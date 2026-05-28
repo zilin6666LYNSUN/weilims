@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.sample.mapper.LimsSampleDisposeMapper">
+
+    <resultMap type="com.wei.lims.sample.domain.LimsSampleDispose" id="LimsSampleDisposeResult">
+        <result property="disposeId" column="dispose_id"/>
+        <result property="sampleId" column="sample_id"/>
+        <result property="disposeType" column="dispose_type"/>
+        <result property="disposeQuantity" column="dispose_quantity"/>
+        <result property="disposeDate" column="dispose_date"/>
+        <result property="disposedBy" column="disposed_by"/>
+        <result property="approvedBy" column="approved_by"/>
+        <result property="reason" column="reason"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select dispose_id, sample_id, dispose_type, dispose_quantity, dispose_date,
+               disposed_by, approved_by, reason
+        from lims_sample_dispose
+    </sql>
+
+    <select id="selectByDisposeId" parameterType="Long" resultMap="LimsSampleDisposeResult">
+        <include refid="selectVo"/> where dispose_id = #{disposeId}
+    </select>
+
+    <select id="selectBySampleId" parameterType="Long" resultMap="LimsSampleDisposeResult">
+        <include refid="selectVo"/> where sample_id = #{sampleId} order by dispose_date desc
+    </select>
+
+    <select id="selectLimsSampleDisposeList" parameterType="com.wei.lims.sample.domain.LimsSampleDispose" resultMap="LimsSampleDisposeResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="sampleId != null"> and sample_id = #{sampleId}</if>
+            <if test="disposeType != null and disposeType != ''"> and dispose_type = #{disposeType}</if>
+        </where>
+        order by dispose_date desc
+    </select>
+
+    <insert id="insertLimsSampleDispose" parameterType="com.wei.lims.sample.domain.LimsSampleDispose" useGeneratedKeys="true" keyProperty="disposeId">
+        insert into lims_sample_dispose(
+            sample_id, dispose_type, dispose_quantity, dispose_date,
+            disposed_by, approved_by, reason
+        )values(
+            #{sampleId}, #{disposeType}, #{disposeQuantity}, #{disposeDate},
+            #{disposedBy}, #{approvedBy}, #{reason}
+        )
+    </insert>
+
+    <update id="updateLimsSampleDispose" parameterType="com.wei.lims.sample.domain.LimsSampleDispose">
+        update lims_sample_dispose
+        <set>
+            <if test="disposeType != null">dispose_type = #{disposeType},</if>
+            <if test="disposeQuantity != null">dispose_quantity = #{disposeQuantity},</if>
+            <if test="disposeDate != null">dispose_date = #{disposeDate},</if>
+            <if test="disposedBy != null">disposed_by = #{disposedBy},</if>
+            <if test="approvedBy != null">approved_by = #{approvedBy},</if>
+            <if test="reason != null">reason = #{reason},</if>
+        </set>
+        where dispose_id = #{disposeId}
+    </update>
+
+    <delete id="deleteByDisposeIds" parameterType="Long">
+        delete from lims_sample_dispose where dispose_id in
+        <foreach item="disposeId" collection="array" open="(" separator="," close=")">#{disposeId}</foreach>
+    </delete>
+</mapper>

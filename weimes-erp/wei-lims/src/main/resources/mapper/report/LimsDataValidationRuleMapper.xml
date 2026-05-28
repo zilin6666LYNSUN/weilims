@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.report.mapper.LimsDataValidationRuleMapper">
+
+    <resultMap type="com.wei.lims.report.domain.LimsDataValidationRule" id="LimsDataValidationRuleResult">
+        <result property="ruleId" column="rule_id"/>
+        <result property="ruleCode" column="rule_code"/>
+        <result property="ruleName" column="rule_name"/>
+        <result property="ruleType" column="rule_type"/>
+        <result property="specLineId" column="spec_line_id"/>
+        <result property="testItemName" column="test_item_name"/>
+        <result property="ruleExpression" column="rule_expression"/>
+        <result property="ruleParams" column="rule_params"/>
+        <result property="errorLevel" column="error_level"/>
+        <result property="errorMessage" column="error_message"/>
+        <result property="isEnabled" column="is_enabled"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select rule_id, rule_code, rule_name, rule_type, spec_line_id, test_item_name,
+               rule_expression, rule_params, error_level, error_message,
+               is_enabled, status, remark, create_by, create_time, update_by, update_time
+        from lims_data_validation_rule
+    </sql>
+
+    <select id="selectRuleByRuleId" parameterType="Long" resultMap="LimsDataValidationRuleResult">
+        <include refid="selectVo"/> where rule_id = #{ruleId}
+    </select>
+
+    <select id="selectRuleByRuleCode" parameterType="String" resultMap="LimsDataValidationRuleResult">
+        <include refid="selectVo"/> where rule_code = #{ruleCode}
+    </select>
+
+    <select id="selectRuleList" parameterType="com.wei.lims.report.domain.LimsDataValidationRule" resultMap="LimsDataValidationRuleResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="ruleCode != null and ruleCode != ''"> and rule_code like concat('%', #{ruleCode}, '%')</if>
+            <if test="ruleName != null and ruleName != ''"> and rule_name like concat('%', #{ruleName}, '%')</if>
+            <if test="ruleType != null and ruleType != ''"> and rule_type = #{ruleType}</if>
+            <if test="errorLevel != null and errorLevel != ''"> and error_level = #{errorLevel}</if>
+            <if test="isEnabled != null"> and is_enabled = #{isEnabled}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectEnabledRules" resultMap="LimsDataValidationRuleResult">
+        <include refid="selectVo"/> where is_enabled = 1 and status = 'ACTIVE' order by rule_type, rule_code
+    </select>
+
+    <insert id="insertRule" parameterType="com.wei.lims.report.domain.LimsDataValidationRule" useGeneratedKeys="true" keyProperty="ruleId">
+        insert into lims_data_validation_rule(
+            rule_code, rule_name, rule_type, spec_line_id, test_item_name,
+            rule_expression, rule_params, error_level, error_message,
+            is_enabled, status, remark, create_by, create_time
+        )values(
+            #{ruleCode}, #{ruleName}, #{ruleType}, #{specLineId}, #{testItemName},
+            #{ruleExpression}, #{ruleParams}, #{errorLevel}, #{errorMessage},
+            #{isEnabled}, #{status}, #{remark}, #{createBy}, sysdate()
+        )
+    </insert>
+
+    <update id="updateRule" parameterType="com.wei.lims.report.domain.LimsDataValidationRule">
+        update lims_data_validation_rule
+        <set>
+            <if test="ruleName != null">rule_name = #{ruleName},</if>
+            <if test="ruleType != null">rule_type = #{ruleType},</if>
+            <if test="specLineId != null">spec_line_id = #{specLineId},</if>
+            <if test="testItemName != null">test_item_name = #{testItemName},</if>
+            <if test="ruleExpression != null">rule_expression = #{ruleExpression},</if>
+            <if test="ruleParams != null">rule_params = #{ruleParams},</if>
+            <if test="errorLevel != null">error_level = #{errorLevel},</if>
+            <if test="errorMessage != null">error_message = #{errorMessage},</if>
+            <if test="isEnabled != null">is_enabled = #{isEnabled},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_by = #{updateBy}, update_time = sysdate()
+        </set>
+        where rule_id = #{ruleId}
+    </update>
+
+    <delete id="deleteRuleByRuleIds" parameterType="Long">
+        delete from lims_data_validation_rule where rule_id in
+        <foreach item="ruleId" collection="array" open="(" separator="," close=")">#{ruleId}</foreach>
+    </delete>
+</mapper>

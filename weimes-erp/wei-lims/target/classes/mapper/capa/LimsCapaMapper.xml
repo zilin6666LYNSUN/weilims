@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.capa.mapper.LimsCapaMapper">
+
+    <resultMap type="com.wei.lims.capa.domain.LimsCapa" id="LimsCapaResult">
+        <result property="capaId" column="capa_id"/>
+        <result property="capaCode" column="capa_code"/>
+        <result property="capaType" column="capa_type"/>
+        <result property="sourceType" column="source_type"/>
+        <result property="sourceCode" column="source_code"/>
+        <result property="description" column="description"/>
+        <result property="rootCause" column="root_cause"/>
+        <result property="correctiveAction" column="corrective_action"/>
+        <result property="preventiveAction" column="preventive_action"/>
+        <result property="responsibleId" column="responsible_id"/>
+        <result property="dueDate" column="due_date"/>
+        <result property="completionDate" column="completion_date"/>
+        <result property="effectivenessResult" column="effectiveness_result"/>
+        <result property="effectivenessDate" column="effectiveness_date"/>
+        <result property="status" column="status"/>
+        <result property="procInstId" column="proc_inst_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select capa_id, capa_code, capa_type, source_type, source_code, description,
+               root_cause, corrective_action, preventive_action, responsible_id,
+               due_date, completion_date, effectiveness_result, effectiveness_date,
+               status, proc_inst_id, create_by, create_time
+        from lims_capa
+    </sql>
+
+    <select id="selectByCapaId" parameterType="Long" resultMap="LimsCapaResult">
+        <include refid="selectVo"/> where capa_id = #{capaId}
+    </select>
+
+    <select id="selectLimsCapaList" parameterType="com.wei.lims.capa.domain.LimsCapa" resultMap="LimsCapaResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="capaCode != null and capaCode != ''"> and capa_code like concat('%', #{capaCode}, '%')</if>
+            <if test="capaType != null and capaType != ''"> and capa_type = #{capaType}</if>
+            <if test="sourceType != null and sourceType != ''"> and source_type = #{sourceType}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <insert id="insertLimsCapa" parameterType="com.wei.lims.capa.domain.LimsCapa" useGeneratedKeys="true" keyProperty="capaId">
+        insert into lims_capa(
+            capa_code, capa_type, source_type, source_code, description,
+            root_cause, corrective_action, preventive_action, responsible_id,
+            due_date, status, proc_inst_id, create_by, create_time
+        )values(
+            #{capaCode}, #{capaType}, #{sourceType}, #{sourceCode}, #{description},
+            #{rootCause}, #{correctiveAction}, #{preventiveAction}, #{responsibleId},
+            #{dueDate}, #{status}, #{procInstId}, #{createBy}, sysdate()
+        )
+    </insert>
+
+    <update id="updateLimsCapa" parameterType="com.wei.lims.capa.domain.LimsCapa">
+        update lims_capa
+        <set>
+            <if test="correctiveAction != null">corrective_action = #{correctiveAction},</if>
+            <if test="preventiveAction != null">preventive_action = #{preventiveAction},</if>
+            <if test="completionDate != null">completion_date = #{completionDate},</if>
+            <if test="effectivenessResult != null">effectiveness_result = #{effectivenessResult},</if>
+            <if test="effectivenessDate != null">effectiveness_date = #{effectivenessDate},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where capa_id = #{capaId}
+    </update>
+
+    <delete id="deleteLimsCapaByIds" parameterType="Long">
+        delete from lims_capa where capa_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

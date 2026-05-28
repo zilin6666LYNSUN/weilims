@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.sample.mapper.LimsSampleStatusLogMapper">
+
+    <resultMap type="com.wei.lims.sample.domain.LimsSampleStatusLog" id="LimsSampleStatusLogResult">
+        <result property="logId" column="log_id"/>
+        <result property="sampleId" column="sample_id"/>
+        <result property="fromStatus" column="from_status"/>
+        <result property="toStatus" column="to_status"/>
+        <result property="changedBy" column="changed_by"/>
+        <result property="changedTime" column="changed_time"/>
+        <result property="reason" column="reason"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select log_id, sample_id, from_status, to_status, changed_by, changed_time, reason
+        from lims_sample_status_log
+    </sql>
+
+    <select id="selectBySampleId" parameterType="Long" resultMap="LimsSampleStatusLogResult">
+        <include refid="selectVo"/>
+        where sample_id = #{sampleId} order by changed_time desc
+    </select>
+
+    <select id="selectByLogId" parameterType="Long" resultMap="LimsSampleStatusLogResult">
+        <include refid="selectVo"/>
+        where log_id = #{logId}
+    </select>
+
+    <select id="selectLimsSampleStatusLogList" parameterType="com.wei.lims.sample.domain.LimsSampleStatusLog" resultMap="LimsSampleStatusLogResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="sampleId != null"> and sample_id = #{sampleId}</if>
+            <if test="fromStatus != null and fromStatus != ''"> and from_status = #{fromStatus}</if>
+            <if test="toStatus != null and toStatus != ''"> and to_status = #{toStatus}</if>
+        </where>
+        order by changed_time desc
+    </select>
+
+    <insert id="insertLimsSampleStatusLog" parameterType="com.wei.lims.sample.domain.LimsSampleStatusLog" useGeneratedKeys="true" keyProperty="logId">
+        insert into lims_sample_status_log(
+            sample_id, from_status, to_status, changed_by, changed_time, reason
+        )values(
+            #{sampleId}, #{fromStatus}, #{toStatus}, #{changedBy}, #{changedTime}, #{reason}
+        )
+    </insert>
+</mapper>

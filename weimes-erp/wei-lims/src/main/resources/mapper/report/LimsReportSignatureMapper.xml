@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.report.mapper.LimsReportSignatureMapper">
+
+    <resultMap type="com.wei.lims.report.domain.LimsReportSignature" id="LimsReportSignatureResult">
+        <result property="signatureId" column="signature_id"/>
+        <result property="reportId" column="report_id"/>
+        <result property="signatureType" column="signature_type"/>
+        <result property="signerId" column="signer_id"/>
+        <result property="signerName" column="signer_name"/>
+        <result property="signatureTime" column="signature_time"/>
+        <result property="signatureMeaning" column="signature_meaning"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="ipAddress" column="ip_address"/>
+        <result property="reason" column="reason"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="selectSignatureById" parameterType="Long" resultMap="LimsReportSignatureResult">
+        select * from lims_report_signature where signature_id = #{signatureId}
+    </select>
+
+    <select id="selectSignaturesByReportId" parameterType="Long" resultMap="LimsReportSignatureResult">
+        select * from lims_report_signature where report_id = #{reportId} and is_valid = 1 order by signature_time
+    </select>
+
+    <select id="selectSignatureList" parameterType="com.wei.lims.report.domain.LimsReportSignature" resultMap="LimsReportSignatureResult">
+        select * from lims_report_signature
+        <where>
+            <if test="reportId != null"> and report_id = #{reportId}</if>
+            <if test="signatureType != null and signatureType != ''"> and signature_type = #{signatureType}</if>
+            <if test="signerId != null"> and signer_id = #{signerId}</if>
+            <if test="isValid != null"> and is_valid = #{isValid}</if>
+        </where>
+        order by signature_time desc
+    </select>
+
+    <insert id="insertSignature" parameterType="com.wei.lims.report.domain.LimsReportSignature" useGeneratedKeys="true" keyProperty="signatureId">
+        insert into lims_report_signature(
+            report_id, signature_type, signer_id, signer_name,
+            signature_time, signature_meaning, is_valid, ip_address, reason, create_time
+        )values(
+            #{reportId}, #{signatureType}, #{signerId}, #{signerName},
+            sysdate(), #{signatureMeaning}, 1, #{ipAddress}, #{reason}, sysdate()
+        )
+    </insert>
+
+    <update id="invalidateSignature" parameterType="Long">
+        update lims_report_signature set is_valid = 0 where signature_id = #{signatureId}
+    </update>
+
+    <delete id="deleteSignatureByReportAndType">
+        delete from lims_report_signature where report_id = #{reportId} and signature_type = #{signatureType}
+    </delete>
+</mapper>

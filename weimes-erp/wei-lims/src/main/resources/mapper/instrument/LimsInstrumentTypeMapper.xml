@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.instrument.mapper.LimsInstrumentTypeMapper">
+
+    <resultMap type="com.wei.lims.instrument.domain.LimsInstrumentType" id="LimsInstrumentTypeResult">
+        <result property="typeId" column="type_id"/>
+        <result property="typeCode" column="type_code"/>
+        <result property="typeName" column="type_name"/>
+        <result property="category" column="category"/>
+        <result property="parentId" column="parent_id"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select type_id, type_code, type_name, category, parent_id
+        from lims_instrument_type
+    </sql>
+
+    <select id="selectByTypeId" parameterType="Long" resultMap="LimsInstrumentTypeResult">
+        <include refid="selectVo"/> where type_id = #{typeId}
+    </select>
+
+    <select id="selectByTypeCode" parameterType="String" resultMap="LimsInstrumentTypeResult">
+        <include refid="selectVo"/> where type_code = #{typeCode}
+    </select>
+
+    <select id="selectLimsInstrumentTypeList" parameterType="com.wei.lims.instrument.domain.LimsInstrumentType" resultMap="LimsInstrumentTypeResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="typeCode != null and typeCode != ''"> and type_code like concat('%', #{typeCode}, '%')</if>
+            <if test="typeName != null and typeName != ''"> and type_name like concat('%', #{typeName}, '%')</if>
+            <if test="category != null and category != ''"> and category = #{category}</if>
+        </where>
+    </select>
+
+    <insert id="insertLimsInstrumentType" parameterType="com.wei.lims.instrument.domain.LimsInstrumentType" useGeneratedKeys="true" keyProperty="typeId">
+        insert into lims_instrument_type(type_code, type_name, category, parent_id)
+        values(#{typeCode}, #{typeName}, #{category}, #{parentId})
+    </insert>
+
+    <update id="updateLimsInstrumentType" parameterType="com.wei.lims.instrument.domain.LimsInstrumentType">
+        update lims_instrument_type
+        <set>
+            <if test="typeName != null">type_name = #{typeName},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+        </set>
+        where type_id = #{typeId}
+    </update>
+
+    <delete id="deleteLimsInstrumentTypeByIds" parameterType="Long">
+        delete from lims_instrument_type where type_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

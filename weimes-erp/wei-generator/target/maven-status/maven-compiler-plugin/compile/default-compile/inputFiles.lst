@@ -1,0 +1,13 @@
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\service\IGenTableService.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\mapper\GenTableMapper.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\domain\GenTableColumn.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\util\VelocityInitializer.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\config\GenConfig.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\controller\GenController.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\util\VelocityUtils.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\service\IGenTableColumnService.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\domain\GenTable.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\service\GenTableColumnServiceImpl.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\util\GenUtils.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\service\GenTableServiceImpl.java
+C:\Work\mes\mes\weimes-erp\wei-generator\src\main\java\com\wei\generator\mapper\GenTableColumnMapper.java

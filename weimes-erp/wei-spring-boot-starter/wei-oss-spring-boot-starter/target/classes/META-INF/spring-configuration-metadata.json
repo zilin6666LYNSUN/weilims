@@ -1,0 +1,43 @@
+{
+  "groups": [
+    {
+      "name": "t3rik-platform.oss",
+      "type": "com.wei.config.OssProperties",
+      "sourceType": "com.wei.config.OssProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "t3rik-platform.oss.access-key",
+      "type": "java.lang.String",
+      "sourceType": "com.wei.config.OssProperties",
+      "defaultValue": "minIO"
+    },
+    {
+      "name": "t3rik-platform.oss.bucket",
+      "type": "java.lang.String",
+      "description": "桶名称",
+      "sourceType": "com.wei.config.OssProperties",
+      "defaultValue": "minIO"
+    },
+    {
+      "name": "t3rik-platform.oss.end-point",
+      "type": "java.lang.String",
+      "sourceType": "com.wei.config.OssProperties",
+      "defaultValue": "http:\/\/127.0.0.1:9000"
+    },
+    {
+      "name": "t3rik-platform.oss.oss-type",
+      "type": "com.wei.enums.OssTypeEnum",
+      "description": "oss类型",
+      "sourceType": "com.wei.config.OssProperties"
+    },
+    {
+      "name": "t3rik-platform.oss.secret-key",
+      "type": "java.lang.String",
+      "sourceType": "com.wei.config.OssProperties",
+      "defaultValue": "minIO"
+    }
+  ],
+  "hints": []
+}

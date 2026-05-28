@@ -1,0 +1,50 @@
+package com.wei.mes.wm.service;
+
+import java.util.List;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.wei.mes.wm.domain.WmWasteHeader;
+import com.wei.mes.wm.domain.tx.WmWasteTxBean;
+import com.wei.mes.wm.dto.WasteHeaderAndLineDTO;
+
+/**
+ * 生产废料单头Service接口
+ *
+ * @author wei
+ * @date 2024-05-11
+ */
+public interface IWmWasteHeaderService extends IService<WmWasteHeader> {
+
+    /**
+     * 检查编号是否重复
+     * @param wmWasteHeader
+     * @return
+     */
+    String checkUnique(WmWasteHeader wmWasteHeader);
+
+    /**
+     * 批量删除生产废料单头
+     *
+     * @param wasteIds 需要删除的生产废料单头主键集合
+     * @return 结果
+     */
+    int delWmWasteHeaderIds(List<Long> wasteIds);
+
+    /**
+     * 查询废料信息所对应的库存记录
+     * @param wasteId 废料id
+     * @return
+     */
+    List<WmWasteTxBean> getTxBeans(Long wasteId);
+
+    /**
+     * 查询废料详情
+     */
+    List<WasteHeaderAndLineDTO> getWasteIssueDetail(Wrapper<WasteHeaderAndLineDTO> query);
+
+    /**
+     * 查询废料详情列表
+     */
+    List<WasteHeaderAndLineDTO> getWasteIssueDetailList(Wrapper<WasteHeaderAndLineDTO> query);
+}

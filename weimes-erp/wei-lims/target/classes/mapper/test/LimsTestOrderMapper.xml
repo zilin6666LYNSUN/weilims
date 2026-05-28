@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.test.mapper.LimsTestOrderMapper">
+
+    <resultMap type="com.wei.lims.test.domain.LimsTestOrder" id="LimsTestOrderResult">
+        <result property="testOrderId" column="test_order_id"/>
+        <result property="testOrderCode" column="test_order_code"/>
+        <result property="testOrderName" column="test_order_name"/>
+        <result property="sampleId" column="sample_id"/>
+        <result property="sampleCode" column="sample_code"/>
+        <result property="specificationId" column="specification_id"/>
+        <result property="testTemplateId" column="test_template_id"/>
+        <result property="sourceDocType" column="source_doc_type"/>
+        <result property="sourceDocId" column="source_doc_id"/>
+        <result property="sourceDocCode" column="source_doc_code"/>
+        <result property="testType" column="test_type"/>
+        <result property="priority" column="priority"/>
+        <result property="plannedStartDate" column="planned_start_date"/>
+        <result property="plannedEndDate" column="planned_end_date"/>
+        <result property="actualStartDate" column="actual_start_date"/>
+        <result property="actualEndDate" column="actual_end_date"/>
+        <result property="testerId" column="tester_id"/>
+        <result property="reviewerId" column="reviewer_id"/>
+        <result property="approverId" column="approver_id"/>
+        <result property="checkResult" column="check_result"/>
+        <result property="conclusion" column="conclusion"/>
+        <result property="reportNo" column="report_no"/>
+        <result property="status" column="status"/>
+        <result property="procInstId" column="proc_inst_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select test_order_id, test_order_code, test_order_name, sample_id, sample_code,
+               specification_id, test_template_id, source_doc_type, source_doc_id, source_doc_code,
+               test_type, priority, planned_start_date, planned_end_date, actual_start_date, actual_end_date,
+               tester_id, reviewer_id, approver_id, check_result, conclusion, report_no,
+               status, proc_inst_id, create_by, create_time, update_by, update_time, remark
+        from lims_test_order
+    </sql>
+
+    <select id="selectLimsTestOrderList" parameterType="com.wei.lims.test.domain.LimsTestOrder" resultMap="LimsTestOrderResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="testOrderCode != null and testOrderCode != ''"> and test_order_code like concat('%', #{testOrderCode}, '%')</if>
+            <if test="sampleId != null"> and sample_id = #{sampleId}</if>
+            <if test="testType != null and testType != ''"> and test_type = #{testType}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="testerId != null"> and tester_id = #{testerId}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectLimsTestOrderByTestOrderId" parameterType="Long" resultMap="LimsTestOrderResult">
+        <include refid="selectVo"/> where test_order_id = #{testOrderId}
+    </select>
+
+    <select id="selectLimsTestOrderByTestOrderCode" parameterType="String" resultMap="LimsTestOrderResult">
+        <include refid="selectVo"/> where test_order_code = #{testOrderCode}
+    </select>
+
+    <insert id="insertLimsTestOrder" parameterType="com.wei.lims.test.domain.LimsTestOrder" useGeneratedKeys="true" keyProperty="testOrderId">
+        insert into lims_test_order(
+            test_order_code, test_order_name, sample_id, sample_code,
+            specification_id, test_template_id, source_doc_type, source_doc_id, source_doc_code,
+            test_type, priority, planned_start_date, planned_end_date,
+            tester_id, reviewer_id, approver_id, check_result, conclusion, report_no,
+            status, proc_inst_id, create_by, create_time, remark
+        )values(
+            #{testOrderCode}, #{testOrderName}, #{sampleId}, #{sampleCode},
+            #{specificationId}, #{testTemplateId}, #{sourceDocType}, #{sourceDocId}, #{sourceDocCode},
+            #{testType}, #{priority}, #{plannedStartDate}, #{plannedEndDate},
+            #{testerId}, #{reviewerId}, #{approverId}, #{checkResult}, #{conclusion}, #{reportNo},
+            #{status}, #{procInstId}, #{createBy}, sysdate(), #{remark}
+        )
+    </insert>
+
+    <update id="updateLimsTestOrder" parameterType="com.wei.lims.test.domain.LimsTestOrder">
+        update lims_test_order
+        <set>
+            <if test="testOrderName != null">test_order_name = #{testOrderName},</if>
+            <if test="testType != null">test_type = #{testType},</if>
+            <if test="priority != null">priority = #{priority},</if>
+            <if test="specificationId != null">specification_id = #{specificationId},</if>
+            <if test="testTemplateId != null">test_template_id = #{testTemplateId},</if>
+            <if test="testerId != null">tester_id = #{testerId},</if>
+            <if test="reviewerId != null">reviewer_id = #{reviewerId},</if>
+            <if test="approverId != null">approver_id = #{approverId},</if>
+            <if test="checkResult != null">check_result = #{checkResult},</if>
+            <if test="conclusion != null">conclusion = #{conclusion},</if>
+            <if test="reportNo != null">report_no = #{reportNo},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="actualStartDate != null">actual_start_date = #{actualStartDate},</if>
+            <if test="actualEndDate != null">actual_end_date = #{actualEndDate},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where test_order_id = #{testOrderId}
+    </update>
+
+    <delete id="deleteLimsTestOrderByTestOrderIds" parameterType="Long">
+        delete from lims_test_order where test_order_id in
+        <foreach item="testOrderId" collection="array" open="(" separator="," close=")">#{testOrderId}</foreach>
+    </delete>
+
+    <delete id="deleteLimsTestOrderByTestOrderId" parameterType="Long">
+        delete from lims_test_order where test_order_id = #{testOrderId}
+    </delete>
+
+    <select id="checkTestOrderCodeUnique" parameterType="String" resultMap="LimsTestOrderResult">
+        <include refid="selectVo"/> where test_order_code = #{testOrderCode} limit 1
+    </select>
+</mapper>

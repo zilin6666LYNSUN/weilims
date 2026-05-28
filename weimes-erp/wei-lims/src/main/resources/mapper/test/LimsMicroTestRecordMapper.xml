@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.test.mapper.LimsMicroTestRecordMapper">
+
+    <resultMap type="com.wei.lims.test.domain.LimsMicroTestRecord" id="LimsMicroTestRecordResult">
+        <result property="recordId" column="record_id"/>
+        <result property="testOrderId" column="test_order_id"/>
+        <result property="testType" column="test_type"/>
+        <result property="mediaId" column="media_id"/>
+        <result property="inoculationDate" column="inoculation_date"/>
+        <result property="incubationTemp" column="incubation_temp"/>
+        <result property="incubationDays" column="incubation_days"/>
+        <result property="positiveControl" column="positive_control"/>
+        <result property="negativeControl" column="negative_control"/>
+        <result property="cultureId" column="culture_id"/>
+        <result property="resultDescription" column="result_description"/>
+        <result property="colonyCount" column="colony_count"/>
+        <result property="resultValue" column="result_value"/>
+        <result property="specificationLimit" column="specification_limit"/>
+        <result property="conclusion" column="conclusion"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select record_id, test_order_id, test_type, media_id, inoculation_date,
+               incubation_temp, incubation_days, positive_control, negative_control,
+               culture_id, result_description, colony_count, result_value,
+               specification_limit, conclusion, status
+        from lims_micro_test_record
+    </sql>
+
+    <select id="selectByRecordId" parameterType="Long" resultMap="LimsMicroTestRecordResult">
+        <include refid="selectVo"/> where record_id = #{recordId}
+    </select>
+
+    <select id="selectByTestOrderId" parameterType="Long" resultMap="LimsMicroTestRecordResult">
+        <include refid="selectVo"/> where test_order_id = #{testOrderId}
+    </select>
+
+    <select id="selectLimsMicroTestRecordList" parameterType="com.wei.lims.test.domain.LimsMicroTestRecord" resultMap="LimsMicroTestRecordResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="testOrderId != null"> and test_order_id = #{testOrderId}</if>
+            <if test="testType != null and testType != ''"> and test_type = #{testType}</if>
+            <if test="conclusion != null and conclusion != ''"> and conclusion = #{conclusion}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by record_id desc
+    </select>
+
+    <insert id="insertLimsMicroTestRecord" parameterType="com.wei.lims.test.domain.LimsMicroTestRecord" useGeneratedKeys="true" keyProperty="recordId">
+        insert into lims_micro_test_record(
+            test_order_id, test_type, media_id, inoculation_date,
+            incubation_temp, incubation_days, positive_control, negative_control,
+            culture_id, result_description, colony_count, result_value,
+            specification_limit, conclusion, status
+        )values(
+            #{testOrderId}, #{testType}, #{mediaId}, #{inoculationDate},
+            #{incubationTemp}, #{incubationDays}, #{positiveControl}, #{negativeControl},
+            #{cultureId}, #{resultDescription}, #{colonyCount}, #{resultValue},
+            #{specificationLimit}, #{conclusion}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsMicroTestRecord" parameterType="com.wei.lims.test.domain.LimsMicroTestRecord">
+        update lims_micro_test_record
+        <set>
+            <if test="testType != null">test_type = #{testType},</if>
+            <if test="mediaId != null">media_id = #{mediaId},</if>
+            <if test="inoculationDate != null">inoculation_date = #{inoculationDate},</if>
+            <if test="incubationTemp != null">incubation_temp = #{incubationTemp},</if>
+            <if test="incubationDays != null">incubation_days = #{incubationDays},</if>
+            <if test="positiveControl != null">positive_control = #{positiveControl},</if>
+            <if test="negativeControl != null">negative_control = #{negativeControl},</if>
+            <if test="cultureId != null">culture_id = #{cultureId},</if>
+            <if test="resultDescription != null">result_description = #{resultDescription},</if>
+            <if test="colonyCount != null">colony_count = #{colonyCount},</if>
+            <if test="resultValue != null">result_value = #{resultValue},</if>
+            <if test="specificationLimit != null">specification_limit = #{specificationLimit},</if>
+            <if test="conclusion != null">conclusion = #{conclusion},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteLimsMicroTestRecordByRecordIds" parameterType="Long">
+        delete from lims_micro_test_record where record_id in
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">#{recordId}</foreach>
+    </delete>
+</mapper>

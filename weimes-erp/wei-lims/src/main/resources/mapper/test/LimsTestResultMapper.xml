@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.test.mapper.LimsTestResultMapper">
+
+    <resultMap type="com.wei.lims.test.domain.LimsTestResult" id="LimsTestResultResult">
+        <result property="resultId" column="result_id"/>
+        <result property="testOrderId" column="test_order_id"/>
+        <result property="specLineId" column="spec_line_id"/>
+        <result property="testItemName" column="test_item_name"/>
+        <result property="methodId" column="method_id"/>
+        <result property="testItemType" column="test_item_type"/>
+        <result property="originalValue" column="original_value"/>
+        <result property="instrumentValue" column="instrument_value"/>
+        <result property="calculatedValue" column="calculated_value"/>
+        <result property="reportedValue" column="reported_value"/>
+        <result property="roundingRule" column="rounding_rule"/>
+        <result property="formula" column="formula"/>
+        <result property="lowerLimit" column="lower_limit"/>
+        <result property="upperLimit" column="upper_limit"/>
+        <result property="specificationVal" column="specification_val"/>
+        <result property="resultConclusion" column="result_conclusion"/>
+        <result property="isOos" column="is_oos"/>
+        <result property="isOot" column="is_oot"/>
+        <result property="testerId" column="tester_id"/>
+        <result property="testDate" column="test_date"/>
+        <result property="reviewerId" column="reviewer_id"/>
+        <result property="reviewDate" column="review_date"/>
+        <result property="instrumentId" column="instrument_id"/>
+        <result property="reagentLot" column="reagent_lot"/>
+        <result property="standardLot" column="standard_lot"/>
+        <result property="testCondition" column="test_condition"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select result_id, test_order_id, spec_line_id, test_item_name, method_id, test_item_type,
+               original_value, instrument_value, calculated_value, reported_value,
+               rounding_rule, formula, lower_limit, upper_limit, specification_val,
+               result_conclusion, is_oos, is_oot,
+               tester_id, test_date, reviewer_id, review_date,
+               instrument_id, reagent_lot, standard_lot, test_condition,
+               create_by, create_time, update_by, update_time, remark
+        from lims_test_result
+    </sql>
+
+    <select id="selectLimsTestResultByResultId" parameterType="Long" resultMap="LimsTestResultResult">
+        <include refid="selectVo"/> where result_id = #{resultId}
+    </select>
+
+    <select id="selectLimsTestResultByTestOrderId" parameterType="Long" resultMap="LimsTestResultResult">
+        <include refid="selectVo"/> where test_order_id = #{testOrderId}
+    </select>
+
+    <select id="selectLimsTestResultList" parameterType="com.wei.lims.test.domain.LimsTestResult" resultMap="LimsTestResultResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="testOrderId != null"> and test_order_id = #{testOrderId}</if>
+            <if test="testItemName != null and testItemName != ''"> and test_item_name like concat('%', #{testItemName}, '%')</if>
+            <if test="resultConclusion != null and resultConclusion != ''"> and result_conclusion = #{resultConclusion}</if>
+            <if test="isOos != null"> and is_oos = #{isOos}</if>
+        </where>
+    </select>
+
+    <insert id="insertLimsTestResult" parameterType="com.wei.lims.test.domain.LimsTestResult" useGeneratedKeys="true" keyProperty="resultId">
+        insert into lims_test_result(
+            test_order_id, spec_line_id, test_item_name, method_id, test_item_type,
+            original_value, instrument_value, calculated_value, reported_value,
+            rounding_rule, formula, lower_limit, upper_limit, specification_val,
+            result_conclusion, is_oos, is_oot,
+            tester_id, test_date, reviewer_id, review_date,
+            instrument_id, reagent_lot, standard_lot, test_condition,
+            create_by, create_time, remark
+        )values(
+            #{testOrderId}, #{specLineId}, #{testItemName}, #{methodId}, #{testItemType},
+            #{originalValue}, #{instrumentValue}, #{calculatedValue}, #{reportedValue},
+            #{roundingRule}, #{formula}, #{lowerLimit}, #{upperLimit}, #{specificationVal},
+            #{resultConclusion}, #{isOos}, #{isOot},
+            #{testerId}, #{testDate}, #{reviewerId}, #{reviewDate},
+            #{instrumentId}, #{reagentLot}, #{standardLot}, #{testCondition},
+            #{createBy}, sysdate(), #{remark}
+        )
+    </insert>
+
+    <update id="updateLimsTestResult" parameterType="com.wei.lims.test.domain.LimsTestResult">
+        update lims_test_result
+        <set>
+            <if test="originalValue != null">original_value = #{originalValue},</if>
+            <if test="instrumentValue != null">instrument_value = #{instrumentValue},</if>
+            <if test="calculatedValue != null">calculated_value = #{calculatedValue},</if>
+            <if test="reportedValue != null">reported_value = #{reportedValue},</if>
+            <if test="resultConclusion != null">result_conclusion = #{resultConclusion},</if>
+            <if test="isOos != null">is_oos = #{isOos},</if>
+            <if test="isOot != null">is_oot = #{isOot},</if>
+            <if test="testerId != null">tester_id = #{testerId},</if>
+            <if test="testDate != null">test_date = #{testDate},</if>
+            <if test="reviewerId != null">reviewer_id = #{reviewerId},</if>
+            <if test="reviewDate != null">review_date = #{reviewDate},</if>
+            <if test="instrumentId != null">instrument_id = #{instrumentId},</if>
+            <if test="reagentLot != null">reagent_lot = #{reagentLot},</if>
+            <if test="standardLot != null">standard_lot = #{standardLot},</if>
+            <if test="testCondition != null">test_condition = #{testCondition},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where result_id = #{resultId}
+    </update>
+
+    <delete id="deleteLimsTestResultByResultIds" parameterType="Long">
+        delete from lims_test_result where result_id in
+        <foreach item="resultId" collection="array" open="(" separator="," close=")">#{resultId}</foreach>
+    </delete>
+
+    <delete id="deleteLimsTestResultByTestOrderId" parameterType="Long">
+        delete from lims_test_result where test_order_id = #{testOrderId}
+    </delete>
+</mapper>

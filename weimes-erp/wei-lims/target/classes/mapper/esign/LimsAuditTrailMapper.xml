@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.esign.mapper.LimsAuditTrailMapper">
+
+    <resultMap type="com.wei.lims.esign.domain.LimsAuditTrail" id="LimsAuditTrailResult">
+        <result property="auditId" column="audit_id"/>
+        <result property="tableName" column="table_name"/>
+        <result property="recordId" column="record_id"/>
+        <result property="fieldName" column="field_name"/>
+        <result property="oldValue" column="old_value"/>
+        <result property="newValue" column="new_value"/>
+        <result property="operationType" column="operation_type"/>
+        <result property="operatorId" column="operator_id"/>
+        <result property="operatorName" column="operator_name"/>
+        <result property="operationTime" column="operation_time"/>
+        <result property="reason" column="reason"/>
+        <result property="signatureId" column="signature_id"/>
+        <result property="ipAddress" column="ip_address"/>
+        <result property="applicationName" column="application_name"/>
+        <result property="sessionId" column="session_id"/>
+    </resultMap>
+
+    <insert id="insertLimsAuditTrail" parameterType="com.wei.lims.esign.domain.LimsAuditTrail" useGeneratedKeys="true" keyProperty="auditId">
+        insert into lims_audit_trail(
+            table_name, record_id, field_name, old_value, new_value,
+            operation_type, operator_id, operator_name, operation_time,
+            reason, signature_id, ip_address, application_name, session_id
+        )values(
+            #{tableName}, #{recordId}, #{fieldName}, #{oldValue}, #{newValue},
+            #{operationType}, #{operatorId}, #{operatorName}, #{operationTime},
+            #{reason}, #{signatureId}, #{ipAddress}, #{applicationName}, #{sessionId}
+        )
+    </insert>
+
+    <select id="selectLimsAuditTrailList" parameterType="com.wei.lims.esign.domain.LimsAuditTrail" resultMap="LimsAuditTrailResult">
+        select audit_id, table_name, record_id, field_name, old_value, new_value,
+               operation_type, operator_id, operator_name, operation_time,
+               reason, signature_id, ip_address, application_name, session_id
+        from lims_audit_trail
+        <where>
+            <if test="tableName != null and tableName != ''"> and table_name = #{tableName}</if>
+            <if test="recordId != null"> and record_id = #{recordId}</if>
+            <if test="operationType != null and operationType != ''"> and operation_type = #{operationType}</if>
+            <if test="operatorId != null"> and operator_id = #{operatorId}</if>
+        </where>
+        order by operation_time desc
+    </select>
+
+    <select id="selectLimsAuditTrailById" parameterType="Long" resultMap="LimsAuditTrailResult">
+        select audit_id, table_name, record_id, field_name, old_value, new_value,
+               operation_type, operator_id, operator_name, operation_time,
+               reason, signature_id, ip_address, application_name, session_id
+        from lims_audit_trail
+        where audit_id = #{auditId}
+    </select>
+
+    <select id="selectByTableAndRecord" resultMap="LimsAuditTrailResult">
+        select audit_id, table_name, record_id, field_name, old_value, new_value,
+               operation_type, operator_id, operator_name, operation_time,
+               reason, signature_id, ip_address, application_name, session_id
+        from lims_audit_trail
+        where table_name = #{tableName} and record_id = #{recordId}
+        order by operation_time desc
+    </select>
+</mapper>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.report.mapper.LimsReportMapper">
+
+    <resultMap type="com.wei.lims.report.domain.LimsReport" id="LimsReportResult">
+        <result property="reportId" column="report_id"/>
+        <result property="reportCode" column="report_code"/>
+        <result property="reportType" column="report_type"/>
+        <result property="templateId" column="template_id"/>
+        <result property="templateVersion" column="template_version"/>
+        <result property="businessType" column="business_type"/>
+        <result property="businessId" column="business_id"/>
+        <result property="title" column="title"/>
+        <result property="productName" column="product_name"/>
+        <result property="batchNo" column="batch_no"/>
+        <result property="reportData" column="report_data"/>
+        <result property="pdfPath" column="pdf_path"/>
+        <result property="pdfHash" column="pdf_hash"/>
+        <result property="generatedBy" column="generated_by"/>
+        <result property="generatedTime" column="generated_time"/>
+        <result property="reviewedBy" column="reviewed_by"/>
+        <result property="reviewedTime" column="reviewed_time"/>
+        <result property="reviewComment" column="review_comment"/>
+        <result property="approvedBy" column="approved_by"/>
+        <result property="approvedTime" column="approved_time"/>
+        <result property="approveComment" column="approve_comment"/>
+        <result property="releasedBy" column="released_by"/>
+        <result property="releasedTime" column="released_time"/>
+        <result property="printedCount" column="printed_count"/>
+        <result property="lastPrintedTime" column="last_printed_time"/>
+        <result property="status" column="status"/>
+        <result property="procInstId" column="proc_inst_id"/>
+        <result property="conclusion" column="conclusion"/>
+        <result property="voidReason" column="void_reason"/>
+        <result property="version" column="version"/>
+        <result property="parentReportId" column="parent_report_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select report_id, report_code, report_type, template_id, template_version,
+               business_type, business_id, title, product_name, batch_no,
+               report_data, pdf_path, pdf_hash,
+               generated_by, generated_time, reviewed_by, reviewed_time, review_comment,
+               approved_by, approved_time, approve_comment, released_by, released_time,
+               printed_count, last_printed_time, status, proc_inst_id,
+               conclusion, void_reason, version, parent_report_id,
+               create_by, create_time, update_by, update_time, remark
+        from lims_report
+    </sql>
+
+    <select id="selectLimsReportList" parameterType="com.wei.lims.report.domain.LimsReport" resultMap="LimsReportResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="reportCode != null and reportCode != ''"> and report_code like concat('%', #{reportCode}, '%')</if>
+            <if test="reportType != null and reportType != ''"> and report_type = #{reportType}</if>
+            <if test="businessType != null and businessType != ''"> and business_type = #{businessType}</if>
+            <if test="businessId != null"> and business_id = #{businessId}</if>
+            <if test="productName != null and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="templateId != null"> and template_id = #{templateId}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectLimsReportByReportId" parameterType="Long" resultMap="LimsReportResult">
+        <include refid="selectVo"/> where report_id = #{reportId}
+    </select>
+
+    <select id="selectLimsReportByReportCode" parameterType="String" resultMap="LimsReportResult">
+        <include refid="selectVo"/> where report_code = #{reportCode}
+    </select>
+
+    <insert id="insertLimsReport" parameterType="com.wei.lims.report.domain.LimsReport" useGeneratedKeys="true" keyProperty="reportId">
+        insert into lims_report(
+            report_code, report_type, template_id, template_version,
+            business_type, business_id, title, product_name, batch_no,
+            report_data, pdf_path, pdf_hash,
+            generated_by, generated_time, reviewed_by, reviewed_time, review_comment,
+            approved_by, approved_time, approve_comment, released_by, released_time,
+            printed_count, status, proc_inst_id,
+            conclusion, void_reason, version, parent_report_id,
+            create_by, create_time, remark
+        )values(
+            #{reportCode}, #{reportType}, #{templateId}, #{templateVersion},
+            #{businessType}, #{businessId}, #{title}, #{productName}, #{batchNo},
+            #{reportData}, #{pdfPath}, #{pdfHash},
+            #{generatedBy}, #{generatedTime}, #{reviewedBy}, #{reviewedTime}, #{reviewComment},
+            #{approvedBy}, #{approvedTime}, #{approveComment}, #{releasedBy}, #{releasedTime},
+            #{printedCount}, #{status}, #{procInstId},
+            #{conclusion}, #{voidReason}, #{version}, #{parentReportId},
+            #{createBy}, sysdate(), #{remark}
+        )
+    </insert>
+
+    <update id="updateLimsReport" parameterType="com.wei.lims.report.domain.LimsReport">
+        update lims_report
+        <set>
+            <if test="reportType != null">report_type = #{reportType},</if>
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="batchNo != null">batch_no = #{batchNo},</if>
+            <if test="reportData != null">report_data = #{reportData},</if>
+            <if test="pdfPath != null">pdf_path = #{pdfPath},</if>
+            <if test="pdfHash != null">pdf_hash = #{pdfHash},</if>
+            <if test="generatedBy != null">generated_by = #{generatedBy},</if>
+            <if test="generatedTime != null">generated_time = #{generatedTime},</if>
+            <if test="reviewedBy != null">reviewed_by = #{reviewedBy},</if>
+            <if test="reviewedTime != null">reviewed_time = #{reviewedTime},</if>
+            <if test="reviewComment != null">review_comment = #{reviewComment},</if>
+            <if test="approvedBy != null">approved_by = #{approvedBy},</if>
+            <if test="approvedTime != null">approved_time = #{approvedTime},</if>
+            <if test="approveComment != null">approve_comment = #{approveComment},</if>
+            <if test="releasedBy != null">released_by = #{releasedBy},</if>
+            <if test="releasedTime != null">released_time = #{releasedTime},</if>
+            <if test="printedCount != null">printed_count = #{printedCount},</if>
+            <if test="lastPrintedTime != null">last_printed_time = #{lastPrintedTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="conclusion != null">conclusion = #{conclusion},</if>
+            <if test="voidReason != null">void_reason = #{voidReason},</if>
+            <if test="version != null">version = #{version},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where report_id = #{reportId}
+    </update>
+
+    <delete id="deleteLimsReportByReportIds" parameterType="Long">
+        delete from lims_report where report_id in
+        <foreach item="reportId" collection="array" open="(" separator="," close=")">#{reportId}</foreach>
+    </delete>
+
+    <select id="checkReportCodeUnique" parameterType="String" resultMap="LimsReportResult">
+        <include refid="selectVo"/> where report_code = #{reportCode} limit 1
+    </select>
+</mapper>

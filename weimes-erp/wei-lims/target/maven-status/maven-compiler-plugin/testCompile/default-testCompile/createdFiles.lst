@@ -1,0 +1,6 @@
+com\wei\lims\change\controller\LimsChangeControlControllerTest.class
+com\wei\lims\test\controller\LimsTestResultControllerTest.class
+com\wei\lims\esign\controller\LimsAuditTrailControllerTest.class
+com\wei\lims\test\controller\LimsTestOrderControllerTest.class
+com\wei\lims\esign\controller\LimsElectronicSignatureControllerTest.class
+com\wei\lims\sample\controller\LimsSampleControllerTest.class

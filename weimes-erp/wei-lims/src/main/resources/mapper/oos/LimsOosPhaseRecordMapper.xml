@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.oos.mapper.LimsOosPhaseRecordMapper">
+
+    <resultMap type="com.wei.lims.oos.domain.LimsOosPhaseRecord" id="LimsOosPhaseRecordResult">
+        <result property="phaseRecordId" column="phase_record_id"/>
+        <result property="investigationId" column="investigation_id"/>
+        <result property="phase" column="phase"/>
+        <result property="hypothesis" column="hypothesis"/>
+        <result property="experimentMethod" column="experiment_method"/>
+        <result property="experimentResult" column="experiment_result"/>
+        <result property="conclusion" column="conclusion"/>
+        <result property="operatorId" column="operator_id"/>
+        <result property="operatorName" column="operator_name"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="selectByPhaseRecordId" parameterType="Long" resultMap="LimsOosPhaseRecordResult">
+        select * from lims_oos_phase_record where phase_record_id = #{phaseRecordId}
+    </select>
+
+    <select id="selectByInvestigationId" parameterType="Long" resultMap="LimsOosPhaseRecordResult">
+        select * from lims_oos_phase_record where investigation_id = #{investigationId} order by create_time
+    </select>
+
+    <select id="selectLimsOosPhaseRecordList" parameterType="com.wei.lims.oos.domain.LimsOosPhaseRecord" resultMap="LimsOosPhaseRecordResult">
+        select * from lims_oos_phase_record
+        <where>
+            <if test="investigationId != null"> and investigation_id = #{investigationId}</if>
+            <if test="phase != null and phase != ''"> and phase = #{phase}</if>
+        </where>
+        order by create_time
+    </select>
+
+    <insert id="insertLimsOosPhaseRecord" parameterType="com.wei.lims.oos.domain.LimsOosPhaseRecord" useGeneratedKeys="true" keyProperty="phaseRecordId">
+        insert into lims_oos_phase_record(
+            investigation_id, phase, hypothesis, experiment_method, experiment_result,
+            conclusion, operator_id, operator_name, create_by, create_time
+        )values(
+            #{investigationId}, #{phase}, #{hypothesis}, #{experimentMethod}, #{experimentResult},
+            #{conclusion}, #{operatorId}, #{operatorName}, #{createBy}, sysdate()
+        )
+    </insert>
+
+    <update id="updateLimsOosPhaseRecord" parameterType="com.wei.lims.oos.domain.LimsOosPhaseRecord">
+        update lims_oos_phase_record
+        <set>
+            <if test="hypothesis != null">hypothesis = #{hypothesis},</if>
+            <if test="experimentMethod != null">experiment_method = #{experimentMethod},</if>
+            <if test="experimentResult != null">experiment_result = #{experimentResult},</if>
+            <if test="conclusion != null">conclusion = #{conclusion},</if>
+        </set>
+        where phase_record_id = #{phaseRecordId}
+    </update>
+
+    <delete id="deleteLimsOosPhaseRecordByIds" parameterType="Long">
+        delete from lims_oos_phase_record where phase_record_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

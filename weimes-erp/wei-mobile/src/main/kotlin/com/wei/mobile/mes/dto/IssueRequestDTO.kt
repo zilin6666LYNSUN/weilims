@@ -1,0 +1,18 @@
+package com.wei.mobile.mes.dto
+
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.wei.mes.wm.domain.WmIssueHeader
+import com.wei.mes.wm.domain.WmIssueLine
+import lombok.AllArgsConstructor
+import lombok.NoArgsConstructor
+
+
+/**
+ * 领料单
+ * @author wei
+ * @date 2024/8/30 15:31
+ */
+data class IssueRequestDTO @JsonCreator constructor(
+    @JsonProperty("issueLineList") val issueLineList: MutableList<WmIssueLine>
+) : WmIssueHeader()

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.sample.mapper.LimsRetainSampleMapper">
+
+    <resultMap type="com.wei.lims.sample.domain.LimsRetainSample" id="LimsRetainSampleResult">
+        <result property="retainId" column="retain_id"/>
+        <result property="retainCode" column="retain_code"/>
+        <result property="sampleId" column="sample_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="batchNo" column="batch_no"/>
+        <result property="retainType" column="retain_type"/>
+        <result property="retainQuantity" column="retain_quantity"/>
+        <result property="remainQuantity" column="remain_quantity"/>
+        <result property="storageLocation" column="storage_location"/>
+        <result property="storageCondition" column="storage_condition"/>
+        <result property="retainDate" column="retain_date"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="observationCycle" column="observation_cycle"/>
+        <result property="lastObservation" column="last_observation"/>
+        <result property="nextObservation" column="next_observation"/>
+        <result property="observationResult" column="observation_result"/>
+        <result property="disposeType" column="dispose_type"/>
+        <result property="disposeDate" column="dispose_date"/>
+        <result property="disposeApprover" column="dispose_approver"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select retain_id, retain_code, sample_id, product_name, batch_no,
+               retain_type, retain_quantity, remain_quantity, storage_location, storage_condition,
+               retain_date, expire_date, observation_cycle, last_observation, next_observation,
+               observation_result, dispose_type, dispose_date, dispose_approver, status
+        from lims_retain_sample
+    </sql>
+
+    <select id="selectByRetainId" parameterType="Long" resultMap="LimsRetainSampleResult">
+        <include refid="selectVo"/> where retain_id = #{retainId}
+    </select>
+
+    <select id="selectBySampleId" parameterType="Long" resultMap="LimsRetainSampleResult">
+        <include refid="selectVo"/> where sample_id = #{sampleId} order by retain_date desc
+    </select>
+
+    <select id="selectLimsRetainSampleList" parameterType="com.wei.lims.sample.domain.LimsRetainSample" resultMap="LimsRetainSampleResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="sampleId != null"> and sample_id = #{sampleId}</if>
+            <if test="retainCode != null and retainCode != ''"> and retain_code like concat('%', #{retainCode}, '%')</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="retainType != null and retainType != ''"> and retain_type = #{retainType}</if>
+        </where>
+        order by retain_date desc
+    </select>
+
+    <insert id="insertLimsRetainSample" parameterType="com.wei.lims.sample.domain.LimsRetainSample" useGeneratedKeys="true" keyProperty="retainId">
+        insert into lims_retain_sample(
+            retain_code, sample_id, product_name, batch_no, retain_type,
+            retain_quantity, remain_quantity, storage_location, storage_condition,
+            retain_date, expire_date, observation_cycle, status
+        )values(
+            #{retainCode}, #{sampleId}, #{productName}, #{batchNo}, #{retainType},
+            #{retainQuantity}, #{remainQuantity}, #{storageLocation}, #{storageCondition},
+            #{retainDate}, #{expireDate}, #{observationCycle}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsRetainSample" parameterType="com.wei.lims.sample.domain.LimsRetainSample">
+        update lims_retain_sample
+        <set>
+            <if test="remainQuantity != null">remain_quantity = #{remainQuantity},</if>
+            <if test="storageLocation != null">storage_location = #{storageLocation},</if>
+            <if test="lastObservation != null">last_observation = #{lastObservation},</if>
+            <if test="nextObservation != null">next_observation = #{nextObservation},</if>
+            <if test="observationResult != null">observation_result = #{observationResult},</if>
+            <if test="disposeType != null">dispose_type = #{disposeType},</if>
+            <if test="disposeDate != null">dispose_date = #{disposeDate},</if>
+            <if test="disposeApprover != null">dispose_approver = #{disposeApprover},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where retain_id = #{retainId}
+    </update>
+
+    <delete id="deleteByRetainIds" parameterType="Long">
+        delete from lims_retain_sample where retain_id in
+        <foreach item="retainId" collection="array" open="(" separator="," close=")">#{retainId}</foreach>
+    </delete>
+</mapper>

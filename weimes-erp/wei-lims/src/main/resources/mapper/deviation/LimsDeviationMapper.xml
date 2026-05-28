@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.deviation.mapper.LimsDeviationMapper">
+
+    <resultMap type="com.wei.lims.deviation.domain.LimsDeviation" id="LimsDeviationResult">
+        <result property="deviationId" column="deviation_id"/>
+        <result property="deviationCode" column="deviation_code"/>
+        <result property="deviationTitle" column="deviation_title"/>
+        <result property="deviationType" column="deviation_type"/>
+        <result property="deviationCategory" column="deviation_category"/>
+        <result property="severityLevel" column="severity_level"/>
+        <result property="discoveryDate" column="discovery_date"/>
+        <result property="discoverySource" column="discovery_source"/>
+        <result property="affectedProduct" column="affected_product"/>
+        <result property="affectedBatch" column="affected_batch"/>
+        <result property="description" column="description"/>
+        <result property="immediateAction" column="immediate_action"/>
+        <result property="isCapaNeeded" column="is_capa_needed"/>
+        <result property="investigationResult" column="investigation_result"/>
+        <result property="rootCause" column="root_cause"/>
+        <result property="capaIds" column="capa_ids"/>
+        <result property="effectivenessReview" column="effectiveness_review"/>
+        <result property="ownerId" column="owner_id"/>
+        <result property="dueDate" column="due_date"/>
+        <result property="closeDate" column="close_date"/>
+        <result property="procInstId" column="proc_inst_id"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select deviation_id, deviation_code, deviation_title, deviation_type, deviation_category,
+               severity_level, discovery_date, discovery_source, affected_product, affected_batch,
+               description, immediate_action, is_capa_needed, investigation_result, root_cause,
+               capa_ids, effectiveness_review, owner_id, due_date, close_date,
+               proc_inst_id, status, create_by, create_time
+        from lims_deviation
+    </sql>
+
+    <select id="selectByDeviationId" parameterType="Long" resultMap="LimsDeviationResult">
+        <include refid="selectVo"/> where deviation_id = #{deviationId}
+    </select>
+
+    <select id="selectLimsDeviationList" parameterType="com.wei.lims.deviation.domain.LimsDeviation" resultMap="LimsDeviationResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="deviationCode != null and deviationCode != ''"> and deviation_code like concat('%', #{deviationCode}, '%')</if>
+            <if test="deviationType != null and deviationType != ''"> and deviation_type = #{deviationType}</if>
+            <if test="deviationCategory != null and deviationCategory != ''"> and deviation_category = #{deviationCategory}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <insert id="insertLimsDeviation" parameterType="com.wei.lims.deviation.domain.LimsDeviation" useGeneratedKeys="true" keyProperty="deviationId">
+        insert into lims_deviation(
+            deviation_code, deviation_title, deviation_type, deviation_category, severity_level,
+            discovery_date, discovery_source, affected_product, affected_batch,
+            description, immediate_action, is_capa_needed, owner_id, due_date,
+            status, proc_inst_id, create_by, create_time
+        )values(
+            #{deviationCode}, #{deviationTitle}, #{deviationType}, #{deviationCategory}, #{severityLevel},
+            #{discoveryDate}, #{discoverySource}, #{affectedProduct}, #{affectedBatch},
+            #{description}, #{immediateAction}, #{isCapaNeeded}, #{ownerId}, #{dueDate},
+            #{status}, #{procInstId}, #{createBy}, sysdate()
+        )
+    </insert>
+
+    <update id="updateLimsDeviation" parameterType="com.wei.lims.deviation.domain.LimsDeviation">
+        update lims_deviation
+        <set>
+            <if test="investigationResult != null">investigation_result = #{investigationResult},</if>
+            <if test="rootCause != null">root_cause = #{rootCause},</if>
+            <if test="capaIds != null">capa_ids = #{capaIds},</if>
+            <if test="effectivenessReview != null">effectiveness_review = #{effectivenessReview},</if>
+            <if test="closeDate != null">close_date = #{closeDate},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where deviation_id = #{deviationId}
+    </update>
+
+    <delete id="deleteLimsDeviationByIds" parameterType="Long">
+        delete from lims_deviation where deviation_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

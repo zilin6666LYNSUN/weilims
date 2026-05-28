@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.sample.mapper.LimsSampleMapper">
+
+    <resultMap type="com.wei.lims.sample.domain.LimsSample" id="LimsSampleResult">
+        <result property="sampleId" column="sample_id"/>
+        <result property="sampleCode" column="sample_code"/>
+        <result property="sampleName" column="sample_name"/>
+        <result property="sampleType" column="sample_type"/>
+        <result property="sampleSource" column="sample_source"/>
+        <result property="batchNo" column="batch_no"/>
+        <result property="productId" column="product_id"/>
+        <result property="productCode" column="product_code"/>
+        <result property="productName" column="product_name"/>
+        <result property="vendorId" column="vendor_id"/>
+        <result property="vendorCode" column="vendor_code"/>
+        <result property="vendorName" column="vendor_name"/>
+        <result property="vendorBatch" column="vendor_batch"/>
+        <result property="specification" column="specification"/>
+        <result property="quantityReceived" column="quantity_received"/>
+        <result property="quantityRemaining" column="quantity_remaining"/>
+        <result property="unitOfMeasure" column="unit_of_measure"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="storageCondition" column="storage_condition"/>
+        <result property="storageLocation" column="storage_location"/>
+        <result property="priority" column="priority"/>
+        <result property="receiveDate" column="receive_date"/>
+        <result property="samplerId" column="sampler_id"/>
+        <result property="inspectorId" column="inspector_id"/>
+        <result property="specificationId" column="specification_id"/>
+        <result property="testTemplateId" column="test_template_id"/>
+        <result property="status" column="status"/>
+        <result property="procInstId" column="proc_inst_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+        <result property="attr1" column="attr1"/>
+        <result property="attr2" column="attr2"/>
+        <result property="attr3" column="attr3"/>
+        <result property="attr4" column="attr4"/>
+    </resultMap>
+
+    <sql id="selectLimsSampleVo">
+        select sample_id, sample_code, sample_name, sample_type, sample_source, batch_no,
+               product_id, product_code, product_name, vendor_id, vendor_code, vendor_name, vendor_batch,
+               specification, quantity_received, quantity_remaining, unit_of_measure,
+               expire_date, storage_condition, storage_location, priority, receive_date,
+               sampler_id, inspector_id, specification_id, test_template_id,
+               status, proc_inst_id, create_by, create_time, update_by, update_time, remark,
+               attr1, attr2, attr3, attr4
+        from lims_sample
+    </sql>
+
+    <select id="selectLimsSampleList" parameterType="com.wei.lims.sample.domain.LimsSample" resultMap="LimsSampleResult">
+        <include refid="selectLimsSampleVo"/>
+        <where>
+            <if test="sampleCode != null and sampleCode != ''"> and sample_code like concat('%', #{sampleCode}, '%')</if>
+            <if test="sampleName != null and sampleName != ''"> and sample_name like concat('%', #{sampleName}, '%')</if>
+            <if test="sampleType != null and sampleType != ''"> and sample_type = #{sampleType}</if>
+            <if test="batchNo != null and batchNo != ''"> and batch_no like concat('%', #{batchNo}, '%')</if>
+            <if test="productId != null"> and product_id = #{productId}</if>
+            <if test="vendorId != null"> and vendor_id = #{vendorId}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="sampleSource != null and sampleSource != ''"> and sample_source = #{sampleSource}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectLimsSampleBySampleId" parameterType="Long" resultMap="LimsSampleResult">
+        <include refid="selectLimsSampleVo"/>
+        where sample_id = #{sampleId}
+    </select>
+
+    <select id="selectLimsSampleBySampleCode" parameterType="String" resultMap="LimsSampleResult">
+        <include refid="selectLimsSampleVo"/>
+        where sample_code = #{sampleCode}
+    </select>
+
+    <insert id="insertLimsSample" parameterType="com.wei.lims.sample.domain.LimsSample" useGeneratedKeys="true" keyProperty="sampleId">
+        insert into lims_sample(
+            <if test="sampleCode != null and sampleCode != ''">sample_code,</if>
+            <if test="sampleName != null and sampleName != ''">sample_name,</if>
+            <if test="sampleType != null and sampleType != ''">sample_type,</if>
+            <if test="sampleSource != null">sample_source,</if>
+            <if test="batchNo != null and batchNo != ''">batch_no,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="productCode != null">product_code,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="vendorId != null">vendor_id,</if>
+            <if test="vendorCode != null">vendor_code,</if>
+            <if test="vendorName != null">vendor_name,</if>
+            <if test="vendorBatch != null">vendor_batch,</if>
+            <if test="specification != null">specification,</if>
+            <if test="quantityReceived != null">quantity_received,</if>
+            <if test="quantityRemaining != null">quantity_remaining,</if>
+            <if test="unitOfMeasure != null">unit_of_measure,</if>
+            <if test="expireDate != null">expire_date,</if>
+            <if test="storageCondition != null">storage_condition,</if>
+            <if test="storageLocation != null">storage_location,</if>
+            <if test="priority != null">priority,</if>
+            <if test="receiveDate != null">receive_date,</if>
+            <if test="samplerId != null">sampler_id,</if>
+            <if test="inspectorId != null">inspector_id,</if>
+            <if test="specificationId != null">specification_id,</if>
+            <if test="testTemplateId != null">test_template_id,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="attr1 != null">attr1,</if>
+            <if test="attr2 != null">attr2,</if>
+            <if test="attr3 != null">attr3,</if>
+            <if test="attr4 != null">attr4,</if>
+            create_by,
+            create_time
+        )values(
+            <if test="sampleCode != null and sampleCode != ''">#{sampleCode},</if>
+            <if test="sampleName != null and sampleName != ''">#{sampleName},</if>
+            <if test="sampleType != null and sampleType != ''">#{sampleType},</if>
+            <if test="sampleSource != null">#{sampleSource},</if>
+            <if test="batchNo != null and batchNo != ''">#{batchNo},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="productCode != null">#{productCode},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="vendorId != null">#{vendorId},</if>
+            <if test="vendorCode != null">#{vendorCode},</if>
+            <if test="vendorName != null">#{vendorName},</if>
+            <if test="vendorBatch != null">#{vendorBatch},</if>
+            <if test="specification != null">#{specification},</if>
+            <if test="quantityReceived != null">#{quantityReceived},</if>
+            <if test="quantityRemaining != null">#{quantityRemaining},</if>
+            <if test="unitOfMeasure != null">#{unitOfMeasure},</if>
+            <if test="expireDate != null">#{expireDate},</if>
+            <if test="storageCondition != null">#{storageCondition},</if>
+            <if test="storageLocation != null">#{storageLocation},</if>
+            <if test="priority != null">#{priority},</if>
+            <if test="receiveDate != null">#{receiveDate},</if>
+            <if test="samplerId != null">#{samplerId},</if>
+            <if test="inspectorId != null">#{inspectorId},</if>
+            <if test="specificationId != null">#{specificationId},</if>
+            <if test="testTemplateId != null">#{testTemplateId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="attr1 != null">#{attr1},</if>
+            <if test="attr2 != null">#{attr2},</if>
+            <if test="attr3 != null">#{attr3},</if>
+            <if test="attr4 != null">#{attr4},</if>
+            #{createBy},
+            sysdate()
+        )
+    </insert>
+
+    <update id="updateLimsSample" parameterType="com.wei.lims.sample.domain.LimsSample">
+        update lims_sample
+        <set>
+            <if test="sampleCode != null and sampleCode != ''">sample_code = #{sampleCode},</if>
+            <if test="sampleName != null">sample_name = #{sampleName},</if>
+            <if test="sampleType != null">sample_type = #{sampleType},</if>
+            <if test="sampleSource != null">sample_source = #{sampleSource},</if>
+            <if test="batchNo != null">batch_no = #{batchNo},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="productCode != null">product_code = #{productCode},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="vendorId != null">vendor_id = #{vendorId},</if>
+            <if test="vendorCode != null">vendor_code = #{vendorCode},</if>
+            <if test="vendorName != null">vendor_name = #{vendorName},</if>
+            <if test="vendorBatch != null">vendor_batch = #{vendorBatch},</if>
+            <if test="specification != null">specification = #{specification},</if>
+            <if test="quantityReceived != null">quantity_received = #{quantityReceived},</if>
+            <if test="quantityRemaining != null">quantity_remaining = #{quantityRemaining},</if>
+            <if test="unitOfMeasure != null">unit_of_measure = #{unitOfMeasure},</if>
+            <if test="expireDate != null">expire_date = #{expireDate},</if>
+            <if test="storageCondition != null">storage_condition = #{storageCondition},</if>
+            <if test="storageLocation != null">storage_location = #{storageLocation},</if>
+            <if test="priority != null">priority = #{priority},</if>
+            <if test="receiveDate != null">receive_date = #{receiveDate},</if>
+            <if test="samplerId != null">sampler_id = #{samplerId},</if>
+            <if test="inspectorId != null">inspector_id = #{inspectorId},</if>
+            <if test="specificationId != null">specification_id = #{specificationId},</if>
+            <if test="testTemplateId != null">test_template_id = #{testTemplateId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where sample_id = #{sampleId}
+    </update>
+
+    <delete id="deleteLimsSampleBySampleIds" parameterType="Long">
+        delete from lims_sample where sample_id in
+        <foreach item="sampleId" collection="array" open="(" separator="," close=")">
+            #{sampleId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteLimsSampleBySampleId" parameterType="Long">
+        delete from lims_sample where sample_id = #{sampleId}
+    </delete>
+</mapper>

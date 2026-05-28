@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.reagent.mapper.LimsCultureCollectionMapper">
+
+    <resultMap type="com.wei.lims.reagent.domain.LimsCultureCollection" id="LimsCultureCollectionResult">
+        <result property="cultureId" column="culture_id"/>
+        <result property="cultureCode" column="culture_code"/>
+        <result property="cultureName" column="culture_name"/>
+        <result property="strainNumber" column="strain_number"/>
+        <result property="source" column="source"/>
+        <result property="storageMethod" column="storage_method"/>
+        <result property="storageLocation" column="storage_location"/>
+        <result property="passageCount" column="passage_count"/>
+        <result property="maxPassage" column="max_passage"/>
+        <result property="receivedDate" column="received_date"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="viabilityTestDate" column="viability_test_date"/>
+        <result property="viabilityResult" column="viability_result"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select culture_id, culture_code, culture_name, strain_number, source,
+               storage_method, storage_location, passage_count, max_passage,
+               received_date, expire_date, viability_test_date, viability_result, status
+        from lims_culture_collection
+    </sql>
+
+    <select id="selectByCultureId" parameterType="Long" resultMap="LimsCultureCollectionResult">
+        <include refid="selectVo"/> where culture_id = #{cultureId}
+    </select>
+
+    <select id="selectLimsCultureCollectionList" parameterType="com.wei.lims.reagent.domain.LimsCultureCollection" resultMap="LimsCultureCollectionResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="cultureCode != null and cultureCode != ''"> and culture_code like concat('%', #{cultureCode}, '%')</if>
+            <if test="cultureName != null and cultureName != ''"> and culture_name like concat('%', #{cultureName}, '%')</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+
+    <insert id="insertLimsCultureCollection" parameterType="com.wei.lims.reagent.domain.LimsCultureCollection" useGeneratedKeys="true" keyProperty="cultureId">
+        insert into lims_culture_collection(
+            culture_code, culture_name, strain_number, source,
+            storage_method, storage_location, passage_count, max_passage,
+            received_date, expire_date, viability_test_date, viability_result, status
+        )values(
+            #{cultureCode}, #{cultureName}, #{strainNumber}, #{source},
+            #{storageMethod}, #{storageLocation}, #{passageCount}, #{maxPassage},
+            #{receivedDate}, #{expireDate}, #{viabilityTestDate}, #{viabilityResult}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsCultureCollection" parameterType="com.wei.lims.reagent.domain.LimsCultureCollection">
+        update lims_culture_collection
+        <set>
+            <if test="cultureName != null">culture_name = #{cultureName},</if>
+            <if test="passageCount != null">passage_count = #{passageCount},</if>
+            <if test="viabilityTestDate != null">viability_test_date = #{viabilityTestDate},</if>
+            <if test="viabilityResult != null">viability_result = #{viabilityResult},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where culture_id = #{cultureId}
+    </update>
+
+    <delete id="deleteLimsCultureCollectionByIds" parameterType="Long">
+        delete from lims_culture_collection where culture_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

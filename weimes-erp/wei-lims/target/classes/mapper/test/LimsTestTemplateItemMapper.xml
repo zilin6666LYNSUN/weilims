@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.test.mapper.LimsTestTemplateItemMapper">
+
+    <resultMap type="com.wei.lims.test.domain.LimsTestTemplateItem" id="LimsTestTemplateItemResult">
+        <result property="id" column="id"/>
+        <result property="templateId" column="template_id"/>
+        <result property="testItemName" column="test_item_name"/>
+        <result property="testItemCode" column="test_item_code"/>
+        <result property="methodId" column="method_id"/>
+        <result property="methodName" column="method_name"/>
+        <result property="specLineId" column="spec_line_id"/>
+        <result property="testItemType" column="test_item_type"/>
+        <result property="isRequired" column="is_required"/>
+        <result property="sortOrder" column="sort_order"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select id, template_id, test_item_name, test_item_code, method_id, method_name,
+               spec_line_id, test_item_type, is_required, sort_order,
+               create_by, create_time, remark
+        from lims_test_template_item
+    </sql>
+
+    <select id="selectByTemplateId" parameterType="Long" resultMap="LimsTestTemplateItemResult">
+        <include refid="selectVo"/> where template_id = #{templateId} order by sort_order
+    </select>
+
+    <select id="selectById" parameterType="Long" resultMap="LimsTestTemplateItemResult">
+        <include refid="selectVo"/> where id = #{id}
+    </select>
+
+    <select id="selectLimsTestTemplateItemList" parameterType="com.wei.lims.test.domain.LimsTestTemplateItem" resultMap="LimsTestTemplateItemResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="templateId != null"> and template_id = #{templateId}</if>
+            <if test="testItemName != null and testItemName != ''"> and test_item_name like concat('%', #{testItemName}, '%')</if>
+        </where>
+        order by sort_order
+    </select>
+
+    <insert id="insertLimsTestTemplateItem" parameterType="com.wei.lims.test.domain.LimsTestTemplateItem" useGeneratedKeys="true" keyProperty="id">
+        insert into lims_test_template_item(
+            template_id, test_item_name, test_item_code, method_id, method_name,
+            spec_line_id, test_item_type, is_required, sort_order,
+            create_by, create_time, remark
+        )values(
+            #{templateId}, #{testItemName}, #{testItemCode}, #{methodId}, #{methodName},
+            #{specLineId}, #{testItemType}, #{isRequired}, #{sortOrder},
+            #{createBy}, sysdate(), #{remark}
+        )
+    </insert>
+
+    <update id="updateLimsTestTemplateItem" parameterType="com.wei.lims.test.domain.LimsTestTemplateItem">
+        update lims_test_template_item
+        <set>
+            <if test="testItemName != null">test_item_name = #{testItemName},</if>
+            <if test="methodName != null">method_name = #{methodName},</if>
+            <if test="isRequired != null">is_required = #{isRequired},</if>
+            <if test="sortOrder != null">sort_order = #{sortOrder},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteLimsTestTemplateItemByIds" parameterType="Long">
+        delete from lims_test_template_item where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+
+    <delete id="deleteByTemplateId" parameterType="Long">
+        delete from lims_test_template_item where template_id = #{templateId}
+    </delete>
+</mapper>

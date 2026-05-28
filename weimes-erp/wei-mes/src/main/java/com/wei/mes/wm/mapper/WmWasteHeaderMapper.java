@@ -1,0 +1,48 @@
+package com.wei.mes.wm.mapper;
+
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.wei.mes.wm.domain.tx.WmWasteTxBean;
+import com.wei.mes.wm.dto.WasteHeaderAndLineDTO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+import com.wei.mes.wm.domain.WmWasteHeader;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
+/**
+ * 生产废料单头Mapper接口
+ *
+ * @author wei
+ * @date 2024-05-11
+ */
+@Mapper
+public interface WmWasteHeaderMapper extends BaseMapper<WmWasteHeader> {
+    /**
+     * 批量删除生产废料单头
+     *
+     * @param wasteIds 需要删除的生产废料单头主键集合
+     * @return 结果
+     */
+    int delWmWasteHeaderIds(@Param("wasteIds")List<Long> wasteIds);
+
+    /**
+     *  关联查询废料信息所对应的库存记录
+     * @param wasteId 废料id
+     * @return
+     */
+    List<WmWasteTxBean> getTxBeans(Long wasteId);
+
+
+    /**
+     * 查询退料详情
+     */
+    List<WasteHeaderAndLineDTO> getWasteIssueDetail(@Param(Constants.WRAPPER) Wrapper<WasteHeaderAndLineDTO> query);
+
+    /**
+     * 查询退料列表
+     */
+    List<WasteHeaderAndLineDTO> getWasteIssueDetailList(@Param(Constants.WRAPPER) Wrapper<WasteHeaderAndLineDTO> query);
+}

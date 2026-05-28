@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.stability.mapper.LimsStabilityTestMapper">
+
+    <resultMap type="com.wei.lims.stability.domain.LimsStabilityTest" id="LimsStabilityTestResult">
+        <result property="stabilityTestId" column="stability_test_id"/>
+        <result property="protocolId" column="protocol_id"/>
+        <result property="testPoint" column="test_point"/>
+        <result property="plannedDate" column="planned_date"/>
+        <result property="actualDate" column="actual_date"/>
+        <result property="testOrderId" column="test_order_id"/>
+        <result property="testResultSummary" column="test_result_summary"/>
+        <result property="isOot" column="is_oot"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <select id="selectByStabilityTestId" parameterType="Long" resultMap="LimsStabilityTestResult">
+        select * from lims_stability_test where stability_test_id = #{stabilityTestId}
+    </select>
+
+    <select id="selectByProtocolId" parameterType="Long" resultMap="LimsStabilityTestResult">
+        select * from lims_stability_test where protocol_id = #{protocolId} order by planned_date
+    </select>
+
+    <select id="selectLimsStabilityTestList" parameterType="com.wei.lims.stability.domain.LimsStabilityTest" resultMap="LimsStabilityTestResult">
+        select * from lims_stability_test
+        <where>
+            <if test="protocolId != null"> and protocol_id = #{protocolId}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="isOot != null"> and is_oot = #{isOot}</if>
+        </where>
+        order by planned_date
+    </select>
+
+    <insert id="insertLimsStabilityTest" parameterType="com.wei.lims.stability.domain.LimsStabilityTest" useGeneratedKeys="true" keyProperty="stabilityTestId">
+        insert into lims_stability_test(
+            protocol_id, test_point, planned_date, actual_date,
+            test_order_id, test_result_summary, is_oot, status
+        )values(
+            #{protocolId}, #{testPoint}, #{plannedDate}, #{actualDate},
+            #{testOrderId}, #{testResultSummary}, #{isOot}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsStabilityTest" parameterType="com.wei.lims.stability.domain.LimsStabilityTest">
+        update lims_stability_test
+        <set>
+            <if test="actualDate != null">actual_date = #{actualDate},</if>
+            <if test="testOrderId != null">test_order_id = #{testOrderId},</if>
+            <if test="testResultSummary != null">test_result_summary = #{testResultSummary},</if>
+            <if test="isOot != null">is_oot = #{isOot},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where stability_test_id = #{stabilityTestId}
+    </update>
+
+    <delete id="deleteLimsStabilityTestByStabilityTestIds" parameterType="Long">
+        delete from lims_stability_test where stability_test_id in
+        <foreach item="stabilityTestId" collection="array" open="(" separator="," close=")">#{stabilityTestId}</foreach>
+    </delete>
+</mapper>

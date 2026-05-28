@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.instrument.mapper.LimsInstrumentCalibrationMapper">
+
+    <resultMap type="com.wei.lims.instrument.domain.LimsInstrumentCalibration" id="LimsInstrumentCalibrationResult">
+        <result property="calibrationId" column="calibration_id"/>
+        <result property="instrumentId" column="instrument_id"/>
+        <result property="calibrationCode" column="calibration_code"/>
+        <result property="calibrationType" column="calibration_type"/>
+        <result property="calibrationOrg" column="calibration_org"/>
+        <result property="calibrationDate" column="calibration_date"/>
+        <result property="nextCalibration" column="next_calibration"/>
+        <result property="calibrationResult" column="calibration_result"/>
+        <result property="certificateNo" column="certificate_no"/>
+        <result property="certificateFile" column="certificate_file"/>
+        <result property="calibratedBy" column="calibrated_by"/>
+        <result property="approvedBy" column="approved_by"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select calibration_id, instrument_id, calibration_code, calibration_type,
+               calibration_org, calibration_date, next_calibration, calibration_result,
+               certificate_no, certificate_file, calibrated_by, approved_by, status
+        from lims_instrument_calibration
+    </sql>
+
+    <select id="selectByCalibrationId" parameterType="Long" resultMap="LimsInstrumentCalibrationResult">
+        <include refid="selectVo"/> where calibration_id = #{calibrationId}
+    </select>
+
+    <select id="selectByInstrumentId" parameterType="Long" resultMap="LimsInstrumentCalibrationResult">
+        <include refid="selectVo"/> where instrument_id = #{instrumentId} order by calibration_date desc
+    </select>
+
+    <select id="selectLimsInstrumentCalibrationList" parameterType="com.wei.lims.instrument.domain.LimsInstrumentCalibration" resultMap="LimsInstrumentCalibrationResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="instrumentId != null"> and instrument_id = #{instrumentId}</if>
+            <if test="calibrationType != null and calibrationType != ''"> and calibration_type = #{calibrationType}</if>
+            <if test="calibrationResult != null and calibrationResult != ''"> and calibration_result = #{calibrationResult}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by calibration_date desc
+    </select>
+
+    <insert id="insertLimsInstrumentCalibration" parameterType="com.wei.lims.instrument.domain.LimsInstrumentCalibration" useGeneratedKeys="true" keyProperty="calibrationId">
+        insert into lims_instrument_calibration(
+            instrument_id, calibration_code, calibration_type, calibration_org,
+            calibration_date, next_calibration, calibration_result,
+            certificate_no, certificate_file, calibrated_by, approved_by, status
+        )values(
+            #{instrumentId}, #{calibrationCode}, #{calibrationType}, #{calibrationOrg},
+            #{calibrationDate}, #{nextCalibration}, #{calibrationResult},
+            #{certificateNo}, #{certificateFile}, #{calibratedBy}, #{approvedBy}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsInstrumentCalibration" parameterType="com.wei.lims.instrument.domain.LimsInstrumentCalibration">
+        update lims_instrument_calibration
+        <set>
+            <if test="calibrationDate != null">calibration_date = #{calibrationDate},</if>
+            <if test="nextCalibration != null">next_calibration = #{nextCalibration},</if>
+            <if test="calibrationResult != null">calibration_result = #{calibrationResult},</if>
+            <if test="approvedBy != null">approved_by = #{approvedBy},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where calibration_id = #{calibrationId}
+    </update>
+
+    <delete id="deleteLimsInstrumentCalibrationByIds" parameterType="Long">
+        delete from lims_instrument_calibration where calibration_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/.m2repo/cn/hutool/hutool-all/5.8.36/hutool-all-5.8.36.pom" />
+        <option value="$PROJECT_DIR$/.m2repo/cn/hutool/hutool-core/5.8.25/hutool-core-5.8.25.pom" />
+        <option value="$PROJECT_DIR$/.m2repo/cn/hutool/hutool-parent/5.8.25/hutool-parent-5.8.25.pom" />
+        <option value="$PROJECT_DIR$/.m2repo/cn/hutool/hutool-parent/5.8.36/hutool-parent-5.8.36.pom" />
+        <option value="$PROJECT_DIR$/.m2repo/eu/bitwalker/UserAgentUtils/1.21/UserAgentUtils-1.21.pom" />
+        <option value="$PROJECT_DIR$/.m2repo/io/minio/minio/8.0.3/minio-8.0.3.pom" />
+        <option value="$PROJECT_DIR$/.m2repo/io/minio/minio/8.5.14/minio-8.5.14.pom" />
+        <option value="$PROJECT_DIR$/.m2repo/io/netty/netty-all/4.1.65.Final/netty-all-4.1.65.Final.pom" />
+        <option value="$PROJECT_DIR$/.m2repo/io/netty/netty-all/4.1.122.Final/netty-all-4.1.122.Final.pom" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

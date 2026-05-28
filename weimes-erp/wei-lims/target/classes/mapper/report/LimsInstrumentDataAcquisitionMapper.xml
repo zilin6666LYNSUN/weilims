@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.report.mapper.LimsInstrumentDataAcquisitionMapper">
+
+    <resultMap type="com.wei.lims.report.domain.LimsInstrumentDataAcquisition" id="LimsInstrumentDataAcquisitionResult">
+        <result property="acquisitionId" column="acquisition_id"/>
+        <result property="instrumentId" column="instrument_id"/>
+        <result property="instrumentCode" column="instrument_code"/>
+        <result property="interfaceType" column="interface_type"/>
+        <result property="connectionConfig" column="connection_config"/>
+        <result property="dataProtocol" column="data_protocol"/>
+        <result property="parsingRules" column="parsing_rules"/>
+        <result property="fieldMappings" column="field_mappings"/>
+        <result property="autoImport" column="auto_import"/>
+        <result property="pollInterval" column="poll_interval"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="selectAcquisitionById" parameterType="Long" resultMap="LimsInstrumentDataAcquisitionResult">
+        select * from lims_instrument_data_acquisition where acquisition_id = #{acquisitionId}
+    </select>
+
+    <select id="selectAcquisitionByInstrumentId" parameterType="Long" resultMap="LimsInstrumentDataAcquisitionResult">
+        select * from lims_instrument_data_acquisition where instrument_id = #{instrumentId} and status = 'ACTIVE'
+    </select>
+
+    <select id="selectAcquisitionList" parameterType="com.wei.lims.report.domain.LimsInstrumentDataAcquisition" resultMap="LimsInstrumentDataAcquisitionResult">
+        select * from lims_instrument_data_acquisition
+        <where>
+            <if test="instrumentId != null"> and instrument_id = #{instrumentId}</if>
+            <if test="instrumentCode != null and instrumentCode != ''"> and instrument_code like concat('%', #{instrumentCode}, '%')</if>
+            <if test="interfaceType != null and interfaceType != ''"> and interface_type = #{interfaceType}</if>
+            <if test="autoImport != null"> and auto_import = #{autoImport}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <insert id="insertAcquisition" parameterType="com.wei.lims.report.domain.LimsInstrumentDataAcquisition" useGeneratedKeys="true" keyProperty="acquisitionId">
+        insert into lims_instrument_data_acquisition(
+            instrument_id, instrument_code, interface_type, connection_config,
+            data_protocol, parsing_rules, field_mappings,
+            auto_import, poll_interval, status, remark, create_by, create_time
+        )values(
+            #{instrumentId}, #{instrumentCode}, #{interfaceType}, #{connectionConfig},
+            #{dataProtocol}, #{parsingRules}, #{fieldMappings},
+            #{autoImport}, #{pollInterval}, #{status}, #{remark}, #{createBy}, sysdate()
+        )
+    </insert>
+
+    <update id="updateAcquisition" parameterType="com.wei.lims.report.domain.LimsInstrumentDataAcquisition">
+        update lims_instrument_data_acquisition
+        <set>
+            <if test="instrumentCode != null">instrument_code = #{instrumentCode},</if>
+            <if test="interfaceType != null">interface_type = #{interfaceType},</if>
+            <if test="connectionConfig != null">connection_config = #{connectionConfig},</if>
+            <if test="dataProtocol != null">data_protocol = #{dataProtocol},</if>
+            <if test="parsingRules != null">parsing_rules = #{parsingRules},</if>
+            <if test="fieldMappings != null">field_mappings = #{fieldMappings},</if>
+            <if test="autoImport != null">auto_import = #{autoImport},</if>
+            <if test="pollInterval != null">poll_interval = #{pollInterval},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_by = #{updateBy}, update_time = sysdate()
+        </set>
+        where acquisition_id = #{acquisitionId}
+    </update>
+
+    <delete id="deleteAcquisitionByIds" parameterType="Long">
+        delete from lims_instrument_data_acquisition where acquisition_id in
+        <foreach item="acquisitionId" collection="array" open="(" separator="," close=")">#{acquisitionId}</foreach>
+    </delete>
+</mapper>

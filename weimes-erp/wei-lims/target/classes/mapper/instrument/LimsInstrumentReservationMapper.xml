@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.instrument.mapper.LimsInstrumentReservationMapper">
+
+    <resultMap type="com.wei.lims.instrument.domain.LimsInstrumentReservation" id="LimsInstrumentReservationResult">
+        <result property="reservationId" column="reservation_id"/>
+        <result property="instrumentId" column="instrument_id"/>
+        <result property="testOrderId" column="test_order_id"/>
+        <result property="testerId" column="tester_id"/>
+        <result property="reservedDate" column="reserved_date"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="purpose" column="purpose"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select reservation_id, instrument_id, test_order_id, tester_id, reserved_date,
+               start_time, end_time, purpose, status
+        from lims_instrument_reservation
+    </sql>
+
+    <select id="selectByReservationId" parameterType="Long" resultMap="LimsInstrumentReservationResult">
+        <include refid="selectVo"/> where reservation_id = #{reservationId}
+    </select>
+
+    <select id="selectByInstrumentId" parameterType="Long" resultMap="LimsInstrumentReservationResult">
+        <include refid="selectVo"/> where instrument_id = #{instrumentId} order by reserved_date desc
+    </select>
+
+    <select id="selectLimsInstrumentReservationList" parameterType="com.wei.lims.instrument.domain.LimsInstrumentReservation" resultMap="LimsInstrumentReservationResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="instrumentId != null"> and instrument_id = #{instrumentId}</if>
+            <if test="testerId != null"> and tester_id = #{testerId}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by reserved_date desc
+    </select>
+
+    <insert id="insertLimsInstrumentReservation" parameterType="com.wei.lims.instrument.domain.LimsInstrumentReservation" useGeneratedKeys="true" keyProperty="reservationId">
+        insert into lims_instrument_reservation(
+            instrument_id, test_order_id, tester_id, reserved_date,
+            start_time, end_time, purpose, status
+        )values(
+            #{instrumentId}, #{testOrderId}, #{testerId}, #{reservedDate},
+            #{startTime}, #{endTime}, #{purpose}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsInstrumentReservation" parameterType="com.wei.lims.instrument.domain.LimsInstrumentReservation">
+        update lims_instrument_reservation
+        <set>
+            <if test="reservedDate != null">reserved_date = #{reservedDate},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="purpose != null">purpose = #{purpose},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where reservation_id = #{reservationId}
+    </update>
+
+    <delete id="deleteLimsInstrumentReservationByIds" parameterType="Long">
+        delete from lims_instrument_reservation where reservation_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

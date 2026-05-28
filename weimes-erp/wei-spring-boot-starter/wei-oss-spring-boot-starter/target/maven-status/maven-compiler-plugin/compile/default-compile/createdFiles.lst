@@ -1,0 +1,13 @@
+com\wei\handler\impl\MinIOHandler.class
+com\wei\handler\IOSSHandler.class
+com\wei\config\AliYunConfig.class
+com\wei\config\OssProperties.class
+META-INF\spring-configuration-metadata.json
+com\wei\handler\impl\HuaWeiObsHandler.class
+com\wei\exception\weiOssException.class
+com\wei\config\MinIOConfig.class
+com\wei\utils\CommonUtils.class
+com\wei\processor\OssProcessor.class
+com\wei\handler\impl\AliYunHandler.class
+com\wei\enums\OssTypeEnum.class
+com\wei\config\HuaWeiObsConfig.class

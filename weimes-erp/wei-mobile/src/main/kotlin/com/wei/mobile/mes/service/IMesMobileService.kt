@@ -1,0 +1,17 @@
+package com.wei.mobile.mes.service
+
+import com.wei.mes.common.dto.SelectInfoDTO
+
+
+/**
+ * 手机端共通service
+ * @author wei
+ * @date 2024/8/23 17:15
+ */
+interface IMesMobileService {
+
+    /**
+     * 获取所有仓库信息，包括库区库位
+     */
+    suspend fun getWarehouseInfo(): HashMap<String, MutableList<SelectInfoDTO>>
+}

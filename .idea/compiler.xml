@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="UserAgentUtils" />
+        <module name="hutool-core" />
+        <module name="hutool-all" />
+        <module name="netty-all" />
+        <module name="netty-all (1)" />
+        <module name="minio" />
+        <module name="minio (1)" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="hutool-all" options="-Xlint:unchecked" />
+      <module name="hutool-core" options="-Xlint:unchecked" />
+      <module name="hutool-parent" options="-Xlint:unchecked" />
+      <module name="hutool-parent (1)" options="-Xlint:unchecked" />
+      <module name="netty-all" options="-Xlint:-options" />
+    </option>
+  </component>
+</project>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.report.mapper.LimsDataValidationLogMapper">
+
+    <resultMap type="com.wei.lims.report.domain.LimsDataValidationLog" id="LimsDataValidationLogResult">
+        <result property="logId" column="log_id"/>
+        <result property="testOrderId" column="test_order_id"/>
+        <result property="resultId" column="result_id"/>
+        <result property="ruleId" column="rule_id"/>
+        <result property="ruleCode" column="rule_code"/>
+        <result property="validationStatus" column="validation_status"/>
+        <result property="actualValue" column="actual_value"/>
+        <result property="expectedValue" column="expected_value"/>
+        <result property="errorMessage" column="error_message"/>
+        <result property="validatedBy" column="validated_by"/>
+        <result property="validatedAt" column="validated_at"/>
+    </resultMap>
+
+    <select id="selectLogById" parameterType="Long" resultMap="LimsDataValidationLogResult">
+        select * from lims_data_validation_log where log_id = #{logId}
+    </select>
+
+    <select id="selectLogsByTestOrderId" parameterType="Long" resultMap="LimsDataValidationLogResult">
+        select * from lims_data_validation_log where test_order_id = #{testOrderId} order by validated_at desc
+    </select>
+
+    <select id="selectLogList" parameterType="com.wei.lims.report.domain.LimsDataValidationLog" resultMap="LimsDataValidationLogResult">
+        select * from lims_data_validation_log
+        <where>
+            <if test="testOrderId != null"> and test_order_id = #{testOrderId}</if>
+            <if test="resultId != null"> and result_id = #{resultId}</if>
+            <if test="validationStatus != null and validationStatus != ''"> and validation_status = #{validationStatus}</if>
+            <if test="ruleCode != null and ruleCode != ''"> and rule_code = #{ruleCode}</if>
+        </where>
+        order by validated_at desc
+    </select>
+
+    <insert id="insertLog" parameterType="com.wei.lims.report.domain.LimsDataValidationLog" useGeneratedKeys="true" keyProperty="logId">
+        insert into lims_data_validation_log(
+            test_order_id, result_id, rule_id, rule_code,
+            validation_status, actual_value, expected_value, error_message,
+            validated_by, validated_at
+        )values(
+            #{testOrderId}, #{resultId}, #{ruleId}, #{ruleCode},
+            #{validationStatus}, #{actualValue}, #{expectedValue}, #{errorMessage},
+            #{validatedBy}, sysdate()
+        )
+    </insert>
+
+    <delete id="deleteLogsByTestOrderId" parameterType="Long">
+        delete from lims_data_validation_log where test_order_id = #{testOrderId}
+    </delete>
+</mapper>

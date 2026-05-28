@@ -1,0 +1,28 @@
+package com.wei.mes.pro.service;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.wei.mes.pro.domain.ProClientOrderItem;
+import com.wei.mes.pro.dto.ClientOrderItemPageDTO;
+
+import java.util.List;
+
+/**
+ * 客户订单材料
+ * Service接口
+ *
+ * @author wei
+ * @date 2024-05-07
+ */
+public interface IProClientOrderItemService extends IService<ProClientOrderItem> {
+
+    /**
+     * 获取级别
+     */
+    Integer getClientOrderItemLevel(Long clientOrderId);
+
+    /**
+     * 获取分页数据
+     */
+    Page<ClientOrderItemPageDTO> getClientOrderItemPage(Page<ClientOrderItemPageDTO> page, Long clientOrderId, List<String> whCodes);
+}

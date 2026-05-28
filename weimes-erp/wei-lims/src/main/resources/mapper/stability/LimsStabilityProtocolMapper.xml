@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.stability.mapper.LimsStabilityProtocolMapper">
+
+    <resultMap type="com.wei.lims.stability.domain.LimsStabilityProtocol" id="LimsStabilityProtocolResult">
+        <result property="protocolId" column="protocol_id"/>
+        <result property="protocolCode" column="protocol_code"/>
+        <result property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="batchNo" column="batch_no"/>
+        <result property="studyType" column="study_type"/>
+        <result property="storageCondition" column="storage_condition"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="testPoints" column="test_points"/>
+        <result property="specificationId" column="specification_id"/>
+        <result property="testTemplateId" column="test_template_id"/>
+        <result property="status" column="status"/>
+        <result property="procInstId" column="proc_inst_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select protocol_id, protocol_code, product_id, product_name, batch_no,
+               study_type, storage_condition, start_date, end_date, test_points,
+               specification_id, test_template_id, status, proc_inst_id,
+               create_by, create_time
+        from lims_stability_protocol
+    </sql>
+
+    <select id="selectByProtocolId" parameterType="Long" resultMap="LimsStabilityProtocolResult">
+        <include refid="selectVo"/> where protocol_id = #{protocolId}
+    </select>
+
+    <select id="selectLimsStabilityProtocolList" parameterType="com.wei.lims.stability.domain.LimsStabilityProtocol" resultMap="LimsStabilityProtocolResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="protocolCode != null and protocolCode != ''"> and protocol_code like concat('%', #{protocolCode}, '%')</if>
+            <if test="productName != null and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="batchNo != null and batchNo != ''"> and batch_no like concat('%', #{batchNo}, '%')</if>
+            <if test="studyType != null and studyType != ''"> and study_type = #{studyType}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <insert id="insertLimsStabilityProtocol" parameterType="com.wei.lims.stability.domain.LimsStabilityProtocol" useGeneratedKeys="true" keyProperty="protocolId">
+        insert into lims_stability_protocol(
+            protocol_code, product_id, product_name, batch_no,
+            study_type, storage_condition, start_date, end_date, test_points,
+            specification_id, test_template_id, status, proc_inst_id,
+            create_by, create_time
+        )values(
+            #{protocolCode}, #{productId}, #{productName}, #{batchNo},
+            #{studyType}, #{storageCondition}, #{startDate}, #{endDate}, #{testPoints},
+            #{specificationId}, #{testTemplateId}, #{status}, #{procInstId},
+            #{createBy}, sysdate()
+        )
+    </insert>
+
+    <update id="updateLimsStabilityProtocol" parameterType="com.wei.lims.stability.domain.LimsStabilityProtocol">
+        update lims_stability_protocol
+        <set>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="batchNo != null">batch_no = #{batchNo},</if>
+            <if test="studyType != null">study_type = #{studyType},</if>
+            <if test="storageCondition != null">storage_condition = #{storageCondition},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="testPoints != null">test_points = #{testPoints},</if>
+            <if test="specificationId != null">specification_id = #{specificationId},</if>
+            <if test="testTemplateId != null">test_template_id = #{testTemplateId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="procInstId != null">proc_inst_id = #{procInstId},</if>
+        </set>
+        where protocol_id = #{protocolId}
+    </update>
+
+    <delete id="deleteLimsStabilityProtocolByProtocolIds" parameterType="Long">
+        delete from lims_stability_protocol where protocol_id in
+        <foreach item="protocolId" collection="array" open="(" separator="," close=")">#{protocolId}</foreach>
+    </delete>
+</mapper>

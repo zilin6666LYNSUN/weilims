@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.reagent.mapper.LimsReagentMapper">
+
+    <resultMap type="com.wei.lims.reagent.domain.LimsReagent" id="LimsReagentResult">
+        <result property="reagentId" column="reagent_id"/>
+        <result property="reagentCode" column="reagent_code"/>
+        <result property="reagentName" column="reagent_name"/>
+        <result property="reagentType" column="reagent_type"/>
+        <result property="casNumber" column="cas_number"/>
+        <result property="manufacturer" column="manufacturer"/>
+        <result property="hazardLevel" column="hazard_level"/>
+        <result property="storageCondition" column="storage_condition"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select reagent_id, reagent_code, reagent_name, reagent_type, cas_number,
+               manufacturer, hazard_level, storage_condition, status
+        from lims_reagent
+    </sql>
+
+    <select id="selectByReagentId" parameterType="Long" resultMap="LimsReagentResult">
+        <include refid="selectVo"/> where reagent_id = #{reagentId}
+    </select>
+
+    <select id="selectByReagentCode" parameterType="String" resultMap="LimsReagentResult">
+        <include refid="selectVo"/> where reagent_code = #{reagentCode}
+    </select>
+
+    <select id="selectLimsReagentList" parameterType="com.wei.lims.reagent.domain.LimsReagent" resultMap="LimsReagentResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="reagentCode != null and reagentCode != ''"> and reagent_code like concat('%', #{reagentCode}, '%')</if>
+            <if test="reagentName != null and reagentName != ''"> and reagent_name like concat('%', #{reagentName}, '%')</if>
+            <if test="reagentType != null and reagentType != ''"> and reagent_type = #{reagentType}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by reagent_id desc
+    </select>
+
+    <insert id="insertLimsReagent" parameterType="com.wei.lims.reagent.domain.LimsReagent" useGeneratedKeys="true" keyProperty="reagentId">
+        insert into lims_reagent(
+            reagent_code, reagent_name, reagent_type, cas_number,
+            manufacturer, hazard_level, storage_condition, status
+        )values(
+            #{reagentCode}, #{reagentName}, #{reagentType}, #{casNumber},
+            #{manufacturer}, #{hazardLevel}, #{storageCondition}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsReagent" parameterType="com.wei.lims.reagent.domain.LimsReagent">
+        update lims_reagent
+        <set>
+            <if test="reagentName != null">reagent_name = #{reagentName},</if>
+            <if test="reagentType != null">reagent_type = #{reagentType},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where reagent_id = #{reagentId}
+    </update>
+
+    <delete id="deleteLimsReagentByIds" parameterType="Long">
+        delete from lims_reagent where reagent_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.oos.mapper.LimsOosInvestigationMapper">
+
+    <resultMap type="com.wei.lims.oos.domain.LimsOosInvestigation" id="LimsOosInvestigationResult">
+        <result property="investigationId" column="investigation_id"/>
+        <result property="investigationNo" column="investigation_no"/>
+        <result property="testResultId" column="test_result_id"/>
+        <result property="testOrderId" column="test_order_id"/>
+        <result property="type" column="type"/>
+        <result property="phase" column="phase"/>
+        <result property="oosValue" column="oos_value"/>
+        <result property="specificationLimit" column="specification_limit"/>
+        <result property="labInvestigation" column="lab_investigation"/>
+        <result property="isLabCause" column="is_lab_cause"/>
+        <result property="labErrorType" column="lab_error_type"/>
+        <result property="fullInvestigation" column="full_investigation"/>
+        <result property="rootCause" column="root_cause"/>
+        <result property="capaIds" column="capa_ids"/>
+        <result property="correctiveAction" column="corrective_action"/>
+        <result property="originalResultValid" column="original_result_valid"/>
+        <result property="retestResult" column="retest_result"/>
+        <result property="conclusion" column="conclusion"/>
+        <result property="investigatorId" column="investigator_id"/>
+        <result property="approverId" column="approver_id"/>
+        <result property="closeDate" column="close_date"/>
+        <result property="status" column="status"/>
+        <result property="procInstId" column="proc_inst_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select investigation_id, investigation_no, test_result_id, test_order_id, type, phase,
+               oos_value, specification_limit, lab_investigation, is_lab_cause, lab_error_type,
+               full_investigation, root_cause, capa_ids, corrective_action,
+               original_result_valid, retest_result, conclusion,
+               investigator_id, approver_id, close_date, status, proc_inst_id, create_by, create_time
+        from lims_oos_investigation
+    </sql>
+
+    <select id="selectByInvestigationId" parameterType="Long" resultMap="LimsOosInvestigationResult">
+        <include refid="selectVo"/> where investigation_id = #{investigationId}
+    </select>
+
+    <select id="selectLimsOosInvestigationList" parameterType="com.wei.lims.oos.domain.LimsOosInvestigation" resultMap="LimsOosInvestigationResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="investigationNo != null and investigationNo != ''"> and investigation_no like concat('%', #{investigationNo}, '%')</if>
+            <if test="type != null and type != ''"> and type = #{type}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <insert id="insertLimsOosInvestigation" parameterType="com.wei.lims.oos.domain.LimsOosInvestigation" useGeneratedKeys="true" keyProperty="investigationId">
+        insert into lims_oos_investigation(
+            investigation_no, test_result_id, test_order_id, type, phase,
+            oos_value, specification_limit, lab_investigation, is_lab_cause, lab_error_type,
+            full_investigation, root_cause, capa_ids, corrective_action,
+            original_result_valid, retest_result, conclusion,
+            investigator_id, approver_id, status, proc_inst_id, create_by, create_time
+        )values(
+            #{investigationNo}, #{testResultId}, #{testOrderId}, #{type}, #{phase},
+            #{oosValue}, #{specificationLimit}, #{labInvestigation}, #{isLabCause}, #{labErrorType},
+            #{fullInvestigation}, #{rootCause}, #{capaIds}, #{correctiveAction},
+            #{originalResultValid}, #{retestResult}, #{conclusion},
+            #{investigatorId}, #{approverId}, #{status}, #{procInstId}, #{createBy}, sysdate()
+        )
+    </insert>
+
+    <update id="updateLimsOosInvestigation" parameterType="com.wei.lims.oos.domain.LimsOosInvestigation">
+        update lims_oos_investigation
+        <set>
+            <if test="phase != null">phase = #{phase},</if>
+            <if test="labInvestigation != null">lab_investigation = #{labInvestigation},</if>
+            <if test="isLabCause != null">is_lab_cause = #{isLabCause},</if>
+            <if test="fullInvestigation != null">full_investigation = #{fullInvestigation},</if>
+            <if test="rootCause != null">root_cause = #{rootCause},</if>
+            <if test="correctiveAction != null">corrective_action = #{correctiveAction},</if>
+            <if test="conclusion != null">conclusion = #{conclusion},</if>
+            <if test="approverId != null">approver_id = #{approverId},</if>
+            <if test="closeDate != null">close_date = #{closeDate},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where investigation_id = #{investigationId}
+    </update>
+
+    <delete id="deleteLimsOosInvestigationByIds" parameterType="Long">
+        delete from lims_oos_investigation where investigation_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

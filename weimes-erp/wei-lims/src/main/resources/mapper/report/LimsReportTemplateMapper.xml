@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.report.mapper.LimsReportTemplateMapper">
+
+    <resultMap type="com.wei.lims.report.domain.LimsReportTemplate" id="LimsReportTemplateResult">
+        <result property="templateId" column="template_id"/>
+        <result property="templateCode" column="template_code"/>
+        <result property="templateName" column="template_name"/>
+        <result property="templateType" column="template_type"/>
+        <result property="templateCategory" column="template_category"/>
+        <result property="description" column="description"/>
+        <result property="versionNumber" column="version_number"/>
+        <result property="paperSize" column="paper_size"/>
+        <result property="orientation" column="orientation"/>
+        <result property="marginTop" column="margin_top"/>
+        <result property="marginBottom" column="margin_bottom"/>
+        <result property="marginLeft" column="margin_left"/>
+        <result property="marginRight" column="margin_right"/>
+        <result property="headerContent" column="header_content"/>
+        <result property="footerContent" column="footer_content"/>
+        <result property="watermark" column="watermark"/>
+        <result property="isDefault" column="is_default"/>
+        <result property="effectiveDate" column="effective_date"/>
+        <result property="expiryDate" column="expiry_date"/>
+        <result property="status" column="status"/>
+        <result property="procInstId" column="proc_inst_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select template_id, template_code, template_name, template_type, template_category,
+               description, version_number, paper_size, orientation,
+               margin_top, margin_bottom, margin_left, margin_right,
+               header_content, footer_content, watermark, is_default,
+               effective_date, expiry_date, status, proc_inst_id,
+               create_by, create_time, update_by, update_time, remark
+        from lims_report_template
+    </sql>
+
+    <select id="selectTemplateList" parameterType="com.wei.lims.report.domain.LimsReportTemplate" resultMap="LimsReportTemplateResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="templateCode != null and templateCode != ''"> and template_code like concat('%', #{templateCode}, '%')</if>
+            <if test="templateName != null and templateName != ''"> and template_name like concat('%', #{templateName}, '%')</if>
+            <if test="templateType != null and templateType != ''"> and template_type = #{templateType}</if>
+            <if test="templateCategory != null and templateCategory != ''"> and template_category = #{templateCategory}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectTemplateByTemplateId" parameterType="Long" resultMap="LimsReportTemplateResult">
+        <include refid="selectVo"/> where template_id = #{templateId}
+    </select>
+
+    <select id="selectTemplateByTemplateCode" parameterType="String" resultMap="LimsReportTemplateResult">
+        <include refid="selectVo"/> where template_code = #{templateCode}
+    </select>
+
+    <insert id="insertTemplate" parameterType="com.wei.lims.report.domain.LimsReportTemplate" useGeneratedKeys="true" keyProperty="templateId">
+        insert into lims_report_template(
+            template_code, template_name, template_type, template_category,
+            description, version_number, paper_size, orientation,
+            margin_top, margin_bottom, margin_left, margin_right,
+            header_content, footer_content, watermark, is_default,
+            effective_date, expiry_date, status, proc_inst_id,
+            create_by, create_time, remark
+        )values(
+            #{templateCode}, #{templateName}, #{templateType}, #{templateCategory},
+            #{description}, #{versionNumber}, #{paperSize}, #{orientation},
+            #{marginTop}, #{marginBottom}, #{marginLeft}, #{marginRight},
+            #{headerContent}, #{footerContent}, #{watermark}, #{isDefault},
+            #{effectiveDate}, #{expiryDate}, #{status}, #{procInstId},
+            #{createBy}, sysdate(), #{remark}
+        )
+    </insert>
+
+    <update id="updateTemplate" parameterType="com.wei.lims.report.domain.LimsReportTemplate">
+        update lims_report_template
+        <set>
+            <if test="templateName != null">template_name = #{templateName},</if>
+            <if test="templateType != null">template_type = #{templateType},</if>
+            <if test="templateCategory != null">template_category = #{templateCategory},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="versionNumber != null">version_number = #{versionNumber},</if>
+            <if test="paperSize != null">paper_size = #{paperSize},</if>
+            <if test="orientation != null">orientation = #{orientation},</if>
+            <if test="marginTop != null">margin_top = #{marginTop},</if>
+            <if test="marginBottom != null">margin_bottom = #{marginBottom},</if>
+            <if test="marginLeft != null">margin_left = #{marginLeft},</if>
+            <if test="marginRight != null">margin_right = #{marginRight},</if>
+            <if test="headerContent != null">header_content = #{headerContent},</if>
+            <if test="footerContent != null">footer_content = #{footerContent},</if>
+            <if test="watermark != null">watermark = #{watermark},</if>
+            <if test="isDefault != null">is_default = #{isDefault},</if>
+            <if test="effectiveDate != null">effective_date = #{effectiveDate},</if>
+            <if test="expiryDate != null">expiry_date = #{expiryDate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_by = #{updateBy}, update_time = sysdate()
+        </set>
+        where template_id = #{templateId}
+    </update>
+
+    <delete id="deleteTemplateByTemplateIds" parameterType="Long">
+        delete from lims_report_template where template_id in
+        <foreach item="templateId" collection="array" open="(" separator="," close=")">#{templateId}</foreach>
+    </delete>
+
+    <select id="checkTemplateCodeUnique" parameterType="String" resultMap="LimsReportTemplateResult">
+        <include refid="selectVo"/> where template_code = #{templateCode} limit 1
+    </select>
+</mapper>

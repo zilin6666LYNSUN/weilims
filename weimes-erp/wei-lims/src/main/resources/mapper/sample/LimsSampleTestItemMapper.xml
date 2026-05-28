@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.sample.mapper.LimsSampleTestItemMapper">
+
+    <resultMap type="com.wei.lims.sample.domain.LimsSampleTestItem" id="LimsSampleTestItemResult">
+        <result property="id" column="id"/>
+        <result property="sampleId" column="sample_id"/>
+        <result property="testItemId" column="test_item_id"/>
+        <result property="testItemCode" column="test_item_code"/>
+        <result property="testItemName" column="test_item_name"/>
+        <result property="methodId" column="method_id"/>
+        <result property="specificationLineId" column="specification_line_id"/>
+        <result property="isMandatory" column="is_mandatory"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select id, sample_id, test_item_id, test_item_code, test_item_name,
+               method_id, specification_line_id, is_mandatory, status
+        from lims_sample_test_item
+    </sql>
+
+    <select id="selectBySampleId" parameterType="Long" resultMap="LimsSampleTestItemResult">
+        <include refid="selectVo"/>
+        where sample_id = #{sampleId} order by id
+    </select>
+
+    <select id="selectById" parameterType="Long" resultMap="LimsSampleTestItemResult">
+        <include refid="selectVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectLimsSampleTestItemList" parameterType="com.wei.lims.sample.domain.LimsSampleTestItem" resultMap="LimsSampleTestItemResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="sampleId != null"> and sample_id = #{sampleId}</if>
+            <if test="testItemName != null and testItemName != ''"> and test_item_name like concat('%', #{testItemName}, '%')</if>
+            <if test="isMandatory != null"> and is_mandatory = #{isMandatory}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by id
+    </select>
+
+    <insert id="insertLimsSampleTestItem" parameterType="com.wei.lims.sample.domain.LimsSampleTestItem" useGeneratedKeys="true" keyProperty="id">
+        insert into lims_sample_test_item(
+            sample_id, test_item_id, test_item_code, test_item_name,
+            method_id, specification_line_id, is_mandatory, status
+        )values(
+            #{sampleId}, #{testItemId}, #{testItemCode}, #{testItemName},
+            #{methodId}, #{specificationLineId}, #{isMandatory}, #{status}
+        )
+    </insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into lims_sample_test_item(
+            sample_id, test_item_id, test_item_code, test_item_name,
+            method_id, specification_line_id, is_mandatory, status
+        )values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.sampleId}, #{item.testItemId}, #{item.testItemCode}, #{item.testItemName},
+             #{item.methodId}, #{item.specificationLineId}, #{item.isMandatory}, #{item.status})
+        </foreach>
+    </insert>
+
+    <update id="updateLimsSampleTestItem" parameterType="com.wei.lims.sample.domain.LimsSampleTestItem">
+        update lims_sample_test_item
+        <set>
+            <if test="testItemName != null">test_item_name = #{testItemName},</if>
+            <if test="methodId != null">method_id = #{methodId},</if>
+            <if test="isMandatory != null">is_mandatory = #{isMandatory},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBySampleId" parameterType="Long">
+        delete from lims_sample_test_item where sample_id = #{sampleId}
+    </delete>
+
+    <delete id="deleteById" parameterType="Long">
+        delete from lims_sample_test_item where id = #{id}
+    </delete>
+</mapper>

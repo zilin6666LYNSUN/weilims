@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.hrm.sm.mapper.HrmInterviewRecordMapper">
+
+    <resultMap type="com.wei.hrm.sm.domain.HrmInterviewRecord" id="BaseResultMap">
+        <!--@Table hrm_interview_record-->
+        <result property="interviewRecordId"    column="interview_record_id"    />
+        <result property="staffId"    column="staff_id"    />
+        <result property="staffCode"    column="staff_code"    />
+        <result property="staffName"    column="staff_name"    />
+        <result property="rankId"    column="rank_id"    />
+        <result property="rankCode"    column="rank_code"    />
+        <result property="rankType"    column="rank_type"    />
+        <result property="rankName"    column="rank_name"    />
+        <result property="actualSalary"    column="actual_salary"    />
+        <result property="salaryExpectation"    column="salary_expectation"    />
+        <result property="interviewFeedback"    column="interview_feedback"    />
+        <result property="times"    column="times"    />
+        <result property="timeForInterview"    column="time_for_interview"    />
+        <result property="interviewerId"    column="interviewer_id"    />
+        <result property="interviewerName"    column="interviewer_name"    />
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateUserId"    column="update_user_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="status"    column="status"    />
+        <result property="remark"    column="remark"    />
+        <result property="deleted"    column="deleted"    />
+        <result property="deleteat"    column="deleteAt"    />
+        <result property="version"    column="version"    />
+    </resultMap>
+
+    <sql id="selectHrmInterviewRecordVo">
+        select interview_record_id, staff_id, staff_code, staff_name, rank_id, rank_code, rank_type, rank_name, actual_salary, salary_expectation, interview_feedback, times, time_for_interview, interviewer_id, interviewer_name, create_user_id, create_by, create_time, update_user_id, update_by, update_time, status, remark, deleted, deleteAt, version from hrm_interview_record
+    </sql>
+
+    <select id="pageGroupByStaff" resultType="com.wei.hrm.sm.dto.InterviewRecordDTO">
+        select hs.staff_id as parentId,
+               hs.id_card,
+               hs.staff_id,
+               hs.staff_name,
+               hs.staff_code,
+               hs.email,
+               hs.contact_phone,
+               hs.sex,
+               hs.status as currentStatus,
+               hs.actual_salary,
+               hir.interview_record_id,
+               hir.rank_id,
+               hir.rank_code,
+               hir.rank_type,
+               hir.rank_name,
+               hir.actual_salary,
+               hir.salary_expectation,
+               hir.interview_feedback,
+               hir.times,
+               hir.time_for_interview,
+               hir.interviewer_id,
+               hir.interviewer_name,
+               hir.create_user_id,
+               hir.create_by,
+               hir.create_time,
+               hir.update_user_id,
+               hir.update_by,
+               hir.update_time,
+               hir.status,
+               hir.remark,
+               hir.deleted,
+               hir.deleteAt,
+               hir.version
+        from hrm_staff hs
+                 left join hrm_interview_record hir on hs.staff_id = hir.staff_id and hir.deleted = 0
+        <where>
+            hs.deleted = 0
+            <if test="query.staffName != null and query.staffName != ''">
+                and hs.staff_name like concat('%',#{query.staffName},'%')
+            </if>
+            <if test="query.interviewerName != null and query.interviewerName != ''">
+                and hir.interviewer_name like concat('%',#{query.interviewerName},'%')
+            </if>
+            <if test="statusList != null and statusList.size() != 0">
+                and hs.status in
+                <foreach collection="statusList" item="status" open="(" separator="," close=")">
+                     #{status}
+                </foreach>
+            </if>
+        </where>
+    </select>
+</mapper>

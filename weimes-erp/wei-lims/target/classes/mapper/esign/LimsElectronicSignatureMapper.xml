@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.esign.mapper.LimsElectronicSignatureMapper">
+
+    <resultMap type="com.wei.lims.esign.domain.LimsElectronicSignature" id="LimsElectronicSignatureResult">
+        <result property="signatureId" column="signature_id"/>
+        <result property="recordType" column="record_type"/>
+        <result property="recordId" column="record_id"/>
+        <result property="signerId" column="signer_id"/>
+        <result property="signerName" column="signer_name"/>
+        <result property="signatureMeaning" column="signature_meaning"/>
+        <result property="signatureTime" column="signature_time"/>
+        <result property="reason" column="reason"/>
+        <result property="isValid" column="is_valid"/>
+        <result property="ipAddress" column="ip_address"/>
+        <result property="sessionId" column="session_id"/>
+    </resultMap>
+
+    <insert id="insertLimsElectronicSignature" parameterType="com.wei.lims.esign.domain.LimsElectronicSignature" useGeneratedKeys="true" keyProperty="signatureId">
+        insert into lims_electronic_signature(
+            record_type, record_id, signer_id, signer_name, signature_meaning,
+            signature_time, reason, is_valid, ip_address, session_id
+        )values(
+            #{recordType}, #{recordId}, #{signerId}, #{signerName}, #{signatureMeaning},
+            #{signatureTime}, #{reason}, #{isValid}, #{ipAddress}, #{sessionId}
+        )
+    </insert>
+
+    <select id="selectLimsElectronicSignatureById" parameterType="Long" resultMap="LimsElectronicSignatureResult">
+        select signature_id, record_type, record_id, signer_id, signer_name, signature_meaning,
+               signature_time, reason, is_valid, ip_address, session_id
+        from lims_electronic_signature
+        where signature_id = #{signatureId}
+    </select>
+
+    <select id="selectLimsElectronicSignatureList" parameterType="com.wei.lims.esign.domain.LimsElectronicSignature" resultMap="LimsElectronicSignatureResult">
+        select signature_id, record_type, record_id, signer_id, signer_name, signature_meaning,
+               signature_time, reason, is_valid, ip_address, session_id
+        from lims_electronic_signature
+        <where>
+            <if test="recordType != null and recordType != ''"> and record_type = #{recordType}</if>
+            <if test="recordId != null"> and record_id = #{recordId}</if>
+            <if test="signerId != null"> and signer_id = #{signerId}</if>
+            <if test="signatureMeaning != null and signatureMeaning != ''"> and signature_meaning = #{signatureMeaning}</if>
+            <if test="isValid != null"> and is_valid = #{isValid}</if>
+        </where>
+        order by signature_time desc
+    </select>
+
+    <select id="selectByRecordTypeAndId" resultMap="LimsElectronicSignatureResult">
+        select signature_id, record_type, record_id, signer_id, signer_name, signature_meaning,
+               signature_time, reason, is_valid, ip_address, session_id
+        from lims_electronic_signature
+        where record_type = #{recordType} and record_id = #{recordId}
+        order by signature_time desc
+    </select>
+
+    <update id="invalidateSignature" parameterType="Long">
+        update lims_electronic_signature set is_valid = 0 where signature_id = #{signatureId}
+    </update>
+</mapper>

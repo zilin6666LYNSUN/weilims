@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.instrument.mapper.LimsInstrumentMaintenanceMapper">
+
+    <resultMap type="com.wei.lims.instrument.domain.LimsInstrumentMaintenance" id="LimsInstrumentMaintenanceResult">
+        <result property="maintenanceId" column="maintenance_id"/>
+        <result property="instrumentId" column="instrument_id"/>
+        <result property="maintenanceType" column="maintenance_type"/>
+        <result property="maintenanceDate" column="maintenance_date"/>
+        <result property="performedBy" column="performed_by"/>
+        <result property="description" column="description"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select maintenance_id, instrument_id, maintenance_type, maintenance_date,
+               performed_by, description, status
+        from lims_instrument_maintenance
+    </sql>
+
+    <select id="selectByMaintenanceId" parameterType="Long" resultMap="LimsInstrumentMaintenanceResult">
+        <include refid="selectVo"/> where maintenance_id = #{maintenanceId}
+    </select>
+
+    <select id="selectByInstrumentId" parameterType="Long" resultMap="LimsInstrumentMaintenanceResult">
+        <include refid="selectVo"/> where instrument_id = #{instrumentId} order by maintenance_date desc
+    </select>
+
+    <select id="selectLimsInstrumentMaintenanceList" parameterType="com.wei.lims.instrument.domain.LimsInstrumentMaintenance" resultMap="LimsInstrumentMaintenanceResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="instrumentId != null"> and instrument_id = #{instrumentId}</if>
+            <if test="maintenanceType != null and maintenanceType != ''"> and maintenance_type = #{maintenanceType}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by maintenance_date desc
+    </select>
+
+    <insert id="insertLimsInstrumentMaintenance" parameterType="com.wei.lims.instrument.domain.LimsInstrumentMaintenance" useGeneratedKeys="true" keyProperty="maintenanceId">
+        insert into lims_instrument_maintenance(
+            instrument_id, maintenance_type, maintenance_date, performed_by, description, status
+        )values(
+            #{instrumentId}, #{maintenanceType}, #{maintenanceDate}, #{performedBy}, #{description}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsInstrumentMaintenance" parameterType="com.wei.lims.instrument.domain.LimsInstrumentMaintenance">
+        update lims_instrument_maintenance
+        <set>
+            <if test="maintenanceType != null">maintenance_type = #{maintenanceType},</if>
+            <if test="maintenanceDate != null">maintenance_date = #{maintenanceDate},</if>
+            <if test="performedBy != null">performed_by = #{performedBy},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where maintenance_id = #{maintenanceId}
+    </update>
+
+    <delete id="deleteLimsInstrumentMaintenanceByIds" parameterType="Long">
+        delete from lims_instrument_maintenance where maintenance_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.reagent.mapper.LimsReagentStockLogMapper">
+
+    <resultMap type="com.wei.lims.reagent.domain.LimsReagentStockLog" id="LimsReagentStockLogResult">
+        <result property="stockLogId" column="stock_log_id"/>
+        <result property="reagentId" column="reagent_id"/>
+        <result property="operationType" column="operation_type"/>
+        <result property="quantity" column="quantity"/>
+        <result property="remainQty" column="remain_qty"/>
+        <result property="relatedOrderNo" column="related_order_no"/>
+        <result property="purpose" column="purpose"/>
+        <result property="operatorId" column="operator_id"/>
+        <result property="operatorName" column="operator_name"/>
+        <result property="operationTime" column="operation_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="selectByStockLogId" parameterType="Long" resultMap="LimsReagentStockLogResult">
+        select * from lims_reagent_stock_log where stock_log_id = #{stockLogId}
+    </select>
+
+    <select id="selectByReagentId" parameterType="Long" resultMap="LimsReagentStockLogResult">
+        select * from lims_reagent_stock_log where reagent_id = #{reagentId} order by operation_time desc
+    </select>
+
+    <select id="selectLimsReagentStockLogList" parameterType="com.wei.lims.reagent.domain.LimsReagentStockLog" resultMap="LimsReagentStockLogResult">
+        select * from lims_reagent_stock_log
+        <where>
+            <if test="reagentId != null"> and reagent_id = #{reagentId}</if>
+            <if test="operationType != null and operationType != ''"> and operation_type = #{operationType}</if>
+        </where>
+        order by operation_time desc
+    </select>
+
+    <insert id="insertLimsReagentStockLog" parameterType="com.wei.lims.reagent.domain.LimsReagentStockLog" useGeneratedKeys="true" keyProperty="stockLogId">
+        insert into lims_reagent_stock_log(
+            reagent_id, operation_type, quantity, remain_qty, related_order_no, purpose,
+            operator_id, operator_name, operation_time, create_by, create_time
+        )values(
+            #{reagentId}, #{operationType}, #{quantity}, #{remainQty}, #{relatedOrderNo}, #{purpose},
+            #{operatorId}, #{operatorName}, #{operationTime}, #{createBy}, sysdate()
+        )
+    </insert>
+
+    <delete id="deleteLimsReagentStockLogByIds" parameterType="Long">
+        delete from lims_reagent_stock_log where stock_log_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

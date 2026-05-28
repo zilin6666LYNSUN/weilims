@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.test.mapper.LimsSpecificationLineMapper">
+
+    <resultMap type="com.wei.lims.test.domain.LimsSpecificationLine" id="LimsSpecificationLineResult">
+        <result property="lineId" column="line_id"/>
+        <result property="specificationId" column="spec_id"/>
+        <result property="testItemId" column="test_item_id"/>
+        <result property="testItemName" column="test_item_name"/>
+        <result property="methodId" column="method_id"/>
+        <result property="specificationValue" column="specification_val"/>
+        <result property="lowerLimit" column="lower_limit"/>
+        <result property="upperLimit" column="upper_limit"/>
+        <result property="unit" column="unit"/>
+        <result property="sequence" column="sequence"/>
+        <result property="isMandatory" column="is_mandatory"/>
+        <result property="roundingRule" column="rounding_rule"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select line_id, spec_id, test_item_id, test_item_name, method_id,
+               specification_val, lower_limit, upper_limit, unit,
+               sequence, is_mandatory, rounding_rule
+        from lims_specification_line
+    </sql>
+
+    <select id="selectBySpecificationId" parameterType="Long" resultMap="LimsSpecificationLineResult">
+        <include refid="selectVo"/> where spec_id = #{specificationId} order by sequence
+    </select>
+
+    <select id="selectByLineId" parameterType="Long" resultMap="LimsSpecificationLineResult">
+        <include refid="selectVo"/> where line_id = #{lineId}
+    </select>
+
+    <select id="selectLimsSpecificationLineList" parameterType="com.wei.lims.test.domain.LimsSpecificationLine" resultMap="LimsSpecificationLineResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="specificationId != null"> and spec_id = #{specificationId}</if>
+            <if test="testItemName != null and testItemName != ''"> and test_item_name like concat('%', #{testItemName}, '%')</if>
+        </where>
+        order by sequence
+    </select>
+
+    <insert id="insertLimsSpecificationLine" parameterType="com.wei.lims.test.domain.LimsSpecificationLine" useGeneratedKeys="true" keyProperty="lineId">
+        insert into lims_specification_line(
+            spec_id, test_item_id, test_item_name, method_id,
+            specification_val, lower_limit, upper_limit, unit,
+            sequence, is_mandatory, rounding_rule
+        )values(
+            #{specificationId}, #{testItemId}, #{testItemName}, #{methodId},
+            #{specificationValue}, #{lowerLimit}, #{upperLimit}, #{unit},
+            #{sequence}, #{isMandatory}, #{roundingRule}
+        )
+    </insert>
+
+    <update id="updateLimsSpecificationLine" parameterType="com.wei.lims.test.domain.LimsSpecificationLine">
+        update lims_specification_line
+        <set>
+            <if test="testItemName != null">test_item_name = #{testItemName},</if>
+            <if test="specificationValue != null">specification_val = #{specificationValue},</if>
+            <if test="lowerLimit != null">lower_limit = #{lowerLimit},</if>
+            <if test="upperLimit != null">upper_limit = #{upperLimit},</if>
+            <if test="unit != null">unit = #{unit},</if>
+            <if test="roundingRule != null">rounding_rule = #{roundingRule},</if>
+            <if test="isMandatory != null">is_mandatory = #{isMandatory},</if>
+            <if test="sequence != null">sequence = #{sequence},</if>
+        </set>
+        where line_id = #{lineId}
+    </update>
+
+    <delete id="deleteLimsSpecificationLineByLineIds" parameterType="Long">
+        delete from lims_specification_line where line_id in
+        <foreach item="lineId" collection="array" open="(" separator="," close=")">#{lineId}</foreach>
+    </delete>
+
+    <delete id="deleteBySpecificationId" parameterType="Long">
+        delete from lims_specification_line where spec_id = #{specificationId}
+    </delete>
+</mapper>

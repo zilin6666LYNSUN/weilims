@@ -1,0 +1,29 @@
+package com.wei.mes.pro.dto;
+
+import com.wei.mes.pro.domain.ProClientOrderItem;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * 客户订单数据扩展DTO
+ *
+ * @author wei
+ * @date 2024/5/17 16:52
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class ClientOrderItemPageDTO extends ProClientOrderItem {
+
+    /**
+     * 库存量
+     */
+    private Double quantityOnhand;
+    /**
+     * 仓库编码
+     */
+    private String warehouseCode;
+    /**
+     * 仓库名称
+     */
+    private String warehouseName;
+}

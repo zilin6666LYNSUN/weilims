@@ -1,0 +1,13 @@
+com\wei\generator\controller\GenController.class
+com\wei\generator\domain\GenTable.class
+com\wei\generator\util\VelocityUtils.class
+com\wei\generator\service\IGenTableColumnService.class
+com\wei\generator\util\VelocityInitializer.class
+com\wei\generator\mapper\GenTableColumnMapper.class
+com\wei\generator\util\GenUtils.class
+com\wei\generator\service\GenTableColumnServiceImpl.class
+com\wei\generator\service\IGenTableService.class
+com\wei\generator\domain\GenTableColumn.class
+com\wei\generator\mapper\GenTableMapper.class
+com\wei\generator\service\GenTableServiceImpl.class
+com\wei\generator\config\GenConfig.class

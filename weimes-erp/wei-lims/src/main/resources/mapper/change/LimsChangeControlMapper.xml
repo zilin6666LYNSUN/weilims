@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.change.mapper.LimsChangeControlMapper">
+
+    <resultMap type="com.wei.lims.change.domain.LimsChangeControl" id="LimsChangeControlResult">
+        <result property="changeId" column="change_id"/>
+        <result property="changeCode" column="change_code"/>
+        <result property="changeTitle" column="change_title"/>
+        <result property="changeType" column="change_type"/>
+        <result property="changeCategory" column="change_category"/>
+        <result property="changeDescription" column="change_description"/>
+        <result property="currentState" column="current_state"/>
+        <result property="proposedChange" column="proposed_change"/>
+        <result property="changeReason" column="change_reason"/>
+        <result property="riskAssessment" column="risk_assessment"/>
+        <result property="impactAnalysis" column="impact_analysis"/>
+        <result property="implementationPlan" column="implementation_plan"/>
+        <result property="trainingNeeded" column="training_needed"/>
+        <result property="revalidationNeeded" column="revalidation_needed"/>
+        <result property="regulatoryImpact" column="regulatory_impact"/>
+        <result property="requesterId" column="requester_id"/>
+        <result property="approverId" column="approver_id"/>
+        <result property="effectiveDate" column="effective_date"/>
+        <result property="status" column="status"/>
+        <result property="procInstId" column="proc_inst_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select change_id, change_code, change_title, change_type, change_category,
+               change_description, current_state, proposed_change, change_reason,
+               risk_assessment, impact_analysis, implementation_plan,
+               training_needed, revalidation_needed, regulatory_impact,
+               requester_id, approver_id, effective_date, status, proc_inst_id, create_by, create_time
+        from lims_change_control
+    </sql>
+
+    <select id="selectByChangeId" parameterType="Long" resultMap="LimsChangeControlResult">
+        <include refid="selectVo"/> where change_id = #{changeId}
+    </select>
+
+    <select id="selectLimsChangeControlList" parameterType="com.wei.lims.change.domain.LimsChangeControl" resultMap="LimsChangeControlResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="changeCode != null and changeCode != ''"> and change_code like concat('%', #{changeCode}, '%')</if>
+            <if test="changeType != null and changeType != ''"> and change_type = #{changeType}</if>
+            <if test="changeCategory != null and changeCategory != ''"> and change_category = #{changeCategory}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <insert id="insertLimsChangeControl" parameterType="com.wei.lims.change.domain.LimsChangeControl" useGeneratedKeys="true" keyProperty="changeId">
+        insert into lims_change_control(
+            change_code, change_title, change_type, change_category, change_description,
+            current_state, proposed_change, change_reason, risk_assessment, impact_analysis,
+            implementation_plan, training_needed, revalidation_needed, regulatory_impact,
+            requester_id, approver_id, effective_date, status, proc_inst_id, create_by, create_time
+        )values(
+            #{changeCode}, #{changeTitle}, #{changeType}, #{changeCategory}, #{changeDescription},
+            #{currentState}, #{proposedChange}, #{changeReason}, #{riskAssessment}, #{impactAnalysis},
+            #{implementationPlan}, #{trainingNeeded}, #{revalidationNeeded}, #{regulatoryImpact},
+            #{requesterId}, #{approverId}, #{effectiveDate}, #{status}, #{procInstId}, #{createBy}, sysdate()
+        )
+    </insert>
+
+    <update id="updateLimsChangeControl" parameterType="com.wei.lims.change.domain.LimsChangeControl">
+        update lims_change_control
+        <set>
+            <if test="changeDescription != null">change_description = #{changeDescription},</if>
+            <if test="proposedChange != null">proposed_change = #{proposedChange},</if>
+            <if test="riskAssessment != null">risk_assessment = #{riskAssessment},</if>
+            <if test="impactAnalysis != null">impact_analysis = #{impactAnalysis},</if>
+            <if test="implementationPlan != null">implementation_plan = #{implementationPlan},</if>
+            <if test="approverId != null">approver_id = #{approverId},</if>
+            <if test="effectiveDate != null">effective_date = #{effectiveDate},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where change_id = #{changeId}
+    </update>
+
+    <delete id="deleteLimsChangeControlByIds" parameterType="Long">
+        delete from lims_change_control where change_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

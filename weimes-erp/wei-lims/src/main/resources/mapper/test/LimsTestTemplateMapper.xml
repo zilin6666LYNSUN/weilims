@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.test.mapper.LimsTestTemplateMapper">
+
+    <resultMap type="com.wei.lims.test.domain.LimsTestTemplate" id="LimsTestTemplateResult">
+        <result property="templateId" column="template_id"/>
+        <result property="templateCode" column="template_code"/>
+        <result property="templateName" column="template_name"/>
+        <result property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="specificationId" column="specification_id"/>
+        <result property="testType" column="test_type"/>
+        <result property="status" column="status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select template_id, template_code, template_name, product_id, product_name,
+               specification_id, test_type, status,
+               create_by, create_time, update_by, update_time, remark
+        from lims_test_template
+    </sql>
+
+    <select id="selectLimsTestTemplateByTemplateId" parameterType="Long" resultMap="LimsTestTemplateResult">
+        <include refid="selectVo"/> where template_id = #{templateId}
+    </select>
+
+    <select id="selectLimsTestTemplateByTemplateCode" parameterType="String" resultMap="LimsTestTemplateResult">
+        <include refid="selectVo"/> where template_code = #{templateCode}
+    </select>
+
+    <select id="selectLimsTestTemplateList" parameterType="com.wei.lims.test.domain.LimsTestTemplate" resultMap="LimsTestTemplateResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="templateCode != null and templateCode != ''"> and template_code like concat('%', #{templateCode}, '%')</if>
+            <if test="templateName != null and templateName != ''"> and template_name like concat('%', #{templateName}, '%')</if>
+            <if test="testType != null and testType != ''"> and test_type = #{testType}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <insert id="insertLimsTestTemplate" parameterType="com.wei.lims.test.domain.LimsTestTemplate" useGeneratedKeys="true" keyProperty="templateId">
+        insert into lims_test_template(
+            template_code, template_name, product_id, product_name,
+            specification_id, test_type, status,
+            create_by, create_time, remark
+        )values(
+            #{templateCode}, #{templateName}, #{productId}, #{productName},
+            #{specificationId}, #{testType}, #{status},
+            #{createBy}, sysdate(), #{remark}
+        )
+    </insert>
+
+    <update id="updateLimsTestTemplate" parameterType="com.wei.lims.test.domain.LimsTestTemplate">
+        update lims_test_template
+        <set>
+            <if test="templateName != null">template_name = #{templateName},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="specificationId != null">specification_id = #{specificationId},</if>
+            <if test="testType != null">test_type = #{testType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where template_id = #{templateId}
+    </update>
+
+    <delete id="deleteLimsTestTemplateByTemplateIds" parameterType="Long">
+        delete from lims_test_template where template_id in
+        <foreach item="templateId" collection="array" open="(" separator="," close=")">#{templateId}</foreach>
+    </delete>
+</mapper>

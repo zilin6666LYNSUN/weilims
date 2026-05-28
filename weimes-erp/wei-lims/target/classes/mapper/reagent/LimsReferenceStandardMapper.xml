@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.reagent.mapper.LimsReferenceStandardMapper">
+
+    <resultMap type="com.wei.lims.reagent.domain.LimsReferenceStandard" id="LimsReferenceStandardResult">
+        <result property="standardId" column="standard_id"/>
+        <result property="standardCode" column="standard_code"/>
+        <result property="standardName" column="standard_name"/>
+        <result property="standardType" column="standard_type"/>
+        <result property="source" column="source"/>
+        <result property="catalogNumber" column="catalog_number"/>
+        <result property="lotNumber" column="lot_number"/>
+        <result property="potency" column="potency"/>
+        <result property="potencyUnit" column="potency_unit"/>
+        <result property="receivedDate" column="received_date"/>
+        <result property="openedDate" column="opened_date"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="storageCondition" column="storage_condition"/>
+        <result property="storageLocation" column="storage_location"/>
+        <result property="remainingQuantity" column="remaining_quantity"/>
+        <result property="unit" column="unit"/>
+        <result property="qualificationStatus" column="qualification_status"/>
+        <result property="qualificationDate" column="qualification_date"/>
+        <result property="nextQualification" column="next_qualification"/>
+        <result property="coaFile" column="coa_file"/>
+        <result property="structureFile" column="structure_file"/>
+        <result property="casNumber" column="cas_number"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select standard_id, standard_code, standard_name, standard_type, source,
+               catalog_number, lot_number, potency, potency_unit,
+               received_date, opened_date, expire_date,
+               storage_condition, storage_location, remaining_quantity, unit,
+               qualification_status, qualification_date, next_qualification,
+               coa_file, structure_file, cas_number, status
+        from lims_reference_standard
+    </sql>
+
+    <select id="selectByStandardId" parameterType="Long" resultMap="LimsReferenceStandardResult">
+        <include refid="selectVo"/> where standard_id = #{standardId}
+    </select>
+
+    <select id="selectLimsReferenceStandardList" parameterType="com.wei.lims.reagent.domain.LimsReferenceStandard" resultMap="LimsReferenceStandardResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="standardCode != null and standardCode != ''"> and standard_code like concat('%', #{standardCode}, '%')</if>
+            <if test="standardName != null and standardName != ''"> and standard_name like concat('%', #{standardName}, '%')</if>
+            <if test="qualificationStatus != null and qualificationStatus != ''"> and qualification_status = #{qualificationStatus}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+    </select>
+
+    <insert id="insertLimsReferenceStandard" parameterType="com.wei.lims.reagent.domain.LimsReferenceStandard" useGeneratedKeys="true" keyProperty="standardId">
+        insert into lims_reference_standard(
+            standard_code, standard_name, standard_type, source,
+            catalog_number, lot_number, potency, potency_unit,
+            received_date, expire_date,
+            storage_condition, storage_location, remaining_quantity, unit,
+            qualification_status, qualification_date, next_qualification,
+            coa_file, structure_file, cas_number, status
+        )values(
+            #{standardCode}, #{standardName}, #{standardType}, #{source},
+            #{catalogNumber}, #{lotNumber}, #{potency}, #{potencyUnit},
+            #{receivedDate}, #{expireDate},
+            #{storageCondition}, #{storageLocation}, #{remainingQuantity}, #{unit},
+            #{qualificationStatus}, #{qualificationDate}, #{nextQualification},
+            #{coaFile}, #{structureFile}, #{casNumber}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsReferenceStandard" parameterType="com.wei.lims.reagent.domain.LimsReferenceStandard">
+        update lims_reference_standard
+        <set>
+            <if test="standardName != null">standard_name = #{standardName},</if>
+            <if test="remainingQuantity != null">remaining_quantity = #{remainingQuantity},</if>
+            <if test="qualificationStatus != null">qualification_status = #{qualificationStatus},</if>
+            <if test="qualificationDate != null">qualification_date = #{qualificationDate},</if>
+            <if test="nextQualification != null">next_qualification = #{nextQualification},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where standard_id = #{standardId}
+    </update>
+
+    <delete id="deleteLimsReferenceStandardByIds" parameterType="Long">
+        delete from lims_reference_standard where standard_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>
