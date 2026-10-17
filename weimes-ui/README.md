@@ -1,8 +1,8 @@
 <p align="center">
 	<img alt="logo" width="196px" src="https://pic.imgdb.cn/item/66b9aaafd9c307b7e9a749fb.png">
 </p>
-<h1 align="center" style=" font-weight: bold;">WEIMES</h1>
-<h4 align="center">专注于中小企业的erp系统</h4>
+<h1 align="center" style=" font-weight: bold;">LIMS</h1>
+<h4 align="center">专注于中小企业的LIMS系统</h4>
 <p align="center">
 <a href='https://gitee.com/wangsanping/weimes/stargazers'><img src='https://gitee.com/wangsanping/weimes/badge/star.svg?theme=dark' alt='star'></img></a>
         <a href="https://www.java.com/zh-CN/">
@@ -24,7 +24,7 @@
 #### 技术架构: springboot3+jdk17+mybatis-plus+mysql8+kotlin+vue+uniapp+elementui等
 #### 项目包括后台管理系统、手机端及pad端，手机端采用uniapp架构，可以随时编译为小程序
 
-WEIMES项目是一个聚焦于制造执行系统（MES）和人力资源管理（HRM）的开源平台，现已逐步扩展为具备完整业务链的轻量级 ERP 系统。项目同时配套开发了支持移动办公的小程序端，便于员工在生产、考勤、审批等场景下移动使用。旨在解决中小企业在人力、物料、销售、生产制造等方面的信息化建设需求。该系统为中小企业提供了全面的信息化解决方案，帮助企业优化资源配置、提升生产效率，从而实现更高效、更智能的运营。
+LIMS项目是一个聚焦于实验室信息管理系统（LIMS）和人力资源管理（HRM）的开源平台，现已逐步扩展为具备完整业务链的轻量级 LIMS 系统。项目同时配套开发了支持移动办公的小程序端，便于员工在生产、考勤、审批等场景下移动使用。旨在解决中小企业在人力、物料、销售、生产制造等方面的信息化建设需求。该系统为中小企业提供了全面的信息化解决方案，帮助企业优化资源配置、提升生产效率，从而实现更高效、更智能的运营。
 
 #### 近期发现项目被滥用的情况太多，故决定后端源码暂时不再开源。
 

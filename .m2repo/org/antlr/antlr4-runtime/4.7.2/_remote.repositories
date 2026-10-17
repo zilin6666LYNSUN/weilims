@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:30:43 CST 2026
+#Fri Jul 17 21:31:55 CST 2026
+antlr4-runtime-4.7.2.pom>mirror=
 antlr4-runtime-4.7.2.pom>aliyunmaven=
+antlr4-runtime-4.7.2.jar>mirror=
 antlr4-runtime-4.7.2.jar>aliyunmaven=

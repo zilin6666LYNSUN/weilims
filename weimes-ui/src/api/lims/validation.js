@@ -46,7 +46,7 @@ export function delValidationRule(ruleIds) {
 // 执行数据校验
 export function executeValidation(testOrderId) {
   return request({
-    url: '/lims/report/validation/validate/' + testOrderId,
+    url: '/lims/report/validation/exec/validate/' + testOrderId,
     method: 'post'
   })
 }
@@ -54,7 +54,7 @@ export function executeValidation(testOrderId) {
 // 查询校验日志
 export function getValidationLogs(testOrderId) {
   return request({
-    url: '/lims/report/validation/logs/' + testOrderId,
+    url: '/lims/report/validation/exec/logs/' + testOrderId,
     method: 'get'
   })
 }
@@ -62,7 +62,7 @@ export function getValidationLogs(testOrderId) {
 // 检查是否全部通过
 export function checkValidation(testOrderId) {
   return request({
-    url: '/lims/report/validation/check/' + testOrderId,
+    url: '/lims/report/validation/exec/check/' + testOrderId,
     method: 'get'
   })
 }

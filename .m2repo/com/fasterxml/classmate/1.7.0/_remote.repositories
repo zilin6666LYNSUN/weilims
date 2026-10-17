@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:47 CST 2026
+#Fri Jul 17 21:28:57 CST 2026
 classmate-1.7.0.jar>aliyunmaven=
 classmate-1.7.0.pom>aliyunmaven=
+classmate-1.7.0.jar>mirror=
+classmate-1.7.0.pom>mirror=

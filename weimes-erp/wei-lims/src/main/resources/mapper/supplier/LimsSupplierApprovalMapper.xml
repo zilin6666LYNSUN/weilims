@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.supplier.mapper.LimsSupplierApprovalMapper">
+
+    <resultMap type="com.wei.lims.supplier.domain.LimsSupplierApproval" id="LimsSupplierApprovalResult">
+        <result property="approvalId" column="approval_id"/>
+        <result property="vendorId" column="vendor_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="approvalType" column="approval_type"/>
+        <result property="approvedDate" column="approved_date"/>
+        <result property="approvedBy" column="approved_by"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select approval_id, vendor_id, product_id, approval_type, approved_date, approved_by, expire_date, status
+        from lims_supplier_approval
+    </sql>
+
+    <select id="selectLimsSupplierApprovalByApprovalId" parameterType="Long" resultMap="LimsSupplierApprovalResult">
+        <include refid="selectVo"/> where approval_id = #{approvalId}
+    </select>
+
+    <select id="selectLimsSupplierApprovalList" parameterType="com.wei.lims.supplier.domain.LimsSupplierApproval" resultMap="LimsSupplierApprovalResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="approvalId != null"> and approval_id = #{approvalId}</if>
+            <if test="vendorId != null"> and vendor_id = #{vendorId}</if>
+            <if test="productId != null"> and product_id = #{productId}</if>
+            <if test="approvalType != null and approvalType != ''"> and approval_type = #{approvalType}</if>
+            <if test="approvedDate != null"> and approved_date = #{approvedDate}</if>
+            <if test="approvedBy != null"> and approved_by = #{approvedBy}</if>
+            <if test="expireDate != null"> and expire_date = #{expireDate}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by approval_id desc
+    </select>
+
+    <insert id="insertLimsSupplierApproval" parameterType="com.wei.lims.supplier.domain.LimsSupplierApproval" useGeneratedKeys="true" keyProperty="approvalId">
+        insert into lims_supplier_approval(
+            vendor_id, product_id, approval_type, approved_date, approved_by, expire_date, status
+        )values(
+            #{vendorId}, #{productId}, #{approvalType}, #{approvedDate}, #{approvedBy}, #{expireDate}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsSupplierApproval" parameterType="com.wei.lims.supplier.domain.LimsSupplierApproval">
+        update lims_supplier_approval
+        <set>
+            <if test="vendorId != null">vendor_id = #{vendorId},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="approvalType != null">approval_type = #{approvalType},</if>
+            <if test="approvedDate != null">approved_date = #{approvedDate},</if>
+            <if test="approvedBy != null">approved_by = #{approvedBy},</if>
+            <if test="expireDate != null">expire_date = #{expireDate},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where approval_id = #{approvalId}
+    </update>
+
+    <delete id="deleteLimsSupplierApprovalByApprovalId" parameterType="String">
+        delete from lims_supplier_approval where approval_id in
+        <foreach item="approvalId" collection="array" open="(" separator="," close=")">
+            #{approvalId}
+        </foreach>
+    </delete>
+</mapper>

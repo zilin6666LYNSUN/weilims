@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:24 CST 2026
+#Fri Jul 17 21:31:32 CST 2026
 awaitility-4.2.2.pom>aliyunmaven=
+awaitility-4.2.2.jar>mirror=
+awaitility-4.2.2.pom>mirror=
 awaitility-4.2.2.jar>aliyunmaven=

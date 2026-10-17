@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:35:47 CST 2026
+#Fri Jul 17 22:03:16 CST 2026
 spring-security-test-6.3.10.pom>aliyunmaven=
 spring-security-test-6.3.10.jar>aliyunmaven=
+spring-security-test-6.3.10.pom>mirror=
+spring-security-test-6.3.10.jar>mirror=

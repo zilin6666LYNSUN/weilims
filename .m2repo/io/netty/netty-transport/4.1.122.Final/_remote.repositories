@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:50 CST 2026
+#Fri Jul 17 21:28:58 CST 2026
 netty-transport-4.1.122.Final.jar>aliyunmaven=
 netty-transport-4.1.122.Final.pom>aliyunmaven=
+netty-transport-4.1.122.Final.pom>mirror=
+netty-transport-4.1.122.Final.jar>mirror=

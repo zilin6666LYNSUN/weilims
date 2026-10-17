@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:25 CST 2026
+#Fri Jul 17 21:31:32 CST 2026
+byte-buddy-agent-1.14.19.pom>mirror=
 byte-buddy-agent-1.14.19.jar>aliyunmaven=
+byte-buddy-agent-1.14.19.jar>mirror=
 byte-buddy-agent-1.14.19.pom>aliyunmaven=

@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:29:46 CST 2026
+#Fri Jul 17 21:29:31 CST 2026
 java-trace-api-0.2.11-beta.pom>aliyunmaven=
+java-trace-api-0.2.11-beta.pom>mirror=
+java-trace-api-0.2.11-beta.jar>mirror=
 java-trace-api-0.2.11-beta.jar>aliyunmaven=

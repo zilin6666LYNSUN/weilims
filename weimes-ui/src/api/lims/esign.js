@@ -38,7 +38,7 @@ export function getSignatures(recordType, recordId) {
 // 查询审计追踪列表
 export function listAuditTrail(query) {
   return request({
-    url: '/lims/esign/audit/list',
+    url: '/lims/audit-trail/list',
     method: 'get',
     params: query
   })
@@ -47,7 +47,7 @@ export function listAuditTrail(query) {
 // 查询指定记录的变更历史
 export function getAuditHistory(tableName, recordId) {
   return request({
-    url: '/lims/esign/audit/history/' + tableName + '/' + recordId,
+    url: '/lims/audit-trail/history/' + tableName + '/' + recordId,
     method: 'get'
   })
 }

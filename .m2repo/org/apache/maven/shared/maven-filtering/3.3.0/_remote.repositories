@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:57 CST 2026
+#Fri Jul 17 21:28:59 CST 2026
 maven-filtering-3.3.0.pom>aliyunmaven=
 maven-filtering-3.3.0.jar>aliyunmaven=
+maven-filtering-3.3.0.pom>mirror=
+maven-filtering-3.3.0.jar>mirror=

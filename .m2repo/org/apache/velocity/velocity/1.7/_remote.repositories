@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:27:18 CST 2026
+#Fri Jul 17 21:29:24 CST 2026
+velocity-1.7.jar>mirror=
+velocity-1.7.pom>mirror=
 velocity-1.7.jar>aliyunmaven=
 velocity-1.7.pom>aliyunmaven=

@@ -8,6 +8,7 @@ import com.wei.common.utils.SecurityUtils;
 import com.wei.lims.report.domain.LimsInstrumentDataAcquisition;
 import com.wei.lims.report.mapper.LimsInstrumentDataAcquisitionMapper;
 import com.wei.lims.report.service.ILimsInstrumentDataAcquisitionService;
+import com.wei.lims.esign.service.ILimsAuditTrailService;
 import com.wei.lims.test.domain.LimsTestResult;
 import com.wei.lims.test.mapper.LimsTestResultMapper;
 import org.slf4j.Logger;
@@ -31,6 +32,9 @@ public class LimsInstrumentDataAcquisitionServiceImpl implements ILimsInstrument
     @Autowired
     private LimsTestResultMapper testResultMapper;
 
+    @Autowired
+    private ILimsAuditTrailService limsAuditTrailService;
+
     @Override
     public LimsInstrumentDataAcquisition selectAcquisitionById(Long acquisitionId) {
         return acquisitionMapper.selectAcquisitionById(acquisitionId);
@@ -47,19 +51,34 @@ public class LimsInstrumentDataAcquisitionServiceImpl implements ILimsInstrument
     }
 
     @Override
+    @Transactional
     public int insertAcquisition(LimsInstrumentDataAcquisition acquisition) {
         acquisition.setCreateTime(DateUtils.getNowDate());
-        return acquisitionMapper.insertAcquisition(acquisition);
+        int rows = acquisitionMapper.insertAcquisition(acquisition);
+        limsAuditTrailService.recordFieldChanges("lims_instrument_data_acquisition", acquisition.getAcquisitionId(),
+                "INSERT", null, acquisition, "新建仪器数据采集配置");
+        return rows;
     }
 
     @Override
+    @Transactional
     public int updateAcquisition(LimsInstrumentDataAcquisition acquisition) {
         acquisition.setUpdateTime(DateUtils.getNowDate());
-        return acquisitionMapper.updateAcquisition(acquisition);
+        LimsInstrumentDataAcquisition oldAcq = acquisitionMapper.selectAcquisitionById(acquisition.getAcquisitionId());
+        int rows = acquisitionMapper.updateAcquisition(acquisition);
+        limsAuditTrailService.recordFieldChanges("lims_instrument_data_acquisition", acquisition.getAcquisitionId(),
+                "UPDATE", oldAcq, acquisition, "更新仪器数据采集配置");
+        return rows;
     }
 
     @Override
+    @Transactional
     public int deleteAcquisitionByIds(Long[] acquisitionIds) {
+        for (Long acquisitionId : acquisitionIds) {
+            LimsInstrumentDataAcquisition oldAcq = acquisitionMapper.selectAcquisitionById(acquisitionId);
+            limsAuditTrailService.recordFieldChanges("lims_instrument_data_acquisition", acquisitionId,
+                    "DELETE", oldAcq, null, "删除仪器数据采集配置");
+        }
         return acquisitionMapper.deleteAcquisitionByIds(acquisitionIds);
     }
 
@@ -89,11 +108,14 @@ public class LimsInstrumentDataAcquisitionServiceImpl implements ILimsInstrument
                     BigDecimal simulatedValue = result.getLowerLimit().add(randomOffset)
                             .setScale(2, BigDecimal.ROUND_HALF_UP);
 
+                    LimsTestResult oldResult = testResultMapper.selectLimsTestResultByResultId(result.getResultId());
                     result.setInstrumentValue(simulatedValue.toPlainString());
                     result.setOriginalValue(simulatedValue.toPlainString());
                     result.setReportedValue(simulatedValue.toPlainString());
 
                     testResultMapper.updateLimsTestResult(result);
+                    limsAuditTrailService.recordFieldChanges("lims_test_result", result.getResultId(),
+                            "UPDATE", oldResult, result, "仪器采集导入检验结果");
                     importedCount++;
                     log.info("仪器{}采集数据: 检测项={}, 值={}", instrumentId, result.getTestItemName(), simulatedValue);
                 }

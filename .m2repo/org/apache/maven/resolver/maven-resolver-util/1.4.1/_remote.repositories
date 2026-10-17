@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:30:44 CST 2026
+#Fri Jul 17 21:31:55 CST 2026
+maven-resolver-util-1.4.1.jar>mirror=
 maven-resolver-util-1.4.1.pom>aliyunmaven=
+maven-resolver-util-1.4.1.pom>mirror=
 maven-resolver-util-1.4.1.jar>aliyunmaven=

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.capa.mapper.LimsCapaTaskMapper">
+
+    <resultMap type="com.wei.lims.capa.domain.LimsCapaTask" id="LimsCapaTaskResult">
+        <result property="taskId" column="task_id"/>
+        <result property="capaId" column="capa_id"/>
+        <result property="taskDescription" column="task_description"/>
+        <result property="assigneeId" column="assignee_id"/>
+        <result property="dueDate" column="due_date"/>
+        <result property="completionDate" column="completion_date"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select task_id, capa_id, task_description, assignee_id, due_date, completion_date, status
+        from lims_capa_task
+    </sql>
+
+    <select id="selectByTaskId" parameterType="Long" resultMap="LimsCapaTaskResult">
+        <include refid="selectVo"/> where task_id = #{taskId}
+    </select>
+
+    <select id="selectByCapaId" parameterType="Long" resultMap="LimsCapaTaskResult">
+        <include refid="selectVo"/> where capa_id = #{capaId} order by task_id asc
+    </select>
+
+    <select id="selectLimsCapaTaskList" parameterType="com.wei.lims.capa.domain.LimsCapaTask" resultMap="LimsCapaTaskResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="capaId != null"> and capa_id = #{capaId}</if>
+            <if test="assigneeId != null"> and assignee_id = #{assigneeId}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="dueDate != null"> and due_date = #{dueDate}</if>
+        </where>
+        order by task_id desc
+    </select>
+
+    <insert id="insertLimsCapaTask" parameterType="com.wei.lims.capa.domain.LimsCapaTask" useGeneratedKeys="true" keyProperty="taskId">
+        insert into lims_capa_task(
+            capa_id, task_description, assignee_id, due_date, completion_date, status
+        )values(
+            #{capaId}, #{taskDescription}, #{assigneeId}, #{dueDate}, #{completionDate}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsCapaTask" parameterType="com.wei.lims.capa.domain.LimsCapaTask">
+        update lims_capa_task
+        <set>
+            <if test="taskDescription != null">task_description = #{taskDescription},</if>
+            <if test="assigneeId != null">assignee_id = #{assigneeId},</if>
+            <if test="dueDate != null">due_date = #{dueDate},</if>
+            <if test="completionDate != null">completion_date = #{completionDate},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where task_id = #{taskId}
+    </update>
+
+    <delete id="deleteLimsCapaTaskByIds" parameterType="String">
+        delete from lims_capa_task where task_id in
+        <foreach item="taskId" collection="array" open="(" separator="," close=")">
+            #{taskId}
+        </foreach>
+    </delete>
+</mapper>

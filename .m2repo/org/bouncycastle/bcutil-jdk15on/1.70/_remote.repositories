@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:23 CST 2026
+#Fri Jul 17 21:30:54 CST 2026
 bcutil-jdk15on-1.70.jar>aliyunmaven=
 bcutil-jdk15on-1.70.pom>aliyunmaven=
+bcutil-jdk15on-1.70.pom>mirror=
+bcutil-jdk15on-1.70.jar>mirror=

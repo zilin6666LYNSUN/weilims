@@ -94,3 +94,27 @@ export function batchSaveTestResult(data) {
     data: data
   })
 }
+
+
+// 微生物检测记录（限度/无菌/菌种鉴定）
+export function listMicroTestRecord(query) {
+  return request({ url: '/lims/test/micro/list', method: 'get', params: query })
+}
+export function listMicroTestRecordByOrder(testOrderId) {
+  return request({ url: '/lims/test/micro/list/order/' + testOrderId, method: 'get' })
+}
+export function getMicroTestRecord(recordId) {
+  return request({ url: '/lims/test/micro/' + recordId, method: 'get' })
+}
+export function addMicroTestRecord(data) {
+  return request({ url: '/lims/test/micro', method: 'post', data: data })
+}
+export function updateMicroTestRecord(data) {
+  return request({ url: '/lims/test/micro', method: 'put', data: data })
+}
+export function recordMicroTestResult(data) {
+  return request({ url: '/lims/test/micro/result', method: 'put', data: data })
+}
+export function delMicroTestRecord(recordIds) {
+  return request({ url: '/lims/test/micro/' + recordIds, method: 'delete' })
+}

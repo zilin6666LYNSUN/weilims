@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:54:27 CST 2026
+#Fri Jul 17 21:28:39 CST 2026
+qdox-2.0.1.jar>mirror=
 qdox-2.0.1.pom>aliyunmaven=
+qdox-2.0.1.pom>mirror=
 qdox-2.0.1.jar>aliyunmaven=

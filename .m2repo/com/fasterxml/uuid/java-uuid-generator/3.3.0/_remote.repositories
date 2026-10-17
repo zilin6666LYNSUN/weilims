@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:20 CST 2026
+#Fri Jul 17 21:30:53 CST 2026
+java-uuid-generator-3.3.0.pom>mirror=
+java-uuid-generator-3.3.0.jar>mirror=
 java-uuid-generator-3.3.0.pom>aliyunmaven=
 java-uuid-generator-3.3.0.jar>aliyunmaven=

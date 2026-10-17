@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:58:42 CST 2026
+#Fri Jul 17 21:29:10 CST 2026
 lombok-1.18.38.pom>aliyunmaven=
+lombok-1.18.38.jar>mirror=
 lombok-1.18.38.jar>aliyunmaven=
+lombok-1.18.38.pom>mirror=

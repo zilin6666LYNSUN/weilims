@@ -1,0 +1,11 @@
+﻿# 大体积构建产物（GitHub 100MB 单文件限制）
+weimes-erp/wei-erp/target/wei-lims.jar
+.m2repo/com/wei/wei-erp/1.0.0/
+# 前端构建产物与依赖
+weimes-ui/node_modules/
+weimes-ui/dist/
+weimes-ui/build/dist/
+weimes-ui/*.zip
+weimes-ui/build/*.zip
+weimes-ui/npm_err.log
+weimes-ui/build_out.log

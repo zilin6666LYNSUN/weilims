@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:53 CST 2026
+#Fri Jul 17 21:28:58 CST 2026
+barcode4j-light-2.0.pom>mirror=
 barcode4j-light-2.0.jar>aliyunmaven=
+barcode4j-light-2.0.jar>mirror=
 barcode4j-light-2.0.pom>aliyunmaven=

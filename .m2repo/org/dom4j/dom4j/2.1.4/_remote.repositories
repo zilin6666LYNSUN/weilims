@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:29:46 CST 2026
+#Fri Jul 17 21:29:31 CST 2026
+dom4j-2.1.4.jar>mirror=
 dom4j-2.1.4.pom>aliyunmaven=
+dom4j-2.1.4.pom>mirror=
 dom4j-2.1.4.jar>aliyunmaven=

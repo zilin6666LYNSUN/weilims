@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.training.mapper.LimsStaffMapper">
+
+    <resultMap type="com.wei.lims.training.domain.LimsStaff" id="LimsStaffResult">
+        <result property="staffId" column="staff_id"/>
+        <result property="staffCode" column="staff_code"/>
+        <result property="staffName" column="staff_name"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="position" column="position"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="hireDate" column="hire_date"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select staff_id, staff_code, staff_name, dept_name, position, phone, email, hire_date, status, remark
+        from lims_staff
+    </sql>
+
+    <select id="selectLimsStaffByStaffId" parameterType="Long" resultMap="LimsStaffResult">
+        <include refid="selectVo"/> where staff_id = #{staffId}
+    </select>
+
+    <select id="selectLimsStaffList" parameterType="com.wei.lims.training.domain.LimsStaff" resultMap="LimsStaffResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="staffId != null"> and staff_id = #{staffId}</if>
+            <if test="staffCode != null and staffCode != ''"> and staff_code = #{staffCode}</if>
+            <if test="staffName != null and staffName != ''"> and staff_name = #{staffName}</if>
+            <if test="deptName != null and deptName != ''"> and dept_name = #{deptName}</if>
+            <if test="position != null and position != ''"> and position = #{position}</if>
+            <if test="phone != null and phone != ''"> and phone = #{phone}</if>
+            <if test="email != null and email != ''"> and email = #{email}</if>
+            <if test="hireDate != null"> and hire_date = #{hireDate}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+        </where>
+        order by staff_id desc
+    </select>
+
+    <insert id="insertLimsStaff" parameterType="com.wei.lims.training.domain.LimsStaff" useGeneratedKeys="true" keyProperty="staffId">
+        insert into lims_staff(
+            staff_code, staff_name, dept_name, position, phone, email, hire_date, status, remark
+        )values(
+            #{staffCode}, #{staffName}, #{deptName}, #{position}, #{phone}, #{email}, #{hireDate}, #{status}, #{remark}
+        )
+    </insert>
+
+    <update id="updateLimsStaff" parameterType="com.wei.lims.training.domain.LimsStaff">
+        update lims_staff
+        <set>
+            <if test="staffCode != null">staff_code = #{staffCode},</if>
+            <if test="staffName != null">staff_name = #{staffName},</if>
+            <if test="deptName != null">dept_name = #{deptName},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="hireDate != null">hire_date = #{hireDate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </set>
+        where staff_id = #{staffId}
+    </update>
+
+    <delete id="deleteLimsStaffByStaffId" parameterType="String">
+        delete from lims_staff where staff_id in
+        <foreach item="staffId" collection="array" open="(" separator="," close=")">
+            #{staffId}
+        </foreach>
+    </delete>
+</mapper>

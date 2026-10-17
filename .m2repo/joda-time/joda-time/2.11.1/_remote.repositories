@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:21 CST 2026
+#Fri Jul 17 21:30:54 CST 2026
+joda-time-2.11.1.pom>mirror=
 joda-time-2.11.1.pom>aliyunmaven=
+joda-time-2.11.1.jar>mirror=
 joda-time-2.11.1.jar>aliyunmaven=

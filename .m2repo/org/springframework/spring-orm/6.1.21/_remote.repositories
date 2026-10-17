@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:22 CST 2026
+#Fri Jul 17 21:30:54 CST 2026
+spring-orm-6.1.21.jar>mirror=
 spring-orm-6.1.21.pom>aliyunmaven=
+spring-orm-6.1.21.pom>mirror=
 spring-orm-6.1.21.jar>aliyunmaven=

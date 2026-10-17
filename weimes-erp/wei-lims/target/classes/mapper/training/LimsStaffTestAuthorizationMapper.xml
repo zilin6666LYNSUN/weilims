@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.training.mapper.LimsStaffTestAuthorizationMapper">
+
+    <resultMap type="com.wei.lims.training.domain.LimsStaffTestAuthorization" id="LimsStaffTestAuthorizationResult">
+        <result property="authId" column="auth_id"/>
+        <result property="staffId" column="staff_id"/>
+        <result property="testItemId" column="test_item_id"/>
+        <result property="testItemName" column="test_item_name"/>
+        <result property="authorizedDate" column="authorized_date"/>
+        <result property="authorizedBy" column="authorized_by"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select auth_id, staff_id, test_item_id, test_item_name, authorized_date, authorized_by, expire_date, status
+        from lims_staff_test_authorization
+    </sql>
+
+    <select id="selectLimsStaffTestAuthorizationByAuthId" parameterType="Long" resultMap="LimsStaffTestAuthorizationResult">
+        <include refid="selectVo"/> where auth_id = #{authId}
+    </select>
+
+    <select id="selectLimsStaffTestAuthorizationList" parameterType="com.wei.lims.training.domain.LimsStaffTestAuthorization" resultMap="LimsStaffTestAuthorizationResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="authId != null"> and auth_id = #{authId}</if>
+            <if test="staffId != null"> and staff_id = #{staffId}</if>
+            <if test="testItemId != null"> and test_item_id = #{testItemId}</if>
+            <if test="testItemName != null and testItemName != ''"> and test_item_name = #{testItemName}</if>
+            <if test="authorizedDate != null"> and authorized_date = #{authorizedDate}</if>
+            <if test="authorizedBy != null"> and authorized_by = #{authorizedBy}</if>
+            <if test="expireDate != null"> and expire_date = #{expireDate}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by auth_id desc
+    </select>
+
+    <insert id="insertLimsStaffTestAuthorization" parameterType="com.wei.lims.training.domain.LimsStaffTestAuthorization" useGeneratedKeys="true" keyProperty="authId">
+        insert into lims_staff_test_authorization(
+            staff_id, test_item_id, test_item_name, authorized_date, authorized_by, expire_date, status
+        )values(
+            #{staffId}, #{testItemId}, #{testItemName}, #{authorizedDate}, #{authorizedBy}, #{expireDate}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsStaffTestAuthorization" parameterType="com.wei.lims.training.domain.LimsStaffTestAuthorization">
+        update lims_staff_test_authorization
+        <set>
+            <if test="staffId != null">staff_id = #{staffId},</if>
+            <if test="testItemId != null">test_item_id = #{testItemId},</if>
+            <if test="testItemName != null">test_item_name = #{testItemName},</if>
+            <if test="authorizedDate != null">authorized_date = #{authorizedDate},</if>
+            <if test="authorizedBy != null">authorized_by = #{authorizedBy},</if>
+            <if test="expireDate != null">expire_date = #{expireDate},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where auth_id = #{authId}
+    </update>
+
+    <delete id="deleteLimsStaffTestAuthorizationByAuthId" parameterType="String">
+        delete from lims_staff_test_authorization where auth_id in
+        <foreach item="authId" collection="array" open="(" separator="," close=")">
+            #{authId}
+        </foreach>
+    </delete>
+</mapper>

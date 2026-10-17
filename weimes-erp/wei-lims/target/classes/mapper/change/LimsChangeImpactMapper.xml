@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.change.mapper.LimsChangeImpactMapper">
+
+    <resultMap type="com.wei.lims.change.domain.LimsChangeImpact" id="LimsChangeImpactResult">
+        <result property="impactId" column="impact_id"/>
+        <result property="changeId" column="change_id"/>
+        <result property="impactArea" column="impact_area"/>
+        <result property="impactDetail" column="impact_detail"/>
+        <result property="riskLevel" column="risk_level"/>
+        <result property="mitigationPlan" column="mitigation_plan"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select impact_id, change_id, impact_area, impact_detail, risk_level, mitigation_plan
+        from lims_change_impact
+    </sql>
+
+    <select id="selectByImpactId" parameterType="Long" resultMap="LimsChangeImpactResult">
+        <include refid="selectVo"/> where impact_id = #{impactId}
+    </select>
+
+    <select id="selectByChangeId" parameterType="Long" resultMap="LimsChangeImpactResult">
+        <include refid="selectVo"/> where change_id = #{changeId} order by impact_id asc
+    </select>
+
+    <select id="selectLimsChangeImpactList" parameterType="com.wei.lims.change.domain.LimsChangeImpact" resultMap="LimsChangeImpactResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="changeId != null"> and change_id = #{changeId}</if>
+            <if test="impactArea != null and impactArea != ''"> and impact_area = #{impactArea}</if>
+            <if test="riskLevel != null and riskLevel != ''"> and risk_level = #{riskLevel}</if>
+        </where>
+        order by impact_id desc
+    </select>
+
+    <insert id="insertLimsChangeImpact" parameterType="com.wei.lims.change.domain.LimsChangeImpact" useGeneratedKeys="true" keyProperty="impactId">
+        insert into lims_change_impact(
+            change_id, impact_area, impact_detail, risk_level, mitigation_plan
+        )values(
+            #{changeId}, #{impactArea}, #{impactDetail}, #{riskLevel}, #{mitigationPlan}
+        )
+    </insert>
+
+    <update id="updateLimsChangeImpact" parameterType="com.wei.lims.change.domain.LimsChangeImpact">
+        update lims_change_impact
+        <set>
+            <if test="impactArea != null">impact_area = #{impactArea},</if>
+            <if test="impactDetail != null">impact_detail = #{impactDetail},</if>
+            <if test="riskLevel != null">risk_level = #{riskLevel},</if>
+            <if test="mitigationPlan != null">mitigation_plan = #{mitigationPlan},</if>
+        </set>
+        where impact_id = #{impactId}
+    </update>
+
+    <delete id="deleteLimsChangeImpactByIds" parameterType="String">
+        delete from lims_change_impact where impact_id in
+        <foreach item="impactId" collection="array" open="(" separator="," close=")">
+            #{impactId}
+        </foreach>
+    </delete>
+</mapper>

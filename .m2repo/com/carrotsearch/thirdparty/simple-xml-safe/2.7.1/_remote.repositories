@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:29:45 CST 2026
+#Fri Jul 17 21:29:30 CST 2026
+simple-xml-safe-2.7.1.jar>mirror=
 simple-xml-safe-2.7.1.jar>aliyunmaven=
 simple-xml-safe-2.7.1.pom>aliyunmaven=
+simple-xml-safe-2.7.1.pom>mirror=

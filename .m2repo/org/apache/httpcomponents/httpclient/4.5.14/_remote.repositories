@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:19 CST 2026
+#Fri Jul 17 21:29:35 CST 2026
+httpclient-4.5.14.pom>mirror=
 httpclient-4.5.14.jar>aliyunmaven=
+httpclient-4.5.14.jar>mirror=
 httpclient-4.5.14.pom>aliyunmaven=

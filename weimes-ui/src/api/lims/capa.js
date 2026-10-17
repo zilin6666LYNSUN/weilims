@@ -25,3 +25,27 @@ export function approveCapa(capaId) {
 export function closeCapa(capaId) {
   return request({ url: '/lims/capa/close/' + capaId, method: 'put' })
 }
+
+
+// CAPA任务
+export function listCapaTask(query) {
+  return request({ url: '/lims/quality/capa/task/list', method: 'get', params: query })
+}
+export function listCapaTaskByCapa(capaId) {
+  return request({ url: '/lims/quality/capa/task/list/' + capaId, method: 'get' })
+}
+export function getCapaTask(taskId) {
+  return request({ url: '/lims/quality/capa/task/' + taskId, method: 'get' })
+}
+export function addCapaTask(data) {
+  return request({ url: '/lims/quality/capa/task', method: 'post', data: data })
+}
+export function updateCapaTask(data) {
+  return request({ url: '/lims/quality/capa/task', method: 'put', data: data })
+}
+export function delCapaTask(taskIds) {
+  return request({ url: '/lims/quality/capa/task/' + taskIds, method: 'delete' })
+}
+export function completeCapaTask(taskId) {
+  return request({ url: '/lims/quality/capa/task/complete/' + taskId, method: 'put' })
+}

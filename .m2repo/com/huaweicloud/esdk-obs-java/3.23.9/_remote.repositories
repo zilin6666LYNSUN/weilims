@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:29:46 CST 2026
+#Fri Jul 17 21:29:31 CST 2026
 esdk-obs-java-3.23.9.jar>aliyunmaven=
+esdk-obs-java-3.23.9.pom>mirror=
+esdk-obs-java-3.23.9.jar>mirror=
 esdk-obs-java-3.23.9.pom>aliyunmaven=

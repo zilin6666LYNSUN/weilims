@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.training.mapper.LimsTrainingPlanMapper">
+
+    <resultMap type="com.wei.lims.training.domain.LimsTrainingPlan" id="LimsTrainingPlanResult">
+        <result property="planId" column="plan_id"/>
+        <result property="planCode" column="plan_code"/>
+        <result property="planName" column="plan_name"/>
+        <result property="planYear" column="plan_year"/>
+        <result property="trainingType" column="training_type"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select plan_id, plan_code, plan_name, plan_year, training_type, status
+        from lims_training_plan
+    </sql>
+
+    <select id="selectLimsTrainingPlanByPlanId" parameterType="Long" resultMap="LimsTrainingPlanResult">
+        <include refid="selectVo"/> where plan_id = #{planId}
+    </select>
+
+    <select id="selectLimsTrainingPlanList" parameterType="com.wei.lims.training.domain.LimsTrainingPlan" resultMap="LimsTrainingPlanResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="planId != null"> and plan_id = #{planId}</if>
+            <if test="planCode != null and planCode != ''"> and plan_code = #{planCode}</if>
+            <if test="planName != null and planName != ''"> and plan_name = #{planName}</if>
+            <if test="planYear != null"> and plan_year = #{planYear}</if>
+            <if test="trainingType != null and trainingType != ''"> and training_type = #{trainingType}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by plan_id desc
+    </select>
+
+    <insert id="insertLimsTrainingPlan" parameterType="com.wei.lims.training.domain.LimsTrainingPlan" useGeneratedKeys="true" keyProperty="planId">
+        insert into lims_training_plan(
+            plan_code, plan_name, plan_year, training_type, status
+        )values(
+            #{planCode}, #{planName}, #{planYear}, #{trainingType}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsTrainingPlan" parameterType="com.wei.lims.training.domain.LimsTrainingPlan">
+        update lims_training_plan
+        <set>
+            <if test="planCode != null">plan_code = #{planCode},</if>
+            <if test="planName != null">plan_name = #{planName},</if>
+            <if test="planYear != null">plan_year = #{planYear},</if>
+            <if test="trainingType != null">training_type = #{trainingType},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where plan_id = #{planId}
+    </update>
+
+    <delete id="deleteLimsTrainingPlanByPlanId" parameterType="String">
+        delete from lims_training_plan where plan_id in
+        <foreach item="planId" collection="array" open="(" separator="," close=")">
+            #{planId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:47 CST 2026
+#Fri Jul 17 21:28:57 CST 2026
+jackson-databind-2.17.3.pom>mirror=
+jackson-databind-2.17.3.jar>mirror=
 jackson-databind-2.17.3.jar>aliyunmaven=
 jackson-databind-2.17.3.pom>aliyunmaven=

@@ -13,6 +13,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -65,6 +66,16 @@ public class GlobalExceptionHandler {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',发生未知异常.", requestURI, e);
         return AjaxResult.error(e.getMessage());
+    }
+
+    /**
+     * 静态资源不存在
+     */
+    @ExceptionHandler(NoResourceFoundException.class)
+    public AjaxResult handleNoResourceFoundException(NoResourceFoundException e, HttpServletRequest request) {
+        String requestURI = request.getRequestURI();
+        log.warn("请求地址'{}',静态资源不存在:{}", requestURI, e.getMessage());
+        return AjaxResult.error(HttpStatus.NOT_FOUND, "资源不存在");
     }
 
     /**

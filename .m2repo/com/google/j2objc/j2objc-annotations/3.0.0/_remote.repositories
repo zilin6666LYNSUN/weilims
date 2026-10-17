@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:29:45 CST 2026
+#Fri Jul 17 21:29:31 CST 2026
 j2objc-annotations-3.0.0.jar>aliyunmaven=
+j2objc-annotations-3.0.0.jar>mirror=
 j2objc-annotations-3.0.0.pom>aliyunmaven=
+j2objc-annotations-3.0.0.pom>mirror=

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.reagent.mapper.LimsStandardQualificationMapper">
+
+    <resultMap type="com.wei.lims.reagent.domain.LimsStandardQualification" id="LimsStandardQualificationResult">
+        <result property="qualId" column="qual_id"/>
+        <result property="standardId" column="standard_id"/>
+        <result property="qualType" column="qual_type"/>
+        <result property="qualDate" column="qual_date"/>
+        <result property="qualMethod" column="qual_method"/>
+        <result property="testResult" column="test_result"/>
+        <result property="qualifiedConclusion" column="qualified_conclusion"/>
+        <result property="qualifiedBy" column="qualified_by"/>
+        <result property="approvedBy" column="approved_by"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select qual_id, standard_id, qual_type, qual_date, qual_method,
+               test_result, qualified_conclusion, qualified_by, approved_by, status
+        from lims_standard_qualification
+    </sql>
+
+    <select id="selectByQualId" parameterType="Long" resultMap="LimsStandardQualificationResult">
+        <include refid="selectVo"/> where qual_id = #{qualId}
+    </select>
+
+    <select id="selectByStandardId" parameterType="Long" resultMap="LimsStandardQualificationResult">
+        <include refid="selectVo"/> where standard_id = #{standardId} order by qual_date desc
+    </select>
+
+    <select id="selectLimsStandardQualificationList" parameterType="com.wei.lims.reagent.domain.LimsStandardQualification" resultMap="LimsStandardQualificationResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="standardId != null"> and standard_id = #{standardId}</if>
+            <if test="qualType != null and qualType != ''"> and qual_type = #{qualType}</if>
+            <if test="qualifiedConclusion != null and qualifiedConclusion != ''"> and qualified_conclusion = #{qualifiedConclusion}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="qualDate != null"> and qual_date = #{qualDate}</if>
+        </where>
+        order by qual_date desc
+    </select>
+
+    <insert id="insertLimsStandardQualification" parameterType="com.wei.lims.reagent.domain.LimsStandardQualification" useGeneratedKeys="true" keyProperty="qualId">
+        insert into lims_standard_qualification(
+            standard_id, qual_type, qual_date, qual_method, test_result,
+            qualified_conclusion, qualified_by, approved_by, status
+        )values(
+            #{standardId}, #{qualType}, #{qualDate}, #{qualMethod}, #{testResult},
+            #{qualifiedConclusion}, #{qualifiedBy}, #{approvedBy}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsStandardQualification" parameterType="com.wei.lims.reagent.domain.LimsStandardQualification">
+        update lims_standard_qualification
+        <set>
+            <if test="qualType != null">qual_type = #{qualType},</if>
+            <if test="qualDate != null">qual_date = #{qualDate},</if>
+            <if test="qualMethod != null">qual_method = #{qualMethod},</if>
+            <if test="testResult != null">test_result = #{testResult},</if>
+            <if test="qualifiedConclusion != null">qualified_conclusion = #{qualifiedConclusion},</if>
+            <if test="qualifiedBy != null">qualified_by = #{qualifiedBy},</if>
+            <if test="approvedBy != null">approved_by = #{approvedBy},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where qual_id = #{qualId}
+    </update>
+
+    <delete id="deleteLimsStandardQualificationByIds" parameterType="String">
+        delete from lims_standard_qualification where qual_id in
+        <foreach item="qualId" collection="array" open="(" separator="," close=")">
+            #{qualId}
+        </foreach>
+    </delete>
+</mapper>

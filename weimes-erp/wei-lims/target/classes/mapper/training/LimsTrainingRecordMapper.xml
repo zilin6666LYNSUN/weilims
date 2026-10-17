@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.training.mapper.LimsTrainingRecordMapper">
+
+    <resultMap type="com.wei.lims.training.domain.LimsTrainingRecord" id="LimsTrainingRecordResult">
+        <result property="trainingId" column="training_id"/>
+        <result property="planId" column="plan_id"/>
+        <result property="trainingTopic" column="training_topic"/>
+        <result property="trainingType" column="training_type"/>
+        <result property="trainingMethod" column="training_method"/>
+        <result property="trainerId" column="trainer_id"/>
+        <result property="trainerName" column="trainer_name"/>
+        <result property="trainingDate" column="training_date"/>
+        <result property="trainingHours" column="training_hours"/>
+        <result property="trainingContent" column="training_content"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select training_id, plan_id, training_topic, training_type, training_method, trainer_id, trainer_name, training_date, training_hours, training_content, status
+        from lims_training_record
+    </sql>
+
+    <select id="selectLimsTrainingRecordByTrainingId" parameterType="Long" resultMap="LimsTrainingRecordResult">
+        <include refid="selectVo"/> where training_id = #{trainingId}
+    </select>
+
+    <select id="selectLimsTrainingRecordList" parameterType="com.wei.lims.training.domain.LimsTrainingRecord" resultMap="LimsTrainingRecordResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="trainingId != null"> and training_id = #{trainingId}</if>
+            <if test="planId != null"> and plan_id = #{planId}</if>
+            <if test="trainingTopic != null and trainingTopic != ''"> and training_topic = #{trainingTopic}</if>
+            <if test="trainingType != null and trainingType != ''"> and training_type = #{trainingType}</if>
+            <if test="trainingMethod != null and trainingMethod != ''"> and training_method = #{trainingMethod}</if>
+            <if test="trainerId != null"> and trainer_id = #{trainerId}</if>
+            <if test="trainerName != null and trainerName != ''"> and trainer_name = #{trainerName}</if>
+            <if test="trainingDate != null"> and training_date = #{trainingDate}</if>
+            <if test="trainingHours != null"> and training_hours = #{trainingHours}</if>
+            <if test="trainingContent != null and trainingContent != ''"> and training_content = #{trainingContent}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by training_id desc
+    </select>
+
+    <insert id="insertLimsTrainingRecord" parameterType="com.wei.lims.training.domain.LimsTrainingRecord" useGeneratedKeys="true" keyProperty="trainingId">
+        insert into lims_training_record(
+            plan_id, training_topic, training_type, training_method, trainer_id, trainer_name, training_date, training_hours, training_content, status
+        )values(
+            #{planId}, #{trainingTopic}, #{trainingType}, #{trainingMethod}, #{trainerId}, #{trainerName}, #{trainingDate}, #{trainingHours}, #{trainingContent}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsTrainingRecord" parameterType="com.wei.lims.training.domain.LimsTrainingRecord">
+        update lims_training_record
+        <set>
+            <if test="planId != null">plan_id = #{planId},</if>
+            <if test="trainingTopic != null">training_topic = #{trainingTopic},</if>
+            <if test="trainingType != null">training_type = #{trainingType},</if>
+            <if test="trainingMethod != null">training_method = #{trainingMethod},</if>
+            <if test="trainerId != null">trainer_id = #{trainerId},</if>
+            <if test="trainerName != null">trainer_name = #{trainerName},</if>
+            <if test="trainingDate != null">training_date = #{trainingDate},</if>
+            <if test="trainingHours != null">training_hours = #{trainingHours},</if>
+            <if test="trainingContent != null">training_content = #{trainingContent},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where training_id = #{trainingId}
+    </update>
+
+    <delete id="deleteLimsTrainingRecordByTrainingId" parameterType="String">
+        delete from lims_training_record where training_id in
+        <foreach item="trainingId" collection="array" open="(" separator="," close=")">
+            #{trainingId}
+        </foreach>
+    </delete>
+</mapper>

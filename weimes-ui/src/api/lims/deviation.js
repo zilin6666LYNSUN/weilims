@@ -25,3 +25,24 @@ export function approveDeviation(deviationId) {
 export function closeDeviation(deviationId) {
   return request({ url: '/lims/deviation/close/' + deviationId, method: 'put' })
 }
+
+
+// 偏差影响评估
+export function listDeviationImpact(query) {
+  return request({ url: '/lims/quality/deviation/impact/list', method: 'get', params: query })
+}
+export function listDeviationImpactByDeviation(deviationId) {
+  return request({ url: '/lims/quality/deviation/impact/list/' + deviationId, method: 'get' })
+}
+export function getDeviationImpact(impactId) {
+  return request({ url: '/lims/quality/deviation/impact/' + impactId, method: 'get' })
+}
+export function addDeviationImpact(data) {
+  return request({ url: '/lims/quality/deviation/impact', method: 'post', data: data })
+}
+export function updateDeviationImpact(data) {
+  return request({ url: '/lims/quality/deviation/impact', method: 'put', data: data })
+}
+export function delDeviationImpact(impactIds) {
+  return request({ url: '/lims/quality/deviation/impact/' + impactIds, method: 'delete' })
+}

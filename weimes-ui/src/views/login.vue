@@ -4,15 +4,15 @@
     <div class="left-box">
 
       <div class="left-bottom">
-        <h2>WEIMES</h2>
+        <h2>LIMS</h2>
         <h3>您好，欢迎来到这里</h3>
-        <h6>这里是制造执行系统</h6>
+        <h6>这里是LIMS系统</h6>
       </div>
       <img src="../assets/images/image.png" class="left-top" />
     </div>
     <div class="right-box">
       <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-        <h2 class="title">企业资源管理系统</h2>
+        <h2 class="title">LIMS系统</h2>
         <el-form-item prop="username">
           <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
             <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />

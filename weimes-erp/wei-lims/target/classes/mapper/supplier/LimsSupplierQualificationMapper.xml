@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.supplier.mapper.LimsSupplierQualificationMapper">
+
+    <resultMap type="com.wei.lims.supplier.domain.LimsSupplierQualification" id="LimsSupplierQualificationResult">
+        <result property="qualificationId" column="qualification_id"/>
+        <result property="vendorId" column="vendor_id"/>
+        <result property="qualificationType" column="qualification_type"/>
+        <result property="certificateNo" column="certificate_no"/>
+        <result property="issueDate" column="issue_date"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="certificateFile" column="certificate_file"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select qualification_id, vendor_id, qualification_type, certificate_no, issue_date, expire_date, certificate_file, status
+        from lims_supplier_qualification
+    </sql>
+
+    <select id="selectLimsSupplierQualificationByQualificationId" parameterType="Long" resultMap="LimsSupplierQualificationResult">
+        <include refid="selectVo"/> where qualification_id = #{qualificationId}
+    </select>
+
+    <select id="selectLimsSupplierQualificationList" parameterType="com.wei.lims.supplier.domain.LimsSupplierQualification" resultMap="LimsSupplierQualificationResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="qualificationId != null"> and qualification_id = #{qualificationId}</if>
+            <if test="vendorId != null"> and vendor_id = #{vendorId}</if>
+            <if test="qualificationType != null and qualificationType != ''"> and qualification_type = #{qualificationType}</if>
+            <if test="certificateNo != null and certificateNo != ''"> and certificate_no = #{certificateNo}</if>
+            <if test="issueDate != null"> and issue_date = #{issueDate}</if>
+            <if test="expireDate != null"> and expire_date = #{expireDate}</if>
+            <if test="certificateFile != null and certificateFile != ''"> and certificate_file = #{certificateFile}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by qualification_id desc
+    </select>
+
+    <insert id="insertLimsSupplierQualification" parameterType="com.wei.lims.supplier.domain.LimsSupplierQualification" useGeneratedKeys="true" keyProperty="qualificationId">
+        insert into lims_supplier_qualification(
+            vendor_id, qualification_type, certificate_no, issue_date, expire_date, certificate_file, status
+        )values(
+            #{vendorId}, #{qualificationType}, #{certificateNo}, #{issueDate}, #{expireDate}, #{certificateFile}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsSupplierQualification" parameterType="com.wei.lims.supplier.domain.LimsSupplierQualification">
+        update lims_supplier_qualification
+        <set>
+            <if test="vendorId != null">vendor_id = #{vendorId},</if>
+            <if test="qualificationType != null">qualification_type = #{qualificationType},</if>
+            <if test="certificateNo != null">certificate_no = #{certificateNo},</if>
+            <if test="issueDate != null">issue_date = #{issueDate},</if>
+            <if test="expireDate != null">expire_date = #{expireDate},</if>
+            <if test="certificateFile != null">certificate_file = #{certificateFile},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where qualification_id = #{qualificationId}
+    </update>
+
+    <delete id="deleteLimsSupplierQualificationByQualificationId" parameterType="String">
+        delete from lims_supplier_qualification where qualification_id in
+        <foreach item="qualificationId" collection="array" open="(" separator="," close=")">
+            #{qualificationId}
+        </foreach>
+    </delete>
+</mapper>

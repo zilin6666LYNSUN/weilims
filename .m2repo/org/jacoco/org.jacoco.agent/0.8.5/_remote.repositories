@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:29:46 CST 2026
+#Fri Jul 17 21:29:31 CST 2026
 org.jacoco.agent-0.8.5-runtime.jar>aliyunmaven=
 org.jacoco.agent-0.8.5.pom>aliyunmaven=
+org.jacoco.agent-0.8.5-runtime.jar>mirror=
+org.jacoco.agent-0.8.5.pom>mirror=

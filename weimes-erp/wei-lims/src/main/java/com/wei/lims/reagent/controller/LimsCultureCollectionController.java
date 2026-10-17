@@ -53,4 +53,28 @@ public class LimsCultureCollectionController extends BaseController {
     public AjaxResult remove(@PathVariable Long[] cultureIds) {
         return toAjax(limsCultureCollectionService.deleteLimsCultureCollectionByIds(cultureIds));
     }
+
+    /** 接收入库 */
+    @PreAuthorize("@ss.hasPermi('lims:reagent:edit')")
+    @Log(title = "菌种管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/receive/{cultureId}")
+    public AjaxResult receive(@PathVariable Long cultureId) {
+        return toAjax(limsCultureCollectionService.receiveCulture(cultureId));
+    }
+
+    /** 传代 */
+    @PreAuthorize("@ss.hasPermi('lims:reagent:edit')")
+    @Log(title = "菌种管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/passage/{cultureId}")
+    public AjaxResult passage(@PathVariable Long cultureId, @RequestParam(required = false) String viabilityResult) {
+        return toAjax(limsCultureCollectionService.passageCulture(cultureId, viabilityResult));
+    }
+
+    /** 销毁出库 */
+    @PreAuthorize("@ss.hasPermi('lims:reagent:edit')")
+    @Log(title = "菌种管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/discard/{cultureId}")
+    public AjaxResult discard(@PathVariable Long cultureId, @RequestParam(required = false) String reason) {
+        return toAjax(limsCultureCollectionService.discardCulture(cultureId, reason));
+    }
 }

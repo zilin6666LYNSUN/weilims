@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:29:45 CST 2026
+#Fri Jul 17 21:29:30 CST 2026
+failureaccess-1.0.2.pom>mirror=
 failureaccess-1.0.2.jar>aliyunmaven=
 failureaccess-1.0.2.pom>aliyunmaven=
+failureaccess-1.0.2.jar>mirror=

@@ -1,7 +1,7 @@
 # ktg-mes-ui
 
 #### Description
-开源、免费MES系统的前端
+开源、免费LIMS系统的前端
 
 #### Software Architecture
 Software architecture description

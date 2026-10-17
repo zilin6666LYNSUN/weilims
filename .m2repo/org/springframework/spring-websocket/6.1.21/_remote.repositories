@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:53 CST 2026
+#Fri Jul 17 21:28:58 CST 2026
 spring-websocket-6.1.21.jar>aliyunmaven=
 spring-websocket-6.1.21.pom>aliyunmaven=
+spring-websocket-6.1.21.pom>mirror=
+spring-websocket-6.1.21.jar>mirror=

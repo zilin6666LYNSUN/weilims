@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:19 CST 2026
+#Fri Jul 17 21:30:53 CST 2026
+liquibase-core-4.27.0.jar>mirror=
 liquibase-core-4.27.0.pom>aliyunmaven=
+liquibase-core-4.27.0.pom>mirror=
 liquibase-core-4.27.0.jar>aliyunmaven=

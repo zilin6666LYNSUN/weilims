@@ -1,5 +1,8 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:30:04 CST 2026
+#Fri Jul 17 21:31:32 CST 2026
+netty-resolver-dns-native-macos-4.1.122.Final.pom>mirror=
+netty-resolver-dns-native-macos-4.1.122.Final-osx-x86_64.jar>mirror=
 netty-resolver-dns-native-macos-4.1.122.Final-osx-aarch_64.jar>aliyunmaven=
 netty-resolver-dns-native-macos-4.1.122.Final.pom>aliyunmaven=
+netty-resolver-dns-native-macos-4.1.122.Final-osx-aarch_64.jar>mirror=
 netty-resolver-dns-native-macos-4.1.122.Final-osx-x86_64.jar>aliyunmaven=

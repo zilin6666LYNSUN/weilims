@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.supplier.mapper.LimsSupplierAuditMapper">
+
+    <resultMap type="com.wei.lims.supplier.domain.LimsSupplierAudit" id="LimsSupplierAuditResult">
+        <result property="auditId" column="audit_id"/>
+        <result property="vendorId" column="vendor_id"/>
+        <result property="auditCode" column="audit_code"/>
+        <result property="auditType" column="audit_type"/>
+        <result property="auditDate" column="audit_date"/>
+        <result property="auditorIds" column="auditor_ids"/>
+        <result property="auditScope" column="audit_scope"/>
+        <result property="auditFindings" column="audit_findings"/>
+        <result property="auditClassification" column="audit_classification"/>
+        <result property="capaRequired" column="capa_required"/>
+        <result property="capaIds" column="capa_ids"/>
+        <result property="auditScore" column="audit_score"/>
+        <result property="nextAuditDate" column="next_audit_date"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select audit_id, vendor_id, audit_code, audit_type, audit_date, auditor_ids, audit_scope, audit_findings, audit_classification, capa_required, capa_ids, audit_score, next_audit_date, status
+        from lims_supplier_audit
+    </sql>
+
+    <select id="selectLimsSupplierAuditByAuditId" parameterType="Long" resultMap="LimsSupplierAuditResult">
+        <include refid="selectVo"/> where audit_id = #{auditId}
+    </select>
+
+    <select id="selectLimsSupplierAuditList" parameterType="com.wei.lims.supplier.domain.LimsSupplierAudit" resultMap="LimsSupplierAuditResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="auditId != null"> and audit_id = #{auditId}</if>
+            <if test="vendorId != null"> and vendor_id = #{vendorId}</if>
+            <if test="auditCode != null and auditCode != ''"> and audit_code = #{auditCode}</if>
+            <if test="auditType != null and auditType != ''"> and audit_type = #{auditType}</if>
+            <if test="auditDate != null"> and audit_date = #{auditDate}</if>
+            <if test="auditorIds != null and auditorIds != ''"> and auditor_ids = #{auditorIds}</if>
+            <if test="auditScope != null and auditScope != ''"> and audit_scope = #{auditScope}</if>
+            <if test="auditFindings != null and auditFindings != ''"> and audit_findings = #{auditFindings}</if>
+            <if test="auditClassification != null and auditClassification != ''"> and audit_classification = #{auditClassification}</if>
+            <if test="capaRequired != null"> and capa_required = #{capaRequired}</if>
+            <if test="capaIds != null and capaIds != ''"> and capa_ids = #{capaIds}</if>
+            <if test="auditScore != null"> and audit_score = #{auditScore}</if>
+            <if test="nextAuditDate != null"> and next_audit_date = #{nextAuditDate}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by audit_id desc
+    </select>
+
+    <insert id="insertLimsSupplierAudit" parameterType="com.wei.lims.supplier.domain.LimsSupplierAudit" useGeneratedKeys="true" keyProperty="auditId">
+        insert into lims_supplier_audit(
+            vendor_id, audit_code, audit_type, audit_date, auditor_ids, audit_scope, audit_findings, audit_classification, capa_required, capa_ids, audit_score, next_audit_date, status
+        )values(
+            #{vendorId}, #{auditCode}, #{auditType}, #{auditDate}, #{auditorIds}, #{auditScope}, #{auditFindings}, #{auditClassification}, #{capaRequired}, #{capaIds}, #{auditScore}, #{nextAuditDate}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsSupplierAudit" parameterType="com.wei.lims.supplier.domain.LimsSupplierAudit">
+        update lims_supplier_audit
+        <set>
+            <if test="vendorId != null">vendor_id = #{vendorId},</if>
+            <if test="auditCode != null">audit_code = #{auditCode},</if>
+            <if test="auditType != null">audit_type = #{auditType},</if>
+            <if test="auditDate != null">audit_date = #{auditDate},</if>
+            <if test="auditorIds != null">auditor_ids = #{auditorIds},</if>
+            <if test="auditScope != null">audit_scope = #{auditScope},</if>
+            <if test="auditFindings != null">audit_findings = #{auditFindings},</if>
+            <if test="auditClassification != null">audit_classification = #{auditClassification},</if>
+            <if test="capaRequired != null">capa_required = #{capaRequired},</if>
+            <if test="capaIds != null">capa_ids = #{capaIds},</if>
+            <if test="auditScore != null">audit_score = #{auditScore},</if>
+            <if test="nextAuditDate != null">next_audit_date = #{nextAuditDate},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where audit_id = #{auditId}
+    </update>
+
+    <delete id="deleteLimsSupplierAuditByAuditId" parameterType="String">
+        delete from lims_supplier_audit where audit_id in
+        <foreach item="auditId" collection="array" open="(" separator="," close=")">
+            #{auditId}
+        </foreach>
+    </delete>
+</mapper>

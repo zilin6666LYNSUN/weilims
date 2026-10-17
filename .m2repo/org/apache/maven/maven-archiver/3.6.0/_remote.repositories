@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:26:45 CST 2026
+#Fri Jul 17 22:01:33 CST 2026
 maven-archiver-3.6.0.jar>aliyunmaven=
 maven-archiver-3.6.0.pom>aliyunmaven=
+maven-archiver-3.6.0.jar>mirror=
+maven-archiver-3.6.0.pom>mirror=

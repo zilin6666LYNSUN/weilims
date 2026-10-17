@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:26:22 CST 2026
+#Fri Jul 17 21:30:26 CST 2026
 ooxml-schemas-1.4.jar>aliyunmaven=
+ooxml-schemas-1.4.pom>mirror=
 ooxml-schemas-1.4.pom>aliyunmaven=
+ooxml-schemas-1.4.jar>mirror=

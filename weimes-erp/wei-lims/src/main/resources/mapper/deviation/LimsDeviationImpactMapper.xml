@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.deviation.mapper.LimsDeviationImpactMapper">
+
+    <resultMap type="com.wei.lims.deviation.domain.LimsDeviationImpact" id="LimsDeviationImpactResult">
+        <result property="impactId" column="impact_id"/>
+        <result property="deviationId" column="deviation_id"/>
+        <result property="impactArea" column="impact_area"/>
+        <result property="impactDescription" column="impact_description"/>
+        <result property="impactLevel" column="impact_level"/>
+        <result property="assessedBy" column="assessed_by"/>
+        <result property="assessedDate" column="assessed_date"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select impact_id, deviation_id, impact_area, impact_description,
+               impact_level, assessed_by, assessed_date
+        from lims_deviation_impact
+    </sql>
+
+    <select id="selectByImpactId" parameterType="Long" resultMap="LimsDeviationImpactResult">
+        <include refid="selectVo"/> where impact_id = #{impactId}
+    </select>
+
+    <select id="selectByDeviationId" parameterType="Long" resultMap="LimsDeviationImpactResult">
+        <include refid="selectVo"/> where deviation_id = #{deviationId} order by impact_id asc
+    </select>
+
+    <select id="selectLimsDeviationImpactList" parameterType="com.wei.lims.deviation.domain.LimsDeviationImpact" resultMap="LimsDeviationImpactResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="deviationId != null"> and deviation_id = #{deviationId}</if>
+            <if test="impactArea != null and impactArea != ''"> and impact_area = #{impactArea}</if>
+            <if test="impactLevel != null and impactLevel != ''"> and impact_level = #{impactLevel}</if>
+            <if test="assessedBy != null"> and assessed_by = #{assessedBy}</if>
+        </where>
+        order by impact_id desc
+    </select>
+
+    <insert id="insertLimsDeviationImpact" parameterType="com.wei.lims.deviation.domain.LimsDeviationImpact" useGeneratedKeys="true" keyProperty="impactId">
+        insert into lims_deviation_impact(
+            deviation_id, impact_area, impact_description, impact_level, assessed_by, assessed_date
+        )values(
+            #{deviationId}, #{impactArea}, #{impactDescription}, #{impactLevel}, #{assessedBy}, #{assessedDate}
+        )
+    </insert>
+
+    <update id="updateLimsDeviationImpact" parameterType="com.wei.lims.deviation.domain.LimsDeviationImpact">
+        update lims_deviation_impact
+        <set>
+            <if test="impactArea != null">impact_area = #{impactArea},</if>
+            <if test="impactDescription != null">impact_description = #{impactDescription},</if>
+            <if test="impactLevel != null">impact_level = #{impactLevel},</if>
+            <if test="assessedBy != null">assessed_by = #{assessedBy},</if>
+            <if test="assessedDate != null">assessed_date = #{assessedDate},</if>
+        </set>
+        where impact_id = #{impactId}
+    </update>
+
+    <delete id="deleteLimsDeviationImpactByIds" parameterType="String">
+        delete from lims_deviation_impact where impact_id in
+        <foreach item="impactId" collection="array" open="(" separator="," close=")">
+            #{impactId}
+        </foreach>
+    </delete>
+</mapper>

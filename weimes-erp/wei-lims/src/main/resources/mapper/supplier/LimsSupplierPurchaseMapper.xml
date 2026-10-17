@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.supplier.mapper.LimsSupplierPurchaseMapper">
+
+    <resultMap type="com.wei.lims.supplier.domain.LimsSupplierPurchase" id="LimsSupplierPurchaseResult">
+        <result property="purchaseId" column="purchase_id"/>
+        <result property="vendorId" column="vendor_id"/>
+        <result property="purchaseNo" column="purchase_no"/>
+        <result property="purchaseDate" column="purchase_date"/>
+        <result property="materialType" column="material_type"/>
+        <result property="materialName" column="material_name"/>
+        <result property="reagentId" column="reagent_id"/>
+        <result property="quantity" column="quantity"/>
+        <result property="unitOfMeasure" column="unit_of_measure"/>
+        <result property="unitPrice" column="unit_price"/>
+        <result property="totalAmount" column="total_amount"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select purchase_id, vendor_id, purchase_no, purchase_date, material_type, material_name, reagent_id, quantity, unit_of_measure, unit_price, total_amount, status, remark
+        from lims_supplier_purchase
+    </sql>
+
+    <select id="selectLimsSupplierPurchaseByPurchaseId" parameterType="Long" resultMap="LimsSupplierPurchaseResult">
+        <include refid="selectVo"/> where purchase_id = #{purchaseId}
+    </select>
+
+    <select id="selectLimsSupplierPurchaseList" parameterType="com.wei.lims.supplier.domain.LimsSupplierPurchase" resultMap="LimsSupplierPurchaseResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="purchaseId != null"> and purchase_id = #{purchaseId}</if>
+            <if test="vendorId != null"> and vendor_id = #{vendorId}</if>
+            <if test="purchaseNo != null and purchaseNo != ''"> and purchase_no = #{purchaseNo}</if>
+            <if test="purchaseDate != null"> and purchase_date = #{purchaseDate}</if>
+            <if test="materialType != null and materialType != ''"> and material_type = #{materialType}</if>
+            <if test="materialName != null and materialName != ''"> and material_name = #{materialName}</if>
+            <if test="reagentId != null"> and reagent_id = #{reagentId}</if>
+            <if test="quantity != null"> and quantity = #{quantity}</if>
+            <if test="unitOfMeasure != null and unitOfMeasure != ''"> and unit_of_measure = #{unitOfMeasure}</if>
+            <if test="unitPrice != null"> and unit_price = #{unitPrice}</if>
+            <if test="totalAmount != null"> and total_amount = #{totalAmount}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+        </where>
+        order by purchase_id desc
+    </select>
+
+    <insert id="insertLimsSupplierPurchase" parameterType="com.wei.lims.supplier.domain.LimsSupplierPurchase" useGeneratedKeys="true" keyProperty="purchaseId">
+        insert into lims_supplier_purchase(
+            vendor_id, purchase_no, purchase_date, material_type, material_name, reagent_id, quantity, unit_of_measure, unit_price, total_amount, status, remark
+        )values(
+            #{vendorId}, #{purchaseNo}, #{purchaseDate}, #{materialType}, #{materialName}, #{reagentId}, #{quantity}, #{unitOfMeasure}, #{unitPrice}, #{totalAmount}, #{status}, #{remark}
+        )
+    </insert>
+
+    <update id="updateLimsSupplierPurchase" parameterType="com.wei.lims.supplier.domain.LimsSupplierPurchase">
+        update lims_supplier_purchase
+        <set>
+            <if test="vendorId != null">vendor_id = #{vendorId},</if>
+            <if test="purchaseNo != null">purchase_no = #{purchaseNo},</if>
+            <if test="purchaseDate != null">purchase_date = #{purchaseDate},</if>
+            <if test="materialType != null">material_type = #{materialType},</if>
+            <if test="materialName != null">material_name = #{materialName},</if>
+            <if test="reagentId != null">reagent_id = #{reagentId},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="unitOfMeasure != null">unit_of_measure = #{unitOfMeasure},</if>
+            <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+            <if test="totalAmount != null">total_amount = #{totalAmount},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </set>
+        where purchase_id = #{purchaseId}
+    </update>
+
+    <delete id="deleteLimsSupplierPurchaseByPurchaseId" parameterType="String">
+        delete from lims_supplier_purchase where purchase_id in
+        <foreach item="purchaseId" collection="array" open="(" separator="," close=")">
+            #{purchaseId}
+        </foreach>
+    </delete>
+</mapper>

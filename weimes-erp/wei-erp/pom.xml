@@ -157,7 +157,7 @@
             <!--                <version>${jasypt.version}</version>-->
             <!--            </plugin>-->
         </plugins>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>wei-lims</finalName>
     </build>
 
 

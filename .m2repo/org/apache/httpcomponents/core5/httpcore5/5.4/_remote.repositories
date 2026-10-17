@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:30:43 CST 2026
+#Fri Jul 17 21:31:55 CST 2026
 httpcore5-5.4.jar>aliyunmaven=
+httpcore5-5.4.jar>mirror=
+httpcore5-5.4.pom>mirror=
 httpcore5-5.4.pom>aliyunmaven=

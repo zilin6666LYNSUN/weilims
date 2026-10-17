@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:51 CST 2026
+#Fri Jul 17 21:28:58 CST 2026
 objenesis-3.4.pom>aliyunmaven=
+objenesis-3.4.jar>mirror=
 objenesis-3.4.jar>aliyunmaven=
+objenesis-3.4.pom>mirror=

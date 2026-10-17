@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.training.mapper.LimsTrainingParticipantMapper">
+
+    <resultMap type="com.wei.lims.training.domain.LimsTrainingParticipant" id="LimsTrainingParticipantResult">
+        <result property="participantId" column="participant_id"/>
+        <result property="trainingId" column="training_id"/>
+        <result property="staffId" column="staff_id"/>
+        <result property="staffName" column="staff_name"/>
+        <result property="attendanceStatus" column="attendance_status"/>
+        <result property="examScore" column="exam_score"/>
+        <result property="examPassed" column="exam_passed"/>
+        <result property="practicalPassed" column="practical_passed"/>
+        <result property="certificateNo" column="certificate_no"/>
+        <result property="certificateExpire" column="certificate_expire"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select participant_id, training_id, staff_id, staff_name, attendance_status, exam_score, exam_passed, practical_passed, certificate_no, certificate_expire
+        from lims_training_participant
+    </sql>
+
+    <select id="selectLimsTrainingParticipantByParticipantId" parameterType="Long" resultMap="LimsTrainingParticipantResult">
+        <include refid="selectVo"/> where participant_id = #{participantId}
+    </select>
+
+    <select id="selectLimsTrainingParticipantList" parameterType="com.wei.lims.training.domain.LimsTrainingParticipant" resultMap="LimsTrainingParticipantResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="participantId != null"> and participant_id = #{participantId}</if>
+            <if test="trainingId != null"> and training_id = #{trainingId}</if>
+            <if test="staffId != null"> and staff_id = #{staffId}</if>
+            <if test="staffName != null and staffName != ''"> and staff_name = #{staffName}</if>
+            <if test="attendanceStatus != null and attendanceStatus != ''"> and attendance_status = #{attendanceStatus}</if>
+            <if test="examScore != null"> and exam_score = #{examScore}</if>
+            <if test="examPassed != null"> and exam_passed = #{examPassed}</if>
+            <if test="practicalPassed != null"> and practical_passed = #{practicalPassed}</if>
+            <if test="certificateNo != null and certificateNo != ''"> and certificate_no = #{certificateNo}</if>
+            <if test="certificateExpire != null"> and certificate_expire = #{certificateExpire}</if>
+        </where>
+        order by participant_id desc
+    </select>
+
+    <insert id="insertLimsTrainingParticipant" parameterType="com.wei.lims.training.domain.LimsTrainingParticipant" useGeneratedKeys="true" keyProperty="participantId">
+        insert into lims_training_participant(
+            training_id, staff_id, staff_name, attendance_status, exam_score, exam_passed, practical_passed, certificate_no, certificate_expire
+        )values(
+            #{trainingId}, #{staffId}, #{staffName}, #{attendanceStatus}, #{examScore}, #{examPassed}, #{practicalPassed}, #{certificateNo}, #{certificateExpire}
+        )
+    </insert>
+
+    <update id="updateLimsTrainingParticipant" parameterType="com.wei.lims.training.domain.LimsTrainingParticipant">
+        update lims_training_participant
+        <set>
+            <if test="trainingId != null">training_id = #{trainingId},</if>
+            <if test="staffId != null">staff_id = #{staffId},</if>
+            <if test="staffName != null">staff_name = #{staffName},</if>
+            <if test="attendanceStatus != null">attendance_status = #{attendanceStatus},</if>
+            <if test="examScore != null">exam_score = #{examScore},</if>
+            <if test="examPassed != null">exam_passed = #{examPassed},</if>
+            <if test="practicalPassed != null">practical_passed = #{practicalPassed},</if>
+            <if test="certificateNo != null">certificate_no = #{certificateNo},</if>
+            <if test="certificateExpire != null">certificate_expire = #{certificateExpire},</if>
+        </set>
+        where participant_id = #{participantId}
+    </update>
+
+    <select id="selectByTrainingId" parameterType="Long" resultMap="LimsTrainingParticipantResult">
+        <include refid="selectVo"/> where training_id = #{trainingId} order by participant_id asc
+    </select>
+
+    <delete id="deleteLimsTrainingParticipantByParticipantId" parameterType="String">
+        delete from lims_training_participant where participant_id in
+        <foreach item="participantId" collection="array" open="(" separator="," close=")">
+            #{participantId}
+        </foreach>
+    </delete>
+</mapper>

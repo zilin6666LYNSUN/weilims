@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:54:26 CST 2026
+#Fri Jul 17 21:28:39 CST 2026
 annotations-13.0.jar>aliyunmaven=
+annotations-13.0.pom>mirror=
 annotations-13.0.pom>aliyunmaven=
+annotations-13.0.jar>mirror=

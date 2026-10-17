@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:54:26 CST 2026
+#Fri Jul 17 21:28:39 CST 2026
+jline-3.24.1.pom>mirror=
 jline-3.24.1.pom>aliyunmaven=
 jline-3.24.1.jar>aliyunmaven=
+jline-3.24.1.jar>mirror=

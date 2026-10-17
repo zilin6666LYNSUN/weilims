@@ -6,14 +6,19 @@ import com.wei.common.utils.DateUtils;
 import com.wei.lims.test.domain.LimsTestMethod;
 import com.wei.lims.test.mapper.LimsTestMethodMapper;
 import com.wei.lims.test.service.ILimsTestMethodService;
+import com.wei.lims.esign.service.ILimsAuditTrailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LimsTestMethodServiceImpl implements ILimsTestMethodService {
 
     @Autowired
     private LimsTestMethodMapper limsTestMethodMapper;
+
+    @Autowired
+    private ILimsAuditTrailService limsAuditTrailService;
 
     @Override
     public LimsTestMethod selectLimsTestMethodByMethodId(Long methodId) {
@@ -26,19 +31,34 @@ public class LimsTestMethodServiceImpl implements ILimsTestMethodService {
     }
 
     @Override
+    @Transactional
     public int insertLimsTestMethod(LimsTestMethod method) {
         method.setCreateTime(DateUtils.getNowDate());
-        return limsTestMethodMapper.insertLimsTestMethod(method);
+        int rows = limsTestMethodMapper.insertLimsTestMethod(method);
+        limsAuditTrailService.recordFieldChanges("lims_test_method", method.getMethodId(),
+                "INSERT", null, method, "新建检验方法");
+        return rows;
     }
 
     @Override
+    @Transactional
     public int updateLimsTestMethod(LimsTestMethod method) {
         method.setUpdateTime(DateUtils.getNowDate());
-        return limsTestMethodMapper.updateLimsTestMethod(method);
+        LimsTestMethod oldMethod = limsTestMethodMapper.selectLimsTestMethodByMethodId(method.getMethodId());
+        int rows = limsTestMethodMapper.updateLimsTestMethod(method);
+        limsAuditTrailService.recordFieldChanges("lims_test_method", method.getMethodId(),
+                "UPDATE", oldMethod, method, "更新检验方法");
+        return rows;
     }
 
     @Override
+    @Transactional
     public int deleteLimsTestMethodByMethodIds(Long[] methodIds) {
+        for (Long methodId : methodIds) {
+            LimsTestMethod oldMethod = limsTestMethodMapper.selectLimsTestMethodByMethodId(methodId);
+            limsAuditTrailService.recordFieldChanges("lims_test_method", methodId,
+                    "DELETE", oldMethod, null, "删除检验方法");
+        }
         return limsTestMethodMapper.deleteLimsTestMethodByMethodIds(methodIds);
     }
 

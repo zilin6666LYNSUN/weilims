@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:52 CST 2026
+#Fri Jul 17 21:28:58 CST 2026
 HikariCP-5.1.0.jar>aliyunmaven=
+HikariCP-5.1.0.jar>mirror=
 HikariCP-5.1.0.pom>aliyunmaven=
+HikariCP-5.1.0.pom>mirror=

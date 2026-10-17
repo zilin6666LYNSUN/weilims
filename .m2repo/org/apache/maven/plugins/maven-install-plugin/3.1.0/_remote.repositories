@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:34:46 CST 2026
+#Fri Jul 17 22:01:25 CST 2026
 maven-install-plugin-3.1.0.jar>aliyunmaven=
+maven-install-plugin-3.1.0.jar>mirror=
+maven-install-plugin-3.1.0.pom>mirror=
 maven-install-plugin-3.1.0.pom>aliyunmaven=

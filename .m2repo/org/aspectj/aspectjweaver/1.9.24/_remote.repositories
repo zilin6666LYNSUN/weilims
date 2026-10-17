@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:59:16 CST 2026
+#Fri Jul 17 21:29:18 CST 2026
+aspectjweaver-1.9.24.pom>mirror=
 aspectjweaver-1.9.24.jar>aliyunmaven=
+aspectjweaver-1.9.24.jar>mirror=
 aspectjweaver-1.9.24.pom>aliyunmaven=

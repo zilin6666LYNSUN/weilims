@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:26:22 CST 2026
+#Fri Jul 17 21:30:26 CST 2026
 checker-qual-2.11.1.pom>aliyunmaven=
+checker-qual-2.11.1.pom>mirror=
 checker-qual-2.11.1.jar>aliyunmaven=
+checker-qual-2.11.1.jar>mirror=

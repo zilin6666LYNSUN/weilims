@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.entrust.mapper.LimsEntrustTemplateMapper">
+
+    <resultMap type="com.wei.lims.entrust.domain.LimsEntrustTemplate" id="LimsEntrustTemplateResult">
+        <result property="templateId" column="template_id"/>
+        <result property="templateCode" column="template_code"/>
+        <result property="templateName" column="template_name"/>
+        <result property="templateFields" column="template_fields"/>
+        <result property="defaultRemark" column="default_remark"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select template_id, template_code, template_name, template_fields, default_remark, status
+        from lims_entrust_template
+    </sql>
+
+    <select id="selectLimsEntrustTemplateByTemplateId" parameterType="Long" resultMap="LimsEntrustTemplateResult">
+        <include refid="selectVo"/> where template_id = #{templateId}
+    </select>
+
+    <select id="selectLimsEntrustTemplateList" parameterType="com.wei.lims.entrust.domain.LimsEntrustTemplate" resultMap="LimsEntrustTemplateResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="templateId != null"> and template_id = #{templateId}</if>
+            <if test="templateCode != null and templateCode != ''"> and template_code = #{templateCode}</if>
+            <if test="templateName != null and templateName != ''"> and template_name = #{templateName}</if>
+            <if test="templateFields != null and templateFields != ''"> and template_fields = #{templateFields}</if>
+            <if test="defaultRemark != null and defaultRemark != ''"> and default_remark = #{defaultRemark}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by template_id desc
+    </select>
+
+    <insert id="insertLimsEntrustTemplate" parameterType="com.wei.lims.entrust.domain.LimsEntrustTemplate" useGeneratedKeys="true" keyProperty="templateId">
+        insert into lims_entrust_template(
+            template_code, template_name, template_fields, default_remark, status
+        )values(
+            #{templateCode}, #{templateName}, #{templateFields}, #{defaultRemark}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsEntrustTemplate" parameterType="com.wei.lims.entrust.domain.LimsEntrustTemplate">
+        update lims_entrust_template
+        <set>
+            <if test="templateCode != null">template_code = #{templateCode},</if>
+            <if test="templateName != null">template_name = #{templateName},</if>
+            <if test="templateFields != null">template_fields = #{templateFields},</if>
+            <if test="defaultRemark != null">default_remark = #{defaultRemark},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where template_id = #{templateId}
+    </update>
+
+    <delete id="deleteLimsEntrustTemplateByTemplateId" parameterType="String">
+        delete from lims_entrust_template where template_id in
+        <foreach item="templateId" collection="array" open="(" separator="," close=")">
+            #{templateId}
+        </foreach>
+    </delete>
+</mapper>

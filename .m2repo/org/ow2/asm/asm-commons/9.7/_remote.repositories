@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:30:44 CST 2026
+#Fri Jul 17 21:31:55 CST 2026
 asm-commons-9.7.jar>aliyunmaven=
+asm-commons-9.7.jar>mirror=
+asm-commons-9.7.pom>mirror=
 asm-commons-9.7.pom>aliyunmaven=

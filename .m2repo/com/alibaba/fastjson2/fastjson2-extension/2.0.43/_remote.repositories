@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:26:21 CST 2026
+#Fri Jul 17 21:30:26 CST 2026
+fastjson2-extension-2.0.43.jar>mirror=
 fastjson2-extension-2.0.43.jar>aliyunmaven=
 fastjson2-extension-2.0.43.pom>aliyunmaven=
+fastjson2-extension-2.0.43.pom>mirror=

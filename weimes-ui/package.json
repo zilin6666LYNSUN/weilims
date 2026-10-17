@@ -1,8 +1,8 @@
 {
   "name": "weimes-ui",
   "version": "1.0.0",
-  "description": "MES",
-  "author": "weimes",
+  "description": "LIMS",
+  "author": "LIMS",
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",

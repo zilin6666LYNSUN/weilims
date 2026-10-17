@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.process.mapper.LimsProcessDefinitionMapper">
+
+    <resultMap type="com.wei.lims.process.domain.LimsProcessDefinition" id="LimsProcessDefinitionResult">
+        <result property="procDefId" column="proc_def_id"/>
+        <result property="procKey" column="proc_key"/>
+        <result property="procName" column="proc_name"/>
+        <result property="procType" column="proc_type"/>
+        <result property="bpmnXml" column="bpmn_xml"/>
+        <result property="version" column="version"/>
+        <result property="status" column="status"/>
+        <result property="effectiveDate" column="effective_date"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectLimsProcessDefinitionVo">
+        select proc_def_id, proc_key, proc_name, proc_type, bpmn_xml, version, status, effective_date, create_by, create_time
+        from lims_process_definition
+    </sql>
+
+    <select id="selectLimsProcessDefinitionList" parameterType="com.wei.lims.process.domain.LimsProcessDefinition" resultMap="LimsProcessDefinitionResult">
+        <include refid="selectLimsProcessDefinitionVo"/>
+        <where>
+            <if test="procKey != null and procKey != ''"> and proc_key like concat('%', #{procKey}, '%')</if>
+            <if test="procName != null and procName != ''"> and proc_name like concat('%', #{procName}, '%')</if>
+            <if test="procType != null and procType != ''"> and proc_type = #{procType}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by proc_def_id desc
+    </select>
+
+    <select id="selectLimsProcessDefinitionByProcDefId" parameterType="Long" resultMap="LimsProcessDefinitionResult">
+        <include refid="selectLimsProcessDefinitionVo"/>
+        where proc_def_id = #{procDefId}
+    </select>
+
+    <select id="selectLimsProcessDefinitionByProcKey" parameterType="String" resultMap="LimsProcessDefinitionResult">
+        <include refid="selectLimsProcessDefinitionVo"/>
+        where proc_key = #{procKey}
+        order by version desc
+        limit 1
+    </select>
+
+    <select id="selectActiveLimsProcessDefinitionByProcKey" parameterType="String" resultMap="LimsProcessDefinitionResult">
+        <include refid="selectLimsProcessDefinitionVo"/>
+        where proc_key = #{procKey} and status = 'ACTIVE'
+        order by version desc
+        limit 1
+    </select>
+
+    <insert id="insertLimsProcessDefinition" parameterType="com.wei.lims.process.domain.LimsProcessDefinition" useGeneratedKeys="true" keyProperty="procDefId">
+        insert into lims_process_definition (
+            <trim suffixOverrides=",">
+                <if test="procKey != null">proc_key,</if>
+                <if test="procName != null">proc_name,</if>
+                <if test="procType != null">proc_type,</if>
+                <if test="bpmnXml != null">bpmn_xml,</if>
+                <if test="version != null">version,</if>
+                <if test="status != null">status,</if>
+                <if test="effectiveDate != null">effective_date,</if>
+                create_by, create_time
+            </trim>
+        ) values (
+            <trim suffixOverrides=",">
+                <if test="procKey != null">#{procKey},</if>
+                <if test="procName != null">#{procName},</if>
+                <if test="procType != null">#{procType},</if>
+                <if test="bpmnXml != null">#{bpmnXml},</if>
+                <if test="version != null">#{version},</if>
+                <if test="status != null">#{status},</if>
+                <if test="effectiveDate != null">#{effectiveDate},</if>
+                #{createBy}, #{createTime}
+            </trim>
+        )
+    </insert>
+
+    <update id="updateLimsProcessDefinition" parameterType="com.wei.lims.process.domain.LimsProcessDefinition">
+        update lims_process_definition
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="procKey != null">proc_key = #{procKey},</if>
+            <if test="procName != null">proc_name = #{procName},</if>
+            <if test="procType != null">proc_type = #{procType},</if>
+            <if test="bpmnXml != null">bpmn_xml = #{bpmnXml},</if>
+            <if test="version != null">version = #{version},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="effectiveDate != null">effective_date = #{effectiveDate},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where proc_def_id = #{procDefId}
+    </update>
+
+    <delete id="deleteLimsProcessDefinitionByProcDefIds" parameterType="Long">
+        delete from lims_process_definition where proc_def_id in
+        <foreach collection="array" item="procDefId" open="(" separator="," close=")">
+            #{procDefId}
+        </foreach>
+    </delete>
+
+    <select id="selectUserIdsByRoleKey" parameterType="String" resultType="Long">
+        select distinct u.user_id
+        from sys_user u
+        join sys_user_role ur on u.user_id = ur.user_id
+        join sys_role r on r.role_id = ur.role_id
+        where r.role_key = #{roleKey}
+          and u.status = '0'
+          and u.del_flag = '0'
+    </select>
+
+</mapper>

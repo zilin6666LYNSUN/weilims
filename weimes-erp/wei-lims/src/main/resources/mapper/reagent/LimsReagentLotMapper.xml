@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.reagent.mapper.LimsReagentLotMapper">
+
+    <resultMap type="com.wei.lims.reagent.domain.LimsReagentLot" id="LimsReagentLotResult">
+        <result property="lotId" column="lot_id"/>
+        <result property="reagentId" column="reagent_id"/>
+        <result property="lotNumber" column="lot_number"/>
+        <result property="receivedDate" column="received_date"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="quantity" column="quantity"/>
+        <result property="remaining" column="remaining"/>
+        <result property="coaFile" column="coa_file"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select lot_id, reagent_id, lot_number, received_date, expire_date,
+               quantity, remaining, coa_file, status
+        from lims_reagent_lot
+    </sql>
+
+    <select id="selectByLotId" parameterType="Long" resultMap="LimsReagentLotResult">
+        <include refid="selectVo"/> where lot_id = #{lotId}
+    </select>
+
+    <select id="selectByReagentId" parameterType="Long" resultMap="LimsReagentLotResult">
+        <include refid="selectVo"/> where reagent_id = #{reagentId} order by expire_date asc
+    </select>
+
+    <select id="selectLimsReagentLotList" parameterType="com.wei.lims.reagent.domain.LimsReagentLot" resultMap="LimsReagentLotResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="reagentId != null"> and reagent_id = #{reagentId}</if>
+            <if test="lotNumber != null and lotNumber != ''"> and lot_number like concat('%', #{lotNumber}, '%')</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="expireDate != null"> and expire_date = #{expireDate}</if>
+        </where>
+        order by expire_date asc
+    </select>
+
+    <insert id="insertLimsReagentLot" parameterType="com.wei.lims.reagent.domain.LimsReagentLot" useGeneratedKeys="true" keyProperty="lotId">
+        insert into lims_reagent_lot(
+            reagent_id, lot_number, received_date, expire_date,
+            quantity, remaining, coa_file, status
+        )values(
+            #{reagentId}, #{lotNumber}, #{receivedDate}, #{expireDate},
+            #{quantity}, #{remaining}, #{coaFile}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsReagentLot" parameterType="com.wei.lims.reagent.domain.LimsReagentLot">
+        update lims_reagent_lot
+        <set>
+            <if test="lotNumber != null">lot_number = #{lotNumber},</if>
+            <if test="receivedDate != null">received_date = #{receivedDate},</if>
+            <if test="expireDate != null">expire_date = #{expireDate},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="remaining != null">remaining = #{remaining},</if>
+            <if test="coaFile != null">coa_file = #{coaFile},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where lot_id = #{lotId}
+    </update>
+
+    <delete id="deleteLimsReagentLotByIds" parameterType="String">
+        delete from lims_reagent_lot where lot_id in
+        <foreach item="lotId" collection="array" open="(" separator="," close=")">
+            #{lotId}
+        </foreach>
+    </delete>
+</mapper>

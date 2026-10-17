@@ -28,3 +28,24 @@ export function implementChange(changeId) {
 export function completeChange(changeId) {
   return request({ url: '/lims/change/control/complete/' + changeId, method: 'put' })
 }
+
+
+// 变更影响评估
+export function listChangeImpact(query) {
+  return request({ url: '/lims/quality/change/impact/list', method: 'get', params: query })
+}
+export function listChangeImpactByChange(changeId) {
+  return request({ url: '/lims/quality/change/impact/list/' + changeId, method: 'get' })
+}
+export function getChangeImpact(impactId) {
+  return request({ url: '/lims/quality/change/impact/' + impactId, method: 'get' })
+}
+export function addChangeImpact(data) {
+  return request({ url: '/lims/quality/change/impact', method: 'post', data: data })
+}
+export function updateChangeImpact(data) {
+  return request({ url: '/lims/quality/change/impact', method: 'put', data: data })
+}
+export function delChangeImpact(impactIds) {
+  return request({ url: '/lims/quality/change/impact/' + impactIds, method: 'delete' })
+}

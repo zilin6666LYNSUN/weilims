@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:25 CST 2026
+#Fri Jul 17 22:03:16 CST 2026
+h2-2.2.224.pom>mirror=
+h2-2.2.224.jar>mirror=
 h2-2.2.224.jar>aliyunmaven=
 h2-2.2.224.pom>aliyunmaven=

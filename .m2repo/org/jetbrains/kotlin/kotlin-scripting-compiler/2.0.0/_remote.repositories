@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:54:26 CST 2026
+#Fri Jul 17 21:28:39 CST 2026
 kotlin-scripting-compiler-2.0.0.pom>aliyunmaven=
+kotlin-scripting-compiler-2.0.0.jar>mirror=
 kotlin-scripting-compiler-2.0.0.jar>aliyunmaven=
+kotlin-scripting-compiler-2.0.0.pom>mirror=

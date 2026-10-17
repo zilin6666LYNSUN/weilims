@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:29:46 CST 2026
+#Fri Jul 17 21:29:31 CST 2026
 ini4j-0.5.4.jar>aliyunmaven=
 ini4j-0.5.4.pom>aliyunmaven=
+ini4j-0.5.4.pom>mirror=
+ini4j-0.5.4.jar>mirror=

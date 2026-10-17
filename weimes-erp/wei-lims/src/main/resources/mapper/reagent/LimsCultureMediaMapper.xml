@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.reagent.mapper.LimsCultureMediaMapper">
+
+    <resultMap type="com.wei.lims.reagent.domain.LimsCultureMedia" id="LimsCultureMediaResult">
+        <result property="mediaId" column="media_id"/>
+        <result property="mediaCode" column="media_code"/>
+        <result property="mediaName" column="media_name"/>
+        <result property="mediaType" column="media_type"/>
+        <result property="manufacturer" column="manufacturer"/>
+        <result property="lotNumber" column="lot_number"/>
+        <result property="preparationDate" column="preparation_date"/>
+        <result property="sterilizationMethod" column="sterilization_method"/>
+        <result property="sterilityTest" column="sterility_test"/>
+        <result property="growthPromotionTest" column="growth_promotion_test"/>
+        <result property="growthTestResult" column="growth_test_result"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="storageCondition" column="storage_condition"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select media_id, media_code, media_name, media_type, manufacturer,
+               lot_number, preparation_date, sterilization_method, sterility_test,
+               growth_promotion_test, growth_test_result, expire_date, storage_condition, status
+        from lims_culture_media
+    </sql>
+
+    <select id="selectByMediaId" parameterType="Long" resultMap="LimsCultureMediaResult">
+        <include refid="selectVo"/> where media_id = #{mediaId}
+    </select>
+
+    <select id="selectLimsCultureMediaList" parameterType="com.wei.lims.reagent.domain.LimsCultureMedia" resultMap="LimsCultureMediaResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="mediaCode != null and mediaCode != ''"> and media_code like concat('%', #{mediaCode}, '%')</if>
+            <if test="mediaName != null and mediaName != ''"> and media_name like concat('%', #{mediaName}, '%')</if>
+            <if test="mediaType != null and mediaType != ''"> and media_type = #{mediaType}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="expireDate != null"> and expire_date = #{expireDate}</if>
+        </where>
+        order by media_id desc
+    </select>
+
+    <insert id="insertLimsCultureMedia" parameterType="com.wei.lims.reagent.domain.LimsCultureMedia" useGeneratedKeys="true" keyProperty="mediaId">
+        insert into lims_culture_media(
+            media_code, media_name, media_type, manufacturer, lot_number,
+            preparation_date, sterilization_method, sterility_test,
+            growth_promotion_test, growth_test_result, expire_date, storage_condition, status
+        )values(
+            #{mediaCode}, #{mediaName}, #{mediaType}, #{manufacturer}, #{lotNumber},
+            #{preparationDate}, #{sterilizationMethod}, #{sterilityTest},
+            #{growthPromotionTest}, #{growthTestResult}, #{expireDate}, #{storageCondition}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsCultureMedia" parameterType="com.wei.lims.reagent.domain.LimsCultureMedia">
+        update lims_culture_media
+        <set>
+            <if test="mediaCode != null">media_code = #{mediaCode},</if>
+            <if test="mediaName != null">media_name = #{mediaName},</if>
+            <if test="mediaType != null">media_type = #{mediaType},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="lotNumber != null">lot_number = #{lotNumber},</if>
+            <if test="preparationDate != null">preparation_date = #{preparationDate},</if>
+            <if test="sterilizationMethod != null">sterilization_method = #{sterilizationMethod},</if>
+            <if test="sterilityTest != null">sterility_test = #{sterilityTest},</if>
+            <if test="growthPromotionTest != null">growth_promotion_test = #{growthPromotionTest},</if>
+            <if test="growthTestResult != null">growth_test_result = #{growthTestResult},</if>
+            <if test="expireDate != null">expire_date = #{expireDate},</if>
+            <if test="storageCondition != null">storage_condition = #{storageCondition},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where media_id = #{mediaId}
+    </update>
+
+    <delete id="deleteLimsCultureMediaByIds" parameterType="String">
+        delete from lims_culture_media where media_id in
+        <foreach item="mediaId" collection="array" open="(" separator="," close=")">
+            #{mediaId}
+        </foreach>
+    </delete>
+</mapper>

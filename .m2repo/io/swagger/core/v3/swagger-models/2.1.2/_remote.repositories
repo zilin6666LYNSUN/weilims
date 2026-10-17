@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:26:20 CST 2026
+#Fri Jul 17 21:31:08 CST 2026
+swagger-models-2.1.2.jar>mirror=
+swagger-models-2.1.2.pom>mirror=
 swagger-models-2.1.2.pom>aliyunmaven=
 swagger-models-2.1.2.jar>aliyunmaven=

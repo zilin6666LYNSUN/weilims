@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:26:23 CST 2026
+#Fri Jul 17 21:30:27 CST 2026
 hutool-core-5.8.25.pom>aliyunmaven=
+hutool-core-5.8.25.jar>mirror=
 hutool-core-5.8.25.jar>aliyunmaven=
+hutool-core-5.8.25.pom>mirror=

@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:29:47 CST 2026
+#Fri Jul 17 21:30:39 CST 2026
+quartz-2.3.2.pom>mirror=
 quartz-2.3.2.jar>aliyunmaven=
+quartz-2.3.2.jar>mirror=
 quartz-2.3.2.pom>aliyunmaven=

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.reagent.mapper.LimsStandardUsageMapper">
+
+    <resultMap type="com.wei.lims.reagent.domain.LimsStandardUsage" id="LimsStandardUsageResult">
+        <result property="usageId" column="usage_id"/>
+        <result property="standardId" column="standard_id"/>
+        <result property="usedDate" column="used_date"/>
+        <result property="usedBy" column="used_by"/>
+        <result property="testOrderId" column="test_order_id"/>
+        <result property="quantityUsed" column="quantity_used"/>
+        <result property="remainingAfter" column="remaining_after"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select usage_id, standard_id, used_date, used_by, test_order_id,
+               quantity_used, remaining_after
+        from lims_standard_usage
+    </sql>
+
+    <select id="selectByUsageId" parameterType="Long" resultMap="LimsStandardUsageResult">
+        <include refid="selectVo"/> where usage_id = #{usageId}
+    </select>
+
+    <select id="selectByStandardId" parameterType="Long" resultMap="LimsStandardUsageResult">
+        <include refid="selectVo"/> where standard_id = #{standardId} order by used_date desc
+    </select>
+
+    <select id="selectLimsStandardUsageList" parameterType="com.wei.lims.reagent.domain.LimsStandardUsage" resultMap="LimsStandardUsageResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="standardId != null"> and standard_id = #{standardId}</if>
+            <if test="usedBy != null"> and used_by = #{usedBy}</if>
+            <if test="testOrderId != null"> and test_order_id = #{testOrderId}</if>
+            <if test="usedDate != null"> and used_date = #{usedDate}</if>
+        </where>
+        order by used_date desc
+    </select>
+
+    <insert id="insertLimsStandardUsage" parameterType="com.wei.lims.reagent.domain.LimsStandardUsage" useGeneratedKeys="true" keyProperty="usageId">
+        insert into lims_standard_usage(
+            standard_id, used_date, used_by, test_order_id, quantity_used, remaining_after
+        )values(
+            #{standardId}, #{usedDate}, #{usedBy}, #{testOrderId}, #{quantityUsed}, #{remainingAfter}
+        )
+    </insert>
+
+    <update id="updateLimsStandardUsage" parameterType="com.wei.lims.reagent.domain.LimsStandardUsage">
+        update lims_standard_usage
+        <set>
+            <if test="usedDate != null">used_date = #{usedDate},</if>
+            <if test="usedBy != null">used_by = #{usedBy},</if>
+            <if test="testOrderId != null">test_order_id = #{testOrderId},</if>
+            <if test="quantityUsed != null">quantity_used = #{quantityUsed},</if>
+            <if test="remainingAfter != null">remaining_after = #{remainingAfter},</if>
+        </set>
+        where usage_id = #{usageId}
+    </update>
+
+    <delete id="deleteLimsStandardUsageByIds" parameterType="String">
+        delete from lims_standard_usage where usage_id in
+        <foreach item="usageId" collection="array" open="(" separator="," close=")">
+            #{usageId}
+        </foreach>
+    </delete>
+</mapper>

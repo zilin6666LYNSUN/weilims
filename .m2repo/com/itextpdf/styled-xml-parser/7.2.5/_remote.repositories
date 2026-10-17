@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:24 CST 2026
+#Fri Jul 17 21:30:54 CST 2026
 styled-xml-parser-7.2.5.jar>aliyunmaven=
 styled-xml-parser-7.2.5.pom>aliyunmaven=
+styled-xml-parser-7.2.5.pom>mirror=
+styled-xml-parser-7.2.5.jar>mirror=

@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:34:12 CST 2026
+#Fri Jul 17 21:29:51 CST 2026
 kotlin-allopen-compiler-plugin-2.0.0.jar>aliyunmaven=
+kotlin-allopen-compiler-plugin-2.0.0.jar>mirror=
+kotlin-allopen-compiler-plugin-2.0.0.pom>mirror=
 kotlin-allopen-compiler-plugin-2.0.0.pom>aliyunmaven=

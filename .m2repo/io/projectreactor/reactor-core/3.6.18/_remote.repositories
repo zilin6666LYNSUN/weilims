@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:50 CST 2026
+#Fri Jul 17 21:28:58 CST 2026
 reactor-core-3.6.18.pom>aliyunmaven=
+reactor-core-3.6.18.pom>mirror=
 reactor-core-3.6.18.jar>aliyunmaven=
+reactor-core-3.6.18.jar>mirror=

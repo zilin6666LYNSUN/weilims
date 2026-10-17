@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:30:03 CST 2026
+#Fri Jul 17 21:31:08 CST 2026
 netty-handler-proxy-4.1.122.Final.pom>aliyunmaven=
 netty-handler-proxy-4.1.122.Final.jar>aliyunmaven=
+netty-handler-proxy-4.1.122.Final.pom>mirror=
+netty-handler-proxy-4.1.122.Final.jar>mirror=

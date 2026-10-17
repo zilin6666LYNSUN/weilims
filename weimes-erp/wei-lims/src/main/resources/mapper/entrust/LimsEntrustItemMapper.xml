@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.entrust.mapper.LimsEntrustItemMapper">
+
+    <resultMap type="com.wei.lims.entrust.domain.LimsEntrustItem" id="LimsEntrustItemResult">
+        <result property="itemId" column="item_id"/>
+        <result property="entrustId" column="entrust_id"/>
+        <result property="testItemName" column="test_item_name"/>
+        <result property="testMethod" column="test_method"/>
+        <result property="standardRef" column="standard_ref"/>
+        <result property="quantity" column="quantity"/>
+        <result property="unitPrice" column="unit_price"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select item_id, entrust_id, test_item_name, test_method, standard_ref, quantity, unit_price, status
+        from lims_entrust_item
+    </sql>
+
+    <select id="selectLimsEntrustItemByItemId" parameterType="Long" resultMap="LimsEntrustItemResult">
+        <include refid="selectVo"/> where item_id = #{itemId}
+    </select>
+
+    <select id="selectLimsEntrustItemList" parameterType="com.wei.lims.entrust.domain.LimsEntrustItem" resultMap="LimsEntrustItemResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="itemId != null"> and item_id = #{itemId}</if>
+            <if test="entrustId != null"> and entrust_id = #{entrustId}</if>
+            <if test="testItemName != null and testItemName != ''"> and test_item_name = #{testItemName}</if>
+            <if test="testMethod != null and testMethod != ''"> and test_method = #{testMethod}</if>
+            <if test="standardRef != null and standardRef != ''"> and standard_ref = #{standardRef}</if>
+            <if test="quantity != null"> and quantity = #{quantity}</if>
+            <if test="unitPrice != null"> and unit_price = #{unitPrice}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by item_id desc
+    </select>
+
+    <insert id="insertLimsEntrustItem" parameterType="com.wei.lims.entrust.domain.LimsEntrustItem" useGeneratedKeys="true" keyProperty="itemId">
+        insert into lims_entrust_item(
+            entrust_id, test_item_name, test_method, standard_ref, quantity, unit_price, status
+        )values(
+            #{entrustId}, #{testItemName}, #{testMethod}, #{standardRef}, #{quantity}, #{unitPrice}, #{status}
+        )
+    </insert>
+
+    <update id="updateLimsEntrustItem" parameterType="com.wei.lims.entrust.domain.LimsEntrustItem">
+        update lims_entrust_item
+        <set>
+            <if test="entrustId != null">entrust_id = #{entrustId},</if>
+            <if test="testItemName != null">test_item_name = #{testItemName},</if>
+            <if test="testMethod != null">test_method = #{testMethod},</if>
+            <if test="standardRef != null">standard_ref = #{standardRef},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where item_id = #{itemId}
+    </update>
+
+    <delete id="deleteLimsEntrustItemByItemId" parameterType="String">
+        delete from lims_entrust_item where item_id in
+        <foreach item="itemId" collection="array" open="(" separator="," close=")">
+            #{itemId}
+        </foreach>
+    </delete>
+</mapper>

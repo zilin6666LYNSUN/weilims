@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:57:34 CST 2026
+#Fri Jul 17 22:01:32 CST 2026
+surefire-shared-utils-3.0.0-M8.pom>mirror=
+surefire-shared-utils-3.0.0-M8.jar>mirror=
 surefire-shared-utils-3.0.0-M8.jar>aliyunmaven=
 surefire-shared-utils-3.0.0-M8.pom>aliyunmaven=

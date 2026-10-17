@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:19 CST 2026
+#Fri Jul 17 21:30:53 CST 2026
 flowable-event-registry-7.0.1.pom>aliyunmaven=
+flowable-event-registry-7.0.1.jar>mirror=
 flowable-event-registry-7.0.1.jar>aliyunmaven=
+flowable-event-registry-7.0.1.pom>mirror=

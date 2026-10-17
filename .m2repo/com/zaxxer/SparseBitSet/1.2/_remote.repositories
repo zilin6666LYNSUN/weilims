@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:48 CST 2026
+#Fri Jul 17 21:28:57 CST 2026
 SparseBitSet-1.2.pom>aliyunmaven=
+SparseBitSet-1.2.jar>mirror=
+SparseBitSet-1.2.pom>mirror=
 SparseBitSet-1.2.jar>aliyunmaven=

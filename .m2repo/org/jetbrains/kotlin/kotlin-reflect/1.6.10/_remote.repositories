@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:54:26 CST 2026
+#Fri Jul 17 21:28:39 CST 2026
 kotlin-reflect-1.6.10.jar>aliyunmaven=
+kotlin-reflect-1.6.10.pom>mirror=
+kotlin-reflect-1.6.10.jar>mirror=
 kotlin-reflect-1.6.10.pom>aliyunmaven=

@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:31:21 CST 2026
+#Fri Jul 17 21:30:54 CST 2026
 flowable-mail-7.0.1.jar>aliyunmaven=
+flowable-mail-7.0.1.pom>mirror=
 flowable-mail-7.0.1.pom>aliyunmaven=
+flowable-mail-7.0.1.jar>mirror=

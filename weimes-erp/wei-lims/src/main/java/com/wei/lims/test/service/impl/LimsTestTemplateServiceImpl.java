@@ -8,6 +8,7 @@ import com.wei.lims.test.domain.LimsTestTemplateItem;
 import com.wei.lims.test.mapper.LimsTestTemplateMapper;
 import com.wei.lims.test.mapper.LimsTestTemplateItemMapper;
 import com.wei.lims.test.service.ILimsTestTemplateService;
+import com.wei.lims.esign.service.ILimsAuditTrailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,9 @@ public class LimsTestTemplateServiceImpl implements ILimsTestTemplateService {
 
     @Autowired
     private LimsTestTemplateItemMapper limsTestTemplateItemMapper;
+
+    @Autowired
+    private ILimsAuditTrailService limsAuditTrailService;
 
     @Override
     public LimsTestTemplate selectLimsTestTemplateByTemplateId(Long templateId) {
@@ -35,18 +39,31 @@ public class LimsTestTemplateServiceImpl implements ILimsTestTemplateService {
     @Transactional
     public int insertLimsTestTemplate(LimsTestTemplate template) {
         template.setCreateTime(DateUtils.getNowDate());
-        return limsTestTemplateMapper.insertLimsTestTemplate(template);
+        int rows = limsTestTemplateMapper.insertLimsTestTemplate(template);
+        limsAuditTrailService.recordFieldChanges("lims_test_template", template.getTemplateId(),
+                "INSERT", null, template, "新建检验模板");
+        return rows;
     }
 
     @Override
     @Transactional
     public int updateLimsTestTemplate(LimsTestTemplate template) {
         template.setUpdateTime(DateUtils.getNowDate());
-        return limsTestTemplateMapper.updateLimsTestTemplate(template);
+        LimsTestTemplate oldTemplate = limsTestTemplateMapper.selectLimsTestTemplateByTemplateId(template.getTemplateId());
+        int rows = limsTestTemplateMapper.updateLimsTestTemplate(template);
+        limsAuditTrailService.recordFieldChanges("lims_test_template", template.getTemplateId(),
+                "UPDATE", oldTemplate, template, "更新检验模板");
+        return rows;
     }
 
     @Override
+    @Transactional
     public int deleteLimsTestTemplateByTemplateIds(Long[] templateIds) {
+        for (Long templateId : templateIds) {
+            LimsTestTemplate oldTemplate = limsTestTemplateMapper.selectLimsTestTemplateByTemplateId(templateId);
+            limsAuditTrailService.recordFieldChanges("lims_test_template", templateId,
+                    "DELETE", oldTemplate, null, "删除检验模板");
+        }
         return limsTestTemplateMapper.deleteLimsTestTemplateByTemplateIds(templateIds);
     }
 
@@ -65,19 +82,34 @@ public class LimsTestTemplateServiceImpl implements ILimsTestTemplateService {
     }
 
     @Override
+    @Transactional
     public int insertTemplateItem(LimsTestTemplateItem item) {
         item.setCreateTime(DateUtils.getNowDate());
-        return limsTestTemplateItemMapper.insertLimsTestTemplateItem(item);
+        int rows = limsTestTemplateItemMapper.insertLimsTestTemplateItem(item);
+        limsAuditTrailService.recordFieldChanges("lims_test_template_item", item.getId(),
+                "INSERT", null, item, "新建检验模板明细");
+        return rows;
     }
 
     @Override
+    @Transactional
     public int updateTemplateItem(LimsTestTemplateItem item) {
         item.setUpdateTime(DateUtils.getNowDate());
-        return limsTestTemplateItemMapper.updateLimsTestTemplateItem(item);
+        LimsTestTemplateItem oldItem = limsTestTemplateItemMapper.selectById(item.getId());
+        int rows = limsTestTemplateItemMapper.updateLimsTestTemplateItem(item);
+        limsAuditTrailService.recordFieldChanges("lims_test_template_item", item.getId(),
+                "UPDATE", oldItem, item, "更新检验模板明细");
+        return rows;
     }
 
     @Override
+    @Transactional
     public int deleteTemplateItemByIds(Long[] ids) {
+        for (Long id : ids) {
+            LimsTestTemplateItem oldItem = limsTestTemplateItemMapper.selectById(id);
+            limsAuditTrailService.recordFieldChanges("lims_test_template_item", id,
+                    "DELETE", oldItem, null, "删除检验模板明细");
+        }
         return limsTestTemplateItemMapper.deleteLimsTestTemplateItemByIds(ids);
     }
 }

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.process.mapper.LimsProcessInstanceMapper">
+
+    <resultMap type="com.wei.lims.process.domain.LimsProcessInstance" id="LimsProcessInstanceResult">
+        <result property="procInstId" column="proc_inst_id"/>
+        <result property="procDefId" column="proc_def_id"/>
+        <result property="procKey" column="proc_key"/>
+        <result property="businessType" column="business_type"/>
+        <result property="businessId" column="business_id"/>
+        <result property="currentNodeId" column="current_node_id"/>
+        <result property="status" column="status"/>
+        <result property="variables" column="variables"/>
+        <result property="currentApprovals" column="current_approvals"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectLimsProcessInstanceVo">
+        select proc_inst_id, proc_def_id, proc_key, business_type, business_id, current_node_id, status,
+               variables, current_approvals, start_time, end_time, create_by, create_time, update_by, update_time
+        from lims_process_instance
+    </sql>
+
+    <select id="selectLimsProcessInstanceList" parameterType="com.wei.lims.process.domain.LimsProcessInstance" resultMap="LimsProcessInstanceResult">
+        <include refid="selectLimsProcessInstanceVo"/>
+        <where>
+            <if test="procInstId != null and procInstId != ''"> and proc_inst_id like concat('%', #{procInstId}, '%')</if>
+            <if test="procKey != null and procKey != ''"> and proc_key = #{procKey}</if>
+            <if test="businessType != null and businessType != ''"> and business_type = #{businessType}</if>
+            <if test="businessId != null"> and business_id = #{businessId}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+        </where>
+        order by start_time desc
+    </select>
+
+    <select id="selectRunningLimsProcessInstanceList" parameterType="com.wei.lims.process.domain.LimsProcessInstance" resultMap="LimsProcessInstanceResult">
+        <include refid="selectLimsProcessInstanceVo"/>
+        <where>
+            status = 'RUNNING'
+            <if test="procKey != null and procKey != ''"> and proc_key = #{procKey}</if>
+            <if test="businessType != null and businessType != ''"> and business_type = #{businessType}</if>
+            <if test="businessId != null"> and business_id = #{businessId}</if>
+        </where>
+        order by start_time desc
+    </select>
+
+    <select id="selectLimsProcessInstanceByProcInstId" parameterType="String" resultMap="LimsProcessInstanceResult">
+        <include refid="selectLimsProcessInstanceVo"/>
+        where proc_inst_id = #{procInstId}
+    </select>
+
+    <insert id="insertLimsProcessInstance" parameterType="com.wei.lims.process.domain.LimsProcessInstance">
+        insert into lims_process_instance (
+            proc_inst_id, proc_def_id, proc_key, business_type, business_id, current_node_id,
+            status, variables, current_approvals, start_time, create_by, create_time
+        ) values (
+            #{procInstId}, #{procDefId}, #{procKey}, #{businessType}, #{businessId}, #{currentNodeId},
+            #{status}, #{variables}, #{currentApprovals}, #{startTime}, #{createBy}, #{createTime}
+        )
+    </insert>
+
+    <update id="updateLimsProcessInstance" parameterType="com.wei.lims.process.domain.LimsProcessInstance">
+        update lims_process_instance
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="currentNodeId != null">current_node_id = #{currentNodeId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="variables != null">variables = #{variables},</if>
+            <if test="currentApprovals != null">current_approvals = #{currentApprovals},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where proc_inst_id = #{procInstId}
+    </update>
+
+    <delete id="deleteLimsProcessInstanceByProcInstId" parameterType="String">
+        delete from lims_process_instance where proc_inst_id = #{procInstId}
+    </delete>
+
+</mapper>

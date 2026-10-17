@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.training.mapper.LimsQualificationMapper">
+
+    <resultMap type="com.wei.lims.training.domain.LimsQualification" id="LimsQualificationResult">
+        <result property="qualificationId" column="qualification_id"/>
+        <result property="staffId" column="staff_id"/>
+        <result property="qualificationType" column="qualification_type"/>
+        <result property="qualificationName" column="qualification_name"/>
+        <result property="qualificationScope" column="qualification_scope"/>
+        <result property="grantedDate" column="granted_date"/>
+        <result property="expireDate" column="expire_date"/>
+        <result property="grantedBy" column="granted_by"/>
+        <result property="status" column="status"/>
+        <result property="requalificationDate" column="requalification_date"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select qualification_id, staff_id, qualification_type, qualification_name, qualification_scope, granted_date, expire_date, granted_by, status, requalification_date
+        from lims_qualification
+    </sql>
+
+    <select id="selectLimsQualificationByQualificationId" parameterType="Long" resultMap="LimsQualificationResult">
+        <include refid="selectVo"/> where qualification_id = #{qualificationId}
+    </select>
+
+    <select id="selectLimsQualificationList" parameterType="com.wei.lims.training.domain.LimsQualification" resultMap="LimsQualificationResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="qualificationId != null"> and qualification_id = #{qualificationId}</if>
+            <if test="staffId != null"> and staff_id = #{staffId}</if>
+            <if test="qualificationType != null and qualificationType != ''"> and qualification_type = #{qualificationType}</if>
+            <if test="qualificationName != null and qualificationName != ''"> and qualification_name = #{qualificationName}</if>
+            <if test="qualificationScope != null and qualificationScope != ''"> and qualification_scope = #{qualificationScope}</if>
+            <if test="grantedDate != null"> and granted_date = #{grantedDate}</if>
+            <if test="expireDate != null"> and expire_date = #{expireDate}</if>
+            <if test="grantedBy != null"> and granted_by = #{grantedBy}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="requalificationDate != null"> and requalification_date = #{requalificationDate}</if>
+        </where>
+        order by qualification_id desc
+    </select>
+
+    <insert id="insertLimsQualification" parameterType="com.wei.lims.training.domain.LimsQualification" useGeneratedKeys="true" keyProperty="qualificationId">
+        insert into lims_qualification(
+            staff_id, qualification_type, qualification_name, qualification_scope, granted_date, expire_date, granted_by, status, requalification_date
+        )values(
+            #{staffId}, #{qualificationType}, #{qualificationName}, #{qualificationScope}, #{grantedDate}, #{expireDate}, #{grantedBy}, #{status}, #{requalificationDate}
+        )
+    </insert>
+
+    <update id="updateLimsQualification" parameterType="com.wei.lims.training.domain.LimsQualification">
+        update lims_qualification
+        <set>
+            <if test="staffId != null">staff_id = #{staffId},</if>
+            <if test="qualificationType != null">qualification_type = #{qualificationType},</if>
+            <if test="qualificationName != null">qualification_name = #{qualificationName},</if>
+            <if test="qualificationScope != null">qualification_scope = #{qualificationScope},</if>
+            <if test="grantedDate != null">granted_date = #{grantedDate},</if>
+            <if test="expireDate != null">expire_date = #{expireDate},</if>
+            <if test="grantedBy != null">granted_by = #{grantedBy},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="requalificationDate != null">requalification_date = #{requalificationDate},</if>
+        </set>
+        where qualification_id = #{qualificationId}
+    </update>
+
+    <select id="selectExpiringQualifications" resultMap="LimsQualificationResult">
+        <include refid="selectVo"/>
+        where status = 'VALID' and expire_date is not null
+          and expire_date &lt;= DATE_ADD(CURDATE(), INTERVAL 30 DAY)
+          and expire_date &gt;= CURDATE()
+        order by expire_date asc
+    </select>
+
+    <delete id="deleteLimsQualificationByQualificationId" parameterType="String">
+        delete from lims_qualification where qualification_id in
+        <foreach item="qualificationId" collection="array" open="(" separator="," close=")">
+            #{qualificationId}
+        </foreach>
+    </delete>
+</mapper>

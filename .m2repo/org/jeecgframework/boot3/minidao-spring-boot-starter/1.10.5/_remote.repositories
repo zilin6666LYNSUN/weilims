@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:26:21 CST 2026
+#Fri Jul 17 21:30:26 CST 2026
 minidao-spring-boot-starter-1.10.5.pom>aliyunmaven=
+minidao-spring-boot-starter-1.10.5.jar>mirror=
 minidao-spring-boot-starter-1.10.5.jar>aliyunmaven=
+minidao-spring-boot-starter-1.10.5.pom>mirror=

@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:27:18 CST 2026
+#Fri Jul 17 21:29:24 CST 2026
+mybatis-plus-generator-3.5.3.2.pom>mirror=
+mybatis-plus-generator-3.5.3.2.jar>mirror=
 mybatis-plus-generator-3.5.3.2.jar>aliyunmaven=
 mybatis-plus-generator-3.5.3.2.pom>aliyunmaven=

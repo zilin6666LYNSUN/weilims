@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:54:26 CST 2026
+#Fri Jul 17 21:28:39 CST 2026
 trove4j-1.0.20200330.pom>aliyunmaven=
 trove4j-1.0.20200330.jar>aliyunmaven=
+trove4j-1.0.20200330.jar>mirror=
+trove4j-1.0.20200330.pom>mirror=

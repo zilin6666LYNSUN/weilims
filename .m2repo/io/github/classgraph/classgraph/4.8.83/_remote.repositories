@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:26:20 CST 2026
+#Fri Jul 17 21:31:08 CST 2026
+classgraph-4.8.83.pom>mirror=
 classgraph-4.8.83.jar>aliyunmaven=
+classgraph-4.8.83.jar>mirror=
 classgraph-4.8.83.pom>aliyunmaven=

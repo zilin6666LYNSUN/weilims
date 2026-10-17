@@ -9,6 +9,7 @@ import com.wei.lims.report.domain.LimsDataValidationRule;
 import com.wei.lims.report.mapper.LimsDataValidationLogMapper;
 import com.wei.lims.report.mapper.LimsDataValidationRuleMapper;
 import com.wei.lims.report.service.ILimsDataValidationService;
+import com.wei.lims.esign.service.ILimsAuditTrailService;
 import com.wei.lims.test.domain.LimsTestResult;
 import com.wei.lims.test.mapper.LimsTestResultMapper;
 import org.slf4j.Logger;
@@ -36,6 +37,9 @@ public class LimsDataValidationServiceImpl implements ILimsDataValidationService
     @Autowired
     private LimsTestResultMapper testResultMapper;
 
+    @Autowired
+    private ILimsAuditTrailService limsAuditTrailService;
+
     @Override
     @Transactional
     public List<LimsDataValidationLog> validateTestOrder(Long testOrderId) {
@@ -60,13 +64,18 @@ public class LimsDataValidationServiceImpl implements ILimsDataValidationService
             LimsDataValidationLog logEntry = validateByRule(testOrderId, result, rule);
             if (logEntry != null) {
                 logMapper.insertLog(logEntry);
+                limsAuditTrailService.recordFieldChanges("lims_data_validation_log", logEntry.getLogId(),
+                        "INSERT", null, logEntry, "生成数据校验记录");
                 logs.add(logEntry);
 
                 // 校验失败且为ERROR级别，自动标记OOS
                 if ("FAIL".equals(logEntry.getValidationStatus()) && "ERROR".equals(rule.getErrorLevel())) {
+                    LimsTestResult oldResult = testResultMapper.selectLimsTestResultByResultId(result.getResultId());
                     result.setIsOos(1);
                     result.setResultConclusion("UNQUALIFIED");
                     testResultMapper.updateLimsTestResult(result);
+                    limsAuditTrailService.recordFieldChanges("lims_test_result", result.getResultId(),
+                            "UPDATE", oldResult, result, "校验失败自动标记OOS");
                 }
             }
         }

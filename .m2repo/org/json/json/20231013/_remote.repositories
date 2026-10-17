@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:50 CST 2026
+#Fri Jul 17 21:28:58 CST 2026
 json-20231013.jar>aliyunmaven=
 json-20231013.pom>aliyunmaven=
+json-20231013.pom>mirror=
+json-20231013.jar>mirror=

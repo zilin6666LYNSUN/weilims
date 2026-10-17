@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:26:45 CST 2026
+#Fri Jul 17 22:01:33 CST 2026
+snappy-0.4.pom>mirror=
 snappy-0.4.pom>aliyunmaven=
+snappy-0.4.jar>mirror=
 snappy-0.4.jar>aliyunmaven=

@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 14:26:21 CST 2026
+#Fri Jul 17 21:30:26 CST 2026
+poi-scratchpad-4.1.2.jar>mirror=
+poi-scratchpad-4.1.2.pom>mirror=
 poi-scratchpad-4.1.2.jar>aliyunmaven=
 poi-scratchpad-4.1.2.pom>aliyunmaven=

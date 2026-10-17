@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:47 CST 2026
+#Fri Jul 17 21:28:57 CST 2026
 tomcat-embed-el-10.1.42.jar>aliyunmaven=
+tomcat-embed-el-10.1.42.pom>mirror=
 tomcat-embed-el-10.1.42.pom>aliyunmaven=
+tomcat-embed-el-10.1.42.jar>mirror=

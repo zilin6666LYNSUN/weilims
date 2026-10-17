@@ -3,10 +3,12 @@ package com.wei.lims.report.service.impl;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import com.wei.common.exception.BusinessException;
 import com.wei.common.utils.DateUtils;
 import com.wei.common.utils.SecurityUtils;
 import com.wei.lims.esign.service.ILimsAuditTrailService;
+import com.wei.lims.process.service.ILimsProcessService;
 import com.wei.lims.report.domain.LimsReport;
 import com.wei.lims.report.domain.LimsReportSignature;
 import com.wei.lims.report.mapper.LimsReportMapper;
@@ -46,6 +48,9 @@ public class LimsReportServiceImpl implements ILimsReportService {
 
     @Autowired
     private ILimsDataValidationService limsDataValidationService;
+
+    @Autowired
+    private ILimsProcessService limsProcessService;
 
     @Override
     public LimsReport selectLimsReportByReportId(Long reportId) {
@@ -192,6 +197,18 @@ public class LimsReportServiceImpl implements ILimsReportService {
         report.setUpdateBy(SecurityUtils.getUsername());
         report.setUpdateTime(DateUtils.getNowDate());
 
+        // P1可配置审批流：若已配置报告放行流程定义(REPORT_RELEASE_FLOW)，生成报告时启动流程实例并回填；
+        // 未配置或配置异常时回退原硬编码状态流转，保证既有功能不破坏。
+        if (limsProcessService.hasActiveProcessDefinition("REPORT_RELEASE_FLOW")) {
+            try {
+                ILimsProcessService.ProcessInstanceResult result = limsProcessService.startProcess(
+                        "REPORT_RELEASE_FLOW", "REPORT", report.getReportId(), null);
+                report.setProcInstId(result.getProcInstId());
+            } catch (BusinessException e) {
+                // 流程配置异常时静默回退硬编码流转，不阻断报告生成
+            }
+        }
+
         int rows = limsReportMapper.updateLimsReport(report);
         limsAuditTrailService.recordFieldChanges("lims_report", reportId,
                 "UPDATE", null, report, "生成报告数据");
@@ -216,7 +233,14 @@ public class LimsReportServiceImpl implements ILimsReportService {
         }
 
         if ("PASS".equals(reviewResult)) {
-            report.setStatus("REVIEWING");
+            // P1可配置审批流：实例已启动则经引擎推进复核节点，业务状态按当前节点 businessStatus 回填；
+            // 未启动实例保持原硬编码流转
+            if (report.getProcInstId() != null && !report.getProcInstId().isEmpty()) {
+                limsProcessService.completeTask(report.getProcInstId(), null, "APPROVE", comment, null);
+                report.setStatus(resolveBusinessStatus(report.getProcInstId(), "REVIEWING"));
+            } else {
+                report.setStatus("REVIEWING");
+            }
             report.setReviewedBy(currentUserId);
             report.setReviewedTime(new Date());
             report.setReviewComment(comment);
@@ -232,7 +256,13 @@ public class LimsReportServiceImpl implements ILimsReportService {
             signature.setReason(comment);
             limsReportSignatureMapper.insertSignature(signature);
         } else {
-            report.setStatus("DRAFT");
+            // P1可配置审批流：引擎按 nextOnReject 回退，业务状态回填；未启动实例保持原硬编码回退
+            if (report.getProcInstId() != null && !report.getProcInstId().isEmpty()) {
+                limsProcessService.completeTask(report.getProcInstId(), null, "REJECT", comment, null);
+                report.setStatus(resolveBusinessStatus(report.getProcInstId(), "DRAFT"));
+            } else {
+                report.setStatus("DRAFT");
+            }
             report.setReviewComment(comment);
 
             limsAuditTrailService.recordFieldChanges("lims_report", reportId,
@@ -269,7 +299,13 @@ public class LimsReportServiceImpl implements ILimsReportService {
         }
 
         if ("PASS".equals(approveResult)) {
-            report.setStatus("APPROVING");
+            // P1可配置审批流：经引擎推进批准节点；未启动实例保持原硬编码流转
+            if (report.getProcInstId() != null && !report.getProcInstId().isEmpty()) {
+                limsProcessService.completeTask(report.getProcInstId(), null, "APPROVE", comment, null);
+                report.setStatus(resolveBusinessStatus(report.getProcInstId(), "APPROVING"));
+            } else {
+                report.setStatus("APPROVING");
+            }
             report.setApprovedBy(currentUserId);
             report.setApprovedTime(new Date());
             report.setApproveComment(comment);
@@ -285,7 +321,13 @@ public class LimsReportServiceImpl implements ILimsReportService {
             signature.setReason(comment);
             limsReportSignatureMapper.insertSignature(signature);
         } else {
-            report.setStatus("PREPARING");
+            // P1可配置审批流：引擎按 nextOnReject 回退；未启动实例保持原硬编码回退
+            if (report.getProcInstId() != null && !report.getProcInstId().isEmpty()) {
+                limsProcessService.completeTask(report.getProcInstId(), null, "REJECT", comment, null);
+                report.setStatus(resolveBusinessStatus(report.getProcInstId(), "PREPARING"));
+            } else {
+                report.setStatus("PREPARING");
+            }
             report.setApproveComment(comment);
 
             limsAuditTrailService.recordFieldChanges("lims_report", reportId,
@@ -323,6 +365,13 @@ public class LimsReportServiceImpl implements ILimsReportService {
         if (currentUserId.equals(report.getGeneratedBy())) {
             throw new BusinessException("GMP合规：放行人不能与编制人为同一人（四眼原则）");
         }
+        // P1可配置审批流：实例已存在则先推进放行节点(若流程已结束则直接放行)，再置业务终态
+        if (report.getProcInstId() != null && !report.getProcInstId().isEmpty()) {
+            Map<String, Object> taskInfo = limsProcessService.getCurrentTaskInfo(report.getProcInstId());
+            if (!"COMPLETED".equals(taskInfo.get("instanceStatus"))) {
+                limsProcessService.completeTask(report.getProcInstId(), null, "APPROVE", "报告放行", null);
+            }
+        }
         report.setStatus("RELEASED");
         report.setReleasedBy(currentUserId);
         report.setReleasedTime(new Date());
@@ -356,6 +405,18 @@ public class LimsReportServiceImpl implements ILimsReportService {
             throw new BusinessException("已放行的报告不能直接作废，请创建修订版");
         }
 
+        // P1可配置审批流：作废时终止仍在运行的流程实例
+        if (report.getProcInstId() != null && !report.getProcInstId().isEmpty()) {
+            try {
+                Map<String, Object> taskInfo = limsProcessService.getCurrentTaskInfo(report.getProcInstId());
+                if ("RUNNING".equals(taskInfo.get("instanceStatus"))) {
+                    limsProcessService.terminateProcess(report.getProcInstId(), voidReason);
+                }
+            } catch (BusinessException ignored) {
+                // 实例已结束或状态异常时忽略
+            }
+        }
+
         report.setStatus("VOIDED");
         report.setVoidReason(voidReason);
         report.setUpdateBy(SecurityUtils.getUsername());
@@ -387,5 +448,22 @@ public class LimsReportServiceImpl implements ILimsReportService {
         limsAuditTrailService.recordFieldChanges("lims_report", reportId,
                 "UPDATE", null, report, "打印报告，累计打印次数: " + report.getPrintedCount());
         return rows;
+    }
+
+    /**
+     * 从流程引擎当前节点回填业务状态：优先取流程定义中节点配置的 businessStatus，
+     * 未配置则使用调用方默认状态（保持原硬编码语义）。
+     */
+    private String resolveBusinessStatus(String procInstId, String defaultStatus) {
+        try {
+            Map<String, Object> taskInfo = limsProcessService.getCurrentTaskInfo(procInstId);
+            Object businessStatus = taskInfo.get("businessStatus");
+            if (businessStatus != null && !businessStatus.toString().isEmpty()) {
+                return businessStatus.toString();
+            }
+        } catch (BusinessException ignored) {
+            // 实例已结束等场景使用默认状态
+        }
+        return defaultStatus;
     }
 }

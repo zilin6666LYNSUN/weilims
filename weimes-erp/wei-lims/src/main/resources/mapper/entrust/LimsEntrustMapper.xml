@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wei.lims.entrust.mapper.LimsEntrustMapper">
+
+    <resultMap type="com.wei.lims.entrust.domain.LimsEntrust" id="LimsEntrustResult">
+        <result property="entrustId" column="entrust_id"/>
+        <result property="entrustCode" column="entrust_code"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="templateId" column="template_id"/>
+        <result property="entrustDate" column="entrust_date"/>
+        <result property="sampleName" column="sample_name"/>
+        <result property="specification" column="specification"/>
+        <result property="batchNo" column="batch_no"/>
+        <result property="quantity" column="quantity"/>
+        <result property="unitOfMeasure" column="unit_of_measure"/>
+        <result property="deliveryDate" column="delivery_date"/>
+        <result property="reportRequired" column="report_required"/>
+        <result property="reportFormat" column="report_format"/>
+        <result property="priority" column="priority"/>
+        <result property="status" column="status"/>
+        <result property="reviewBy" column="review_by"/>
+        <result property="reviewTime" column="review_time"/>
+        <result property="reviewComment" column="review_comment"/>
+        <result property="sampleId" column="sample_id"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectVo">
+        select entrust_id, entrust_code, customer_id, template_id, entrust_date, sample_name, specification, batch_no, quantity, unit_of_measure, delivery_date, report_required, report_format, priority, status, review_by, review_time, review_comment, sample_id, remark
+        from lims_entrust
+    </sql>
+
+    <select id="selectLimsEntrustByEntrustId" parameterType="Long" resultMap="LimsEntrustResult">
+        <include refid="selectVo"/> where entrust_id = #{entrustId}
+    </select>
+
+    <select id="selectLimsEntrustList" parameterType="com.wei.lims.entrust.domain.LimsEntrust" resultMap="LimsEntrustResult">
+        <include refid="selectVo"/>
+        <where>
+            <if test="entrustId != null"> and entrust_id = #{entrustId}</if>
+            <if test="entrustCode != null and entrustCode != ''"> and entrust_code = #{entrustCode}</if>
+            <if test="customerId != null"> and customer_id = #{customerId}</if>
+            <if test="templateId != null"> and template_id = #{templateId}</if>
+            <if test="entrustDate != null"> and entrust_date = #{entrustDate}</if>
+            <if test="sampleName != null and sampleName != ''"> and sample_name = #{sampleName}</if>
+            <if test="specification != null and specification != ''"> and specification = #{specification}</if>
+            <if test="batchNo != null and batchNo != ''"> and batch_no = #{batchNo}</if>
+            <if test="quantity != null"> and quantity = #{quantity}</if>
+            <if test="unitOfMeasure != null and unitOfMeasure != ''"> and unit_of_measure = #{unitOfMeasure}</if>
+            <if test="deliveryDate != null"> and delivery_date = #{deliveryDate}</if>
+            <if test="reportRequired != null"> and report_required = #{reportRequired}</if>
+            <if test="reportFormat != null and reportFormat != ''"> and report_format = #{reportFormat}</if>
+            <if test="priority != null and priority != ''"> and priority = #{priority}</if>
+            <if test="status != null and status != ''"> and status = #{status}</if>
+            <if test="reviewBy != null"> and review_by = #{reviewBy}</if>
+            <if test="reviewTime != null"> and review_time = #{reviewTime}</if>
+            <if test="reviewComment != null and reviewComment != ''"> and review_comment = #{reviewComment}</if>
+            <if test="sampleId != null"> and sample_id = #{sampleId}</if>
+            <if test="remark != null and remark != ''"> and remark = #{remark}</if>
+        </where>
+        order by entrust_id desc
+    </select>
+
+    <insert id="insertLimsEntrust" parameterType="com.wei.lims.entrust.domain.LimsEntrust" useGeneratedKeys="true" keyProperty="entrustId">
+        insert into lims_entrust(
+            entrust_code, customer_id, template_id, entrust_date, sample_name, specification, batch_no, quantity, unit_of_measure, delivery_date, report_required, report_format, priority, status, review_by, review_time, review_comment, sample_id, remark
+        )values(
+            #{entrustCode}, #{customerId}, #{templateId}, #{entrustDate}, #{sampleName}, #{specification}, #{batchNo}, #{quantity}, #{unitOfMeasure}, #{deliveryDate}, #{reportRequired}, #{reportFormat}, #{priority}, #{status}, #{reviewBy}, #{reviewTime}, #{reviewComment}, #{sampleId}, #{remark}
+        )
+    </insert>
+
+    <update id="updateLimsEntrust" parameterType="com.wei.lims.entrust.domain.LimsEntrust">
+        update lims_entrust
+        <set>
+            <if test="entrustCode != null">entrust_code = #{entrustCode},</if>
+            <if test="customerId != null">customer_id = #{customerId},</if>
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="entrustDate != null">entrust_date = #{entrustDate},</if>
+            <if test="sampleName != null">sample_name = #{sampleName},</if>
+            <if test="specification != null">specification = #{specification},</if>
+            <if test="batchNo != null">batch_no = #{batchNo},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="unitOfMeasure != null">unit_of_measure = #{unitOfMeasure},</if>
+            <if test="deliveryDate != null">delivery_date = #{deliveryDate},</if>
+            <if test="reportRequired != null">report_required = #{reportRequired},</if>
+            <if test="reportFormat != null">report_format = #{reportFormat},</if>
+            <if test="priority != null">priority = #{priority},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="reviewBy != null">review_by = #{reviewBy},</if>
+            <if test="reviewTime != null">review_time = #{reviewTime},</if>
+            <if test="reviewComment != null">review_comment = #{reviewComment},</if>
+            <if test="sampleId != null">sample_id = #{sampleId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </set>
+        where entrust_id = #{entrustId}
+    </update>
+
+    <delete id="deleteLimsEntrustByEntrustId" parameterType="String">
+        delete from lims_entrust where entrust_id in
+        <foreach item="entrustId" collection="array" open="(" separator="," close=")">
+            #{entrustId}
+        </foreach>
+    </delete>
+</mapper>

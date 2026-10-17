@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 12:29:45 CST 2026
+#Fri Jul 17 21:29:31 CST 2026
 jsr305-3.0.2.pom>aliyunmaven=
+jsr305-3.0.2.jar>mirror=
 jsr305-3.0.2.jar>aliyunmaven=
+jsr305-3.0.2.pom>mirror=

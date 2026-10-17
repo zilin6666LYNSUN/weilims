@@ -1,4 +1,6 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon May 25 11:56:57 CST 2026
+#Fri Jul 17 21:28:59 CST 2026
 plexus-interpolation-1.26.pom>aliyunmaven=
+plexus-interpolation-1.26.jar>mirror=
+plexus-interpolation-1.26.pom>mirror=
 plexus-interpolation-1.26.jar>aliyunmaven=

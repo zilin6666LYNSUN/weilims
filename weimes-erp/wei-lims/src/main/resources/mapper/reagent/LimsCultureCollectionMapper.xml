@@ -55,6 +55,7 @@
         update lims_culture_collection
         <set>
             <if test="cultureName != null">culture_name = #{cultureName},</if>
+            <if test="receivedDate != null">received_date = #{receivedDate},</if>
             <if test="passageCount != null">passage_count = #{passageCount},</if>
             <if test="viabilityTestDate != null">viability_test_date = #{viabilityTestDate},</if>
             <if test="viabilityResult != null">viability_result = #{viabilityResult},</if>

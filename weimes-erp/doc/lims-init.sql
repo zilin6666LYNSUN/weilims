@@ -1684,6 +1684,62 @@ INSERT INTO `sys_menu` VALUES (3400, '试剂管理', 3000, 4, 'reagent', NULL, '
 INSERT INTO `sys_menu` VALUES (3500, '质量管理', 3000, 5, 'quality', NULL, '', 1, 0, 'M', '1', '0', '0', '', 'quality', 'admin', NULL, NOW(), '', NULL, NULL, '质量管理目录', 0, '1000-01-01 00:00:00', 1);
 -- 二级目录: 合规管理
 INSERT INTO `sys_menu` VALUES (3600, '合规管理', 3000, 6, 'compliance', NULL, '', 1, 0, 'M', '1', '0', '0', '', 'lock', 'admin', NULL, NOW(), '', NULL, NULL, '合规管理目录', 0, '1000-01-01 00:00:00', 1);
+-- 二级目录: 报告管理 (统一主菜单：原 doc/lims_report_tables.sql 菜单并入本脚本，menu_id 使用 3700 系列避免冲突)
+INSERT INTO `sys_menu` VALUES (3700, '报告管理', 3000, 7, 'report', NULL, '', 1, 0, 'M', '1', '0', '0', '', 'documentation', 'admin', NULL, NOW(), '', NULL, NULL, '报告管理目录', 0, '1000-01-01 00:00:00', 1);
+
+-- ============================
+-- 报告管理 菜单与权限
+-- ============================
+-- C: 报告模板
+INSERT INTO `sys_menu` VALUES (3701, '报告模板', 3700, 1, 'template', 'lims/report/template', '', 1, 0, 'C', '1', '0', '0', 'lims:report:template:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '报告模板菜单', 0, '1000-01-01 00:00:00', 1);
+-- C: 检验报告
+INSERT INTO `sys_menu` VALUES (3702, '检验报告', 3700, 2, 'testReport', 'lims/report/testReport', '', 1, 0, 'C', '1', '0', '0', 'lims:report:test:list', 'documentation', 'admin', NULL, NOW(), '', NULL, NULL, '检验报告菜单', 0, '1000-01-01 00:00:00', 1);
+-- C: 数据校验
+INSERT INTO `sys_menu` VALUES (3703, '数据校验', 3700, 3, 'validation', 'lims/report/validation', '', 1, 0, 'C', '1', '0', '0', 'lims:report:validation:list', 'checkbox', 'admin', NULL, NOW(), '', NULL, NULL, '数据校验菜单', 0, '1000-01-01 00:00:00', 1);
+-- C: 采集配置 (归入仪器管理)
+INSERT INTO `sys_menu` VALUES (3704, '采集配置', 3300, 5, 'acquisition', 'lims/instrument/acquisition', '', 1, 0, 'C', '1', '0', '0', 'lims:instrument:acquisition:list', 'upload', 'admin', NULL, NOW(), '', NULL, NULL, '仪器采集配置菜单', 0, '1000-01-01 00:00:00', 1);
+-- F: 报告模板按钮权限
+INSERT INTO `sys_menu` VALUES (3711, '报告模板查询', 3701, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:template:query', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3712, '报告模板新增', 3701, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:template:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3713, '报告模板修改', 3701, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:template:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3714, '报告模板删除', 3701, 4, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:template:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- F: 检验报告按钮权限
+INSERT INTO `sys_menu` VALUES (3721, '检验报告查询', 3702, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:test:query', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3722, '检验报告新增', 3702, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:test:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3723, '检验报告修改', 3702, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:test:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3724, '检验报告删除', 3702, 4, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:test:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- F: 数据校验按钮权限
+INSERT INTO `sys_menu` VALUES (3731, '数据校验查询', 3703, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:validation:query', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3732, '数据校验新增', 3703, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:validation:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3733, '数据校验修改', 3703, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:validation:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3734, '数据校验删除', 3703, 4, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:report:validation:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- F: 采集配置按钮权限
+INSERT INTO `sys_menu` VALUES (3741, '采集配置查询', 3704, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:instrument:acquisition:query', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3742, '采集配置新增', 3704, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:instrument:acquisition:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3743, '采集配置修改', 3704, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:instrument:acquisition:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3744, '采集配置删除', 3704, 4, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:instrument:acquisition:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- 管理员角色(role_id=1)授权报告管理菜单与按钮
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3700);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3701);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3702);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3703);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3704);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3711);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3712);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3713);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3714);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3721);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3722);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3723);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3724);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3731);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3732);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3733);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3734);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3741);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3742);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3743);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3744);
 
 -- ============================
 -- 样品管理 菜单与权限
@@ -1839,3 +1895,402 @@ INSERT INTO `sys_menu` VALUES (3613, '签名验证', 3610, 3, '#', '', NULL, 1, 
 -- ============================================================
 -- 初始化完成，共创建 86 张新表 + LIMS菜单权限数据
 -- ============================================================
+
+-- ============================================================
+-- P1 可配置审批工作流：流程实例表（支撑 lims_process_definition /
+-- lims_process_approval 的运行时状态存储，原两表无实例运行态字段）
+-- ============================================================
+CREATE TABLE IF NOT EXISTS lims_process_instance (
+    proc_inst_id       VARCHAR(64) PRIMARY KEY COMMENT '流程实例ID(引擎生成 PI+时间+序号)',
+    proc_def_id        BIGINT COMMENT '流程定义ID',
+    proc_key           VARCHAR(100) COMMENT '流程KEY',
+    business_type      VARCHAR(50) COMMENT '业务类型: REPORT/DEVIATION/CHANGE/CAPA等',
+    business_id        BIGINT COMMENT '业务ID',
+    current_node_id    VARCHAR(64) COMMENT '当前节点ID',
+    status             VARCHAR(20) DEFAULT 'RUNNING' COMMENT 'RUNNING/COMPLETED/TERMINATED',
+    variables          LONGTEXT COMMENT '流程变量JSON',
+    current_approvals  TEXT COMMENT '会签节点审批进度JSON',
+    start_time         DATETIME,
+    end_time           DATETIME,
+    create_by          VARCHAR(64),
+    create_time        DATETIME,
+    update_by          VARCHAR(64),
+    update_time        DATETIME
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='流程实例表';
+
+-- ============================================================
+-- 流程管理 菜单与权限（P1 可配置审批工作流）
+-- ============================================================
+INSERT INTO `sys_menu` VALUES (3800, '流程管理', 3000, 8, 'process', NULL, '', 1, 0, 'M', '1', '0', '0', '', 'workflow', 'admin', NULL, NOW(), '', NULL, NULL, '流程管理目录', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3801, '流程定义', 3800, 1, 'definition', 'lims/process/definition', '', 1, 0, 'C', '1', '0', '0', 'lims:process:definition:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '流程定义菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3802, '流程实例', 3800, 2, 'instance', 'lims/process/instance', '', 1, 0, 'C', '1', '0', '0', 'lims:process:instance:list', 'tree-table', 'admin', NULL, NOW(), '', NULL, NULL, '流程实例菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3803, '我的待办', 3800, 3, 'todo', 'lims/process/todo', '', 1, 0, 'C', '1', '0', '0', 'lims:process:instance:list', 'checkbox', 'admin', NULL, NOW(), '', NULL, NULL, '我的待办菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3810, '流程定义新增', 3801, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:process:definition:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3811, '流程定义修改', 3801, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:process:definition:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3812, '流程定义删除', 3801, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:process:definition:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3813, '流程定义查询', 3801, 4, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:process:definition:query', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3800);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3801);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3802);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3803);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3810);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3811);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3812);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3813);
+
+-- ============================================================
+-- 十二、委托与客户管理（新增 4 张）
+-- ============================================================
+
+CREATE TABLE lims_customer (
+    customer_id       BIGINT PRIMARY KEY AUTO_INCREMENT,
+    customer_code     VARCHAR(50) NOT NULL COMMENT '客户编码',
+    customer_name     VARCHAR(200) NOT NULL COMMENT '客户名称',
+    customer_type     VARCHAR(30) COMMENT '生产企业/经营企业/研发机构/医院/其他',
+    contact_person    VARCHAR(50) COMMENT '联系人',
+    contact_phone     VARCHAR(30) COMMENT '联系电话',
+    contact_email     VARCHAR(100) COMMENT '邮箱',
+    address           VARCHAR(300) COMMENT '地址',
+    credit_level      VARCHAR(20) COMMENT '信用等级 A/B/C',
+    status            VARCHAR(20) DEFAULT 'ACTIVE' COMMENT 'ACTIVE/INACTIVE',
+    create_by         VARCHAR(64),
+    create_time       DATETIME,
+    update_by         VARCHAR(64),
+    update_time       DATETIME,
+    remark            TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='客户档案';
+
+CREATE TABLE lims_entrust_template (
+    template_id       BIGINT PRIMARY KEY AUTO_INCREMENT,
+    template_code     VARCHAR(50) NOT NULL COMMENT '模板编码',
+    template_name     VARCHAR(200) NOT NULL COMMENT '模板名称',
+    template_fields   TEXT COMMENT '自定义字段定义(JSON)',
+    default_remark    VARCHAR(500) COMMENT '默认备注',
+    status            VARCHAR(20) DEFAULT 'ENABLED' COMMENT 'ENABLED/DISABLED',
+    create_by         VARCHAR(64),
+    create_time       DATETIME
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='委托单模板';
+
+CREATE TABLE lims_entrust (
+    entrust_id        BIGINT PRIMARY KEY AUTO_INCREMENT,
+    entrust_code      VARCHAR(50) NOT NULL COMMENT '委托单号',
+    customer_id       BIGINT NOT NULL COMMENT '客户ID',
+    template_id       BIGINT COMMENT '模板ID',
+    entrust_date      DATE COMMENT '委托日期',
+    sample_name       VARCHAR(200) NOT NULL COMMENT '样品名称',
+    specification     VARCHAR(200) COMMENT '规格型号',
+    batch_no          VARCHAR(50) COMMENT '批号',
+    quantity          DECIMAL(18,4) COMMENT '数量',
+    unit_of_measure   VARCHAR(20) COMMENT '单位',
+    delivery_date     DATE COMMENT '交付日期',
+    report_required   TINYINT DEFAULT 1 COMMENT '是否需要报告',
+    report_format     VARCHAR(30) COMMENT '报告格式',
+    priority          VARCHAR(20) DEFAULT 'NORMAL' COMMENT 'NORMAL/URGENT/EMERGENCY',
+    status            VARCHAR(20) DEFAULT 'DRAFT' COMMENT '草稿/受理评审/评审通过/评审驳回/已登记样品/完成',
+    review_by         BIGINT COMMENT '评审人',
+    review_time       DATETIME COMMENT '评审时间',
+    review_comment    VARCHAR(500) COMMENT '评审意见',
+    sample_id         BIGINT COMMENT '贯通生成的样品ID',
+    create_by         VARCHAR(64),
+    create_time       DATETIME,
+    update_by         VARCHAR(64),
+    update_time       DATETIME,
+    remark            TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='委托单';
+
+CREATE TABLE lims_entrust_item (
+    item_id           BIGINT PRIMARY KEY AUTO_INCREMENT,
+    entrust_id        BIGINT NOT NULL COMMENT '委托单ID',
+    test_item_name    VARCHAR(200) NOT NULL COMMENT '检验项目名称',
+    test_method       VARCHAR(200) COMMENT '检验方法',
+    standard_ref      VARCHAR(200) COMMENT '标准依据',
+    quantity          DECIMAL(10,2) COMMENT '数量',
+    unit_price        DECIMAL(12,2) COMMENT '单价',
+    status            VARCHAR(20) DEFAULT 'PENDING' COMMENT 'PENDING/DONE',
+    create_time       DATETIME
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='委托检验项目';
+
+-- ============================================================
+-- 十三、人员档案（新增 1 张）
+-- ============================================================
+
+CREATE TABLE lims_staff (
+    staff_id          BIGINT PRIMARY KEY AUTO_INCREMENT,
+    staff_code        VARCHAR(50) NOT NULL COMMENT '人员工号',
+    staff_name        VARCHAR(50) NOT NULL COMMENT '姓名',
+    dept_name         VARCHAR(100) COMMENT '部门',
+    position          VARCHAR(50) COMMENT '岗位',
+    phone             VARCHAR(30) COMMENT '电话',
+    email             VARCHAR(100) COMMENT '邮箱',
+    hire_date         DATE COMMENT '入职日期',
+    status            VARCHAR(20) DEFAULT 'ACTIVE' COMMENT 'ACTIVE/INACTIVE',
+    create_by         VARCHAR(64),
+    create_time       DATETIME,
+    update_by         VARCHAR(64),
+    update_time       DATETIME,
+    remark            TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='人员档案';
+
+-- ============================================================
+-- 十四、供应商管理（新增 2 张）
+-- ============================================================
+
+CREATE TABLE lims_supplier (
+    vendor_id         BIGINT PRIMARY KEY AUTO_INCREMENT,
+    vendor_code       VARCHAR(50) NOT NULL COMMENT '供应商编码',
+    vendor_name       VARCHAR(200) NOT NULL COMMENT '供应商名称',
+    vendor_type       VARCHAR(30) COMMENT '生产商/经销商/服务商',
+    contact_person    VARCHAR(50) COMMENT '联系人',
+    contact_phone     VARCHAR(30) COMMENT '联系电话',
+    email             VARCHAR(100) COMMENT '邮箱',
+    address           VARCHAR(300) COMMENT '地址',
+    grade             VARCHAR(20) COMMENT '评估分级 A/B/C',
+    approved          TINYINT DEFAULT 0 COMMENT '是否合格名录',
+    status            VARCHAR(20) DEFAULT 'ACTIVE' COMMENT 'ACTIVE/INACTIVE',
+    create_by         VARCHAR(64),
+    create_time       DATETIME,
+    update_by         VARCHAR(64),
+    update_time       DATETIME,
+    remark            TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='供应商档案';
+
+CREATE TABLE lims_supplier_purchase (
+    purchase_id       BIGINT PRIMARY KEY AUTO_INCREMENT,
+    vendor_id         BIGINT NOT NULL COMMENT '供应商ID',
+    purchase_no       VARCHAR(50) COMMENT '采购单号',
+    purchase_date     DATE COMMENT '采购日期',
+    material_type     VARCHAR(30) COMMENT '试剂/物料/耗材',
+    material_name     VARCHAR(200) NOT NULL COMMENT '物料名称',
+    reagent_id        BIGINT COMMENT '关联试剂ID',
+    quantity          DECIMAL(18,4) COMMENT '数量',
+    unit_of_measure   VARCHAR(20) COMMENT '单位',
+    unit_price        DECIMAL(12,2) COMMENT '单价',
+    total_amount      DECIMAL(14,2) COMMENT '总金额',
+    status            VARCHAR(20) DEFAULT 'ORDERED' COMMENT 'ORDERED/RECEIVED',
+    create_by         VARCHAR(64),
+    create_time       DATETIME,
+    remark            TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='供应商采购记录';
+
+-- ============================================================
+-- 菜单与权限 SQL（P1 补强：新模块 40xx/41xx/42xx + 补旧 9 页面）
+-- ============================================================
+
+-- 二级目录: 委托与客户管理
+INSERT INTO `sys_menu` VALUES (4000, '委托与客户管理', 3000, 8, 'entrust', NULL, '', 1, 0, 'M', '1', '0', '0', '', 'phone', 'admin', NULL, NOW(), '', NULL, NULL, '委托与客户管理目录', 0, '1000-01-01 00:00:00', 1);
+-- C: 客户档案
+INSERT INTO `sys_menu` VALUES (4001, '客户档案', 4000, 1, 'customer', 'lims/entrust/customer', '', 1, 0, 'C', '1', '0', '0', 'lims:customer:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '客户档案菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4002, '客户新增', 4001, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:customer:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4003, '客户修改', 4001, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:customer:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4004, '客户删除', 4001, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:customer:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 委托单模板
+INSERT INTO `sys_menu` VALUES (4005, '委托单模板', 4000, 2, 'template', 'lims/entrust/template', '', 1, 0, 'C', '1', '0', '0', 'lims:entrust:template:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '委托单模板菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4006, '模板新增', 4005, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:entrust:template:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4007, '模板修改', 4005, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:entrust:template:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4008, '模板删除', 4005, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:entrust:template:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 委托单管理
+INSERT INTO `sys_menu` VALUES (4009, '委托单管理', 4000, 3, 'index', 'lims/entrust/index', '', 1, 0, 'C', '1', '0', '0', 'lims:entrust:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '委托单管理菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4010, '委托新增', 4009, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:entrust:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4011, '委托修改', 4009, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:entrust:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4012, '委托删除', 4009, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:entrust:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4013, '提交受理', 4009, 4, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:entrust:submit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4014, '受理评审', 4009, 5, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:entrust:review', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4015, '登记样品', 4009, 6, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:entrust:register', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+
+-- 二级目录: 培训与资质
+INSERT INTO `sys_menu` VALUES (4100, '培训与资质', 3000, 9, 'training', NULL, '', 1, 0, 'M', '1', '0', '0', '', 'education', 'admin', NULL, NOW(), '', NULL, NULL, '培训与资质目录', 0, '1000-01-01 00:00:00', 1);
+-- C: 人员档案
+INSERT INTO `sys_menu` VALUES (4101, '人员档案', 4100, 1, 'staff', 'lims/training/staff', '', 1, 0, 'C', '1', '0', '0', 'lims:staff:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '人员档案菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4102, '人员新增', 4101, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:staff:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4103, '人员修改', 4101, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:staff:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4104, '人员删除', 4101, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:staff:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 培训计划
+INSERT INTO `sys_menu` VALUES (4105, '培训计划', 4100, 2, 'plan', 'lims/training/plan', '', 1, 0, 'C', '1', '0', '0', 'lims:training:plan:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '培训计划菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4106, '计划新增', 4105, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:training:plan:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4107, '计划修改', 4105, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:training:plan:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4108, '计划删除', 4105, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:training:plan:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 培训记录
+INSERT INTO `sys_menu` VALUES (4109, '培训记录', 4100, 3, 'record', 'lims/training/record', '', 1, 0, 'C', '1', '0', '0', 'lims:training:record:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '培训记录菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4110, '记录新增', 4109, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:training:record:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4111, '记录修改', 4109, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:training:record:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4112, '记录删除', 4109, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:training:record:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4113, '参训人员', 4109, 4, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:training:record:participant', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 上岗资质
+INSERT INTO `sys_menu` VALUES (4114, '上岗资质', 4100, 4, 'qualification', 'lims/training/qualification', '', 1, 0, 'C', '1', '0', '0', 'lims:qualification:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '上岗资质菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4115, '资质新增', 4114, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:qualification:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4116, '资质修改', 4114, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:qualification:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4117, '资质删除', 4114, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:qualification:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4118, '到期提醒', 4114, 4, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:qualification:expire', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+
+-- 二级目录: 供应商管理
+INSERT INTO `sys_menu` VALUES (4200, '供应商管理', 3000, 10, 'supplier', NULL, '', 1, 0, 'M', '1', '0', '0', '', 'shopping', 'admin', NULL, NOW(), '', NULL, NULL, '供应商管理目录', 0, '1000-01-01 00:00:00', 1);
+-- C: 供应商档案
+INSERT INTO `sys_menu` VALUES (4201, '供应商档案', 4200, 1, 'index', 'lims/supplier/index', '', 1, 0, 'C', '1', '0', '0', 'lims:supplier:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '供应商档案菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4202, '供应商新增', 4201, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4203, '供应商修改', 4201, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4204, '供应商删除', 4201, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 资质附件
+INSERT INTO `sys_menu` VALUES (4205, '资质附件', 4200, 2, 'qualification', 'lims/supplier/qualification', '', 1, 0, 'C', '1', '0', '0', 'lims:supplier:qualification:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '供应商资质菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4206, '资质新增', 4205, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:qualification:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4207, '资质修改', 4205, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:qualification:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4208, '资质删除', 4205, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:qualification:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 供应商审计
+INSERT INTO `sys_menu` VALUES (4209, '供应商审计', 4200, 3, 'audit', 'lims/supplier/audit', '', 1, 0, 'C', '1', '0', '0', 'lims:supplier:audit:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '供应商审计菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4210, '审计新增', 4209, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:audit:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4211, '审计修改', 4209, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:audit:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4212, '审计删除', 4209, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:audit:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 合格名录
+INSERT INTO `sys_menu` VALUES (4213, '合格名录', 4200, 4, 'approval', 'lims/supplier/approval', '', 1, 0, 'C', '1', '0', '0', 'lims:supplier:approval:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '合格名录菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4214, '名录新增', 4213, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:approval:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4215, '名录修改', 4213, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:approval:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4216, '名录删除', 4213, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:approval:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 采购记录
+INSERT INTO `sys_menu` VALUES (4217, '采购记录', 4200, 5, 'purchase', 'lims/supplier/purchase', '', 1, 0, 'C', '1', '0', '0', 'lims:supplier:purchase:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '采购记录菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4218, '采购新增', 4217, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:purchase:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4219, '采购修改', 4217, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:purchase:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (4220, '采购删除', 4217, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:supplier:purchase:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+
+-- ============================================================
+-- 补旧 9 页面菜单（试剂/质量/检验）
+-- ============================================================
+-- C: 试剂批次效期 (reagent/lot)
+INSERT INTO `sys_menu` VALUES (3415, '试剂批次效期', 3400, 5, 'lot', 'lims/reagent/lot', '', 1, 0, 'C', '1', '0', '0', 'lims:reagent:lot:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '试剂批次效期菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3416, '批次新增', 3415, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:lot:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3417, '批次修改', 3415, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:lot:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3418, '批次删除', 3415, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:lot:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 标准品资质 (reagent/standardQualification)
+INSERT INTO `sys_menu` VALUES (3425, '标准品资质', 3400, 6, 'standardQualification', 'lims/reagent/standardQualification', '', 1, 0, 'C', '1', '0', '0', 'lims:reagent:qualification:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '标准品资质菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3426, '资质新增', 3425, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:qualification:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3427, '资质修改', 3425, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:qualification:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3428, '资质删除', 3425, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:qualification:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 标准品使用 (reagent/standardUsage)
+INSERT INTO `sys_menu` VALUES (3429, '标准品使用', 3400, 7, 'standardUsage', 'lims/reagent/standardUsage', '', 1, 0, 'C', '1', '0', '0', 'lims:reagent:usage:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '标准品使用菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3430, '使用新增', 3429, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:usage:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3431, '使用删除', 3429, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:usage:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 培养基管理 (reagent/cultureMedia)
+INSERT INTO `sys_menu` VALUES (3432, '培养基管理', 3400, 8, 'cultureMedia', 'lims/reagent/cultureMedia', '', 1, 0, 'C', '1', '0', '0', 'lims:reagent:media:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '培养基管理菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3433, '培养基新增', 3432, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:media:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3434, '培养基修改', 3432, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:media:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3435, '培养基删除', 3432, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:media:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 菌种流转 (reagent/cultureCollection)
+INSERT INTO `sys_menu` VALUES (3436, '菌种流转', 3400, 9, 'cultureCollection', 'lims/reagent/cultureCollection', '', 1, 0, 'C', '1', '0', '0', 'lims:reagent:culture:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '菌种流转菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3437, '菌种新增', 3436, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:culture:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3438, '菌种修改', 3436, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:culture:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3439, '菌种删除', 3436, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:reagent:culture:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 偏差影响评估 (quality/deviationImpact)
+INSERT INTO `sys_menu` VALUES (3545, '偏差影响评估', 3500, 7, 'deviationImpact', 'lims/quality/deviationImpact', '', 1, 0, 'C', '1', '0', '0', 'lims:quality:deviationImpact:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '偏差影响评估菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3546, '评估新增', 3545, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:quality:deviationImpact:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3547, '评估修改', 3545, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:quality:deviationImpact:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3548, '评估删除', 3545, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:quality:deviationImpact:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 变更影响评估 (quality/changeImpact)
+INSERT INTO `sys_menu` VALUES (3549, '变更影响评估', 3500, 8, 'changeImpact', 'lims/quality/changeImpact', '', 1, 0, 'C', '1', '0', '0', 'lims:quality:changeImpact:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '变更影响评估菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3550, '评估新增', 3549, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:quality:changeImpact:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3551, '评估修改', 3549, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:quality:changeImpact:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3552, '评估删除', 3549, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:quality:changeImpact:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: CAPA任务 (quality/capaTask)
+INSERT INTO `sys_menu` VALUES (3553, 'CAPA任务', 3500, 9, 'capaTask', 'lims/quality/capaTask', '', 1, 0, 'C', '1', '0', '0', 'lims:quality:capaTask:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, 'CAPA任务菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3554, '任务新增', 3553, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:quality:capaTask:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3555, '任务修改', 3553, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:quality:capaTask:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3556, '任务删除', 3553, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:quality:capaTask:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3557, '任务完成', 3553, 4, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:quality:capaTask:complete', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+-- C: 微生物检测 (test/micro)
+INSERT INTO `sys_menu` VALUES (3240, '微生物检测', 3200, 8, 'micro', 'lims/test/micro', '', 1, 0, 'C', '1', '0', '0', 'lims:test:micro:list', 'form', 'admin', NULL, NOW(), '', NULL, NULL, '微生物检测菜单', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3241, '检测新增', 3240, 1, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:test:micro:add', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3242, '检测修改', 3240, 2, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:test:micro:edit', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3243, '结果录入', 3240, 3, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:test:micro:result', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+INSERT INTO `sys_menu` VALUES (3244, '检测删除', 3240, 4, '#', '', NULL, 1, 0, 'F', '1', '0', '0', 'lims:test:micro:remove', '#', 'admin', NULL, NOW(), '', NULL, NULL, '', 0, '1000-01-01 00:00:00', 1);
+
+-- 管理员授权 role_id=1
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4000);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4001);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4002);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4003);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4004);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4005);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4006);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4007);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4008);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4009);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4010);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4011);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4012);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4013);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4014);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4015);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4100);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4101);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4102);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4103);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4104);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4105);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4106);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4107);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4108);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4109);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4110);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4111);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4112);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4113);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4114);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4115);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4116);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4117);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4118);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4200);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4201);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4202);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4203);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4204);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4205);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4206);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4207);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4208);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4209);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4210);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4211);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4212);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4213);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4214);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4215);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4216);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4217);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4218);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4219);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 4220);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3415);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3416);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3417);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3418);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3425);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3426);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3427);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3428);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3429);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3430);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3431);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3432);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3433);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3434);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3435);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3436);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3437);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3438);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3439);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3545);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3546);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3547);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3548);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3549);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3550);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3551);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3552);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3553);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3554);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3555);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3556);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3557);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3240);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3241);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3242);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3243);
+INSERT INTO sys_role_menu (role_id, menu_id) VALUES (1, 3244);
