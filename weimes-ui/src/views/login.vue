@@ -25,15 +25,6 @@
             <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon" />
           </el-input>
         </el-form-item>
-        <el-form-item prop="code" v-if="captchaOnOff">
-          <el-input v-model="loginForm.code" auto-complete="off" :placeholder="$t('login.captcha')" style="width: 60%"
-            @keyup.enter.native="handleLogin">
-            <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
-          </el-input>
-          <div class="login-code">
-            <img :src="codeUrl" @click="getCode" class="login-code-img" />
-          </div>
-        </el-form-item>
         <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">{{ this.$t('login.remember') }}</el-checkbox>
         <el-form-item style="width:100%;">
           <el-button :loading="loading" size="medium" type="primary" style="width:100%;"
@@ -56,7 +47,6 @@
 </template>
 
 <script>
-import { getCodeImg } from "@/api/login";
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from '@/utils/jsencrypt'
 import LangSelect from "@/components/LangSelect";
@@ -66,7 +56,6 @@ export default {
   components: { LangSelect },
   data() {
     return {
-      codeUrl: "",
       loginForm: {
         username: "kf1",
         password: "123456",
@@ -80,12 +69,9 @@ export default {
         ],
         password: [
           { required: true, trigger: "blur", message: this.$t('login.validatePassword') }
-        ],
-        code: [{ required: true, trigger: "change", message: this.$t('login.validateCode') }]
+        ]
       },
       loading: false,
-      // 验证码开关
-      captchaOnOff: true,
       // 注册开关
       register: false,
       redirect: undefined
@@ -100,21 +86,11 @@ export default {
     }
   },
   created() {
-    this.getCode();
     this.getCookie();
   },
   methods: {
     toIPC() {
       window.open("https://beian.miit.gov.cn/", "_blank");
-    },
-    getCode() {
-      getCodeImg().then(res => {
-        this.captchaOnOff = res.captchaOnOff === undefined ? true : res.captchaOnOff;
-        if (this.captchaOnOff) {
-          this.codeUrl = "data:image/gif;base64," + res.img;
-          this.loginForm.uuid = res.uuid;
-        }
-      });
     },
     getCookie() {
       const username = Cookies.get("username");
@@ -145,9 +121,6 @@ export default {
             this.$router.push({ path: this.redirect || "/" }).catch(() => { });
           }).catch(() => {
             this.loading = false;
-            if (this.captchaOnOff) {
-              this.getCode();
-            }
           });
         }
       });
@@ -216,9 +189,47 @@ export default {
 
 .login-lang {
   position: absolute;
-  top: 20px;
-  right: 28px;
-  color: #5a5e66;
+  top: 16px;
+  right: 32px;
+  z-index: 10;
+}
+
+.login-lang .lang-select {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-lang .lang-select:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.login-lang .lang-icon {
+  font-size: 18px;
+  margin-right: 6px;
+}
+
+.login-lang .lang-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  max-width: none;
+  overflow: visible;
+  text-overflow: unset;
+  white-space: nowrap;
+}
+
+.login-lang .lang-caret {
+  font-size: 14px;
+  margin-left: 6px;
+  color: #333;
 }
 
 .login-form {
@@ -248,17 +259,6 @@ export default {
   color: #bfbfbf;
 }
 
-.login-code {
-  width: 33%;
-  height: 38px;
-  float: right;
-
-  img {
-    cursor: pointer;
-    vertical-align: middle;
-  }
-}
-
 .el-login-footer {
   height: 40px;
   line-height: 40px;
@@ -271,9 +271,5 @@ export default {
   font-size: 10px;
   letter-spacing: 1px;
   margin-bottom: -4px;
-}
-
-.login-code-img {
-  height: 38px;
 }
 </style>

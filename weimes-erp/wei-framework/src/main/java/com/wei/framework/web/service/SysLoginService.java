@@ -58,7 +58,8 @@ public class SysLoginService {
      */
     public String login(String username, String password, String code, String uuid) {
         boolean captchaOnOff = configService.selectCaptchaOnOff();
-        // 验证码开关
+        // 验证码已禁用（登录页移除验证码输入）
+        captchaOnOff = false;
         if (captchaOnOff) {
             validateCaptcha(username, code, uuid);
         }
