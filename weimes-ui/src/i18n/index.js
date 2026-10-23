@@ -84,7 +84,7 @@ const elementMessages = {
 export function getLang() {
   const cookieLang = Cookies.get('lang')
   const localLang = localStorage.getItem('app_lang')
-  return cookieLang || localLang || 'zh-CN'
+  return cookieLang || localLang || 'en-US'
 }
 
 const i18n = new VueI18n({
