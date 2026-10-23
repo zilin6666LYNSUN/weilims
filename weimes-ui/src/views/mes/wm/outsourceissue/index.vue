@@ -1,41 +1,41 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="发料单编号" prop="issueCode">
+      <el-form-item :label="$t('mes.发料单编号')" prop="issueCode">
         <el-input
           v-model="queryParams.issueCode"
-          placeholder="请输入发料单编号"
+          :placeholder="$t('mes.请输入发料单编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="外协工单编码" prop="workorderCode">
+      <el-form-item :label="$t('mes.外协工单编码')" prop="workorderCode">
         <el-input
           v-model="queryParams.workorderCode"
-          placeholder="请输入外协工单编码"
+          :placeholder="$t('mes.请输入外协工单编码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="供应商名称" prop="vendorName">
+      <el-form-item :label="$t('lims.供应商名称')" prop="vendorName">
         <el-input
           v-model="queryParams.vendorName"
-          placeholder="请输入供应商名称"
+          :placeholder="$t('lims.请输入供应商名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="发料日期" prop="issueDate">
+      <el-form-item :label="$t('mes.发料日期')" prop="issueDate">
         <el-date-picker clearable
           v-model="queryParams.issueDate"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择发料日期">
+          :placeholder="$t('mes.请选择发料日期')">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -48,7 +48,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:outsourceissue:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -59,7 +59,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:wm:outsourceissue:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -70,14 +70,14 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:wm:outsourceissue:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="outsourceissueList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="发料单编号" align="center" prop="issueCode" >
+      <el-table-column :label="$t('mes.发料单编号')" align="center" prop="issueCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -86,20 +86,20 @@
           >{{scope.row.issueCode}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="发料单名称" align="center" prop="issueName" />
-      <el-table-column label="生产工单编码" align="center" prop="workorderCode" />
-      <el-table-column label="供应商名称" align="center" prop="vendorName" />
-      <el-table-column label="发料日期" align="center" prop="issueDate" width="180">
+      <el-table-column :label="$t('mes.发料单名称')" align="center" prop="issueName" />
+      <el-table-column :label="$t('mes.生产工单编码')" align="center" prop="workorderCode" />
+      <el-table-column :label="$t('lims.供应商名称')" align="center" prop="vendorName" />
+      <el-table-column :label="$t('mes.发料日期')" align="center" prop="issueDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.issueDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="单据状态" align="center" prop="status">
+      <el-table-column :label="$t('mes.单据状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
       </el-table-column>  
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -108,7 +108,7 @@
             v-if="scope.row.status =='PREPARE'"
             @click="handleExecute(scope.row)"
             v-hasPermi="['mes:wm:outsourceissue:edit']"
-          >执行发料</el-button>
+          >{{ this.$t('mes.执行发料') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -116,7 +116,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:wm:outsourceissue:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -124,7 +124,7 @@
             @click="handleDelete(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:wm:outsourceissue:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -142,38 +142,38 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="发料单编号" prop="issueCode">
-              <el-input v-model="form.issueCode" placeholder="请输入发料单编号" />
+            <el-form-item :label="$t('mes.发料单编号')" prop="issueCode">
+              <el-input v-model="form.issueCode" :placeholder="$t('mes.请输入发料单编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view' && form.status =='PREPARE'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="发料单名称" prop="issueName">
-              <el-input v-model="form.issueName" placeholder="请输入发料单名称" />
+            <el-form-item :label="$t('mes.发料单名称')" prop="issueName">
+              <el-input v-model="form.issueName" :placeholder="$t('mes.请输入发料单名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-             <el-form-item label="发料日期" prop="issueDate">
+             <el-form-item :label="$t('mes.发料日期')" prop="issueDate">
               <el-date-picker clearable
                 v-model="form.issueDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择发料日期">
+                :placeholder="$t('mes.请选择发料日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="发料仓库">
+            <el-form-item :label="$t('mes.发料仓库')">
               <el-cascader v-model="warehouseInfo"
                 :options="warehouseOptions"
                 :props="warehouseProps"
@@ -183,7 +183,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="单据状态" prop="status">
+            <el-form-item :label="$t('mes.单据状态')" prop="status">
               <el-select v-model="form.status" disabled>
                 <el-option
                   v-for="dict in dict.type.mes_order_status"
@@ -197,42 +197,42 @@
         </el-row>        
         <el-row>
           <el-col :span="8">
-            <el-form-item label="外协工单" prop="workorderCode">
-              <el-input v-model="form.workorderCode" placeholder="请选择外协工单" >
+            <el-form-item :label="$t('mes.外协工单')" prop="workorderCode">
+              <el-input v-model="form.workorderCode" :placeholder="$t('mes.请选择外协工单')" >
                 <el-button slot="append" icon="el-icon-search" @click="handleWorkorderSelect"></el-button>
               </el-input>
             </el-form-item>
             <WorkorderSelect ref="woSelect" :workorder="workorder" @onSelected="onWorkorderSelected"></WorkorderSelect>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="供应商" prop="vendorCode">
+            <el-form-item :label="$t('lims.供应商')" prop="vendorCode">
               <el-input v-model="form.vendorCode" readonly="readonly">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="供应商名称" >
-              <el-input v-model="form.vendorName" placeholder="请选择外协工单" >               
+            <el-form-item :label="$t('lims.供应商名称')" >
+              <el-input v-model="form.vendorName" :placeholder="$t('mes.请选择外协工单')" >               
               </el-input>
             </el-form-item>
           </el-col>
         </el-row>        
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <el-divider v-if="form.issueId !=null" content-position="center">物料信息</el-divider> 
+      <el-divider v-if="form.issueId !=null" content-position="center">{{ this.$t('mes.物料信息') }}</el-divider> 
       <el-card shadow="always" v-if="form.issueId !=null" class="box-card">
         <Issueline ref="line" :issueId="form.issueId" :warehouseId="form.warehouseId" :locationId="form.locationId" :areaId="form.areaId" :optType="optType"></Issueline>    
       </el-card>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>     
-        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">保 存</el-button>           
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">{{ this.$t('common.back') }}</el-button>     
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">{{ this.$t('mes.保 存') }}</el-button>           
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -292,13 +292,13 @@ export default {
       // 表单校验
       rules: {
         issueCode: [
-          { required: true, message: "发料单编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.发料单编号不能为空'), trigger: "blur" }
         ],        
         issueName: [
-          { required: true, message: "发料单名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.发料单名称不能为空'), trigger: "blur" }
         ],
         workorderCode: [
-          { required: true, message: "请选择外协工单", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择外协工单'), trigger: "blur" }
         ]
       }
     };
@@ -399,7 +399,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加外协发料单头";
+      this.title = this.$t('mes.添加外协发料单头');
       this.optType = "add";
     },
     /** 修改按钮操作 */
@@ -409,7 +409,7 @@ export default {
       getOutsourceissue(issueId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改外协发料单头";
+        this.title = this.$t('mes.修改外协发料单头');
         this.optType = "edit";
       });
     },
@@ -419,13 +419,13 @@ export default {
         if (valid) {
           if (this.form.issueId != null) {
             updateOutsourceissue(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addOutsourceissue(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -436,11 +436,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const issueIds = row.issueId || this.ids;
-      this.$modal.confirm('是否确认删除外协发料单头编号为"' + issueIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除外协发料单头编号为{v}的数据项？', { v: issueIds })).then(function() {
         return delOutsourceissue(issueIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     // 查询明细按钮操作
@@ -453,18 +453,18 @@ export default {
         this.warehouseInfo[1] = response.data.locationId;    
         this.warehouseInfo[2] = response.data.areaId; 
         this.open = true;
-        this.title = "查看外协发料单信息";
+        this.title = this.$t('mes.查看外协发料单信息');
         this.optType = "view";
       });
     },
     //执行发料
     handleExecute(row){
       const issueIds = row.issueId || this.ids;
-      this.$modal.confirm('确认执行发料？').then(function() {
+      this.$modal.confirm(this.$t('mes.确认执行发料？')).then(function() {
         return execute(issueIds)
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("出库成功");
+        this.$modal.msgSuccess(this.$t('mes.出库成功'));
       }).catch(() => {});
     },
     //选择生产工单

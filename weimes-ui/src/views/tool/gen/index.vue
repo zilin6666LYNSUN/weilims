@@ -1,66 +1,66 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="表名称" prop="tableName">
-        <el-input v-model="queryParams.tableName" placeholder="请输入表名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('tool.表名称')" prop="tableName">
+        <el-input v-model="queryParams.tableName" :placeholder="$t('tool.请输入表名称')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="表描述" prop="tableComment">
-        <el-input v-model="queryParams.tableComment" placeholder="请输入表描述" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('tool.表描述')" prop="tableComment">
+        <el-input v-model="queryParams.tableComment" :placeholder="$t('tool.请输入表描述')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="创建时间">
+      <el-form-item :label="$t('system.创建时间')">
         <el-date-picker v-model="dateRange" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
-          range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+          range-separator="-" :start-placeholder="$t('system.开始日期')" :end-placeholder="$t('system.结束日期')"></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-download" size="mini" @click="handleGenTable"
-          v-hasPermi="['tool:gen:code']">生成</el-button>
+          v-hasPermi="['tool:gen:code']">{{ this.$t('lims.生成') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="info" plain icon="el-icon-upload" size="mini" @click="openImportTable"
-          v-hasPermi="['tool:gen:import']">导入</el-button>
+          v-hasPermi="['tool:gen:import']">{{ this.$t('system.导入') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleEditTable"
-          v-hasPermi="['tool:gen:edit']">修改</el-button>
+          v-hasPermi="['tool:gen:edit']">{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
-          v-hasPermi="['tool:gen:remove']">删除</el-button>
+          v-hasPermi="['tool:gen:remove']">{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="tableList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center" width="55"></el-table-column>
-      <el-table-column label="序号" type="index" width="50" align="center">
+      <el-table-column :label="$t('system.序号')" type="index" width="50" align="center">
         <template slot-scope="scope">
           <span>{{ (queryParams.pageNum - 1) * queryParams.pageSize + scope.$index + 1 }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="表名称" align="center" prop="tableName" :show-overflow-tooltip="true" width="120" />
-      <el-table-column label="表描述" align="center" prop="tableComment" :show-overflow-tooltip="true" width="120" />
-      <el-table-column label="实体" align="center" prop="className" :show-overflow-tooltip="true" width="120" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="160" />
-      <el-table-column label="更新时间" align="center" prop="updateTime" width="160" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('tool.表名称')" align="center" prop="tableName" :show-overflow-tooltip="true" width="120" />
+      <el-table-column :label="$t('tool.表描述')" align="center" prop="tableComment" :show-overflow-tooltip="true" width="120" />
+      <el-table-column :label="$t('tool.实体')" align="center" prop="className" :show-overflow-tooltip="true" width="120" />
+      <el-table-column :label="$t('system.创建时间')" align="center" prop="createTime" width="160" />
+      <el-table-column :label="$t('tool.更新时间')" align="center" prop="updateTime" width="160" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="text" size="small" icon="el-icon-view" @click="handlePreview(scope.row)"
-            v-hasPermi="['tool:gen:preview']">预览</el-button>
+            v-hasPermi="['tool:gen:preview']">{{ this.$t('common.preview') }}</el-button>
           <el-button type="text" size="small" icon="el-icon-edit" @click="handleEditTable(scope.row)"
-            v-hasPermi="['tool:gen:edit']">编辑</el-button>
+            v-hasPermi="['tool:gen:edit']">{{ this.$t('common.edit') }}</el-button>
           <el-button type="text" size="small" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['tool:gen:remove']">删除</el-button>
+            v-hasPermi="['tool:gen:remove']">{{ this.$t('common.delete') }}</el-button>
           <el-button type="text" size="small" icon="el-icon-refresh" @click="handleSynchDb(scope.row)"
-            v-hasPermi="['tool:gen:edit']">同步</el-button>
+            v-hasPermi="['tool:gen:edit']">{{ this.$t('tool.同步') }}</el-button>
           <el-button type="text" size="small" icon="el-icon-download" @click="handleGenTable(scope.row)"
-            v-hasPermi="['tool:gen:code']">生成代码</el-button>
+            v-hasPermi="['tool:gen:code']">{{ this.$t('tool.生成代码') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -74,13 +74,13 @@
           :label="key.substring(key.lastIndexOf('/') + 1, key.indexOf('.vm'))"
           :name="key.substring(key.lastIndexOf('/') + 1, key.indexOf('.vm'))" :key="key">
           <el-link :underline="false" icon="el-icon-document-copy" v-clipboard:copy="value"
-            v-clipboard:success="clipboardSuccess" style="float:right">复制</el-link>
+            v-clipboard:success="clipboardSuccess" style="float:right">{{ this.$t('tool.复制') }}</el-link>
           <pre><code class="hljs" v-html="highlightedCode(value, key)"></code></pre>
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
     <import-table ref="import" @ok="handleQuery" />
-    <el-dialog width="30%" :visible.sync="open" v-bind="$attrs" v-on="$listeners" title="风格选择">
+    <el-dialog width="30%" :visible.sync="open" v-bind="$attrs" v-on="$listeners" :title="$t('tool.风格选择')">
       <el-radio-group v-model="style" size="small">
         <el-radio v-for="(item, index) in styleOptions" :key="index" :label="item.value" :disabled="item.disabled"
           border>
@@ -88,8 +88,8 @@
         </el-radio>
       </el-radio-group>
       <div slot="footer">
-        <el-button @click="dialogClose">取消</el-button>
-        <el-button type="primary" @click="dialogConfirm">确定</el-button>
+        <el-button @click="dialogClose">{{ this.$t('common.cancel') }}</el-button>
+        <el-button type="primary" @click="dialogConfirm">{{ this.$t('common.confirm') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -145,16 +145,16 @@ export default {
       style: 1,
       // 生成风格
       styleOptions: [{
-        "label": "mybatis-plus风格",
+        "label": this.$t('tool.mybatis-plus风格'),
         "value": 1
       }, {
-        "label": "mybatis风格",
+        "label": this.$t('tool.mybatis风格'),
         "value": 2
       }],
       // 预览参数
       preview: {
         open: false,
-        title: "代码预览",
+        title: this.$t('tool.代码预览'),
         data: {},
         activeName: "domain.java"
       }
@@ -198,12 +198,12 @@ export default {
     dialogConfirm() {
       const tableNames = this.selectRow.tableName || this.tableNames;
       if (tableNames == "") {
-        this.$modal.msgError("请选择要生成的数据");
+        this.$modal.msgError(this.$t('tool.请选择要生成的数据'));
         return;
       }
       if (this.selectRow.genType === "1") {
         genCode(this.selectRow.tableName).then(response => {
-          this.$modal.msgSuccess("成功生成到自定义路径：" + row.genPath);
+          this.$modal.msgSuccess(this.$t('tool.成功生成到自定义路径：') + row.genPath);
         });
       } else {
         this.$download.zip("/tool/gen/batchGenCode?tables=" + tableNames + "&style=" + this.style, "weimes");
@@ -219,10 +219,10 @@ export default {
     /** 同步数据库操作 */
     handleSynchDb(row) {
       const tableName = row.tableName;
-      this.$modal.confirm('确认要强制同步"' + tableName + '"表结构吗？').then(function () {
+      this.$modal.confirm(this.$t('tool.确认要强制同步{v}表结构吗？', { v: tableName })).then(function () {
         return synchDb(tableName);
       }).then(() => {
-        this.$modal.msgSuccess("同步成功");
+        this.$modal.msgSuccess(this.$t('tool.同步成功'));
       }).catch(() => { });
     },
     /** 打开导入表弹窗 */
@@ -252,7 +252,7 @@ export default {
     },
     /** 复制代码成功 */
     clipboardSuccess() {
-      this.$modal.msgSuccess("复制成功");
+      this.$modal.msgSuccess(this.$t('tool.复制成功'));
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -269,11 +269,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const tableIds = row.tableId || this.ids;
-      this.$modal.confirm('是否确认删除表编号为"' + tableIds + '"的数据项？').then(function () {
+      this.$modal.confirm(this.$t('tool.是否确认删除表编号为{v}的数据项？', { v: tableIds })).then(function () {
         return delTable(tableIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => { });
     }
   }

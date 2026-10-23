@@ -3,28 +3,28 @@
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
       <el-row>
         <el-col :span="8">
-          <el-form-item label="工作站编码" prop="workstationCode">
+          <el-form-item :label="$t('mes.工作站编码')" prop="workstationCode">
             <el-input
               v-model="queryParams.workstationCode"
-              placeholder="请输入工作站编码"
+              :placeholder="$t('mes.请输入工作站编码')"
               clearable
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="工作站名称" prop="workstationName">
+          <el-form-item :label="$t('mes.工作站名称')" prop="workstationName">
             <el-input
               v-model="queryParams.workstationName"
-              placeholder="请输入工作站名称"
+              :placeholder="$t('mes.请输入工作站名称')"
               clearable
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="所在车间名称" prop="workshopName">
-            <el-select v-model="queryParams.workshopId" placeholder="请选择车间">
+          <el-form-item :label="$t('mes.所在车间名称')" prop="workshopName">
+            <el-select v-model="queryParams.workshopId" :placeholder="$t('mes.请选择车间')">
               <el-option
                 v-for="item in workshopOptions"
                 :key="item.workshopId"
@@ -37,8 +37,8 @@
       </el-row>
       <el-row>
         <el-col :span="8">
-          <el-form-item label="所属工序" prop="processName">
-            <el-select v-model="queryParams.processId" placeholder="请选择工序">
+          <el-form-item :label="$t('mes.所属工序')" prop="processName">
+            <el-select v-model="queryParams.processId" :placeholder="$t('mes.请选择工序')">
                 <el-option
                   v-for="item in processOptions"
                   :key="item.processId"
@@ -50,8 +50,8 @@
         </el-col>
         <el-col :span="8">
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -66,7 +66,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:md:workstation:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -77,7 +77,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:md:workstation:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -88,7 +88,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:md:workstation:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -98,14 +98,14 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:md:workstation:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="workstationList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="工作站编号" align="center" prop="workstationCode" >
+      <el-table-column :label="$t('mes.工作站编号')" align="center" prop="workstationCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -114,17 +114,17 @@
           >{{scope.row.workstationCode}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="工作站名称" align="center" prop="workstationName" />
-      <el-table-column label="工作站地点" align="center" prop="workstationAddress" />
-      <el-table-column label="所在车间名称" align="center" prop="workshopName" />
-      <el-table-column label="所属工序" align="center" prop="processName" />
-      <el-table-column label="是否启用" align="center" prop="enableFlag">
+      <el-table-column :label="$t('mes.工作站名称')" align="center" prop="workstationName" />
+      <el-table-column :label="$t('mes.工作站地点')" align="center" prop="workstationAddress" />
+      <el-table-column :label="$t('mes.所在车间名称')" align="center" prop="workshopName" />
+      <el-table-column :label="$t('mes.所属工序')" align="center" prop="processName" />
+      <el-table-column :label="$t('system.是否启用')" align="center" prop="enableFlag">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -132,14 +132,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:md:workstation:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:md:workstation:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -157,34 +157,34 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="工作站编号" prop="workstationCode">
-              <el-input v-model="form.workstationCode" placeholder="请输入工作站编码" />
+            <el-form-item :label="$t('mes.工作站编号')" prop="workstationCode">
+              <el-input v-model="form.workstationCode" :placeholder="$t('mes.请输入工作站编码')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="工作站名称" prop="workstationName">
-              <el-input v-model="form.workstationName" placeholder="请输入工作站名称" />
+            <el-form-item :label="$t('mes.工作站名称')" prop="workstationName">
+              <el-input v-model="form.workstationName" :placeholder="$t('mes.请输入工作站名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="工作站地点" prop="workstationAddress">
-              <el-input v-model="form.workstationAddress" placeholder="请输入工作站地点" />
+            <el-form-item :label="$t('mes.工作站地点')" prop="workstationAddress">
+              <el-input v-model="form.workstationAddress" :placeholder="$t('mes.请输入工作站地点')" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="所在车间" prop="workshopId">
-                <el-select v-model="form.workshopId" placeholder="请选择车间">
+            <el-form-item :label="$t('mes.所在车间')" prop="workshopId">
+                <el-select v-model="form.workshopId" :placeholder="$t('mes.请选择车间')">
                   <el-option
                     v-for="item in workshopOptions"
                     :key="item.workshopId"
@@ -197,8 +197,8 @@
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="所属工序" prop="processId">
-              <el-select v-model="form.processId" placeholder="请选择工序">
+            <el-form-item :label="$t('mes.所属工序')" prop="processId">
+              <el-select v-model="form.processId" :placeholder="$t('mes.请选择工序')">
                 <el-option
                   v-for="item in processOptions"
                   :key="item.processId"
@@ -209,7 +209,7 @@
             </el-form-item>
           </el-col>        
           <el-col :span="8">
-            <el-form-item label="是否启用" prop="enableFlag">
+            <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
               <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
                 <el-radio
                   v-for="dict in dict.type.sys_yes_no"
@@ -229,13 +229,13 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <el-divider content-position="center" v-if="form.workstationId !=null">工作站资源</el-divider>
+      <el-divider content-position="center" v-if="form.workstationId !=null">{{ this.$t('mes.工作站资源') }}</el-divider>
       <MachinerySelectSingle ref="machinerySelect" @onSelected="onMachineryAdd"></MachinerySelectSingle>
       <el-row v-if="form.workstationId !=null">
         <el-col :span=24>
@@ -243,8 +243,8 @@
             <el-carousel-item>
               <el-card shadow="always" style="width:450px">
                 <div slot="header">
-                  <span>设备资源</span>
-                  <el-button style="float:right; padding: 3px 0" @click="handleMachineryAdd" v-if="optType !='view'" type="text">新增</el-button>
+                  <span>{{ this.$t('mes.设备资源') }}</span>
+                  <el-button style="float:right; padding: 3px 0" @click="handleMachineryAdd" v-if="optType !='view'" type="text">{{ this.$t('common.add') }}</el-button>
                 </div>
                 <WorkStationMachine ref="machineryList" :optType="optType" :workstationId="form.workstationId" style="align:center"></WorkStationMachine>                
               </el-card>
@@ -252,8 +252,8 @@
             <el-carousel-item>
               <el-card shadow="always" style="width:400px">
                 <div slot="header">
-                  <span>人力资源</span>
-                  <el-button style="float:right; padding: 3px 0" @click="handlePostAdd" v-if="optType !='view'" type="text">新增</el-button>
+                  <span>{{ this.$t('mes.人力资源') }}</span>
+                  <el-button style="float:right; padding: 3px 0" @click="handlePostAdd" v-if="optType !='view'" type="text">{{ this.$t('common.add') }}</el-button>
                 </div>
                 <Workstationworker ref="postList" :optType="optType" :workstationId="form.workstationId"></Workstationworker>
               </el-card>
@@ -261,8 +261,8 @@
             <el-carousel-item>
               <el-card shadow="always" style="width:400px">
                 <div slot="header">
-                  <span>工装夹具</span>
-                  <el-button style="float:right; padding: 5px 0" @click="handleToolTypeAdd" v-if="optType !='view'" type="text">新增</el-button>
+                  <span>{{ this.$t('mes.工装夹具') }}</span>
+                  <el-button style="float:right; padding: 5px 0" @click="handleToolTypeAdd" v-if="optType !='view'" type="text">{{ this.$t('common.add') }}</el-button>
                 </div>
                 <WorkStationTool ref="toolList" :optType="optType" :workstationId="form.workstationId"></WorkStationTool>
               </el-card>
@@ -271,9 +271,9 @@
         </el-col>
       </el-row>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>保 存</el-button>
-        <el-button @click="cancel">关 闭</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-else>{{ this.$t('mes.保 存') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('mes.关 闭') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -355,19 +355,19 @@ export default {
       // 表单校验
       rules: {
         workstationCode: [
-          { required: true, message: "工作站编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.工作站编号不能为空'), trigger: "blur" }
         ],
         workstationName: [
-          { required: true, message: "工作站名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.工作站名称不能为空'), trigger: "blur" }
         ],
         enableFlag: [
-          { required: true, message: "是否启用不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.是否启用不能为空'), trigger: "blur" }
         ],
         workshopId: [
-          { required: true, message: "请选择所属车间", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择所属车间'), trigger: "blur" }
         ],
         processId: [
-          { required: true, message: "请选择所属工序", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择所属工序'), trigger: "blur" }
         ]        
       }
     };
@@ -495,7 +495,7 @@ export default {
       this.reset();
       this.getWorkshops();
       this.open = true;
-      this.title = "添加工作站";
+      this.title = this.$t('mes.添加工作站');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -506,7 +506,7 @@ export default {
       getWorkstation(workstationId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看车间信息";
+        this.title = this.$t('mes.查看车间信息');
         this.optType = "view";
       });
     },
@@ -518,7 +518,7 @@ export default {
       getWorkstation(workstationId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改工作站";
+        this.title = this.$t('mes.修改工作站');
         this.optType = "edit";
       });
     },
@@ -528,13 +528,13 @@ export default {
         if (valid) {
           if (this.form.workstationId != null) {
             updateWorkstation(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addWorkstation(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -545,11 +545,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const workstationIds = row.workstationId || this.ids;
-      this.$modal.confirm('是否确认删除工作站？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除工作站？')).then(function() {
         return delWorkstation(workstationIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

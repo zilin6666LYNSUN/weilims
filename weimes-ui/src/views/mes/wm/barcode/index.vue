@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="条码类型" prop="barcodeType">
-        <el-select v-model="queryParams.barcodeType" placeholder="请选择条码类型">
+      <el-form-item :label="$t('mes.条码类型')" prop="barcodeType">
+        <el-select v-model="queryParams.barcodeType" :placeholder="$t('mes.请选择条码类型')">
           <el-option
             v-for="dict in dict.type.mes_barcode_type"
             :key="dict.value"
@@ -11,25 +11,25 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="业务编码" prop="bussinessCode">
+      <el-form-item :label="$t('mes.业务编码')" prop="bussinessCode">
         <el-input
           v-model="queryParams.bussinessCode"
-          placeholder="请输入业务编码"
+          :placeholder="$t('mes.请输入业务编码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="业务名称" prop="bussinessName">
+      <el-form-item :label="$t('mes.业务名称')" prop="bussinessName">
         <el-input
           v-model="queryParams.bussinessName"
-          placeholder="请输入业务名称"
+          :placeholder="$t('mes.请输入业务名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -42,7 +42,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:barcode:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
 
       <el-col :span="1.5">
@@ -54,7 +54,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:wm:barcode:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
 
       <el-col :span="1.5">
@@ -64,7 +64,7 @@
           size="mini"
           @click="handleConfig"
           v-hasPermi="['mes:wm:barcode:edit']"
-        >条码设置</el-button>
+        >{{ this.$t('mes.条码设置') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -73,7 +73,7 @@
           size="mini"
           @click="handleBatchPrint"
           v-hasPermi="['mes:wm:barcode:view']"
-        >批量打印</el-button>
+        >{{ this.$t('mes.批量打印') }}</el-button>
       </el-col>
       <Barcodeconfig ref="barcodeconfig"></Barcodeconfig>
       <BarcodeBatchPrint ref="barcodebatchprint"></BarcodeBatchPrint>
@@ -82,7 +82,7 @@
 
     <el-table v-loading="loading" :data="barcodeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />     
-      <el-table-column label="条码" align="center">
+      <el-table-column :label="$t('mes.条码')" align="center">
         <template slot-scope="scope">
             <el-image @click="handleView(scope.row)" class="barcodeClass" fit="scale-down" :src="scope.row.barcodeUrl">
               <div slot="error" class="image-slot">
@@ -91,25 +91,25 @@
             </el-image>
         </template>
       </el-table-column> 
-      <el-table-column label="条码格式" align="center" prop="barcodeFormart">
+      <el-table-column :label="$t('mes.条码格式')" align="center" prop="barcodeFormart">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_barcode_formart" :value="scope.row.barcodeFormart"/>
         </template>
       </el-table-column>          
-      <el-table-column label="条码类型" align="center" prop="barcodeType">
+      <el-table-column :label="$t('mes.条码类型')" align="center" prop="barcodeType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_barcode_type" :value="scope.row.barcodeType"/>
         </template>
       </el-table-column>
-      <el-table-column label="条码内容" align="center" prop="barcodeContent" />
-      <el-table-column label="业务编码" align="center" prop="bussinessCode" />
-      <el-table-column label="业务名称" align="center" prop="bussinessName" />
-      <el-table-column label="是否生效" align="center" prop="enableFlag" >
+      <el-table-column :label="$t('mes.条码内容')" align="center" prop="barcodeContent" />
+      <el-table-column :label="$t('mes.业务编码')" align="center" prop="bussinessCode" />
+      <el-table-column :label="$t('mes.业务名称')" align="center" prop="bussinessName" />
+      <el-table-column :label="$t('mes.是否生效')" align="center" prop="enableFlag" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -117,14 +117,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:wm:barcode:edit']"
-          >编辑</el-button>
+          >{{ this.$t('common.edit') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:wm:barcode:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -142,8 +142,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="条码格式" prop="barcodeFormart">          
-              <el-select v-model="form.barcodeFormart" placeholder="请选择条码格式">
+            <el-form-item :label="$t('mes.条码格式')" prop="barcodeFormart">          
+              <el-select v-model="form.barcodeFormart" :placeholder="$t('mes.请选择条码格式')">
                 <el-option
                   v-for="dict in dict.type.mes_barcode_formart"
                   :key="dict.value"
@@ -154,8 +154,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="条码类型" prop="barcodeType">
-              <el-select v-model="form.barcodeType" placeholder="请选择条码类型">
+            <el-form-item :label="$t('mes.条码类型')" prop="barcodeType">
+              <el-select v-model="form.barcodeType" :placeholder="$t('mes.请选择条码类型')">
                 <el-option
                   v-for="dict in dict.type.mes_barcode_type"
                   :key="dict.value"
@@ -166,7 +166,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="是否启用">
+            <el-form-item :label="$t('system.是否启用')">
               <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
                 <el-radio
                   v-for="dict in dict.type.sys_yes_no"
@@ -188,15 +188,15 @@
         <!--物料产品-->
         <el-row v-if="form.barcodeType=='ITEM'">
           <el-col :span="12">
-            <el-form-item label="物料编码"  prop="bussinessCode">
-              <el-input v-model="form.bussinessCode" readonly="readonly" placeholder="请选择物料编码" >
+            <el-form-item :label="$t('mes.物料编码')"  prop="bussinessCode">
+              <el-input v-model="form.bussinessCode" readonly="readonly" :placeholder="$t('mes.请选择物料编码')" >
                 <el-button slot="append" @click="handleSelectProduct" icon="el-icon-search"></el-button>
               </el-input>
             </el-form-item>
             <ItemSelect ref="itemSelect" @onSelected="onItemSelected" > </ItemSelect>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="物料名称" prop="bussinessName">
+            <el-form-item :label="$t('lims.物料名称')" prop="bussinessName">
               <el-input v-model="form.bussinessName" readonly="readonly" />
             </el-form-item>
           </el-col>
@@ -204,7 +204,7 @@
         <!--仓库-->
         <el-row v-if="form.barcodeType=='WAREHOUSE'">
           <el-col :span="24">
-            <el-form-item label="储位" prop="warehouseId">
+            <el-form-item :label="$t('mes.储位')" prop="warehouseId">
               <!-- <el-cascader v-model="warehouseInfo"
                 :options="warehouseOptions"
                 :props="warehouseProps"
@@ -225,15 +225,15 @@
         <!--箱条码-->
         <el-row v-if="form.barcodeType=='BOX'">
           <el-col :span="12">
-            <el-form-item label="装箱单号"  prop="packageCode">
-              <el-input v-model="form.bussinessCode" readonly="readonly" placeholder="请选择装箱单" >
+            <el-form-item :label="$t('mes.装箱单号')"  prop="packageCode">
+              <el-input v-model="form.bussinessCode" readonly="readonly" :placeholder="$t('mes.请选择装箱单')" >
                 <el-button slot="append" @click="handleSelectPackage" icon="el-icon-search"></el-button>
               </el-input>
             </el-form-item>
             <PackageSelectSingle ref="packageSelect" :status="'FINISHED'" @onSelected="onPackageSelected"></PackageSelectSingle>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="客户名称" prop="bussinessName">
+            <el-form-item :label="$t('lims.客户名称')" prop="bussinessName">
               <el-input v-model="form.bussinessName" readonly="readonly" />
             </el-form-item>
           </el-col>
@@ -241,15 +241,15 @@
         <!--供应商-->
         <el-row v-else-if="form.barcodeType=='VENDOR'">
           <el-col :span="12">
-            <el-form-item label="供应商编号" prop="bussinessCode">
-              <el-input v-model="form.bussinessCode" readonly="readonly" placeholder="请选择供应商" >
+            <el-form-item :label="$t('mes.供应商编号')" prop="bussinessCode">
+              <el-input v-model="form.bussinessCode" readonly="readonly" :placeholder="$t('mes.请选择供应商')" >
                 <el-button slot="append" @click="handleSelectVendor" icon="el-icon-search"></el-button>
               </el-input>
               <VendorSelect ref="vendorSelect" @onSelected="onVendorSelected" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="供应商名称" prop="bussinessName">
+            <el-form-item :label="$t('lims.供应商名称')" prop="bussinessName">
               <el-input v-model="form.bussinessName" readonly="readonly" >
               </el-input>
             </el-form-item>
@@ -258,15 +258,15 @@
         <!-- 工作站 -->
         <el-row v-else-if="form.barcodeType=='WORKSTATION'">
           <el-col :span="12">
-            <el-form-item label="工作站" prop="bussinessCode">
-              <el-input v-model="form.bussinessCode" placeholder="请选择工作站" >
+            <el-form-item :label="$t('mes.工作站')" prop="bussinessCode">
+              <el-input v-model="form.bussinessCode" :placeholder="$t('mes.请选择工作站')" >
                 <el-button slot="append" icon="el-icon-search" @click="handleWorkstationSelect"></el-button>
               </el-input>
             </el-form-item>
             <WorkstationSelect ref="wsSelect"  @onSelected="onWorkstationSelected"> </WorkstationSelect>      
           </el-col>
           <el-col :span="12">
-            <el-form-item label="工作站名称" prop="bussinessName">
+            <el-form-item :label="$t('mes.工作站名称')" prop="bussinessName">
               <el-input v-model="form.bussinessName" readonly="readonly" >
               </el-input>
             </el-form-item>
@@ -275,15 +275,15 @@
         <!-- 库存 -->
         <el-row v-else-if="form.barcodeType=='STOCK'">
           <el-col :span="8">
-            <el-form-item label="物资编码" prop="bussinessCode">
-              <el-input v-model="form.bussinessCode" placeholder="请选择库存记录" >
+            <el-form-item :label="$t('mes.物资编码')" prop="bussinessCode">
+              <el-input v-model="form.bussinessCode" :placeholder="$t('mes.请选择库存记录')" >
                 <el-button slot="append" icon="el-icon-search" @click="handleMaterialStockSelect"></el-button>
               </el-input>
             </el-form-item>
             <StockSelect ref="stockSelect"  @onSelected="onMaterialStockSelected"> </StockSelect>      
           </el-col>
           <el-col :span="16">
-            <el-form-item label="物资信息" prop="bussinessName">
+            <el-form-item :label="$t('mes.物资信息')" prop="bussinessName">
               <el-input v-model="form.bussinessName" readonly="readonly" ></el-input>
             </el-form-item>
           </el-col>
@@ -292,14 +292,14 @@
         <!--根据不同的条码类型展示不同的业务内容选择 end-->
         <el-row>
           <el-col :span="24">
-            <el-form-item label="条码内容">
+            <el-form-item :label="$t('mes.条码内容')">
               <el-input v-model="form.barcodeContent" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="条码" prop="url">
+            <el-form-item :label="$t('mes.条码')" prop="url">
               <el-image class="barcodeFormClass" :src="form.barcodeUrl">
                 <div slot="error" class="image-slot">
                   <i class="el-icon-picture-outline"></i>
@@ -310,16 +310,16 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>   
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-if="optType !='view' ">保 存</el-button>        
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-if="optType !='view' ">{{ this.$t('mes.保 存') }}</el-button>        
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -387,13 +387,13 @@ export default {
       // 表单校验
       rules: {
         barcodeFormart: [
-          { required: true, message: "条码格式不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.条码格式不能为空'), trigger: "blur" }
         ],
         barcodeType: [
-          { required: true, message: "条码类型不能为空", trigger: "change" }
+          { required: true, message: this.$t('mes.条码类型不能为空'), trigger: "change" }
         ],
         barcodeContent: [
-          { required: true, message: "产品物料ID不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.产品物料ID不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -461,7 +461,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加条码";
+      this.title = this.$t('mes.添加条码');
       this.optType = "add";
     },
     handleView(row){
@@ -470,7 +470,7 @@ export default {
       getBarcode(barcodeId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看条码";
+        this.title = this.$t('mes.查看条码');
         this.optType = "view";
       });
     },
@@ -481,7 +481,7 @@ export default {
       getBarcode(barcodeId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改条码";
+        this.title = this.$t('mes.修改条码');
         this.optType = "edit";
       });
     },
@@ -491,13 +491,13 @@ export default {
         if (valid) {
           if (this.form.barcodeId != null) {
             updateBarcode(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addBarcode(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -508,11 +508,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const barcodeIds = row.barcodeId || this.ids;
-      this.$modal.confirm('是否确认删除条码清单编号为"' + barcodeIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除条码清单编号为{v}的数据项？', { v: barcodeIds })).then(function() {
         return delBarcode(barcodeIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

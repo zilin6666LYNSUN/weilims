@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:qc:qctemplate:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -20,7 +20,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:qc:qctemplate:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -31,26 +31,26 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:qc:qctemplate:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="templateindexList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="检测项名称" align="center" prop="indexName" />
-      <el-table-column label="检测项类型" align="center" prop="indexType">
+      <el-table-column :label="$t('lims.检测项名称')" align="center" prop="indexName" />
+      <el-table-column :label="$t('lims.检测项类型')" align="center" prop="indexType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_index_type" :value="scope.row.indexType"/>
         </template>
       </el-table-column>
-      <el-table-column label="检测工具" align="center" prop="qcTool" />
-      <el-table-column label="检测方法" align="center" prop="checkMethod" :show-overflow-tooltip="true"/>
-      <el-table-column label="标准值" align="center" prop="standerVal" />
-      <el-table-column label="单位" align="center" prop="unitOfMeasure" />
-      <el-table-column label="误差上限" align="center" prop="thresholdMax" />
-      <el-table-column label="误差下限" align="center" prop="thresholdMin" />
-      <el-table-column label="操作" v-if="optType != 'view'" align="center" width="100px" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.检测工具')" align="center" prop="qcTool" />
+      <el-table-column :label="$t('lims.检测方法')" align="center" prop="checkMethod" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('lims.标准值')" align="center" prop="standerVal" />
+      <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure" />
+      <el-table-column :label="$t('mes.误差上限')" align="center" prop="thresholdMax" />
+      <el-table-column :label="$t('mes.误差下限')" align="center" prop="thresholdMin" />
+      <el-table-column :label="$t('common.operation')" v-if="optType != 'view'" align="center" width="100px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -58,14 +58,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:qc:qctemplate:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:qc:qctemplate:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -83,35 +83,35 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
             <el-col :span="12">
-                <el-form-item label="检测项" prop="indexId">
-                    <el-input v-model="form.indexName" placeholder="请选择检测项" >
+                <el-form-item :label="$t('lims.检测项')" prop="indexId">
+                    <el-input v-model="form.indexName" :placeholder="$t('mes.请选择检测项')" >
                         <el-button slot="append" @click="handleSelectIndex" icon="el-icon-search"></el-button>
                     </el-input>
                     <IndexSelect ref="indexSelect" @onSelected="onIndexSelected" ></IndexSelect>
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="检测工具" prop="qcTool">
-                    <el-input v-model="form.qcTool" placeholder="请输入检测工具" />
+                <el-form-item :label="$t('mes.检测工具')" prop="qcTool">
+                    <el-input v-model="form.qcTool" :placeholder="$t('mes.请输入检测工具')" />
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="24">
-                <el-form-item label="检测要求" prop="checkMethod">
-                    <el-input v-model="form.checkMethod" type="textarea" placeholder="请输入内容" />
+                <el-form-item :label="$t('mes.检测要求')" prop="checkMethod">
+                    <el-input v-model="form.checkMethod" type="textarea" :placeholder="$t('common.inputContent')" />
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="12">
-                <el-form-item label="标准值" prop="standerVal">
-                    <el-input v-model="form.standerVal" placeholder="请输入标准值" />
+                <el-form-item :label="$t('lims.标准值')" prop="standerVal">
+                    <el-input v-model="form.standerVal" :placeholder="$t('mes.请输入标准值')" />
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="单位" prop="unitOfMeasure">
-                    <el-select v-model="form.unitOfMeasure" placeholder="请选择单位">
+                <el-form-item :label="$t('lims.单位')" prop="unitOfMeasure">
+                    <el-select v-model="form.unitOfMeasure" :placeholder="$t('mes.请选择单位')">
                         <el-option
                             v-for="item in measureOptions"
                             :key="item.measureCode"
@@ -125,35 +125,35 @@
         </el-row>
         <el-row>
             <el-col :span="12">
-                <el-form-item label="误差上限" prop="thresholdMax">
-                    <el-input-number :min="0" v-model="form.thresholdMax" placeholder="请输入误差上限" />
+                <el-form-item :label="$t('mes.误差上限')" prop="thresholdMax">
+                    <el-input-number :min="0" v-model="form.thresholdMax" :placeholder="$t('mes.请输入误差上限')" />
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="误差下限" prop="thresholdMin">
-                    <el-input-number :max="0" v-model="form.thresholdMin" placeholder="请输入误差下限" />
+                <el-form-item :label="$t('mes.误差下限')" prop="thresholdMin">
+                    <el-input-number :max="0" v-model="form.thresholdMin" :placeholder="$t('mes.请输入误差下限')" />
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="24">
-                <el-form-item label="说明图" prop="docUrl">
-                    <el-input v-model="form.docUrl" placeholder="请输入说明图" />
+                <el-form-item :label="$t('mes.说明图')" prop="docUrl">
+                    <el-input v-model="form.docUrl" :placeholder="$t('mes.请输入说明图')" />
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="24">
-                <el-form-item label="备注" prop="remark">
-                    <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+                <el-form-item :label="$t('system.备注')" prop="remark">
+                    <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
                 </el-form-item>
             </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-else>{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -215,10 +215,10 @@ export default {
       // 表单校验
       rules: {
         templateId: [
-          { required: true, message: "检测模板ID不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.检测模板ID不能为空'), trigger: "blur" }
         ],
         indexId: [
-          { required: true, message: "检测项不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.检测项不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -291,7 +291,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加检测模板-检测项";
+      this.title = this.$t('mes.添加检测模板-检测项');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -300,7 +300,7 @@ export default {
       getTemplateindex(recordId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改检测模板-检测项";
+        this.title = this.$t('mes.修改检测模板-检测项');
       });
     },
     /** 提交按钮 */
@@ -309,13 +309,13 @@ export default {
         if (valid) {
           if (this.form.recordId != null) {
             updateTemplateindex(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addTemplateindex(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -326,11 +326,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const recordIds = row.recordId || this.ids;
-      this.$modal.confirm('是否确认删除检测模板-检测项编号为"' + recordIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除检测模板-检测项编号为{v}的数据项？', { v: recordIds })).then(function() {
         return delTemplateindex(recordIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     //选择检测项弹出框

@@ -3,22 +3,22 @@
     
     <el-table v-loading="loading" :data="oqclineList" >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="检测项名称" width="120px" align="center" prop="indexName" />
-      <el-table-column label="检测项类型" width="100px" align="center" prop="indexType">
+      <el-table-column :label="$t('lims.检测项名称')" width="120px" align="center" prop="indexName" />
+      <el-table-column :label="$t('lims.检测项类型')" width="100px" align="center" prop="indexType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_index_type" :value="scope.row.indexType"/>
         </template>
       </el-table-column>
-      <el-table-column label="检测工具" align="center" prop="qcTool" />
-      <el-table-column label="检测要求" width="150px" align="center" prop="checkMethod" :show-overflow-tooltip="true"/>
-      <el-table-column label="标准值" align="center" prop="standerVal" />
-      <el-table-column label="单位" align="center" prop="unitOfMeasure" />
-      <el-table-column label="误差上限" align="center" prop="thresholdMax" />
-      <el-table-column label="误差下限" align="center" prop="thresholdMin" />
-      <el-table-column label="致命缺陷数量" align="center" prop="crQuantity" />
-      <el-table-column label="严重缺陷数量" align="center" prop="majQuantity" />
-      <el-table-column label="轻微缺陷数量" align="center" prop="minQuantity" />      
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.检测工具')" align="center" prop="qcTool" />
+      <el-table-column :label="$t('mes.检测要求')" width="150px" align="center" prop="checkMethod" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('lims.标准值')" align="center" prop="standerVal" />
+      <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure" />
+      <el-table-column :label="$t('mes.误差上限')" align="center" prop="thresholdMax" />
+      <el-table-column :label="$t('mes.误差下限')" align="center" prop="thresholdMin" />
+      <el-table-column :label="$t('mes.致命缺陷数量')" align="center" prop="crQuantity" />
+      <el-table-column :label="$t('mes.严重缺陷数量')" align="center" prop="majQuantity" />
+      <el-table-column :label="$t('mes.轻微缺陷数量')" align="center" prop="minQuantity" />      
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -27,7 +27,7 @@
             @click="handleDefect(scope.row)"
             v-hasPermi="['mes:qc:oqc:edit']"
             v-if="optType !='view'"
-          >缺陷记录</el-button>        
+          >{{ this.$t('mes.缺陷记录') }}</el-button>        
         </template>
       </el-table-column>
     </el-table>

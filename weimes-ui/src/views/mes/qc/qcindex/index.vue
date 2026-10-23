@@ -1,24 +1,24 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="检测项编码" prop="indexCode">
+      <el-form-item :label="$t('mes.检测项编码')" prop="indexCode">
         <el-input
           v-model="queryParams.indexCode"
-          placeholder="请输入检测项编码"
+          :placeholder="$t('mes.请输入检测项编码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="检测项名称" prop="indexName">
+      <el-form-item :label="$t('lims.检测项名称')" prop="indexName">
         <el-input
           v-model="queryParams.indexName"
-          placeholder="请输入检测项名称"
+          :placeholder="$t('mes.请输入检测项名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="检测项类型" prop="indexType">
-        <el-select v-model="queryParams.indexType" placeholder="请选择检测项类型" clearable>
+      <el-form-item :label="$t('lims.检测项类型')" prop="indexType">
+        <el-select v-model="queryParams.indexType" :placeholder="$t('mes.请选择检测项类型')" clearable>
           <el-option
             v-for="dict in dict.type.mes_index_type"
             :key="dict.value"
@@ -28,8 +28,8 @@
         </el-select>
       </el-form-item>     
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -42,7 +42,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:qc:qcindex:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -53,7 +53,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:qc:qcindex:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -64,7 +64,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:qc:qcindex:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -74,22 +74,22 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:qc:qcindex:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="qcindexList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="检测项编码" align="center" prop="indexCode" />
-      <el-table-column label="检测项名称" align="center" prop="indexName" />
-      <el-table-column label="检测项类型" align="center" prop="indexType">
+      <el-table-column :label="$t('mes.检测项编码')" align="center" prop="indexCode" />
+      <el-table-column :label="$t('lims.检测项名称')" align="center" prop="indexName" />
+      <el-table-column :label="$t('lims.检测项类型')" align="center" prop="indexType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_index_type" :value="scope.row.indexType"/>
         </template>
       </el-table-column>
-      <el-table-column label="检测工具" align="center" prop="qcTool" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.检测工具')" align="center" prop="qcTool" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -97,14 +97,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:qc:qcindex:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:qc:qcindex:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -122,29 +122,29 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="检测项编码" prop="indexCode">
-              <el-input v-model="form.indexCode" placeholder="请输入检测项编码" />
+            <el-form-item :label="$t('mes.检测项编码')" prop="indexCode">
+              <el-input v-model="form.indexCode" :placeholder="$t('mes.请输入检测项编码')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="检测项名称" prop="indexName">
-              <el-input v-model="form.indexName" placeholder="请输入检测项名称" />
+            <el-form-item :label="$t('lims.检测项名称')" prop="indexName">
+              <el-input v-model="form.indexName" :placeholder="$t('mes.请输入检测项名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="检测项类型" prop="indexType">
-              <el-select v-model="form.indexType" placeholder="请选择检测项类型">
+            <el-form-item :label="$t('lims.检测项类型')" prop="indexType">
+              <el-select v-model="form.indexType" :placeholder="$t('mes.请选择检测项类型')">
                 <el-option
                   v-for="dict in dict.type.mes_index_type"
                   :key="dict.value"
@@ -155,23 +155,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="检测工具" prop="qcTool">
-              <el-input v-model="form.qcTool" placeholder="请输入检测工具" />
+            <el-form-item :label="$t('mes.检测工具')" prop="qcTool">
+              <el-input v-model="form.qcTool" :placeholder="$t('mes.请输入检测工具')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-else>{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -220,13 +220,13 @@ export default {
       // 表单校验
       rules: {
         indexCode: [
-          { required: true, message: "检测项编码不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.检测项编码不能为空'), trigger: "blur" }
         ],
         indexName: [
-          { required: true, message: "检测项名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.检测项名称不能为空'), trigger: "blur" }
         ],
         indexType: [
-          { required: true, message: "检测项类型不能为空", trigger: "change" }
+          { required: true, message: this.$t('mes.检测项类型不能为空'), trigger: "change" }
         ],
       }
     };
@@ -290,7 +290,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加检测项";
+      this.title = this.$t('mes.添加检测项');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -300,7 +300,7 @@ export default {
       getQcindex(indexId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看检测项信息";
+        this.title = this.$t('mes.查看检测项信息');
         this.optType = "view";
       });
     },
@@ -311,7 +311,7 @@ export default {
       getQcindex(indexId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改检测项";
+        this.title = this.$t('mes.修改检测项');
         this.optType = "edit";
       });
     },
@@ -321,13 +321,13 @@ export default {
         if (valid) {
           if (this.form.indexId != null) {
             updateQcindex(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addQcindex(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -338,11 +338,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const indexIds = row.indexId || this.ids;
-      this.$modal.confirm('是否确认删除检测项编号为"' + indexIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除检测项编号为{v}的数据项？', { v: indexIds })).then(function() {
         return delQcindex(indexIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

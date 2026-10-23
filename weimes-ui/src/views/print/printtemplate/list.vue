@@ -1,38 +1,38 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="模板编号" prop="templateCode">
+      <el-form-item :label="$t('lims.模板编号')" prop="templateCode">
         <el-input
           v-model="queryParams.templateCode"
-          placeholder="请输入模板编号"
+          :placeholder="$t('lims.请输入模板编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="模板名称" prop="templateName">
+      <el-form-item :label="$t('lims.模板名称')" prop="templateName">
         <el-input
           v-model="queryParams.templateName"
-          placeholder="请输入模板名称"
+          :placeholder="$t('lims.请输入模板名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="模板类型" prop="templateType">
-        <el-select v-model="queryParams.templateType" placeholder="请选择模板类型" clearable>
-          <el-option label="请选择字典生成" value="" />
+      <el-form-item :label="$t('lims.模板类型')" prop="templateType">
+        <el-select v-model="queryParams.templateType" :placeholder="$t('lims.请选择模板类型')" clearable>
+          <el-option :label="$t('print.请选择字典生成')" value="" />
         </el-select>
       </el-form-item>
-      <el-form-item label="启用状态" prop="enableFlag">
+      <el-form-item :label="$t('system.启用状态')" prop="enableFlag">
         <el-input
           v-model="queryParams.enableFlag"
-          placeholder="请输入启用状态"
+          :placeholder="$t('print.请输入启用状态')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
         <el-button
           type="primary"
           plain
@@ -40,7 +40,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['template:template:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -72,7 +72,7 @@
               style="display: inline-block; float: right; cursor: pointer"
               @click="handleDelete(item)"
             >
-              <el-tooltip effect="dark" content="删除模板22" placement="top">
+              <el-tooltip effect="dark" :content="$t('print.删除模板')" placement="top">
                 <i class="el-icon-delete" style="margin-left: 15px" />
               </el-tooltip>
             </div>
@@ -80,7 +80,7 @@
               style="display: inline-block; float: right; cursor: pointer"
               @click="handleEdit(item)"
             >
-              <el-tooltip effect="dark" content="编辑模板11" placement="top">
+              <el-tooltip effect="dark" :content="$t('print.编辑模板')" placement="top">
                 <i class="el-icon-edit-outline" style="margin-left: 15px" />
               </el-tooltip>
             </div>
@@ -97,29 +97,29 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="模板编号" prop="templateCode">
-              <el-input v-model="form.templateCode" placeholder="请输入模板编号" />
+            <el-form-item :label="$t('lims.模板编号')" prop="templateCode">
+              <el-input v-model="form.templateCode" :placeholder="$t('lims.请输入模板编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('print.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span=12>
-            <el-form-item label="模板名称" prop="templateName">
-              <el-input v-model="form.templateName" placeholder="请输入模板名称" />
+            <el-form-item :label="$t('lims.模板名称')" prop="templateName">
+              <el-input v-model="form.templateName" :placeholder="$t('lims.请输入模板名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="模板类型" prop="templateType">
-              <el-select v-model="form.templateType" placeholder="请选择模板类型" style="width: 100%">
+            <el-form-item :label="$t('lims.模板类型')" prop="templateType">
+              <el-select v-model="form.templateType" :placeholder="$t('lims.请选择模板类型')" style="width: 100%">
                 <el-option
                       v-for="dict in dict.type.print_template_type"
                       :key="dict.value"
@@ -130,8 +130,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="纸张类型" prop="paperType">
-              <el-select v-model="form.paperType" @change="changePaperType" placeholder="请选择纸张类型" style="width: 100%">
+            <el-form-item :label="$t('print.纸张类型')" prop="paperType">
+              <el-select v-model="form.paperType" @change="changePaperType" :placeholder="$t('print.请选择纸张类型')" style="width: 100%">
                 <el-option
                       v-for="dict in dict.type.print_paper_type"
                       :key="dict.value"
@@ -144,19 +144,19 @@
         </el-row>
         <el-row v-if="this.form.paperType == 'other'">
           <el-col :span="12">
-            <el-form-item label="纸张宽度" prop="templateWidth">
-              <el-input-number v-model="form.templateWidth" placeholder="请输入纸张宽度(mm)" style=" width: 100%; text-align: center" controls-position="right"/>
+            <el-form-item :label="$t('print.纸张宽度')" prop="templateWidth">
+              <el-input-number v-model="form.templateWidth" :placeholder="$t('print.请输入纸张宽度(mm)')" style=" width: 100%; text-align: center" controls-position="right"/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="纸张高度" prop="templateHeight">
-              <el-input-number v-model="form.templateHeight" placeholder="请输入纸张高度(mm)" style=" width: 100%; text-align: center" controls-position="right"/>
+            <el-form-item :label="$t('print.纸张高度')" prop="templateHeight">
+              <el-input-number v-model="form.templateHeight" :placeholder="$t('print.请输入纸张高度(mm)')" style=" width: 100%; text-align: center" controls-position="right"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="是否默认" prop="isDefault">
+            <el-form-item :label="$t('print.是否默认')" prop="isDefault">
               <el-radio-group v-model="form.isDefault">
                   <el-radio
                     v-for="dict in dict.type.sys_yes_no"
@@ -167,7 +167,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="启用状态" prop="enableFlag">
+            <el-form-item :label="$t('system.启用状态')" prop="enableFlag">
               <el-radio-group v-model="form.enableFlag">
                   <el-radio
                     v-for="dict in dict.type.sys_yes_no"
@@ -183,15 +183,15 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -236,17 +236,17 @@ export default {
       // 表单校验
       rules: {
         templateCode: [
-          { required: true, message: "模板编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('print.模板编号不能为空'), trigger: "blur" }
         ],
         templateName: [
-          { required: true, message: "模板名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('print.模板名称不能为空'), trigger: "blur" }
         ],        templateType: [
-          { required: true, message: "模板类型不能为空", trigger: "change" }
+          { required: true, message: this.$t('print.模板类型不能为空'), trigger: "change" }
         ],      paperType: [
-          { required: true, message: "请选择纸张类型", trigger: "change" }
+          { required: true, message: this.$t('print.请选择纸张类型'), trigger: "change" }
         ],
         remark: [
-          { max: 250, message: '长度必须小于250个字符', trigger: 'blur' }
+          { max: 250, message: this.$t('print.长度必须小于250个字符'), trigger: 'blur' }
         ]
       },
       // 纸张类型
@@ -348,7 +348,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加打印模板";
+      this.title = this.$t('print.添加打印模板');
     },
     handleEdit(item){
       console.log('编辑----************');
@@ -362,28 +362,28 @@ export default {
     /** 删除按钮操作 */
     handleDelete(item) {
       const templateIds = item.templateId || this.ids;
-      this.$modal.confirm('是否确认删除打印模板配置编号为"' + templateIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('print.是否确认删除打印模板配置编号为{v}的数据项？', { v: templateIds })).then(function() {
         return delTemplate(templateIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 提交按钮 */
     submitForm() {
       // 校验纸张宽高
       if (!(this.form.templateWidth >= 1)) {
-        this.$message.warning("请输入纸张宽度")
+        this.$message.warning(this.$t('print.请输入纸张宽度'))
         return
       }
       if (!(this.form.templateHeight >= 1)) {
-        this.$message.warning("请输入纸张高度")
+        this.$message.warning(this.$t('print.请输入纸张高度'))
         return
       }
       this.$refs["form"].validate(valid => {
         if (valid) {
             addTemplate(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.form.templateId = response.data.templateId;
               this.handleEdit(this.form)

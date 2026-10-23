@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="类型名称" prop="machineryTypeName">
+      <el-form-item :label="$t('lims.类型名称')" prop="machineryTypeName">
         <el-input
           v-model="queryParams.machineryTypeName"
-          placeholder="请输入设备类型名称"
+          :placeholder="$t('mes.请输入设备类型名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="是否启用" prop="enableFlag">
-        <el-select v-model="queryParams.enableFlag" placeholder="选择是或否" clearable>
+      <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
+        <el-select v-model="queryParams.enableFlag" :placeholder="$t('mes.选择是或否')" clearable>
           <el-option
             v-for="dict in dict.type.sys_yes_no"
             :key="dict.value"
@@ -20,8 +20,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-	    <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+	    <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -32,15 +32,15 @@
       default-expand-all
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column label="设备类型编码" prop="machineryTypeCode" />
-      <el-table-column label="设备类型名称" align="center" prop="machineryTypeName" />
-      <el-table-column label="是否启用" align="center" prop="enableFlag" >
+      <el-table-column :label="$t('mes.设备类型编码')" prop="machineryTypeCode" />
+      <el-table-column :label="$t('mes.设备类型名称')" align="center" prop="machineryTypeName" />
+      <el-table-column :label="$t('system.是否启用')" align="center" prop="enableFlag" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -48,14 +48,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:dv:machinerytype:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-plus"
             @click="handleAdd(scope.row)"
             v-hasPermi="['mes:dv:machinerytype:add']"
-          >新增</el-button>
+          >{{ this.$t('common.add') }}</el-button>
           <el-button
             v-if="scope.row.parentTypeId != 0"
             size="mini"
@@ -63,7 +63,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:dv:machinerytype:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -73,19 +73,19 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="24" v-if="form.parentTypeId !== 0">
-            <el-form-item label="父类型" prop="parentTypeId">
-              <treeselect v-model="form.parentTypeId" :options="machinerytypeOptions" :normalizer="normalizer" placeholder="请选择父类型" />
+            <el-form-item :label="$t('mes.父类型')" prop="parentTypeId">
+              <treeselect v-model="form.parentTypeId" :options="machinerytypeOptions" :normalizer="normalizer" :placeholder="$t('mes.请选择父类型')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="设备类型名称" prop="machineryTypeName">
-              <el-input v-model="form.machineryTypeName" placeholder="请输入设备类型名称" />
+            <el-form-item :label="$t('mes.设备类型名称')" prop="machineryTypeName">
+              <el-input v-model="form.machineryTypeName" :placeholder="$t('mes.请输入设备类型名称')" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="是否启用" prop="enableFlag">
+            <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
               <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
                 <el-radio
                   v-for="dict in dict.type.sys_yes_no"
@@ -105,15 +105,15 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -158,13 +158,13 @@ export default {
       // 表单校验
       rules: {
         parentTypeId: [
-          { required: true, message: "父类型不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.父类型不能为空'), trigger: "blur" }
         ],
         machineryTypeName: [
-          { required: true, message: "设备类型名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.设备类型名称不能为空'), trigger: "blur" }
         ],
         enableFlag: [
-          { required: true, message: "是否启用不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.是否启用不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -240,7 +240,7 @@ export default {
         this.form.parentTypeId = 0;
       }
       this.open = true;
-      this.title = "添加设备类型";
+      this.title = this.$t('mes.添加设备类型');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -252,7 +252,7 @@ export default {
       getMachinerytype(row.machineryTypeId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改设备类型";
+        this.title = this.$t('mes.修改设备类型');
       });
     },
     /** 提交按钮 */
@@ -261,13 +261,13 @@ export default {
         if (valid) {
           if (this.form.machineryTypeId != null) {
             updateMachinerytype(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addMachinerytype(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -277,11 +277,11 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除设备类型编号为"' + row.machineryTypeId + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除设备类型编号为{v}的数据项？', { v: row.machineryTypeId })).then(function() {
         return delMachinerytype(row.machineryTypeId);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     }
   }

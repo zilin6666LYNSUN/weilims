@@ -1,28 +1,28 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="规则名称" prop="ruleName">
+      <el-form-item :label="$t('system.规则名称')" prop="ruleName">
         <el-input
           v-model="queryParams.ruleName"
-          placeholder="请输入规则名称"
+          :placeholder="$t('system.请输入规则名称')"
           clearable
           style="width: 240px"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="规则编码" prop="ruleCode">
+      <el-form-item :label="$t('system.规则编码')" prop="ruleCode">
         <el-input
           v-model="queryParams.ruleCode"
-          placeholder="请输入规则编码"
+          :placeholder="$t('system.请输入规则编码')"
           clearable
           style="width: 240px"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="启用状态" prop="enableFlag">
+      <el-form-item :label="$t('system.启用状态')" prop="enableFlag">
         <el-select
           v-model="queryParams.enableFlag"
-          placeholder="启用状态"
+          :placeholder="$t('system.启用状态')"
           clearable
           style="width: 240px"
         >
@@ -35,8 +35,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -49,7 +49,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:autocode:rule:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -60,7 +60,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['system:autocode:rule:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -71,35 +71,35 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:autocode:rule:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="ruleList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="规则编号" align="center" width="210px" prop="ruleCode" >
+      <el-table-column :label="$t('system.规则编号')" align="center" width="210px" prop="ruleCode" >
           <template slot-scope="scope">
           <router-link :to="'/system/autocodePart/index/' + scope.row.ruleId" class="link-type">
             <span>{{ scope.row.ruleCode }}</span>
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="规则名称" align="center" prop="ruleName" :show-overflow-tooltip="true" />
-      <el-table-column label="最大长度" align="center" prop="maxLength" />
-      <el-table-column label="是否补齐" align="center" prop="isPadded" />
-      <el-table-column label="是否可用" align="center" prop="enableFlag">
+      <el-table-column :label="$t('system.规则名称')" align="center" prop="ruleName" :show-overflow-tooltip="true" />
+      <el-table-column :label="$t('system.最大长度')" align="center" prop="maxLength" />
+      <el-table-column :label="$t('system.是否补齐')" align="center" prop="isPadded" />
+      <el-table-column :label="$t('system.是否可用')" align="center" prop="enableFlag">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" :show-overflow-tooltip="true" />
+      <el-table-column :label="$t('system.创建时间')" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -107,14 +107,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:autocode:rule:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:autocode:rule:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -130,34 +130,34 @@
     <!-- 添加或修改参数配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="规则编码" prop="ruleCode">
-          <el-input v-model="form.ruleCode" placeholder="请输入规则编码" />
+        <el-form-item :label="$t('system.规则编码')" prop="ruleCode">
+          <el-input v-model="form.ruleCode" :placeholder="$t('system.请输入规则编码')" />
         </el-form-item>
-        <el-form-item label="规则名称" prop="ruleName">
-          <el-input v-model="form.ruleName" placeholder="请输入规则名称" />
+        <el-form-item :label="$t('system.规则名称')" prop="ruleName">
+          <el-input v-model="form.ruleName" :placeholder="$t('system.请输入规则名称')" />
         </el-form-item>
-        <el-form-item label="描述" prop="ruleDesc">
-          <el-input v-model="form.ruleDesc" placeholder="请输入描述信息" />
+        <el-form-item :label="$t('system.描述')" prop="ruleDesc">
+          <el-input v-model="form.ruleDesc" :placeholder="$t('system.请输入描述信息')" />
         </el-form-item>
-        <el-form-item label="最大长度" prop="maxLength">
+        <el-form-item :label="$t('system.最大长度')" prop="maxLength">
           <el-input-number v-model="form.maxLength" controls-position="right" :min="0" />
         </el-form-item>
-        <el-form-item label="是否补齐" prop="isPadded">
+        <el-form-item :label="$t('system.是否补齐')" prop="isPadded">
           <el-radio-group v-model="form.isPadded">
-                <el-radio label="Y">是</el-radio>
-                <el-radio label="N">否</el-radio>
+                <el-radio label="Y">{{ this.$t('system.是') }}</el-radio>
+                <el-radio label="N">{{ this.$t('system.否') }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="补齐字符" prop="paddedChar" v-if="form.isPadded == 'Y'">
-          <el-input v-model="form.paddedChar" placeholder="请输入补齐字符" />
+        <el-form-item :label="$t('system.补齐字符')" prop="paddedChar" v-if="form.isPadded == 'Y'">
+          <el-input v-model="form.paddedChar" :placeholder="$t('system.请输入补齐字符')" />
         </el-form-item>
-        <el-form-item label="补齐方式" prop="paddedMethod" v-if="form.isPadded == 'Y'">
+        <el-form-item :label="$t('system.补齐方式')" prop="paddedMethod" v-if="form.isPadded == 'Y'">
           <el-radio-group v-model="form.paddedMethod">
-                <el-radio label="L">左补齐</el-radio>
-                <el-radio label="R">右补齐</el-radio>
+                <el-radio label="L">{{ this.$t('system.左补齐') }}</el-radio>
+                <el-radio label="R">{{ this.$t('system.右补齐') }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="是否启用" prop="enableFlag">
+        <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
           <el-radio-group v-model="form.enableFlag">
             <el-radio
               v-for="dict in dict.type.sys_yes_no"
@@ -166,13 +166,13 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+        <el-form-item :label="$t('system.备注')" prop="remark">
+          <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -219,10 +219,10 @@ export default {
       // 表单校验
       rules: {
         ruleCode: [
-          { required: true, message: "规则编码不能为空", trigger: "blur" }
+          { required: true, message: this.$t('system.规则编码不能为空'), trigger: "blur" }
         ],
         ruleName: [
-          { required: true, message: "规则名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('system.规则名称不能为空'), trigger: "blur" }
         ]
       }
     };
@@ -275,7 +275,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加编码规则";
+      this.title = this.$t('system.添加编码规则');
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -290,7 +290,7 @@ export default {
       getRule(ruleId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改编码规则";
+        this.title = this.$t('system.修改编码规则');
       });
     },
     /** 提交按钮 */
@@ -299,13 +299,13 @@ export default {
         if (valid) {
           if (this.form.ruleId != undefined) {
             updateRule(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addRule(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -316,17 +316,17 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const ruleIds = row.ruleId || this.ids;
-      this.$modal.confirm('是否确认删除编码规则为"' + ruleIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('system.是否确认删除编码规则为{v}的数据项？', { v: ruleIds })).then(function() {
         return delRule(ruleIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 刷新缓存按钮操作 */
     handleRefreshCache() {
       refreshCache().then(() => {
-        this.$modal.msgSuccess("刷新成功");
+        this.$modal.msgSuccess(this.$t('system.刷新成功'));
       });
     }
   }

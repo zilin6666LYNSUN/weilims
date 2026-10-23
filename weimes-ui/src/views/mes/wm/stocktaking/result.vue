@@ -1,78 +1,78 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="盘点单ID" prop="takingId">
+      <el-form-item :label="$t('mes.盘点单ID')" prop="takingId">
         <el-input
           v-model="queryParams.takingId"
-          placeholder="请输入盘点单ID"
+          :placeholder="$t('mes.请输入盘点单ID')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="产品物料ID" prop="itemId">
+      <el-form-item :label="$t('mes.产品物料ID')" prop="itemId">
         <el-input
           v-model="queryParams.itemId"
-          placeholder="请输入产品物料ID"
+          :placeholder="$t('mes.请输入产品物料ID')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="产品物料编码" prop="itemCode">
+      <el-form-item :label="$t('mes.产品物料编码')" prop="itemCode">
         <el-input
           v-model="queryParams.itemCode"
-          placeholder="请输入产品物料编码"
+          :placeholder="$t('mes.请输入产品物料编码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="产品物料名称" prop="itemName">
+      <el-form-item :label="$t('mes.产品物料名称')" prop="itemName">
         <el-input
           v-model="queryParams.itemName"
-          placeholder="请输入产品物料名称"
+          :placeholder="$t('mes.请输入产品物料名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="单位" prop="unitOfMeasure">
+      <el-form-item :label="$t('lims.单位')" prop="unitOfMeasure">
         <el-input
           v-model="queryParams.unitOfMeasure"
-          placeholder="请输入单位"
+          :placeholder="$t('lims.请输入单位')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="单位名称" prop="unitName">
+      <el-form-item :label="$t('mes.单位名称')" prop="unitName">
         <el-input
           v-model="queryParams.unitName"
-          placeholder="请输入单位名称"
+          :placeholder="$t('mes.请输入单位名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="数量" prop="quantity">
+      <el-form-item :label="$t('lims.数量')" prop="quantity">
         <el-input
           v-model="queryParams.quantity"
-          placeholder="请输入数量"
+          :placeholder="$t('mes.请输入数量')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="盘点数量" prop="takingQuantity">
+      <el-form-item :label="$t('mes.盘点数量')" prop="takingQuantity">
         <el-input
           v-model="queryParams.takingQuantity"
-          placeholder="请输入盘点数量"
+          :placeholder="$t('mes.请输入盘点数量')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="盘点状态" prop="takingStatus">
-        <el-select v-model="queryParams.takingStatus" placeholder="请选择盘点状态" clearable>
-          <el-option label="请选择字典生成" value="" />
+      <el-form-item :label="$t('mes.盘点状态')" prop="takingStatus">
+        <el-select v-model="queryParams.takingStatus" :placeholder="$t('mes.请选择盘点状态')" clearable>
+          <el-option :label="$t('mes.请选择字典生成')" value="" />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -85,7 +85,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:stocktaking:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -96,7 +96,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:wm:stocktaking:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -107,7 +107,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:wm:stocktaking:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -117,25 +117,25 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:wm:stocktaking:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="stocktakingresultList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="结果ID" align="center" prop="resultId" />
-      <el-table-column label="盘点单ID" align="center" prop="takingId" />
-      <el-table-column label="产品物料ID" align="center" prop="itemId" />
-      <el-table-column label="产品物料编码" align="center" prop="itemCode" />
-      <el-table-column label="产品物料名称" align="center" prop="itemName" />
-      <el-table-column label="规格型号" align="center" prop="specification" />
-      <el-table-column label="单位" align="center" prop="unitOfMeasure" />
-      <el-table-column label="单位名称" align="center" prop="unitName" />
-      <el-table-column label="数量" align="center" prop="quantity" />
-      <el-table-column label="盘点数量" align="center" prop="takingQuantity" />
-      <el-table-column label="盘点状态" align="center" prop="takingStatus" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.结果ID')" align="center" prop="resultId" />
+      <el-table-column :label="$t('mes.盘点单ID')" align="center" prop="takingId" />
+      <el-table-column :label="$t('mes.产品物料ID')" align="center" prop="itemId" />
+      <el-table-column :label="$t('mes.产品物料编码')" align="center" prop="itemCode" />
+      <el-table-column :label="$t('mes.产品物料名称')" align="center" prop="itemName" />
+      <el-table-column :label="$t('lims.规格型号')" align="center" prop="specification" />
+      <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure" />
+      <el-table-column :label="$t('mes.单位名称')" align="center" prop="unitName" />
+      <el-table-column :label="$t('lims.数量')" align="center" prop="quantity" />
+      <el-table-column :label="$t('mes.盘点数量')" align="center" prop="takingQuantity" />
+      <el-table-column :label="$t('mes.盘点状态')" align="center" prop="takingStatus" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -143,14 +143,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:wm:stocktaking:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:wm:stocktaking:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -166,42 +166,42 @@
     <!-- 添加或修改库存盘点结果对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="盘点单ID" prop="takingId">
-          <el-input v-model="form.takingId" placeholder="请输入盘点单ID" />
+        <el-form-item :label="$t('mes.盘点单ID')" prop="takingId">
+          <el-input v-model="form.takingId" :placeholder="$t('mes.请输入盘点单ID')" />
         </el-form-item>
-        <el-form-item label="产品物料ID" prop="itemId">
-          <el-input v-model="form.itemId" placeholder="请输入产品物料ID" />
+        <el-form-item :label="$t('mes.产品物料ID')" prop="itemId">
+          <el-input v-model="form.itemId" :placeholder="$t('mes.请输入产品物料ID')" />
         </el-form-item>
-        <el-form-item label="产品物料编码" prop="itemCode">
-          <el-input v-model="form.itemCode" placeholder="请输入产品物料编码" />
+        <el-form-item :label="$t('mes.产品物料编码')" prop="itemCode">
+          <el-input v-model="form.itemCode" :placeholder="$t('mes.请输入产品物料编码')" />
         </el-form-item>
-        <el-form-item label="产品物料名称" prop="itemName">
-          <el-input v-model="form.itemName" placeholder="请输入产品物料名称" />
+        <el-form-item :label="$t('mes.产品物料名称')" prop="itemName">
+          <el-input v-model="form.itemName" :placeholder="$t('mes.请输入产品物料名称')" />
         </el-form-item>
-        <el-form-item label="规格型号" prop="specification">
-          <el-input v-model="form.specification" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('lims.规格型号')" prop="specification">
+          <el-input v-model="form.specification" type="textarea" :placeholder="$t('common.inputContent')" />
         </el-form-item>
-        <el-form-item label="单位" prop="unitOfMeasure">
-          <el-input v-model="form.unitOfMeasure" placeholder="请输入单位" />
+        <el-form-item :label="$t('lims.单位')" prop="unitOfMeasure">
+          <el-input v-model="form.unitOfMeasure" :placeholder="$t('lims.请输入单位')" />
         </el-form-item>
-        <el-form-item label="单位名称" prop="unitName">
-          <el-input v-model="form.unitName" placeholder="请输入单位名称" />
+        <el-form-item :label="$t('mes.单位名称')" prop="unitName">
+          <el-input v-model="form.unitName" :placeholder="$t('mes.请输入单位名称')" />
         </el-form-item>
-        <el-form-item label="数量" prop="quantity">
-          <el-input v-model="form.quantity" placeholder="请输入数量" />
+        <el-form-item :label="$t('lims.数量')" prop="quantity">
+          <el-input v-model="form.quantity" :placeholder="$t('mes.请输入数量')" />
         </el-form-item>
-        <el-form-item label="盘点数量" prop="takingQuantity">
-          <el-input v-model="form.takingQuantity" placeholder="请输入盘点数量" />
+        <el-form-item :label="$t('mes.盘点数量')" prop="takingQuantity">
+          <el-input v-model="form.takingQuantity" :placeholder="$t('mes.请输入盘点数量')" />
         </el-form-item>
-        <el-form-item label="盘点状态">
+        <el-form-item :label="$t('mes.盘点状态')">
           <el-radio-group v-model="form.takingStatus">
-            <el-radio label="1">请选择字典生成</el-radio>
+            <el-radio label="1">{{ this.$t('mes.请选择字典生成') }}</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -246,11 +246,11 @@ export default {
       // 表单校验
       rules: {
         itemId: [
-          { required: true, message: "产品物料ID不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.产品物料ID不能为空'), trigger: "blur" }
         ],        quantity: [
-          { required: true, message: "数量不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.数量不能为空'), trigger: "blur" }
         ],        takingStatus: [
-          { required: true, message: "盘点状态不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.盘点状态不能为空'), trigger: "blur" }
         ],      }
     };
   },
@@ -298,7 +298,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加库存盘点结果";
+      this.title = this.$t('mes.添加库存盘点结果');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -307,7 +307,7 @@ export default {
       getStocktakingresult(resultId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改库存盘点结果";
+        this.title = this.$t('mes.修改库存盘点结果');
       });
     },
     /** 提交按钮 */
@@ -316,13 +316,13 @@ export default {
         if (valid) {
           if (this.form.resultId != null) {
             updateStocktakingresult(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addStocktakingresult(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -333,11 +333,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const resultIds = row.resultId || this.ids;
-      this.$modal.confirm('是否确认删除库存盘点结果编号为"' + resultIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除库存盘点结果编号为{v}的数据项？', { v: resultIds })).then(function() {
         return delStocktakingresult(resultIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

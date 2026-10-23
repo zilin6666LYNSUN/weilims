@@ -1,39 +1,39 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="工单编码" prop="workorderCode">
-        <el-input v-model="queryParams.workorderCode" placeholder="请输入工单编码" clearable
+      <el-form-item :label="$t('mes.工单编码')" prop="workorderCode">
+        <el-input v-model="queryParams.workorderCode" :placeholder="$t('mes.请输入工单编码')" clearable
           @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="工单名称" prop="workorderName">
-        <el-input v-model="queryParams.workorderName" placeholder="请输入工单名称" clearable
+      <el-form-item :label="$t('mes.工单名称')" prop="workorderName">
+        <el-input v-model="queryParams.workorderName" :placeholder="$t('mes.请输入工单名称')" clearable
           @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="来源单据" prop="sourceCode">
-        <el-input v-model="queryParams.sourceCode" placeholder="请输入来源单据" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('mes.来源单据')" prop="sourceCode">
+        <el-input v-model="queryParams.sourceCode" :placeholder="$t('mes.请输入来源单据')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
 
-      <el-form-item label="产品编号" prop="productCode">
-        <el-input v-model="queryParams.productCode" placeholder="请输入产品编号" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('mes.产品编号')" prop="productCode">
+        <el-input v-model="queryParams.productCode" :placeholder="$t('mes.请输入产品编号')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="产品名称" prop="productName">
-        <el-input v-model="queryParams.productName" placeholder="请输入产品名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('lims.产品名称')" prop="productName">
+        <el-input v-model="queryParams.productName" :placeholder="$t('mes.请输入产品名称')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
 
-      <el-form-item label="客户编码" prop="clientCode">
-        <el-input v-model="queryParams.clientCode" placeholder="请输入客户编码" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('lims.客户编码')" prop="clientCode">
+        <el-input v-model="queryParams.clientCode" :placeholder="$t('lims.请输入客户编码')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="客户名称" prop="clientName">
-        <el-input v-model="queryParams.clientName" placeholder="请输入客户名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('lims.客户名称')" prop="clientName">
+        <el-input v-model="queryParams.clientName" :placeholder="$t('lims.请输入客户名称')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="需求日期" prop="requestDate">
+      <el-form-item :label="$t('mes.需求日期')" prop="requestDate">
         <el-date-picker clearable v-model="queryParams.requestDate" type="date" value-format="yyyy-MM-dd"
-          placeholder="请选择需求日期">
+          :placeholder="$t('mes.请选择需求日期')">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-refresh" v-hasPermi="['mes:pro:protask:list']" circle=""
@@ -49,43 +49,43 @@
     </div>
     <el-table v-loading="loading" :data="workorderList" row-key="workorderId" default-expand-all
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
-      <el-table-column label="工单编码" width="180" prop="workorderCode">
+      <el-table-column :label="$t('mes.工单编码')" width="180" prop="workorderCode">
         <template slot-scope="scope">
           <el-button size="mini" type="text" @click="handleView(scope.row)" v-hasPermi="['mes:pro:protask:query']">{{
             scope.row.workorderCode }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="工单名称" width="200" align="center" prop="workorderName" :show-overflow-tooltip="true" />
-      <el-table-column label="工单来源" align="center" prop="orderSource">
+      <el-table-column :label="$t('mes.工单名称')" width="200" align="center" prop="workorderName" :show-overflow-tooltip="true" />
+      <el-table-column :label="$t('mes.工单来源')" align="center" prop="orderSource">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_workorder_sourcetype" :value="scope.row.orderSource" />
         </template>
       </el-table-column>
-      <el-table-column label="订单编号" width="140" align="center" prop="sourceCode" />
-      <el-table-column label="产品编号" width="120" align="center" prop="productCode" />
-      <el-table-column label="产品名称" width="200" align="center" prop="productName" :show-overflow-tooltip="true" />
-      <el-table-column label="规格型号" align="center" prop="productSpc" :show-overflow-tooltip="true" />
-      <el-table-column label="单位" align="center" prop="unitOfMeasure">
+      <el-table-column :label="$t('mes.订单编号')" width="140" align="center" prop="sourceCode" />
+      <el-table-column :label="$t('mes.产品编号')" width="120" align="center" prop="productCode" />
+      <el-table-column :label="$t('lims.产品名称')" width="200" align="center" prop="productName" :show-overflow-tooltip="true" />
+      <el-table-column :label="$t('lims.规格型号')" align="center" prop="productSpc" :show-overflow-tooltip="true" />
+      <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure">
       </el-table-column>
-      <el-table-column label="工单数量" align="center" prop="quantity" />
-      <el-table-column label="调整数量" align="center" prop="quantityChanged" />
-      <el-table-column label="已生产数量" align="center" width="100px" prop="quantityProduced" />
-      <el-table-column label="客户编码" align="center" prop="clientCode" />
-      <el-table-column label="客户名称" align="center" prop="clientName" :show-overflow-tooltip="true" />
-      <el-table-column label="需求日期" align="center" prop="requestDate" width="180">
+      <el-table-column :label="$t('mes.工单数量')" align="center" prop="quantity" />
+      <el-table-column :label="$t('mes.调整数量')" align="center" prop="quantityChanged" />
+      <el-table-column :label="$t('mes.已生产数量')" align="center" width="100px" prop="quantityProduced" />
+      <el-table-column :label="$t('lims.客户编码')" align="center" prop="clientCode" />
+      <el-table-column :label="$t('lims.客户名称')" align="center" prop="clientName" :show-overflow-tooltip="true" />
+      <el-table-column :label="$t('mes.需求日期')" align="center" prop="requestDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.requestDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="排产状态" align="center" prop="status">
+      <el-table-column :label="$t('mes.排产状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status" />
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="150px" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" width="150px" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" v-if="scope.row.status == 'CONFIRMED'"
-            @click="handleUpdate(scope.row)" v-hasPermi="['mes:pro:protask:edit']">排产</el-button>
+            @click="handleUpdate(scope.row)" v-hasPermi="['mes:pro:protask:edit']">{{ this.$t('mes.排产') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -98,19 +98,19 @@
       <el-form ref="form" :model="form" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="工单编号" prop="workorderCode">
+            <el-form-item :label="$t('mes.工单编号')" prop="workorderCode">
               <el-input v-model="form.workorderCode" readonly="readonly" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="工单名称" prop="workorderName">
+            <el-form-item :label="$t('mes.工单名称')" prop="workorderName">
               <el-input v-model="form.workorderName" readonly="readonly" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="来源类型" prop="orderSource">
+            <el-form-item :label="$t('lims.来源类型')" prop="orderSource">
               <el-radio-group v-model="form.orderSource" disabled>
                 <el-radio v-for="dict in dict.type.mes_workorder_sourcetype" :key="dict.value" :label="dict.value">{{
                   dict.label }}</el-radio>
@@ -118,12 +118,12 @@
             </el-form-item>
           </el-col>
           <el-col :span="8" v-if="form.orderSource == 'ORDER'">
-            <el-form-item label="订单编号" prop="sourceCode">
+            <el-form-item :label="$t('mes.订单编号')" prop="sourceCode">
               <el-input v-model="form.sourceCode" readonly="readonly" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="排产状态" prop="status">
+            <el-form-item :label="$t('mes.排产状态')" prop="status">
               <el-select v-model="form.status" disabled>
                 <el-option v-for="dict in dict.type.mes_order_status" :key="dict.value" :label="dict.label"
                   :value="dict.value"></el-option>
@@ -133,52 +133,52 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="产品编号" prop="productCode">
+            <el-form-item :label="$t('mes.产品编号')" prop="productCode">
               <el-input v-model="form.productCode" readonly="readonly">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="产品名称" prop="productName">
+            <el-form-item :label="$t('lims.产品名称')" prop="productName">
               <el-input v-model="form.productName" readonly="readonly" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="规格型号" prop="productSpc">
+            <el-form-item :label="$t('lims.规格型号')" prop="productSpc">
               <el-input v-model="form.productSpc" readonly="readonly" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单位" prop="unitOfMeasure">
+            <el-form-item :label="$t('lims.单位')" prop="unitOfMeasure">
               <el-input v-model="form.unitOfMeasure" readonly="readonly" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="工单数量" prop="quantity">
+            <el-form-item :label="$t('mes.工单数量')" prop="quantity">
               <el-input v-model="form.quantity" readonly="readonly" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="需求日期" prop="requestDate">
+            <el-form-item :label="$t('mes.需求日期')" prop="requestDate">
               <el-date-picker disabled v-model="form.requestDate" type="date" value-format="yyyy-MM-dd"
-                placeholder="请选择需求日期">
+                :placeholder="$t('mes.请选择需求日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row v-if="form.orderSource == 'ORDER'">
           <el-col :span="12">
-            <el-form-item label="客户编号" prop="clientCode">
+            <el-form-item :label="$t('mes.客户编号')" prop="clientCode">
               <el-input v-model="form.clientCode" readonly="readonly">
               </el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="客户名称" prop="clientName">
+            <el-form-item :label="$t('lims.客户名称')" prop="clientName">
               <el-input v-model="form.clientName" readonly="readonly" />
             </el-form-item>
           </el-col>
@@ -186,7 +186,7 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
+            <el-form-item :label="$t('system.备注')" prop="remark">
               <el-input v-model="form.remark" type="textarea" readonly="readonly" />
             </el-form-item>
           </el-col>
@@ -203,12 +203,12 @@
           :colorCode="item.colorCode" :optType="optType"></ProTask>
       </el-card>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType == 'view' || form.status != 'PREPARE'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-if="form.status == 'PREPARE' && optType != 'view'">确
+        <el-button type="primary" @click="cancel" v-if="optType == 'view' || form.status != 'PREPARE'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status == 'PREPARE' && optType != 'view'">{{ this.$t('mes.确') }}
           定</el-button>
         <el-button type="success" @click="handleFinish"
-          v-if="form.status == 'PREPARE' && optType != 'view' && form.workorderId != null">完成</el-button>
-        <el-button @click="cancel">取 消</el-button>
+          v-if="form.status == 'PREPARE' && optType != 'view' && form.workorderId != null">{{ this.$t('lims.完成') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -412,7 +412,7 @@ export default {
         this.form.parentId = 0;
       }
       this.open = true;
-      this.title = "添加生产工单";
+      this.title = this.$t('mes.添加生产工单');
       this.optType = "add";
     },
     /** 新增按钮操作 */
@@ -430,7 +430,7 @@ export default {
         this.form.parentId = 0;
       }
       this.open = true;
-      this.title = "添加生产工单";
+      this.title = this.$t('mes.添加生产工单');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -442,7 +442,7 @@ export default {
         this.form = response.data;
         this.getProcess();
         this.open = true;
-        this.title = "查看工单信息";
+        this.title = this.$t('mes.查看工单信息');
         this.optType = "view";
       });
     },
@@ -457,7 +457,7 @@ export default {
         this.form = response.data;
         this.getProcess();
         this.open = true;
-        this.title = "生产排产";
+        this.title = this.$t('mes.生产排产');
         this.optType = "edit";
       });
     },
@@ -467,14 +467,14 @@ export default {
         if (valid) {
           if (this.form.workorderId != null) {
             updateWorkorder(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               //this.open = false;
               this.$refs["bomlist"].getList();
               this.getList();
             });
           } else {
             addWorkorder(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               //this.open = false;
               this.form.workorderId = response.data;
               this.getList();
@@ -485,11 +485,11 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除生产工单编号为"' + row.workorderId + '"的数据项？').then(function () {
+      this.$modal.confirm(this.$t('mes.是否确认删除生产工单编号为{v}的数据项？', { v: row.workorderId })).then(function () {
         return delWorkorder(row.workorderId);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => { });
     },
     handleSelectProduct() {
@@ -506,7 +506,7 @@ export default {
     },
     handleFinish() {
       let that = this;
-      this.$modal.confirm('是否完成工单编制？【完成后将不能更改】').then(function () {
+      this.$modal.confirm(this.$t('mes.是否完成工单编制？【完成后将不能更改】')).then(function () {
         that.form.status = 'CONFIRMED';
         that.submitForm();
       });

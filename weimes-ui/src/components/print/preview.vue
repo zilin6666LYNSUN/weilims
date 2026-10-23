@@ -2,12 +2,12 @@
   <div class="modal" v-if="show">
     <div class="wrap" @click="close">
       <div class="box">
-        <div class="modal-box__header">预览</div>
+        <div class="modal-box__header">{{ this.$t('common.preview') }}</div>
         <div class="preview-body" style="max-height: 50vh; overflow: auto">
           <div class="container"></div>
         </div>
         <div class="modal-box__footer">
-          <button class="primary" @click="close">确定</button>
+          <button class="primary" @click="close">{{ this.$t('common.confirm') }}</button>
         </div>
       </div>
     </div>

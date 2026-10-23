@@ -1,39 +1,39 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="检测模板编号" prop="templateCode">
+      <el-form-item :label="$t('mes.检测模板编号')" prop="templateCode">
         <el-input
           v-model="queryParams.templateCode"
-          placeholder="请输入检测模板编号"
+          :placeholder="$t('mes.请输入检测模板编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="检测模板名称" prop="templateName">
+      <el-form-item :label="$t('mes.检测模板名称')" prop="templateName">
         <el-input
           v-model="queryParams.templateName"
-          placeholder="请输入检测模板名称"
+          :placeholder="$t('mes.请输入检测模板名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="产品编码" prop="itemCode">
+      <el-form-item :label="$t('mes.产品编码')" prop="itemCode">
         <el-input
           v-model="queryParams.itemCode"
-          placeholder="请输入产品名称"
+          :placeholder="$t('mes.请输入产品名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="产品名称" prop="itemName">
+      <el-form-item :label="$t('lims.产品名称')" prop="itemName">
         <el-input
           v-model="queryParams.itemName"
-          placeholder="请输入产品名称"
+          :placeholder="$t('mes.请输入产品名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="检测种类" prop="qcTypesParam">
+      <el-form-item :label="$t('mes.检测种类')" prop="qcTypesParam">
           <el-checkbox-group v-model="queryParams.qcTypesParam">
             <el-checkbox v-for="dict in dict.type.mes_qc_type"
                   :key="dict.value"
@@ -42,8 +42,8 @@
           </el-checkbox-group>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -56,7 +56,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:qc:qctemplate:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -67,7 +67,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:qc:qctemplate:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -78,14 +78,14 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:qc:qctemplate:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="qctemplateList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="检测模板编号" align="center" prop="templateCode" >
+      <el-table-column :label="$t('mes.检测模板编号')" align="center" prop="templateCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -94,18 +94,18 @@
           >{{scope.row.templateCode}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="检测模板名称" align="center" prop="templateName" />
-      <el-table-column label="检测种类" align="center" prop="qcTypesParam" >
+      <el-table-column :label="$t('mes.检测模板名称')" align="center" prop="templateName" />
+      <el-table-column :label="$t('mes.检测种类')" align="center" prop="qcTypesParam" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_qc_type" :value="scope.row.qcTypesParam"/>
         </template>
       </el-table-column>
-      <el-table-column label="是否启用" align="center" prop="enableFlag">
+      <el-table-column :label="$t('system.是否启用')" align="center" prop="enableFlag">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -113,14 +113,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:qc:qctemplate:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:qc:qctemplate:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -138,28 +138,28 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="模板编号" prop="templateCode">
-              <el-input v-model="form.templateCode" placeholder="请输入模板编号" />
+            <el-form-item :label="$t('lims.模板编号')" prop="templateCode">
+              <el-input v-model="form.templateCode" :placeholder="$t('lims.请输入模板编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="模板名称" prop="templateName">
-              <el-input v-model="form.templateName" placeholder="请输入模板名称" />
+            <el-form-item :label="$t('lims.模板名称')" prop="templateName">
+              <el-input v-model="form.templateName" :placeholder="$t('lims.请输入模板名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="18">
-            <el-form-item label="检测种类" prop="qcTypesParam">
+            <el-form-item :label="$t('mes.检测种类')" prop="qcTypesParam">
               <el-checkbox-group v-model="form.qcTypesParam">
                 <el-checkbox v-for="dict in dict.type.mes_qc_type"
                       :key="dict.value"
@@ -169,7 +169,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="是否启用" prop="enableFlag">
+            <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
               <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
                 <el-radio
                   v-for="dict in dict.type.sys_yes_no"
@@ -189,25 +189,25 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <el-tabs type="border-card" v-if="form.templateId != null">
-        <el-tab-pane label="检测项">
+        <el-tab-pane :label="$t('lims.检测项')">
           <TemplateIndex ref="indexTab" :templateId="form.templateId" :optType="optType"></TemplateIndex>
         </el-tab-pane>
-        <el-tab-pane label="物料产品">
+        <el-tab-pane :label="$t('mes.物料产品')">
           <TemplateProduct ref="productTab" :templateId="form.templateId" :optType="optType"></TemplateProduct>
         </el-tab-pane>
       </el-tabs>
 
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-else>{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -262,16 +262,16 @@ export default {
       // 表单校验
       rules: {
         templateCode: [
-          { required: true, message: "检测模板编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.检测模板编号不能为空'), trigger: "blur" }
         ],
         templateName: [
-          { required: true, message: "检测模板名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.检测模板名称不能为空'), trigger: "blur" }
         ],
         qcTypes: [
-          { required: true, message: "检测种类不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.检测种类不能为空'), trigger: "blur" }
         ],
         qcTypesParam:[
-          { required: true, message: "检测种类不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.检测种类不能为空'), trigger: "blur" }
         ]
       }
     };
@@ -331,7 +331,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加检测模板";
+      this.title = this.$t('mes.添加检测模板');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -341,7 +341,7 @@ export default {
       getQctemplate(templateId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看检测模板信息";
+        this.title = this.$t('mes.查看检测模板信息');
         this.optType = "view";
       });
     },
@@ -352,7 +352,7 @@ export default {
       getQctemplate(templateId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改检测模板";
+        this.title = this.$t('mes.修改检测模板');
         this.optType = "edit";
       });
     },
@@ -362,13 +362,13 @@ export default {
         if (valid) {
           if (this.form.templateId != null) {
             updateQctemplate(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addQctemplate(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -379,11 +379,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const templateIds = row.templateId || this.ids;
-      this.$modal.confirm('是否确认删除检测模板编号为"' + templateIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除检测模板编号为{v}的数据项？', { v: templateIds })).then(function() {
         return delQctemplate(templateIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     //自动生成编码

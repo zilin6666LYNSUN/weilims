@@ -1,41 +1,41 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="入库单编号" prop="recptCode">
+      <el-form-item :label="$t('mes.入库单编号')" prop="recptCode">
         <el-input
           v-model="queryParams.recptCode"
-          placeholder="请输入入库单编号"
+          :placeholder="$t('mes.请输入入库单编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="入库单名称" prop="recptName">
+      <el-form-item :label="$t('mes.入库单名称')" prop="recptName">
         <el-input
           v-model="queryParams.recptName"
-          placeholder="请输入入库单名称"
+          :placeholder="$t('mes.请输入入库单名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="生产工单" prop="workorderCode">
+      <el-form-item :label="$t('mes.生产工单')" prop="workorderCode">
         <el-input
           v-model="queryParams.workorderCode"
-          placeholder="请输入生产工单编码"
+          :placeholder="$t('mes.请输入生产工单编码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="仓库" prop="warehouseName">
+      <el-form-item :label="$t('mes.仓库')" prop="warehouseName">
         <el-input
           v-model="queryParams.warehouseName"
-          placeholder="请输入仓库名称"
+          :placeholder="$t('mes.请输入仓库名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -48,7 +48,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:productrecpt:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -59,7 +59,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:wm:productrecpt:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -70,7 +70,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:wm:productrecpt:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -80,29 +80,29 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:wm:productrecpt:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="productrecptList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="入库单编号" width="130px" align="center" prop="recptCode" />
-      <el-table-column label="入库单名称" width="150px" align="center" prop="recptName" :show-overflow-tooltip="true"/>
-      <el-table-column label="生产工单编码" width="150px" align="center" prop="workorderCode" />
-      <el-table-column label="产品编码" align="center" prop="itemCode" />
-      <el-table-column label="产品名称" align="center" prop="itemName" />
-      <el-table-column label="入库日期" align="center" prop="recptDate" width="120">
+      <el-table-column :label="$t('mes.入库单编号')" width="130px" align="center" prop="recptCode" />
+      <el-table-column :label="$t('mes.入库单名称')" width="150px" align="center" prop="recptName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('mes.生产工单编码')" width="150px" align="center" prop="workorderCode" />
+      <el-table-column :label="$t('mes.产品编码')" align="center" prop="itemCode" />
+      <el-table-column :label="$t('lims.产品名称')" align="center" prop="itemName" />
+      <el-table-column :label="$t('lims.入库日期')" align="center" prop="recptDate" width="120">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.recptDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="单据状态" align="center" prop="status">
+      <el-table-column :label="$t('mes.单据状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -111,7 +111,7 @@
             v-if="scope.row.status =='PREPARE'"
             @click="handleExecute(scope.row)"
             v-hasPermi="['mes:wm:productrecpt:edit']"
-          >执行入库</el-button>
+          >{{ this.$t('mes.执行入库') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -119,7 +119,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:wm:productrecpt:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -127,7 +127,7 @@
             @click="handleDelete(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:wm:productrecpt:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -145,66 +145,66 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="入库单编号" prop="recptCode">
-              <el-input v-model="form.recptCode" placeholder="请输入入库单编号" />
+            <el-form-item :label="$t('mes.入库单编号')" prop="recptCode">
+              <el-input v-model="form.recptCode" :placeholder="$t('mes.请输入入库单编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view' && form.status =='PREPARE'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="入库单名称" prop="recptName">
-              <el-input v-model="form.recptName" placeholder="请输入入库单名称" />
+            <el-form-item :label="$t('mes.入库单名称')" prop="recptName">
+              <el-input v-model="form.recptName" :placeholder="$t('mes.请输入入库单名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="生产工单" prop="workorderCode">
-              <el-input v-model="form.workorderCode" placeholder="请选择生产工单" >
+            <el-form-item :label="$t('mes.生产工单')" prop="workorderCode">
+              <el-input v-model="form.workorderCode" :placeholder="$t('mes.请选择生产工单')" >
                 <el-button slot="append" icon="el-icon-search" @click="handleWorkorderSelect"></el-button>
               </el-input>
               <WorkorderSelect ref="woSelect" @onSelected="onWorkorderSelected"></WorkorderSelect>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="生产工单名称" prop="workorderName">
+            <el-form-item :label="$t('mes.生产工单名称')" prop="workorderName">
               <el-input v-model="form.workorderName" readonly="readonly" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="入库日期" prop="recptDate">
+            <el-form-item :label="$t('lims.入库日期')" prop="recptDate">
               <el-date-picker clearable
                 v-model="form.recptDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择入库日期">
+                :placeholder="$t('mes.请选择入库日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>       
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <el-divider v-if="form.recptId !=null" content-position="center">物料信息</el-divider> 
+      <el-divider v-if="form.recptId !=null" content-position="center">{{ this.$t('mes.物料信息') }}</el-divider> 
       <el-card shadow="always" v-if="form.recptId !=null" class="box-card">
         <Productrecptline :recptId="form.recptId" :optType="optType" :workorderId="form.workorderId" :itemId="form.itemId"></Productrecptline>
       </el-card>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">保 存</el-button>        
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">{{ this.$t('mes.保 存') }}</el-button>        
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -276,13 +276,13 @@ export default {
       // 表单校验
       rules: {
         recptCode: [
-          { required: true, message: "入库单编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.入库单编号不能为空'), trigger: "blur" }
         ],
         recptDate: [
-          { required: true, message: "请选择入库日期", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择入库日期'), trigger: "blur" }
         ],
         workorderCode: [
-          { required: true, message: "请选择生产工单", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择生产工单'), trigger: "blur" }
         ],
       }
     };
@@ -382,7 +382,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加产品入库单";
+      this.title = this.$t('mes.添加产品入库单');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -391,17 +391,17 @@ export default {
       getProductrecpt(recptId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改产品入库单";
+        this.title = this.$t('mes.修改产品入库单');
       });
     },
     //执行入库
     handleExecute(row){
       const recptIds = row.recptId || this.ids;
-      this.$modal.confirm('确认执行入库？').then(function() {
+      this.$modal.confirm(this.$t('mes.确认执行入库？')).then(function() {
         return execute(recptIds)//执行入库
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("入库成功");
+        this.$modal.msgSuccess(this.$t('lims.入库成功'));
       }).catch(() => {});
     },
     /** 提交按钮 */
@@ -410,13 +410,13 @@ export default {
         if (valid) {
           if (this.form.recptId != null) {
             updateProductrecpt(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addProductrecpt(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -427,11 +427,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const recptIds = row.recptId || this.ids;
-      this.$modal.confirm('是否确认删除产品入库单编号为"' + recptIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除产品入库单编号为{v}的数据项？', { v: recptIds })).then(function() {
         return delProductrecpt(recptIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

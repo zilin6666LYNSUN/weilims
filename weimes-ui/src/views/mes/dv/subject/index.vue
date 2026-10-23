@@ -1,24 +1,24 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="项目编码" prop="subjectCode">
+      <el-form-item :label="$t('mes.项目编码')" prop="subjectCode">
         <el-input
           v-model="queryParams.subjectCode"
-          placeholder="请输入项目编码"
+          :placeholder="$t('mes.请输入项目编码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="项目名称" prop="subjectName">
+      <el-form-item :label="$t('mes.项目名称')" prop="subjectName">
         <el-input
           v-model="queryParams.subjectName"
-          placeholder="请输入项目名称"
+          :placeholder="$t('mes.请输入项目名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="项目类型" prop="subjectType">
-        <el-select v-model="queryParams.subjectType" placeholder="请选择项目类型" clearable>
+      <el-form-item :label="$t('mes.项目类型')" prop="subjectType">
+        <el-select v-model="queryParams.subjectType" :placeholder="$t('mes.请选择项目类型')" clearable>
           <el-option
             v-for="dict in dict.type.mes_dvsubject_type"
             :key="dict.value"
@@ -28,8 +28,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -42,7 +42,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:dv:dvsubject:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -53,7 +53,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:dv:dvsubject:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -64,7 +64,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:dv:dvsubject:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -74,28 +74,28 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:dv:dvsubject:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="dvsubjectList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="项目编码" align="center" prop="subjectCode" />
-      <el-table-column label="项目类型" align="center" prop="subjectType">
+      <el-table-column :label="$t('mes.项目编码')" align="center" prop="subjectCode" />
+      <el-table-column :label="$t('mes.项目类型')" align="center" prop="subjectType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_dvsubject_type" :value="scope.row.subjectType"/>
         </template>
       </el-table-column>
-      <el-table-column label="项目内容" align="center" prop="subjectContent" :show-overflow-tooltip="true"/>
-      <el-table-column label="标准" align="center" prop="subjectStandard" :show-overflow-tooltip="true"/>
-      <el-table-column label="是否启用" align="center" prop="enableFlag">
+      <el-table-column :label="$t('mes.项目内容')" align="center" prop="subjectContent" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('mes.标准')" align="center" prop="subjectStandard" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('system.是否启用')" align="center" prop="enableFlag">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -103,14 +103,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:dv:dvsubject:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:dv:dvsubject:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -128,28 +128,28 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="项目编码" prop="subjectCode">
-              <el-input v-model="form.subjectCode" placeholder="请输入项目编码" />
+            <el-form-item :label="$t('mes.项目编码')" prop="subjectCode">
+              <el-input v-model="form.subjectCode" :placeholder="$t('mes.请输入项目编码')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="项目名称" prop="subjectName">
-              <el-input v-model="form.subjectName" placeholder="请输入项目名称" />
+            <el-form-item :label="$t('mes.项目名称')" prop="subjectName">
+              <el-input v-model="form.subjectName" :placeholder="$t('mes.请输入项目名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="项目类型" prop="subjectType">
+            <el-form-item :label="$t('mes.项目类型')" prop="subjectType">
               <el-radio-group v-model="form.subjectType">
                 <el-radio
                   v-for="dict in dict.type.mes_dvsubject_type"
@@ -160,7 +160,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="是否启用">
+            <el-form-item :label="$t('system.是否启用')">
               <el-radio-group v-model="form.enableFlag">
                 <el-radio
                   v-for="dict in dict.type.sys_yes_no"
@@ -171,16 +171,16 @@
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="项目内容" prop="subjectContent">          
-          <el-input type="textarea" v-model="form.subjectContent" placeholder="请输入项目内容" />
+        <el-form-item :label="$t('mes.项目内容')" prop="subjectContent">          
+          <el-input type="textarea" v-model="form.subjectContent" :placeholder="$t('mes.请输入项目内容')" />
         </el-form-item>
-        <el-form-item label="标准" prop="subjectStandard">
-          <el-input type="textarea" v-model="form.subjectStandard" placeholder="请输入标准" autosize/>
+        <el-form-item :label="$t('mes.标准')" prop="subjectStandard">
+          <el-input type="textarea" v-model="form.subjectStandard" :placeholder="$t('mes.请输入标准')" autosize/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -229,16 +229,16 @@ export default {
       // 表单校验
       rules: {
         subjectCode: [
-          { required: true, message: "项目编码不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.项目编码不能为空'), trigger: "blur" }
         ],
         subjectType: [
-          { required: true, message: "请选择项目类型", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择项目类型'), trigger: "blur" }
         ],
         subjectContent: [
-          { required: true, message: "项目内容不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.项目内容不能为空'), trigger: "blur" }
         ],
         enableFlag: [
-          { required: true, message: "是否启用不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.是否启用不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -304,7 +304,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加设备点检保养项目";
+      this.title = this.$t('mes.添加设备点检保养项目');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -313,7 +313,7 @@ export default {
       getDvsubject(subjectId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改设备点检保养项目";
+        this.title = this.$t('mes.修改设备点检保养项目');
       });
     },
     /** 提交按钮 */
@@ -322,13 +322,13 @@ export default {
         if (valid) {
           if (this.form.subjectId != null) {
             updateDvsubject(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addDvsubject(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -339,11 +339,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const subjectIds = row.subjectId || this.ids;
-      this.$modal.confirm('是否确认删除设备点检保养项目编号为"' + subjectIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除设备点检保养项目编号为{v}的数据项？', { v: subjectIds })).then(function() {
         return delDvsubject(subjectIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

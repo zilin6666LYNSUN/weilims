@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:rtvendor:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -20,24 +20,24 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:wm:rtvendor:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="rtvendorlineList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="物料编码" width="120px" align="center" prop="itemCode" />
-      <el-table-column label="物料名称" width="150px" align="center" prop="itemName" :show-overflow-tooltip="true"/>
-      <el-table-column label="规格型号" align="center" prop="specification" :show-overflow-tooltip="true"/>
-      <el-table-column label="单位" align="center" prop="unitOfMeasure" />
-      <el-table-column label="退货数量" align="center" prop="quantityRted" />
-      <el-table-column label="批次号" align="center" prop="batchCode" />
-      <el-table-column label="仓库" align="center" prop="warehouseName" />
-      <el-table-column label="库区" align="center" prop="locationName" />
-      <el-table-column label="库位" align="center" prop="areaName" />
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作" width="100px"  v-if="optType != 'view'" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.物料编码')" width="120px" align="center" prop="itemCode" />
+      <el-table-column :label="$t('lims.物料名称')" width="150px" align="center" prop="itemName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('lims.规格型号')" align="center" prop="specification" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure" />
+      <el-table-column :label="$t('mes.退货数量')" align="center" prop="quantityRted" />
+      <el-table-column :label="$t('lims.批次号')" align="center" prop="batchCode" />
+      <el-table-column :label="$t('mes.仓库')" align="center" prop="warehouseName" />
+      <el-table-column :label="$t('mes.库区')" align="center" prop="locationName" />
+      <el-table-column :label="$t('mes.库位')" align="center" prop="areaName" />
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('common.operation')" width="100px"  v-if="optType != 'view'" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -45,14 +45,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:wm:rtvendor:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:wm:rtvendor:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -70,39 +70,39 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
             <el-col :span="8">
-                <el-form-item label="产品物料编码" prop="itemCode">
-                    <el-input v-model="form.itemCode" readonly="readonly" placeholder="请选择产品物料编码" >
+                <el-form-item :label="$t('mes.产品物料编码')" prop="itemCode">
+                    <el-input v-model="form.itemCode" readonly="readonly" :placeholder="$t('mes.请选择产品物料编码')" >
                       <el-button slot="append" @click="handleSelectStock" icon="el-icon-search"></el-button>
                     </el-input>
                 </el-form-item>
                 <StockSelect ref="stockSelect" :batchCode="batchCode" :vendorId="vendorId" @onSelected="onStockSelected"></StockSelect>
             </el-col>
             <el-col :span="8">
-                <el-form-item label="产品物料名称" prop="itemName">
+                <el-form-item :label="$t('mes.产品物料名称')" prop="itemName">
                     <el-input v-model="form.itemName" readonly="readonly" />
                 </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="退货数量" prop="quantityRted">
-                <el-input-number :max="form.quantityMax" v-model="form.quantityRted" placeholder="请输入退货数量" />
+              <el-form-item :label="$t('mes.退货数量')" prop="quantityRted">
+                <el-input-number :max="form.quantityMax" v-model="form.quantityRted" :placeholder="$t('mes.请输入退货数量')" />
               </el-form-item>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="24">
-                <el-form-item label="规格型号" prop="specification">
+                <el-form-item :label="$t('lims.规格型号')" prop="specification">
                     <el-input v-model="form.specification" readonly="readonly" type="textarea" />
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="8">
-              <el-form-item label="单位" prop="unitOfMeasure">
+              <el-form-item :label="$t('lims.单位')" prop="unitOfMeasure">
                 <el-input v-model="form.unitOfMeasure" readonly="readonly" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="批次号" prop="batchCode">
+              <el-form-item :label="$t('lims.批次号')" prop="batchCode">
                 <el-input v-model="form.batchCode" readonly="readonly" />
               </el-form-item>
             </el-col>
@@ -112,32 +112,32 @@
         </el-row>
         <el-row>
             <el-col :span="8">
-              <el-form-item label="仓库" prop="warehouseName">
+              <el-form-item :label="$t('mes.仓库')" prop="warehouseName">
                 <el-input v-model="form.warehouseName" readonly="readonly" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="库区" prop="locationName">
+              <el-form-item :label="$t('mes.库区')" prop="locationName">
                 <el-input v-model="form.locationName" readonly="readonly" />
               </el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="库位" prop="areaName">
+              <el-form-item :label="$t('mes.库位')" prop="areaName">
                 <el-input v-model="form.areaName" readonly="readonly" />
               </el-form-item>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="24">
-              <el-form-item label="备注" prop="remark">
-                <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+              <el-form-item :label="$t('system.备注')" prop="remark">
+                <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
               </el-form-item>
             </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -204,10 +204,10 @@ export default {
       // 表单校验
       rules: {
         itemId: [
-          { required: true, message: "产品物料不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.产品物料不能为空'), trigger: "blur" }
         ],
         quantityRted: [
-          { required: true, message: "退货数量不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.退货数量不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -283,7 +283,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加供应商退货行";
+      this.title = this.$t('mes.添加供应商退货行');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -292,7 +292,7 @@ export default {
       getRtvendorline(lineId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改供应商退货行";
+        this.title = this.$t('mes.修改供应商退货行');
       });
     },
     /** 提交按钮 */
@@ -301,13 +301,13 @@ export default {
         if (valid) {
           if (this.form.lineId != null) {
             updateRtvendorline(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addRtvendorline(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -318,11 +318,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const lineIds = row.lineId || this.ids;
-      this.$modal.confirm('是否确认删除供应商退货行编号为"' + lineIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除供应商退货行编号为{v}的数据项？', { v: lineIds })).then(function() {
         return delRtvendorline(lineIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     handleSelectStock(){

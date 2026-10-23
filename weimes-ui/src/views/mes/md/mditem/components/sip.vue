@@ -9,23 +9,23 @@
                 size="mini"
                 @click="handleAdd"
                 v-hasPermi="['mes:md:mditem:add']"
-                >新增</el-button>
+                >{{ this.$t('common.add') }}</el-button>
             </el-col>
         </el-row>
         <div class="header">
             <el-dialog :title="title" :visible.sync="open" width="960px" append-to-body>
                 <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-                    <el-form-item label="标题" prop="sipTitle">
-                        <el-input v-model="form.sipTitle" placeholder="请输入标题"></el-input>
+                    <el-form-item :label="$t('system.标题')" prop="sipTitle">
+                        <el-input v-model="form.sipTitle" :placeholder="$t('system.请输入标题')"></el-input>
                     </el-form-item>
-                    <el-form-item label="展示顺序">
+                    <el-form-item :label="$t('mes.展示顺序')">
                         <el-input-number :min="1" v-model="form.orderNum"></el-input-number>
                     </el-form-item>
-                    <el-form-item label="内容说明">
-                        <el-input type="textarea" v-model="form.sipDescription" placeholder="请输入说明信息"></el-input>
+                    <el-form-item :label="$t('mes.内容说明')">
+                        <el-input type="textarea" v-model="form.sipDescription" :placeholder="$t('mes.请输入说明信息')"></el-input>
                     </el-form-item>
-                    <el-form-item label="所属工序" prop="processId">
-                        <el-select v-model="form.processId" placeholder="请选择工序">
+                    <el-form-item :label="$t('mes.所属工序')" prop="processId">
+                        <el-select v-model="form.processId" :placeholder="$t('mes.请选择工序')">
                             <el-option
                             v-for="item in processOptions"
                             :key="item.processId"
@@ -34,13 +34,13 @@
                             ></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="图片">
+                    <el-form-item :label="$t('mes.图片')">
                         <ImageUpload :limit="1" :value="form.sipUrl" :fileSize="5" @onUploaded="handleImgUplaoded" @onRemoved="handleImgRemoved" ></ImageUpload>
                     </el-form-item>                    
                 </el-form>
                 <div slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="submitForm">提 交</el-button>
-                    <el-button @click="cancel">取 消</el-button>
+                    <el-button type="primary" @click="submitForm">{{ this.$t('system.提 交') }}</el-button>
+                    <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
                 </div>
             </el-dialog>
         </div>
@@ -76,7 +76,7 @@ export default{
     },
     data(){
         return {
-            title: "新增SIP信息",
+            title: this.$t('mes.新增SIP信息'),
             loading: true,
             open: false,      
             // 表单参数
@@ -84,7 +84,7 @@ export default{
             // 表单校验
             rules: {
                 itemId: [
-                    { required: true, message: "物料产品ID不能为空", trigger: "blur" }
+                    { required: true, message: this.$t('mes.物料产品ID不能为空'), trigger: "blur" }
                 ],
             },     
             // 产品SOP表格数据
@@ -146,7 +146,7 @@ export default{
         handleAdd(){
             this.reset();
             this.open = true;
-            this.title = "添加产品SIP";
+            this.title = this.$t('mes.添加产品SIP');
         },
         /** 修改按钮操作 */
         handleUpdate(row) {
@@ -155,7 +155,7 @@ export default{
             getSip(sipId).then(response => {
                 this.form = response.data;
                 this.open = true;
-                this.title = "修改产品SIP";
+                this.title = this.$t('mes.修改产品SIP');
             });
         },
         //图片上传成功
@@ -172,13 +172,13 @@ export default{
                     if (valid) {
                     if (this.form.sipId != null) {
                         updateSip(this.form).then(response => {
-                            this.$modal.msgSuccess("修改成功");
+                            this.$modal.msgSuccess(this.$t('system.修改成功'));
                             this.open = false;
                             this.getList();
                         });
                     } else {
                         addSip(this.form).then(response => {
-                            this.$modal.msgSuccess("新增成功");
+                            this.$modal.msgSuccess(this.$t('system.新增成功'));
                             this.open = false;
                             this.getList();
                         });
@@ -189,11 +189,11 @@ export default{
         /** 删除按钮操作 */
         handleDelete(row) {
             const sipIds = row.sipId || this.ids;
-            this.$modal.confirm('是否确认删除产品SIP编号为"' + sipIds + '"的数据项？').then(function() {
+            this.$modal.confirm(this.$t('mes.是否确认删除产品SIP编号为{v}的数据项？', { v: sipIds })).then(function() {
                 return delSip(sipIds);
             }).then(() => {
                 this.getList();
-                this.$modal.msgSuccess("删除成功");
+                this.$modal.msgSuccess(this.$t('system.删除成功'));
             }).catch(() => {});
         },
     }

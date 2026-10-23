@@ -1,140 +1,140 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="销售订单编码" prop="salesOrderCode" label-width="108px">
-        <el-input v-model="queryParams.salesOrderCode" placeholder="请输入销售订单编码" clearable
+      <el-form-item :label="$t('mes.销售订单编码')" prop="salesOrderCode" label-width="108px">
+        <el-input v-model="queryParams.salesOrderCode" :placeholder="$t('mes.请输入销售订单编码')" clearable
           @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="订单名称" prop="salesOrderName">
-        <el-input v-model="queryParams.salesOrderName" placeholder="请输入订单名称" clearable
+      <el-form-item :label="$t('mes.订单名称')" prop="salesOrderName">
+        <el-input v-model="queryParams.salesOrderName" :placeholder="$t('mes.请输入订单名称')" clearable
           @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="客户编码" prop="clientCode">
-        <el-input v-model="queryParams.clientCode" placeholder="请输入客户编码" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('lims.客户编码')" prop="clientCode">
+        <el-input v-model="queryParams.clientCode" :placeholder="$t('lims.请输入客户编码')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="客户名称" prop="clientName">
-        <el-input v-model="queryParams.clientName" placeholder="请输入客户名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('lims.客户名称')" prop="clientName">
+        <el-input v-model="queryParams.clientName" :placeholder="$t('lims.请输入客户名称')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="产品编码" prop="productCode">
-        <el-input v-model="queryParams.productCode" placeholder="请输入产品编码" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('mes.产品编码')" prop="productCode">
+        <el-input v-model="queryParams.productCode" :placeholder="$t('mes.请输入产品编码')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="产品名称" prop="productName">
-        <el-input v-model="queryParams.productName" placeholder="请输入产品名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('lims.产品名称')" prop="productName">
+        <el-input v-model="queryParams.productName" :placeholder="$t('mes.请输入产品名称')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="客户产品名称" prop="clientProductName" label-width="120px">
-        <el-input v-model="queryParams.clientProductName" placeholder="请输入客户产品名称" clearable
+      <el-form-item :label="$t('mes.客户产品名称')" prop="clientProductName" label-width="120px">
+        <el-input v-model="queryParams.clientProductName" :placeholder="$t('mes.请输入客户产品名称')" clearable
           @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="材质" prop="quality">
-        <el-input v-model="queryParams.quality" placeholder="请输入材质" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('mes.材质')" prop="quality">
+        <el-input v-model="queryParams.quality" :placeholder="$t('mes.请输入材质')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="颜色" prop="colorName">
-        <el-select v-model="queryParams.colorName" placeholder="请选择颜色">
+      <el-form-item :label="$t('mes.颜色')" prop="colorName">
+        <el-select v-model="queryParams.colorName" :placeholder="$t('mes.请选择颜色')">
           <el-option v-for="item in colorList" :key="item.colorCode" :label="item.colorName"
             :value="item.colorCode"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="交货日期" prop="deliveryDate">
+      <el-form-item :label="$t('mes.交货日期')" prop="deliveryDate">
         <el-date-picker clearable v-model="queryParams.deliveryDate" type="date" value-format="yyyy-MM-dd"
-          placeholder="请选择交货日期">
+          :placeholder="$t('mes.请选择交货日期')">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-          v-hasPermi="['md:item:add']">新增</el-button>
+          v-hasPermi="['md:item:add']">{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate"
-          v-hasPermi="['md:item:edit']">修改</el-button>
+          v-hasPermi="['md:item:edit']">{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
-          v-hasPermi="['md:item:remove']">删除</el-button>
+          v-hasPermi="['md:item:remove']">{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
-          v-hasPermi="['md:item:export']">导出</el-button>
+          v-hasPermi="['md:item:export']">{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="itemList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="明细编码" align="center" prop="salesOrderItemCode" width="100">
+      <el-table-column :label="$t('mes.明细编码')" align="center" prop="salesOrderItemCode" width="100">
         <template slot-scope="scope">
           <el-button size="mini" type="text" @click="handleView(scope.row)">{{
             scope.row.salesOrderItemCode
             }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="订单编码" align="center" prop="salesOrderCode" width="100">
+      <el-table-column :label="$t('mes.订单编码')" align="center" prop="salesOrderCode" width="100">
         <template slot-scope="scope">
           <el-button size="mini" type="text" @click="handleOrderView(scope.row)">{{
             scope.row.salesOrderCode }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="客户编码" align="center" prop="clientCode" />
-      <el-table-column label="订货日期" align="center" prop="salesOrderDate">
+      <el-table-column :label="$t('lims.客户编码')" align="center" prop="clientCode" />
+      <el-table-column :label="$t('mes.订货日期')" align="center" prop="salesOrderDate">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.salesOrderDate, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column :label="$t('system.状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status" />
         </template>
       </el-table-column>
-      <el-table-column label="客户名称" align="center" prop="clientName" />
-      <el-table-column label="产品编码" align="center" prop="productCode" />
-      <el-table-column label="产品名称" align="center" prop="productName" />
-      <el-table-column label="产品规格" align="center" prop="productSpec" />
-      <el-table-column label="材质" align="center" prop="quality" />
-      <el-table-column label="色号" align="center" prop="colorName" />
-      <el-table-column label="颜色" align="center" prop="colorName">
+      <el-table-column :label="$t('lims.客户名称')" align="center" prop="clientName" />
+      <el-table-column :label="$t('mes.产品编码')" align="center" prop="productCode" />
+      <el-table-column :label="$t('lims.产品名称')" align="center" prop="productName" />
+      <el-table-column :label="$t('mes.产品规格')" align="center" prop="productSpec" />
+      <el-table-column :label="$t('mes.材质')" align="center" prop="quality" />
+      <el-table-column :label="$t('mes.色号')" align="center" prop="colorName" />
+      <el-table-column :label="$t('mes.颜色')" align="center" prop="colorName">
         <template slot-scope="scope">
           {{ convertColor(scope.row.colorName) }}
         </template>
       </el-table-column>
 
-      <el-table-column label="单位" align="center" prop="unitOfMeasure">
+      <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure">
         <template slot-scope="scope">
           {{ convertUnitmeasure(scope.row.unitOfMeasure) }}
         </template>
       </el-table-column>
-      <el-table-column label="交货日期" align="center" prop="deliveryDate">
+      <el-table-column :label="$t('mes.交货日期')" align="center" prop="deliveryDate">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.deliveryDate, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="客户产品名称" align="center" prop="clientProductName" width="120px" />
-      <el-table-column label="订货数量" align="center" prop="salesOrderQuantity" />
-      <el-table-column label="库存数量" align="center" prop="stockNum" />
-      <el-table-column label="已出货数" align="center" prop="saleQty" />
-      <el-table-column label="已退货数" align="center" prop="saleThqty" />
-      <el-table-column label="欠数" align="center" prop="oweQty" />
-      <el-table-column label="手工消数" align="center" prop="saleSgqty" />
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="工单ID" align="center" prop="workorderId" />
-      <el-table-column label="创建者" align="center" prop="createBy" />
-      <el-table-column label="创建时间" align="center" prop="createTime">
+      <el-table-column :label="$t('mes.客户产品名称')" align="center" prop="clientProductName" width="120px" />
+      <el-table-column :label="$t('mes.订货数量')" align="center" prop="salesOrderQuantity" />
+      <el-table-column :label="$t('mes.库存数量')" align="center" prop="stockNum" />
+      <el-table-column :label="$t('mes.已出货数')" align="center" prop="saleQty" />
+      <el-table-column :label="$t('mes.已退货数')" align="center" prop="saleThqty" />
+      <el-table-column :label="$t('mes.欠数')" align="center" prop="oweQty" />
+      <el-table-column :label="$t('mes.手工消数')" align="center" prop="saleSgqty" />
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" />
+      <el-table-column :label="$t('mes.工单ID')" align="center" prop="workorderId" />
+      <el-table-column :label="$t('system.创建者')" align="center" prop="createBy" />
+      <el-table-column :label="$t('system.创建时间')" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="更新者" align="center" prop="updateBy" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.更新者')" align="center" prop="updateBy" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['md:item:edit']">修改</el-button>
+            v-hasPermi="['md:item:edit']">{{ this.$t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['md:item:remove']">删除</el-button>
+            v-hasPermi="['md:item:remove']">{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -147,8 +147,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="产品编号" prop="productCode">
-              <el-input v-model="form.productCode" placeholder="请选择产品">
+            <el-form-item :label="$t('mes.产品编号')" prop="productCode">
+              <el-input v-model="form.productCode" :placeholder="$t('mes.请选择产品')">
                 <el-button slot="append" @click="handleSelectProduct" icon="el-icon-search"></el-button>
               </el-input>
               <ItemSelect ref="itemSelect" @onSelected="onItemSelected">
@@ -156,52 +156,52 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="产品名称" prop="productName">
-              <el-input class="normal-input-colour" v-model="form.productName" placeholder="请选择产品" disabled />
+            <el-form-item :label="$t('lims.产品名称')" prop="productName">
+              <el-input class="normal-input-colour" v-model="form.productName" :placeholder="$t('mes.请选择产品')" disabled />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="产品规格" prop="productSpec">
-              <el-input class="normal-input-colour" v-model="form.productSpec" placeholder="请选择产品" disabled />
+            <el-form-item :label="$t('mes.产品规格')" prop="productSpec">
+              <el-input class="normal-input-colour" v-model="form.productSpec" :placeholder="$t('mes.请选择产品')" disabled />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="订单编码" prop="clientOrderCode">
-              <el-input v-model="form.salesOrderItemCode" placeholder="请输入订单编码" />
+            <el-form-item :label="$t('mes.订单编码')" prop="clientOrderCode">
+              <el-input v-model="form.salesOrderItemCode" :placeholder="$t('mes.请输入订单编码')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="订货日期" prop="orderDate">
+            <el-form-item :label="$t('mes.订货日期')" prop="orderDate">
               <el-date-picker clearable v-model="form.salesOrderDate" type="date" value-format="yyyy-MM-dd"
-                placeholder="请选择订货日期">
+                :placeholder="$t('mes.请选择订货日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="交货日期" prop="deliveryDate">
+            <el-form-item :label="$t('mes.交货日期')" prop="deliveryDate">
               <el-date-picker clearable v-model="form.deliveryDate" type="date" value-format="yyyy-MM-dd"
-                placeholder="请选择交货日期">
+                :placeholder="$t('mes.请选择交货日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="材质" prop="quality">
-              <el-input v-model="form.quality" placeholder="请输入材质" />
+            <el-form-item :label="$t('mes.材质')" prop="quality">
+              <el-input v-model="form.quality" :placeholder="$t('mes.请输入材质')" />
             </el-form-item>
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="色号" prop="colorCode">
+            <el-form-item :label="$t('mes.色号')" prop="colorCode">
               <el-input v-model="form.colorName" placeholder="colorCode" disabled />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="颜色" prop="colorName">
-              <el-select v-model="form.colorName" placeholder="请选择颜色">
+            <el-form-item :label="$t('mes.颜色')" prop="colorName">
+              <el-select v-model="form.colorName" :placeholder="$t('mes.请选择颜色')">
                 <el-option v-for="item in colorList" :key="item.colorCode" :label="item.colorName"
                   :value="item.colorCode"></el-option>
               </el-select>
@@ -210,12 +210,12 @@
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="订货数量" prop="salesOrderQuantity">
+            <el-form-item :label="$t('mes.订货数量')" prop="salesOrderQuantity">
               <el-input-number v-model="form.salesOrderQuantity" :min="1" />
             </el-form-item>
           </el-col>
           <el-col :span="5">
-            <el-form-item label="单位" prop="unitOfMeasure">
+            <el-form-item :label="$t('lims.单位')" prop="unitOfMeasure">
               <el-select v-model="form.unitOfMeasure">
                 <el-option v-for="item in measureOptions" :key="item.measureCode" :label="item.measureName"
                   :value="item.measureCode" :disabled="item.enableFlag == 'N'"></el-option>
@@ -223,57 +223,57 @@
             </el-form-item>
           </el-col>
           <el-col :span="11">
-            <el-form-item label="主单编码" prop="clientOrderCode">
-              <el-input v-model="form.clientOrderCode" placeholder="请输入订单编码" />
+            <el-form-item :label="$t('mes.主单编码')" prop="clientOrderCode">
+              <el-input v-model="form.clientOrderCode" :placeholder="$t('mes.请输入订单编码')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="客供名称" prop="clientProductName">
-              <el-input v-model="form.clientProductName" placeholder="请输入客供名称" /> </el-form-item></el-col>
+            <el-form-item :label="$t('mes.客供名称')" prop="clientProductName">
+              <el-input v-model="form.clientProductName" :placeholder="$t('mes.请输入客供名称')" /> </el-form-item></el-col>
           <el-col :span="4">
-            <el-form-item label="库存数量" prop="stockNum">
+            <el-form-item :label="$t('mes.库存数量')" prop="stockNum">
               <el-input v-model="form.stockNum" disabled />
             </el-form-item>
           </el-col>
           <el-col :span="4">
-            <el-form-item label="已出货数" prop="saleQty">
+            <el-form-item :label="$t('mes.已出货数')" prop="saleQty">
               <el-input v-model="form.saleQty" disabled />
             </el-form-item>
           </el-col>
           <el-col :span="4">
-            <el-form-item label="已退货数" prop="saleThqty">
+            <el-form-item :label="$t('mes.已退货数')" prop="saleThqty">
               <el-input v-model="form.saleThqty" disabled />
             </el-form-item>
           </el-col>
           <el-col :span="4">
-            <el-form-item label="手工消数" prop="saleSgqty">
+            <el-form-item :label="$t('mes.手工消数')" prop="saleSgqty">
               <el-input v-model="form.saleSgqty" disabled />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="10">
-            <el-form-item label="工单编码" prop="workorderId">
+            <el-form-item :label="$t('mes.工单编码')" prop="workorderId">
               <el-input v-model="form.workorderId" disabled />
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('system.备注')" prop="remark">
+          <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
         </el-form-item>
       </el-form>
       <el-tabs type="border-card" v-if="form.salesOrderId != null">
-        <el-tab-pane label="物料需求">
+        <el-tab-pane :label="$t('mes.物料需求')">
           <SalesItemOrder ref="salesOrderItem" :clientOrderId="form.salesOrderItemId" :optType="optType" />
         </el-tab-pane>
       </el-tabs>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm" v-if="optType !== 'view'">确 定</el-button>
+        <el-button type="primary" @click="submitForm" v-if="optType !== 'view'">{{ this.$t('system.确 定') }}</el-button>
         <el-button type="success" @click="generateWorkOrderOnClick"
-          v-if="optType !== 'view' && form.status == 'CONFIRMED' && optType != 'view' && form.salesOrderItemId != null">生成生产工单</el-button>
-        <el-button @click="cancel">取 消</el-button>
+          v-if="optType !== 'view' && form.status == 'CONFIRMED' && optType != 'view' && form.salesOrderItemId != null">{{ this.$t('mes.生成生产工单') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -360,19 +360,19 @@ export default {
       // 表单校验
       rules: {
         productId: [
-          { required: true, message: "产品id不能为空", trigger: "blur" },
+          { required: true, message: this.$t('mes.产品id不能为空'), trigger: "blur" },
         ],
         productCode: [
-          { required: true, message: "产品编码不能为空", trigger: "blur" },
+          { required: true, message: this.$t('mes.产品编码不能为空'), trigger: "blur" },
         ],
         productName: [
-          { required: true, message: "产品名称不能为空", trigger: "blur" },
+          { required: true, message: this.$t('mes.产品名称不能为空'), trigger: "blur" },
         ],
         unitOfMeasure: [
-          { required: true, message: "单位不能为空", trigger: "change" },
+          { required: true, message: this.$t('mes.单位不能为空'), trigger: "change" },
         ],
         deliveryDate: [
-          { required: true, message: "交货日期不能为空", trigger: "blur" },
+          { required: true, message: this.$t('mes.交货日期不能为空'), trigger: "blur" },
         ],
       },
     };
@@ -498,7 +498,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加销售订单产品列";
+      this.title = this.$t('mes.添加销售订单产品列');
       this.optType = "add";
     },
     /** 修改按钮操作 */
@@ -508,7 +508,7 @@ export default {
       getItem(salesOrderItemId).then((response) => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改销售订单产品列";
+        this.title = this.$t('mes.修改销售订单产品列');
         this.optType = "edit";
       });
     },
@@ -518,13 +518,13 @@ export default {
         if (valid) {
           if (this.form.salesOrderItemId != null) {
             updateItem(this.form).then((response) => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addItem(this.form).then((response) => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -548,7 +548,7 @@ export default {
         })
         .then(() => {
           this.getList();
-          this.$modal.msgSuccess("删除成功");
+          this.$modal.msgSuccess(this.$t('system.删除成功'));
         })
         .catch(() => { });
     },
@@ -569,7 +569,7 @@ export default {
       getItem(salesOrderItemId).then((response) => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改销售订单产品列";
+        this.title = this.$t('mes.修改销售订单产品列');
         this.optType = "view";
       });
     },

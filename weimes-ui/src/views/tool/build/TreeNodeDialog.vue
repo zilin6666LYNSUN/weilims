@@ -18,24 +18,24 @@
         >
           <el-col :span="24">
             <el-form-item
-              label="选项名"
+              :label="$t('tool.选项名')"
               prop="label"
             >
               <el-input
                 v-model="formData.label"
-                placeholder="请输入选项名"
+                :placeholder="$t('tool.请输入选项名')"
                 clearable
               />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item
-              label="选项值"
+              :label="$t('tool.选项值')"
               prop="value"
             >
               <el-input
                 v-model="formData.value"
-                placeholder="请输入选项值"
+                :placeholder="$t('tool.请输入选项值')"
                 clearable
               >
                 <el-select
@@ -61,10 +61,10 @@
           type="primary"
           @click="handleConfirm"
         >
-          确定
+          {{ this.$t('common.confirm') }}
         </el-button>
         <el-button @click="close">
-          取消
+          {{ this.$t('common.cancel') }}
         </el-button>
       </div>
     </el-dialog>
@@ -88,14 +88,14 @@ export default {
         label: [
           {
             required: true,
-            message: '请输入选项名',
+            message: this.$t('tool.请输入选项名'),
             trigger: 'blur'
           }
         ],
         value: [
           {
             required: true,
-            message: '请输入选项值',
+            message: this.$t('tool.请输入选项值'),
             trigger: 'blur'
           }
         ]
@@ -103,11 +103,11 @@ export default {
       dataType: 'string',
       dataTypeOptions: [
         {
-          label: '字符串',
+          label: this.$t('tool.字符串'),
           value: 'string'
         },
         {
-          label: '数字',
+          label: this.$t('tool.数字'),
           value: 'number'
         }
       ]

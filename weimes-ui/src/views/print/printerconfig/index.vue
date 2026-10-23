@@ -10,7 +10,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['print:printerconfig:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -21,7 +21,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['print:printerconfig:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -32,13 +32,13 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['print:printerconfig:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
     <el-table v-loading="loading" :data="clientList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="客户端编号" align="center" prop="clientCode">
+      <el-table-column :label="$t('print.客户端编号')" align="center" prop="clientCode">
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -47,13 +47,13 @@
           >{{scope.row.clientCode}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="客户端名称" align="center" prop="clientName" />
-      <el-table-column label="客户端IP" align="center" prop="clientIp" />
-      <el-table-column label="客户端端口" align="center" prop="clientPort" />
-      <el-table-column label="客户端token" align="center" prop="clientToken" />
-      <el-table-column label="车间名称" align="center" prop="workshopName" />
-      <el-table-column label="工作站名称" align="center" prop="workstationName" />
-      <el-table-column label="操作" align="center" width="200px" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('print.客户端名称')" align="center" prop="clientName" />
+      <el-table-column :label="$t('print.客户端IP')" align="center" prop="clientIp" />
+      <el-table-column :label="$t('print.客户端端口')" align="center" prop="clientPort" />
+      <el-table-column :label="$t('print.客户端token')" align="center" prop="clientToken" />
+      <el-table-column :label="$t('print.车间名称')" align="center" prop="workshopName" />
+      <el-table-column :label="$t('print.工作站名称')" align="center" prop="workstationName" />
+      <el-table-column :label="$t('common.operation')" align="center" width="200px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -61,14 +61,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['print:printerconfig:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['print:printerconfig:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -88,15 +88,15 @@
           <el-col :span="12">
             <el-row>
               <el-col :span="16">
-                <el-form-item label="客户端编码：" prop="clientCode">
-                  <el-input v-model="form.clientCode" placeholder="请输入客户端编号" />
+                <el-form-item :label="$t('print.客户端编码：')" prop="clientCode">
+                  <el-input v-model="form.clientCode" :placeholder="$t('print.请输入客户端编号')" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item  label-width="80">
                   <el-switch v-model="autoGenFlag"
                              active-color="#13ce66"
-                             active-text="自动生成"
+                             :active-text="$t('print.自动生成')"
                              @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">
                   </el-switch>
                 </el-form-item>
@@ -104,28 +104,28 @@
             </el-row>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="客户端名称：" prop="clientName">
-              <el-input v-model="form.clientName" placeholder="请输入打印客户端名称" />
+            <el-form-item :label="$t('print.客户端名称：')" prop="clientName">
+              <el-input v-model="form.clientName" :placeholder="$t('print.请输入打印客户端名称')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="客户端IP：" prop="clientIp">
-              <el-input v-model="form.clientIp" placeholder="请输入打印客户端IP" />
+            <el-form-item :label="$t('print.客户端IP：')" prop="clientIp">
+              <el-input v-model="form.clientIp" :placeholder="$t('print.请输入打印客户端IP')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="客户端端口：" prop="clientPort">
-              <el-input v-model="form.clientPort" placeholder="请输入打印客户端端口" />
+            <el-form-item :label="$t('print.客户端端口：')" prop="clientPort">
+              <el-input v-model="form.clientPort" :placeholder="$t('print.请输入打印客户端端口')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="客户端token：" prop="clientToken">
-              <el-input v-model="form.clientToken" placeholder="请输入打印客户端token" />
+            <el-form-item :label="$t('print.客户端token：')" prop="clientToken">
+              <el-input v-model="form.clientToken" :placeholder="$t('print.请输入打印客户端token')" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="所属工作站：" prop="workstationName">
-              <el-select v-model="form.workstationName" @change="changeWorkstation" placeholder="请选择所属工作站" style="width: 100%;">
+            <el-form-item :label="$t('print.所属工作站：')" prop="workstationName">
+              <el-select v-model="form.workstationName" @change="changeWorkstation" :placeholder="$t('print.请选择所属工作站')" style="width: 100%;">
                 <el-option
                   v-for="item in workstationList"
                   :key="item.workstationId"
@@ -136,23 +136,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="所属车间：" prop="workshopName">
-              <el-input v-model="form.workshopName" readonly placeholder="请输入所属车间" />
+            <el-form-item :label="$t('print.所属车间：')" prop="workshopName">
+              <el-input v-model="form.workshopName" readonly :placeholder="$t('print.请输入所属车间')" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="备注：" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('print.备注：')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
 
-      <el-divider content-position="center" v-if="form.clientId !=null">打印机配置</el-divider>
+      <el-divider content-position="center" v-if="form.clientId !=null">{{ this.$t('print.打印机配置') }}</el-divider>
       <PrintConfig ref="printConfig" :optType="optType" :client="form"></PrintConfig>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm" v-if="optType !='view'">确 定</el-button>
-        <el-button @click="cancel">关 闭</el-button>
+        <el-button type="primary" @click="submitForm" v-if="optType !='view'">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('print.关 闭') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -202,21 +202,21 @@ export default {
       // 表单校验
       rules: {
         clientCode: [
-          { required: true, message: "客户端编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('print.客户端编号不能为空'), trigger: "blur" }
         ],
 
         clientName: [
-          { required: true, message: "客户端名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('print.客户端名称不能为空'), trigger: "blur" }
         ],
 
         clientIp: [
-          { required: true, message: "客户端IP地址不能为空", trigger: "blur" }
+          { required: true, message: this.$t('print.客户端IP地址不能为空'), trigger: "blur" }
         ],
         clientPort: [
-          { required: true, message: "客户端端口地址不能为空", trigger: "blur" }
+          { required: true, message: this.$t('print.客户端端口地址不能为空'), trigger: "blur" }
         ],
         remark: [
-          { max: 250, message: '长度必须小于250个字符', trigger: 'blur' }
+          { max: 250, message: this.$t('print.长度必须小于250个字符'), trigger: 'blur' }
         ]
       },
       // 所属车间
@@ -302,7 +302,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加客户端配置";
+      this.title = this.$t('print.添加客户端配置');
       this.optType = 'add';
     },
     /** 修改按钮操作 */
@@ -312,7 +312,7 @@ export default {
       getClient(clientId).then(res => {
         this.form = res.data
         this.open = true
-        this.title = "修改客户端配置";
+        this.title = this.$t('print.修改客户端配置');
         this.optType = 'edit';
       })
     },
@@ -323,7 +323,7 @@ export default {
       getClient(clientId).then(res => {
         this.form = res.data
         this.open = true
-        this.title = "查看客户端配置";
+        this.title = this.$t('print.查看客户端配置');
         this.optType = 'view'
       })
     },
@@ -333,13 +333,13 @@ export default {
         if (valid) {
           if (this.form.clientId != null) {
             updateClient(this.form).then(res => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             })
           } else {
             addClient(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -350,11 +350,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const clientIds = row.clientId || this.ids;
-      this.$modal.confirm('是否确认删除客户端配置编号为"' + clientIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('print.是否确认删除客户端配置编号为{v}的数据项？', { v: clientIds })).then(function() {
         return delClient(clientIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     //自动生成编码

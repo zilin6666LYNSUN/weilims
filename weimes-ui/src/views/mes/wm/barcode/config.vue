@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="赋码设置"
+  <el-dialog :title="$t('mes.赋码设置')"
     v-if="showFlag"
     :visible.sync="showFlag"
     :modal= false
@@ -8,19 +8,19 @@
     >
     <el-table v-loading="loading" :data="barcodeconfigList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="赋码类型" align="center" prop="barcodeType">
+      <el-table-column :label="$t('mes.赋码类型')" align="center" prop="barcodeType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_barcode_type" :value="scope.row.barcodeType"/>
         </template>
       </el-table-column>
-      <el-table-column label="赋码格式" align="center" prop="barcodeFormart">
+      <el-table-column :label="$t('mes.赋码格式')" align="center" prop="barcodeFormart">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_barcode_formart" :value="scope.row.barcodeFormart"/>
         </template>
       </el-table-column>
-      <el-table-column label="内容格式" align="center" prop="contentFormart" />
-      <el-table-column label="内容样例" align="center" prop="contentExample" />
-      <el-table-column label="是否自动生成" align="center" prop="autoGenFlag">
+      <el-table-column :label="$t('mes.内容格式')" align="center" prop="contentFormart" />
+      <el-table-column :label="$t('mes.内容样例')" align="center" prop="contentExample" />
+      <el-table-column :label="$t('mes.是否自动生成')" align="center" prop="autoGenFlag">
         <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.autoGenFlag"
@@ -30,13 +30,13 @@
               ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="默认打印模板" align="center" prop="defaultTemplate" >
+      <el-table-column :label="$t('mes.默认打印模板')" align="center" prop="defaultTemplate" >
         <template slot-scope="scope">
           {{scope.row.defaultTemplate}}
           <el-button
             type="text"
             @click="handleSetReport(scope.row)"
-          >设置</el-button>
+          >{{ this.$t('mes.设置') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -50,8 +50,8 @@
     />
     <ReportSelect ref="reportRef" @onSelected="onReportSelected"></ReportSelect>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="showFlag=false">确 定</el-button>
-      <el-button @click="showFlag=false">取 消</el-button>
+      <el-button type="primary" @click="showFlag=false">{{ this.$t('system.确 定') }}</el-button>
+      <el-button @click="showFlag=false">{{ this.$t('system.取 消') }}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -96,11 +96,11 @@ export default {
       // 表单校验
       rules: {
         barcodeFormart: [
-          { required: true, message: "条码格式不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.条码格式不能为空'), trigger: "blur" }
         ],        barcodeType: [
-          { required: true, message: "条码类型不能为空", trigger: "change" }
+          { required: true, message: this.$t('mes.条码类型不能为空'), trigger: "change" }
         ],        contentFormart: [
-          { required: true, message: "内容格式不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.内容格式不能为空'), trigger: "blur" }
         ],      }
     };
   },
@@ -148,7 +148,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加条码配置";
+      this.title = this.$t('mes.添加条码配置');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -157,7 +157,7 @@ export default {
       getBarcodeconfig(configId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改条码配置";
+        this.title = this.$t('mes.修改条码配置');
       });
     },
     /** 提交按钮 */
@@ -166,13 +166,13 @@ export default {
         if (valid) {
           if (this.form.configId != null) {
             updateBarcodeconfig(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addBarcodeconfig(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -191,7 +191,7 @@ export default {
       if(row != null && this.form !=null ){
         this.form.defaultTemplate = row.name;
         updateBarcodeconfig(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
@@ -199,15 +199,15 @@ export default {
     },
     //赋码自动生成修改
     handleAutoGenChange(row) {
-      let text = row.autoGenFlag === "Y" ? "启用" : "停用";
+      let text = row.autoGenFlag === "Y" ? this.$t('dict.sys_normal_disable.0') : "$t('dict.sys_normal_disable.1')";
       this.$modal.confirm('确认要' + text + '自动生成吗？').then(function() {
             updateBarcodeconfig(row).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
       }).then(() => {
-        this.$modal.msgSuccess(text + "成功");
+        this.$modal.msgSuccess(text + this.$t('system.成功'));
       }).catch(function() {
         row.autoGenFlag = row.autoGenFlag === "N" ? "Y" : "N";
       });

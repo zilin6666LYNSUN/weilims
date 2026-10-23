@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="班组类型" prop="calendarType">
-        <el-select v-model="queryParams.calendarType" placeholder="请选择班组类型">
+      <el-form-item :label="$t('mes.班组类型')" prop="calendarType">
+        <el-select v-model="queryParams.calendarType" :placeholder="$t('mes.请选择班组类型')">
           <el-option
             v-for="dict in dict.type.mes_calendar_type"
             :key="dict.value"
@@ -11,25 +11,25 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="班组编号" prop="teamCode">
+      <el-form-item :label="$t('mes.班组编号')" prop="teamCode">
         <el-input
           v-model="queryParams.teamCode"
-          placeholder="请输入班组编号"
+          :placeholder="$t('mes.请输入班组编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="班组名称" prop="teamName">
+      <el-form-item :label="$t('mes.班组名称')" prop="teamName">
         <el-input
           v-model="queryParams.teamName"
-          placeholder="请输入班组名称"
+          :placeholder="$t('mes.请输入班组名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -42,7 +42,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:cal:team:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -53,7 +53,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:cal:team:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -64,7 +64,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:cal:team:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -74,14 +74,14 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:cal:team:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="teamList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="班组编号" align="center" prop="teamCode" >
+      <el-table-column :label="$t('mes.班组编号')" align="center" prop="teamCode" >
           <template slot-scope="scope">
                 <el-button              
                   type="text"
@@ -90,14 +90,14 @@
                 >{{scope.row.teamCode}}</el-button>
           </template>
       </el-table-column>
-      <el-table-column label="班组名称" align="center" prop="teamName" />
-      <el-table-column label="班组类型" align="center" prop="calendarType">
+      <el-table-column :label="$t('mes.班组名称')" align="center" prop="teamName" />
+      <el-table-column :label="$t('mes.班组类型')" align="center" prop="calendarType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_calendar_type" :value="scope.row.calendarType"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -105,14 +105,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:cal:team:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:cal:team:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -130,27 +130,27 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="班组编号" prop="teamCode">
-              <el-input v-model="form.teamCode" placeholder="请输入班组编号" />
+            <el-form-item :label="$t('mes.班组编号')" prop="teamCode">
+              <el-input v-model="form.teamCode" :placeholder="$t('mes.请输入班组编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="3">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'" >               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="班组名称" prop="teamName">
-              <el-input v-model="form.teamName" placeholder="请输入班组名称" />
+            <el-form-item :label="$t('mes.班组名称')" prop="teamName">
+              <el-input v-model="form.teamName" :placeholder="$t('mes.请输入班组名称')" />
             </el-form-item>
           </el-col>
           <el-col :span="5">
-            <el-form-item label="班组类型" prop="calendarType">
-              <el-select v-model="form.calendarType" placeholder="请选择班组类型">
+            <el-form-item :label="$t('mes.班组类型')" prop="calendarType">
+              <el-select v-model="form.calendarType" :placeholder="$t('mes.请选择班组类型')">
                 <el-option
                   v-for="dict in dict.type.mes_calendar_type"
                   :key="dict.value"
@@ -163,18 +163,18 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>          
         </el-row>
       </el-form>
-      <el-divider v-if="form.teamId !=null" content-position="center">项目组成员</el-divider>
+      <el-divider v-if="form.teamId !=null" content-position="center">{{ this.$t('mes.项目组成员') }}</el-divider>
       <Teammember v-if="form.teamId !=null" :optType="optType" :teamId="form.teamId"></Teammember>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-else>{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -224,13 +224,13 @@ export default {
       // 表单校验
       rules: {
         teamCode: [
-          { required: true, message: "班组编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.班组编号不能为空'), trigger: "blur" }
         ],
         teamName: [
-          { required: true, message: "班组名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.班组名称不能为空'), trigger: "blur" }
         ],
         calendarType:[
-          { required: true, message: "清选择班组类型", trigger: "blur" }
+          { required: true, message: this.$t('mes.清选择班组类型'), trigger: "blur" }
         ]
       }
     };
@@ -292,7 +292,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加班组";
+      this.title = this.$t('mes.添加班组');
       this.optType = "add";
     },
         // 查询明细按钮操作
@@ -302,7 +302,7 @@ export default {
       getTeam(teamId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看班组";
+        this.title = this.$t('mes.查看班组');
         this.optType = "view";
       });
     },
@@ -313,7 +313,7 @@ export default {
       getTeam(teamId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改班组";
+        this.title = this.$t('mes.修改班组');
         this.optType = "edit";
       });
     },
@@ -323,13 +323,13 @@ export default {
         if (valid) {
           if (this.form.teamId != null) {
             updateTeam(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addTeam(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -340,11 +340,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const teamIds = row.teamId || this.ids;
-      this.$modal.confirm('是否确认删除班组编号为"' + teamIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除班组编号为{v}的数据项？', { v: teamIds })).then(function() {
         return delTeam(teamIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

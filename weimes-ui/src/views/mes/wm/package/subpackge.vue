@@ -9,7 +9,7 @@
             size="mini"
             @click="handleAdd"
             v-hasPermi="['mes:wm:package:add']"
-          >新增</el-button>
+          >{{ this.$t('common.add') }}</el-button>
         </el-col>
         <el-col :span="1.5">
           <el-button
@@ -20,30 +20,30 @@
             :disabled="multiple"
             @click="handleDelete"
             v-hasPermi="['mes:wm:package:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </el-col>
         <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
       </el-row>
       <PackageSelectSingle ref="packageSelect" @onSelected="onPackageSelected"></PackageSelectSingle>
       <el-table v-loading="loading" :data="packageList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="装箱单编号" width="150px" align="center" prop="packageCode" />
-        <el-table-column label="装箱日期" align="center" prop="packageDate" width="120">
+        <el-table-column :label="$t('mes.装箱单编号')" width="150px" align="center" prop="packageCode" />
+        <el-table-column :label="$t('mes.装箱日期')" align="center" prop="packageDate" width="120">
           <template slot-scope="scope">
             <span>{{ parseTime(scope.row.packageDate, '{y}-{m}-{d}') }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="销售订单编号" width="100px" align="center" prop="soCode" />
-        <el-table-column label="客户编码" align="center" prop="clientCode" />
-        <el-table-column label="客户名称" width="120px" align="center" prop="clientName" :show-overflow-tooltip="true"/>
-        <el-table-column label="箱长度" align="center" prop="packageLength" />
-        <el-table-column label="箱宽度" align="center" prop="packageWidth" />
-        <el-table-column label="箱高度" align="center" prop="packageHeight" />
-        <el-table-column label="尺寸单位" align="center" prop="sizeUnit" />
-        <el-table-column label="净重" align="center" prop="netWeight" />
-        <el-table-column label="毛重" align="center" prop="crossWeight" />
-        <el-table-column label="重量单位" align="center" prop="weightUnit" />
-        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <el-table-column :label="$t('mes.销售订单编号')" width="100px" align="center" prop="soCode" />
+        <el-table-column :label="$t('lims.客户编码')" align="center" prop="clientCode" />
+        <el-table-column :label="$t('lims.客户名称')" width="120px" align="center" prop="clientName" :show-overflow-tooltip="true"/>
+        <el-table-column :label="$t('mes.箱长度')" align="center" prop="packageLength" />
+        <el-table-column :label="$t('mes.箱宽度')" align="center" prop="packageWidth" />
+        <el-table-column :label="$t('mes.箱高度')" align="center" prop="packageHeight" />
+        <el-table-column :label="$t('mes.尺寸单位')" align="center" prop="sizeUnit" />
+        <el-table-column :label="$t('mes.净重')" align="center" prop="netWeight" />
+        <el-table-column :label="$t('mes.毛重')" align="center" prop="crossWeight" />
+        <el-table-column :label="$t('mes.重量单位')" align="center" prop="weightUnit" />
+        <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -52,7 +52,7 @@
               @click="handleDelete(scope.row)"
               v-hasPermi="['mes:wm:package:remove']"
               v-if="optType !='view'"
-            >删除</el-button>
+            >{{ this.$t('common.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -135,7 +135,7 @@
         // 表单校验
         rules: {
           packageCode: [
-            { required: true, message: "箱不能为空", trigger: "blur" }
+            { required: true, message: this.$t('mes.箱不能为空'), trigger: "blur" }
           ]
         }
       };
@@ -189,18 +189,18 @@
             parentId: this.parentId
         }
         addSubPackage(subpackage).then(response => {
-            this.$modal.msgSuccess("添加成功");
+            this.$modal.msgSuccess(this.$t('mes.添加成功'));
             this.getList();
         });
       },
       /** 删除按钮操作 */
       handleDelete(row) {
         const packageIds = row.packageId || this.ids;
-        this.$modal.confirm('是否确认删除装箱单编号为"' + packageIds + '"的数据项？').then(function() {
+        this.$modal.confirm(this.$t('mes.是否确认删除装箱单编号为{v}的数据项？', { v: packageIds })).then(function() {
           return delPackage(packageIds);
         }).then(() => {
           this.getList();
-          this.$modal.msgSuccess("删除成功");
+          this.$modal.msgSuccess(this.$t('system.删除成功'));
         }).catch(() => {});
       }
     }

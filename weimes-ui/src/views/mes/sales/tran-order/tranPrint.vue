@@ -1,6 +1,6 @@
 <template>
   <div class="receipt-order-print" ref="receiptOrderPrintRef" hidden="hidden">
-    <div class="title">送货单</div>
+    <div class="title">{{ this.$t('mes.送货单') }}</div>
     <div class="summary">
       <div class="col1">送货单号: {{ row.tranOrderCode }}</div>
       <div class="col1"></div>
@@ -9,14 +9,14 @@
     </div>
     <table class="common-table">
       <tr>
-        <th>序号</th>
-        <th>订单编码</th>
-        <th>品名规格</th>
-        <th>物料编码</th>
-        <th>单位</th>
-        <th>数量</th>
-        <th>金额</th>
-        <th>备注</th>
+        <th>{{ this.$t('system.序号') }}</th>
+        <th>{{ this.$t('mes.订单编码') }}</th>
+        <th>{{ this.$t('mes.品名规格') }}</th>
+        <th>{{ this.$t('mes.物料编码') }}</th>
+        <th>{{ this.$t('lims.单位') }}</th>
+        <th>{{ this.$t('lims.数量') }}</th>
+        <th>{{ this.$t('mes.金额') }}</th>
+        <th>{{ this.$t('system.备注') }}</th>
       </tr>
       <tr v-for="(it,index) in row.tranOrderLineList " align="center">
         <td>{{ index+1 }}</td>
@@ -31,7 +31,7 @@
         <td>{{ it.remark || "" }}</td>
       </tr>
       <tr>
-        <td>合计</td>
+        <td>{{ this.$t('mes.合计') }}</td>
         <td></td>
         <td></td>
         <td></td>

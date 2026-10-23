@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:pro:process:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -20,7 +20,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:pro:process:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -31,7 +31,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:pro:process:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -41,19 +41,19 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:pro:process:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="processcontentList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="顺序编号" align="center" prop="orderNum" />
-      <el-table-column label="步骤说明" width="400px" align="center" prop="contentText" :show-overflow-tooltip="true"/>
-      <el-table-column label="辅助设备" align="center" prop="device" :show-overflow-tooltip="true"/>
-      <el-table-column label="辅助材料" align="center" prop="material" :show-overflow-tooltip="true"/>
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作" width="100px" v-if="optType !='view'" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.顺序编号')" align="center" prop="orderNum" />
+      <el-table-column :label="$t('mes.步骤说明')" width="400px" align="center" prop="contentText" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('mes.辅助设备')" align="center" prop="device" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('mes.辅助材料')" align="center" prop="material" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('common.operation')" width="100px" v-if="optType !='view'" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -61,14 +61,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:pro:process:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:pro:process:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -86,46 +86,46 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row >
             <el-col :span="12">
-                <el-form-item label="顺序编号" prop="orderNum">
-                    <el-input-number :min="1" v-model="form.orderNum" placeholder="请输入顺序编号" />
+                <el-form-item :label="$t('mes.顺序编号')" prop="orderNum">
+                    <el-input-number :min="1" v-model="form.orderNum" :placeholder="$t('mes.请输入顺序编号')" />
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="材料URL" prop="docUrl">
-                    <el-input v-model="form.docUrl" placeholder="请输入材料URL" />
+                <el-form-item :label="$t('mes.材料URL')" prop="docUrl">
+                    <el-input v-model="form.docUrl" :placeholder="$t('mes.请输入材料URL')" />
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="12">
-                <el-form-item label="辅助设备" prop="device">
-                    <el-input v-model="form.device" placeholder="请输入辅助设备" />
+                <el-form-item :label="$t('mes.辅助设备')" prop="device">
+                    <el-input v-model="form.device" :placeholder="$t('mes.请输入辅助设备')" />
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="辅助材料" prop="material">
-                    <el-input v-model="form.material" placeholder="请输入辅助材料" />
-                </el-form-item>
-            </el-col>
-        </el-row>
-        <el-row>
-            <el-col :span="24">
-                <el-form-item label="步骤说明" prop="contentText">
-                    <el-input v-model="form.contentText" type="textarea" placeholder="请输入内容" />
+                <el-form-item :label="$t('mes.辅助材料')" prop="material">
+                    <el-input v-model="form.material" :placeholder="$t('mes.请输入辅助材料')" />
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="24">
-                <el-form-item label="备注" prop="remark">
-                    <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+                <el-form-item :label="$t('mes.步骤说明')" prop="contentText">
+                    <el-input v-model="form.contentText" type="textarea" :placeholder="$t('common.inputContent')" />
+                </el-form-item>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="24">
+                <el-form-item :label="$t('system.备注')" prop="remark">
+                    <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
                 </el-form-item>
             </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -172,7 +172,7 @@ export default {
       // 表单校验
       rules: {
         processId: [
-          { required: true, message: "工序不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.工序不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -237,7 +237,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加操作步骤";
+      this.title = this.$t('mes.添加操作步骤');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -246,7 +246,7 @@ export default {
       getProcesscontent(contentId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改操作步骤";
+        this.title = this.$t('mes.修改操作步骤');
       });
     },
     /** 提交按钮 */
@@ -255,13 +255,13 @@ export default {
         if (valid) {
           if (this.form.contentId != null) {
             updateProcesscontent(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addProcesscontent(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -272,11 +272,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const contentIds = row.contentId || this.ids;
-      this.$modal.confirm('是否确认删除操作步骤？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除操作步骤？')).then(function() {
         return delProcesscontent(contentIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

@@ -1,19 +1,19 @@
 <template>
   <div class="top-right-btn">
     <el-row>
-      <el-tooltip class="item" effect="dark" :content="showSearch ? '隐藏搜索' : '显示搜索'" placement="top">
+      <el-tooltip class="item" effect="dark" :content="showSearch ? this.$t('common.hideSearch') : this.$t('common.showSearch')" placement="top">
         <el-button size="mini" circle icon="el-icon-search" @click="toggleSearch()" />
       </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="刷新" placement="top">
+      <el-tooltip class="item" effect="dark" :content="$t('common.refresh')" placement="top">
         <el-button size="mini" circle icon="el-icon-refresh" @click="refresh()" />
       </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="显隐列" placement="top" v-if="columns">
+      <el-tooltip class="item" effect="dark" :content="$t('common.showHideColumns')" placement="top" v-if="columns">
         <el-button size="mini" circle icon="el-icon-menu" @click="showColumn()" />
       </el-tooltip>
     </el-row>
     <el-dialog :title="title" :visible.sync="open" append-to-body>
       <el-transfer
-        :titles="['显示', '隐藏']"
+        :titles="[this.$t('common.show'), this.$t('common.hide')]"
         v-model="value"
         :data="columns"
         @change="dataChange"
@@ -28,11 +28,15 @@ export default {
     return {
       // 显隐数据
       value: [],
-      // 弹出层标题
-      title: "显示/隐藏",
       // 是否显示弹出层
       open: false,
     };
+  },
+  computed: {
+    // 弹出层标题
+    title() {
+      return this.$t('common.showHide');
+    }
   },
   props: {
     showSearch: {

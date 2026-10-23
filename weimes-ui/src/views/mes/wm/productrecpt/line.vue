@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:productrecpt:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -21,7 +21,7 @@
           @click="handleUpdate"
           v-if="optType != 'view'"
           v-hasPermi="['mes:wm:productrecpt:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -33,23 +33,23 @@
           @click="handleDelete"
           v-if="optType != 'view'"
           v-hasPermi="['mes:wm:productrecpt:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>     
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="productrecptlineList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="产品物料编码" width="120px" align="center" prop="itemCode" />
-      <el-table-column label="产品物料名称" width="150px" align="center" prop="itemName" :show-overflow-tooltip="true"/>
-      <el-table-column label="规格型号" width="120px" align="center" prop="specification" :show-overflow-tooltip="true"/>
-      <el-table-column label="单位" align="center" prop="unitOfMeasure" />
-      <el-table-column label="入库数量" align="center" prop="quantityRecived" />
-      <el-table-column label="批次号" align="center" prop="batchCode" />
-      <el-table-column label="仓库名称" align="center" prop="warehouseName" />
-      <el-table-column label="库区名称" align="center" prop="locationName" />
-      <el-table-column label="库位名称" align="center" prop="areaName" />
-      <el-table-column label="操作" align="center"  class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.产品物料编码')" width="120px" align="center" prop="itemCode" />
+      <el-table-column :label="$t('mes.产品物料名称')" width="150px" align="center" prop="itemName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('lims.规格型号')" width="120px" align="center" prop="specification" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure" />
+      <el-table-column :label="$t('lims.入库数量')" align="center" prop="quantityRecived" />
+      <el-table-column :label="$t('lims.批次号')" align="center" prop="batchCode" />
+      <el-table-column :label="$t('mes.仓库名称')" align="center" prop="warehouseName" />
+      <el-table-column :label="$t('mes.库区名称')" align="center" prop="locationName" />
+      <el-table-column :label="$t('mes.库位名称')" align="center" prop="areaName" />
+      <el-table-column :label="$t('common.operation')" align="center"  class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -58,7 +58,7 @@
             @click="handleUpdate(scope.row)"
             v-if="optType != 'view'"
             v-hasPermi="['mes:wm:productrecpt:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -66,7 +66,7 @@
             @click="handleDelete(scope.row)"
             v-if="optType != 'view'"
             v-hasPermi="['mes:wm:productrecpt:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -84,44 +84,44 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="产品物料编码" prop="itemCode">
-              <el-input v-model="form.itemCode" placeholder="请输入产品物料编码" >
+            <el-form-item :label="$t('mes.产品物料编码')" prop="itemCode">
+              <el-input v-model="form.itemCode" :placeholder="$t('mes.请输入产品物料编码')" >
                 <el-button slot="append" @click="handleSelectStock" icon="el-icon-search"></el-button>
               </el-input>
               <StockSelect ref="stockSelect" :workorderId="workorderId" :itemId="itemId" warehouseCode="XBK_VIRTUAL" @onSelected="onStockSelected"></StockSelect>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="产品物料名称" prop="itemName">
-              <el-input v-model="form.itemName" placeholder="请输入产品物料名称" />
+            <el-form-item :label="$t('mes.产品物料名称')" prop="itemName">
+              <el-input v-model="form.itemName" :placeholder="$t('mes.请输入产品物料名称')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="单位" prop="unitOfMeasure">
-              <el-input v-model="form.unitOfMeasure" placeholder="请输入单位" />
+            <el-form-item :label="$t('lims.单位')" prop="unitOfMeasure">
+              <el-input v-model="form.unitOfMeasure" :placeholder="$t('lims.请输入单位')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="规格型号" prop="specification">
-              <el-input v-model="form.specification" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('lims.规格型号')" prop="specification">
+              <el-input v-model="form.specification" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="入库数量" prop="quantityRecived">
-              <el-input-number :min="0" :max="form.quantityMax" v-model="form.quantityRecived" placeholder="请输入入库数量" />
+            <el-form-item :label="$t('lims.入库数量')" prop="quantityRecived">
+              <el-input-number :min="0" :max="form.quantityMax" v-model="form.quantityRecived" :placeholder="$t('mes.请输入入库数量')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="批次号" prop="batchCode">
-              <el-input v-model="form.batchCode" placeholder="请输入批次号" />
+            <el-form-item :label="$t('lims.批次号')" prop="batchCode">
+              <el-input v-model="form.batchCode" :placeholder="$t('lims.请输入批次号')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="入库仓库" prop="warehouseId">
+            <el-form-item :label="$t('mes.入库仓库')" prop="warehouseId">
               <el-cascader v-model="warehouseInfo"
                 :options="warehouseOptions"
                 :props="warehouseProps"
@@ -133,15 +133,15 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -218,13 +218,13 @@ export default {
       // 表单校验
       rules: {
         itemId: [
-          { required: true, message: "产品不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.产品不能为空'), trigger: "blur" }
         ],
         warehouseId: [
-          { required: true, message: "入库仓库不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.入库仓库不能为空'), trigger: "blur" }
         ],
         quantityRecived: [
-          { required: true, message: "入库数量不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.入库数量不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -319,7 +319,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加产品入库记录行";
+      this.title = this.$t('mes.添加产品入库记录行');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -328,7 +328,7 @@ export default {
       getProductrecptline(lineId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改产品入库记录行";
+        this.title = this.$t('mes.修改产品入库记录行');
       });
     },
     /** 提交按钮 */
@@ -337,13 +337,13 @@ export default {
         if (valid) {
           if (this.form.lineId != null) {
             updateProductrecptline(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addProductrecptline(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -354,11 +354,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const lineIds = row.lineId || this.ids;
-      this.$modal.confirm('是否确认删除产品入库记录行编号为"' + lineIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除产品入库记录行编号为{v}的数据项？', { v: lineIds })).then(function() {
         return delProductrecptline(lineIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

@@ -10,7 +10,7 @@
           v-if="optType !='view'"
           @click="handleAdd"
           v-hasPermi="['mes:dv:checkplan:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>     
       <el-col :span="1.5">
         <el-button
@@ -22,19 +22,19 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:dv:checkplan:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
     <MachinerySelect ref="machinerySelect" @onSelected="onMachineryAdd"></MachinerySelect>
     <el-table v-loading="loading" :data="checkmachineryList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="设备编码" align="center" prop="machineryCode" />
-      <el-table-column label="设备名称" align="center" prop="machineryName" />
-      <el-table-column label="品牌" align="center" prop="machineryBrand" />
-      <el-table-column label="规格型号" align="center" prop="machinerySpec" />
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.设备编码')" align="center" prop="machineryCode" />
+      <el-table-column :label="$t('mes.设备名称')" align="center" prop="machineryName" />
+      <el-table-column :label="$t('mes.品牌')" align="center" prop="machineryBrand" />
+      <el-table-column :label="$t('lims.规格型号')" align="center" prop="machinerySpec" />
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -43,7 +43,7 @@
             v-if="optType !='view'"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:dv:checkplan:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -142,11 +142,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const recordIds = row.recordId || this.ids;
-      this.$modal.confirm('是否确认删除点检设备编号为"' + recordIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除点检设备编号为{v}的数据项？', { v: recordIds })).then(function() {
         return delCheckmachinery(recordIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     }
   }

@@ -9,24 +9,24 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:pro:workorder:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="workorderbomList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="BOM物料编号" width="120" align="center" prop="itemCode" />
-      <el-table-column label="BOM物料名称" width="200" align="center" prop="itemName" :show-overflow-tooltip="true"/>
-      <el-table-column label="规格型号" align="center" prop="itemSpc" :show-overflow-tooltip="true"/>
-      <el-table-column label="单位" align="center" prop="unitOfMeasure" />
-      <el-table-column label="物料/产品" align="center" prop="itemOrProduct" >
+      <el-table-column :label="$t('mes.BOM物料编号')" width="120" align="center" prop="itemCode" />
+      <el-table-column :label="$t('mes.BOM物料名称')" width="200" align="center" prop="itemName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('lims.规格型号')" align="center" prop="itemSpc" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure" />
+      <el-table-column :label="$t('mes.物料/产品')" align="center" prop="itemOrProduct" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_item_product" :value="scope.row.itemOrProduct"/>
         </template>
       </el-table-column>
-      <el-table-column label="预计使用量" align="center" prop="quantity" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.预计使用量')" align="center" prop="quantity" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -35,7 +35,7 @@
             v-if="workorder.status == 'PREPARE'"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:pro:workorder:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
 
           <el-button
             size="mini"
@@ -44,7 +44,7 @@
             @click="handleAddSubWorkorder(scope.row)"
             v-if="workorder.status == 'CONFIRMED' && scope.row.itemOrProduct=='PRODUCT' && workorder.workorderType =='SELF'"
             v-hasPermi="['mes:pro:workorder:edit']"
-          >生成工单</el-button>
+          >{{ this.$t('mes.生成工单') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -59,16 +59,16 @@
     <!-- 添加或修改生产工单BOM组成对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="预计使用量" prop="quantity">
-          <el-input v-model="form.quantity" placeholder="请输入预计使用量" />
+        <el-form-item :label="$t('mes.预计使用量')" prop="quantity">
+          <el-input v-model="form.quantity" :placeholder="$t('mes.请输入预计使用量')" />
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('system.备注')" prop="remark">
+          <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -118,25 +118,25 @@ export default {
       // 表单校验
       rules: {
         workorderId: [
-          { required: true, message: "生产工单ID不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.生产工单ID不能为空'), trigger: "blur" }
         ],
         itemId: [
-          { required: true, message: "BOM物料ID不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.BOM物料ID不能为空'), trigger: "blur" }
         ],
         itemCode: [
-          { required: true, message: "BOM物料编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.BOM物料编号不能为空'), trigger: "blur" }
         ],
         itemName: [
-          { required: true, message: "BOM物料名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.BOM物料名称不能为空'), trigger: "blur" }
         ],
         unitOfMeasure: [
-          { required: true, message: "单位不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.单位不能为空'), trigger: "blur" }
         ],
         itemOrProduct: [
-          { required: true, message: "物料产品标识不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.物料产品标识不能为空'), trigger: "blur" }
         ],
         quantity: [
-          { required: true, message: "预计使用量不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.预计使用量不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -211,7 +211,7 @@ export default {
       getWorkorderbom(lineId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改生产工单BOM组成";
+        this.title = this.$t('mes.修改生产工单BOM组成');
       });
     },
     /** 提交按钮 */
@@ -220,13 +220,13 @@ export default {
         if (valid) {
           if (this.form.lineId != null) {
             updateWorkorderbom(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addWorkorderbom(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });

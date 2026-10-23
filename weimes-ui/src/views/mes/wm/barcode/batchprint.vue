@@ -1,5 +1,5 @@
 <template>
-    <el-dialog title="批量打印"
+    <el-dialog :title="$t('mes.批量打印')"
       v-if="showFlag"
       :visible.sync="showFlag"
       :modal= false
@@ -7,8 +7,8 @@
       center
       >
       <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-        <el-form-item label="条码类型" prop="barcodeType">
-            <el-select v-model="queryParams.barcodeType" placeholder="请选择条码类型">
+        <el-form-item :label="$t('mes.条码类型')" prop="barcodeType">
+            <el-select v-model="queryParams.barcodeType" :placeholder="$t('mes.请选择条码类型')">
             <el-option
                 v-for="dict in dict.type.mes_barcode_type"
                 :key="dict.value"
@@ -18,26 +18,26 @@
             </el-select>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
         </el-form-item>
-        <el-form-item label="打印模板" prop="bussinessCode">
+        <el-form-item :label="$t('mes.打印模板')" prop="bussinessCode">
             <el-input
             v-model="queryParams.bussinessCode"
-            placeholder="请选择打印模板"
+            :placeholder="$t('mes.请选择打印模板')"
             clearable
             @keyup.enter.native="handleQuery"
             />
         </el-form-item>
         <el-form-item>
-            <el-button type="success" icon="el-icon-printer" size="mini" @click="handlePrint">打印</el-button>
+            <el-button type="success" icon="el-icon-printer" size="mini" @click="handlePrint">{{ this.$t('common.print') }}</el-button>
         </el-form-item>
 
         </el-form>
 
         <el-table v-loading="loading" :data="barcodeList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />     
-          <el-table-column label="条码" align="center">
+          <el-table-column :label="$t('mes.条码')" align="center">
             <template slot-scope="scope">
                 <el-image @click="handleView(scope.row)" class="barcodeClass" fit="scale-down" :src="scope.row.barcodeUrl">
                   <div slot="error" class="image-slot">
@@ -46,25 +46,25 @@
                 </el-image>
             </template>
           </el-table-column> 
-          <el-table-column label="条码格式" align="center" prop="barcodeFormart">
+          <el-table-column :label="$t('mes.条码格式')" align="center" prop="barcodeFormart">
             <template slot-scope="scope">
               <dict-tag :options="dict.type.mes_barcode_formart" :value="scope.row.barcodeFormart"/>
             </template>
           </el-table-column>          
-          <el-table-column label="条码类型" align="center" prop="barcodeType">
+          <el-table-column :label="$t('mes.条码类型')" align="center" prop="barcodeType">
             <template slot-scope="scope">
               <dict-tag :options="dict.type.mes_barcode_type" :value="scope.row.barcodeType"/>
             </template>
           </el-table-column>
-          <el-table-column label="条码内容" align="center" prop="barcodeContent" />
-          <el-table-column label="业务编码" align="center" prop="bussinessCode" />
-          <el-table-column label="业务名称" align="center" prop="bussinessName" />
-          <el-table-column label="是否生效" align="center" prop="enableFlag" >
+          <el-table-column :label="$t('mes.条码内容')" align="center" prop="barcodeContent" />
+          <el-table-column :label="$t('mes.业务编码')" align="center" prop="bussinessCode" />
+          <el-table-column :label="$t('mes.业务名称')" align="center" prop="bussinessName" />
+          <el-table-column :label="$t('mes.是否生效')" align="center" prop="enableFlag" >
             <template slot-scope="scope">
               <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
             </template>
           </el-table-column>        
-          <el-table-column label="生成时间" align="center" prop="createTime" >
+          <el-table-column :label="$t('mes.生成时间')" align="center" prop="createTime" >
             <template slot-scope="scope">
               <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d} {h}:{i}:{s}') }}</span>
             </template>
@@ -80,7 +80,7 @@
         />
       
       <div slot="footer" class="dialog-footer">
-        <el-button @click="showFlag=false">取 消</el-button>
+        <el-button @click="showFlag=false">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </template>

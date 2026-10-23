@@ -1,25 +1,25 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="组成编码" prop="partCode">
+      <el-form-item :label="$t('system.组成编码')" prop="partCode">
         <el-input
           v-model="queryParams.partCode"
-          placeholder="请输入组成编码"
+          :placeholder="$t('system.请输入组成编码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="组成名称" prop="partName">
+      <el-form-item :label="$t('system.组成名称')" prop="partName">
         <el-input
           v-model="queryParams.partName"
-          placeholder="请输入组成名称"
+          :placeholder="$t('system.请输入组成名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>      
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -32,7 +32,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:autocode:part:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -43,7 +43,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['system:autocode:part:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -54,7 +54,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:autocode:part:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -63,29 +63,29 @@
           icon="el-icon-close"
           size="mini"
           @click="handleClose"
-        >关闭</el-button>
+        >{{ this.$t('system.关闭') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="partList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="组成编码" align="center" prop="partCode" />
-      <el-table-column label="组成名称" align="center" prop="partName"/>
-      <el-table-column label="分段序号" align="center" prop="partIndex" />
-      <el-table-column label="分段类型" align="center" prop="partType" >
+      <el-table-column :label="$t('system.组成编码')" align="center" prop="partCode" />
+      <el-table-column :label="$t('system.组成名称')" align="center" prop="partName"/>
+      <el-table-column :label="$t('system.分段序号')" align="center" prop="partIndex" />
+      <el-table-column :label="$t('system.分段类型')" align="center" prop="partType" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_autocode_parttype" :value="scope.row.partType"/>
         </template>
       </el-table-column>
-      <el-table-column label="分段长度" align="center" prop="partLength" />
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column :label="$t('system.分段长度')" align="center" prop="partLength" />
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" :show-overflow-tooltip="true" />
+      <el-table-column :label="$t('system.创建时间')" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -93,14 +93,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:autocode:part:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:autocode:part:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -118,31 +118,31 @@
       <el-form ref="form" :model="form" :inline="true" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="分段编码" prop="partCode">
-              <el-input v-model="form.partCode" placeholder="请输入分段编码" />
+            <el-form-item :label="$t('system.分段编码')" prop="partCode">
+              <el-input v-model="form.partCode" :placeholder="$t('system.请输入分段编码')" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="分段名称" prop="partName">
-              <el-input v-model="form.partName" placeholder="请输入分段名称" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="分段序号" prop="partIndex">
-              <el-input-number v-model="form.partIndex" placeholder="请输入分段序号" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="分段长度" prop="partLength">
-              <el-input-number v-model="form.partLength" placeholder="请输入分段长度" />
+            <el-form-item :label="$t('system.分段名称')" prop="partName">
+              <el-input v-model="form.partName" :placeholder="$t('system.请输入分段名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="分段类型" prop="partType">
+            <el-form-item :label="$t('system.分段序号')" prop="partIndex">
+              <el-input-number v-model="form.partIndex" :placeholder="$t('system.请输入分段序号')" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item :label="$t('system.分段长度')" prop="partLength">
+              <el-input-number v-model="form.partLength" :placeholder="$t('system.请输入分段长度')" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item :label="$t('system.分段类型')" prop="partType">
               <el-select v-model="form.partType">
                 <el-option
                   v-for="item in dict.type.sys_autocode_parttype"
@@ -154,41 +154,41 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="日期时间格式" prop="dateFormat" v-if="form.partType=='NOWDATE'">
-              <el-input v-model="form.dateFormat" placeholder="请输入日期时间格式" />
+            <el-form-item :label="$t('system.日期时间格式')" prop="dateFormat" v-if="form.partType=='NOWDATE'">
+              <el-input v-model="form.dateFormat" :placeholder="$t('system.请输入日期时间格式')" />
             </el-form-item>
 
-            <el-form-item label="输入字符" prop="inputCharacter" v-if="form.partType=='INPUTCHAR'">
-              <el-input v-model="form.inputCharacter" placeholder="请填写输入字符" />
+            <el-form-item :label="$t('system.输入字符')" prop="inputCharacter" v-if="form.partType=='INPUTCHAR'">
+              <el-input v-model="form.inputCharacter" :placeholder="$t('system.请填写输入字符')" />
             </el-form-item>
 
-            <el-form-item label="固定字符" prop="fixCharacter" v-if="form.partType=='FIXCHAR'">
-              <el-input v-model="form.fixCharacter" placeholder="请填写固定字符" />
+            <el-form-item :label="$t('system.固定字符')" prop="fixCharacter" v-if="form.partType=='FIXCHAR'">
+              <el-input v-model="form.fixCharacter" :placeholder="$t('system.请填写固定字符')" />
             </el-form-item>
 
-            <el-form-item label="起始流水号" prop="seriaStartNo" v-if="form.partType=='SERIALNO'">
-              <el-input-number v-model="form.seriaStartNo" placeholder="请填写起始流水号" />
+            <el-form-item :label="$t('system.起始流水号')" prop="seriaStartNo" v-if="form.partType=='SERIALNO'">
+              <el-input-number v-model="form.seriaStartNo" :placeholder="$t('system.请填写起始流水号')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="流水号步长" prop="seriaStep" v-if="form.partType=='SERIALNO'">
-              <el-input-number v-model="form.seriaStep" placeholder="请填写流水号步长" />
+            <el-form-item :label="$t('system.流水号步长')" prop="seriaStep" v-if="form.partType=='SERIALNO'">
+              <el-input-number v-model="form.seriaStep" :placeholder="$t('system.请填写流水号步长')" />
             </el-form-item>
           </el-col>
           <el-col :span= "12">
-            <el-form-item label="是否循环" prop="cycleFlag" v-if="form.partType=='SERIALNO'">
+            <el-form-item :label="$t('system.是否循环')" prop="cycleFlag" v-if="form.partType=='SERIALNO'">
               <el-radio-group v-model="form.cycleFlag">
-                    <el-radio label="Y">是</el-radio>
-                    <el-radio label="N">否</el-radio>
+                    <el-radio label="Y">{{ this.$t('system.是') }}</el-radio>
+                    <el-radio label="N">{{ this.$t('system.否') }}</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span= "12">
-            <el-form-item label="循环方式" prop="cycleMethod" v-if="form.partType =='SERIALNO' && form.cycleFlag =='Y'">
+            <el-form-item :label="$t('system.循环方式')" prop="cycleMethod" v-if="form.partType =='SERIALNO' && form.cycleFlag =='Y'">
               <el-select v-model="form.cycleMethod">
                 <el-option
                   v-for="item in dict.type.sys_autocode_cyclemethod"
@@ -202,15 +202,15 @@
         </el-row>
         <el-row>
           <el-col>
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -257,13 +257,13 @@ export default {
       // 表单校验
       rules: {
         partCode: [
-          { required: true, message: "组成编码不能为空", trigger: "blur" }
+          { required: true, message: this.$t('system.组成编码不能为空'), trigger: "blur" }
         ],
         partName: [
-          { required: true, message: "组成名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('system.组成名称不能为空'), trigger: "blur" }
         ],
         partIndex: [
-          { required: true, message: "组成序号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('system.组成序号不能为空'), trigger: "blur" }
         ]
       }
     };
@@ -322,7 +322,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加规则组成";
+      this.title = this.$t('system.添加规则组成');
       this.form.ruleId = this.recentRuleId;
     },
     // 多选框选中数据
@@ -338,7 +338,7 @@ export default {
       getPart(partId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改规则组成";
+        this.title = this.$t('system.修改规则组成');
       });
     },
     /** 提交按钮 */
@@ -347,13 +347,13 @@ export default {
         if (valid) {
           if (this.form.partId != undefined) {
             updatePart(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addPart(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -364,11 +364,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const partIds = row.partId || this.ids;
-      this.$modal.confirm('是否确认删除规则组成ID为"' + partIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('system.是否确认删除规则组成ID为{v}的数据项？', { v: partIds })).then(function() {
         return delPart(partIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     }
   }

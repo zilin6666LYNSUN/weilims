@@ -1,13 +1,13 @@
 <template>
     <div class="app-container">
         <el-tabs type="border-card">
-            <el-tab-pane label="分类">
+            <el-tab-pane :label="$t('lims.分类')">
                 <CalendarTypeView></CalendarTypeView>
             </el-tab-pane>
-            <el-tab-pane label="班组">
+            <el-tab-pane :label="$t('mes.班组')">
                 <TeamView></TeamView>
             </el-tab-pane>
-            <el-tab-pane label="个人">
+            <el-tab-pane :label="$t('mes.个人')">
                 <UserView></UserView>
             </el-tab-pane>
         </el-tabs>

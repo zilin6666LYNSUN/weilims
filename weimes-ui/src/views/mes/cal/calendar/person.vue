@@ -3,10 +3,10 @@
           <el-container>
                   <el-header height="20px">
                         <el-form :model="form" size="small" :inline="true" label-width="100px">
-                              <el-form-item label="人员" prop="nickName">
+                              <el-form-item :label="$t('mes.人员')" prop="nickName">
                                     <el-input
                                     v-model="form.nickName"
-                                    placeholder="请选择查询的人员"
+                                    :placeholder="$t('mes.请选择查询的人员')"
                                     clearable
                                     readonly="readonly"
                                     >
@@ -30,8 +30,8 @@
                                                 <div class="lunar" :class="{ festival : isFestival(date, data) }">{{ solarDate2lunar(data.day) }}</div>
                                           </el-col>
                                           <el-col :span="6">
-                                                <el-tag v-if="holidayList.indexOf(data.day) ==-1" effect="dark">班</el-tag>
-                                                <el-tag v-else effect="dark" type="success">休</el-tag>
+                                                <el-tag v-if="holidayList.indexOf(data.day) ==-1" effect="dark">{{ this.$t('mes.班') }}</el-tag>
+                                                <el-tag v-else effect="dark" type="success">{{ this.$t('mes.休') }}</el-tag>
                                           </el-col>
                                     </el-row>
                                     <el-row v-for="calendarDay in calendarDayList " :key="calendarDay.theDay">

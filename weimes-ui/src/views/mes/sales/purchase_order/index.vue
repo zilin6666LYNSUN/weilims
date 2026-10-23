@@ -8,142 +8,142 @@
       v-show="showSearch"
       label-width="68px"
     >
-      <el-form-item label="单号" prop="poOrderNo">
+      <el-form-item :label="$t('mes.单号')" prop="poOrderNo">
         <el-input
           v-model="queryParams.poOrderNo"
-          placeholder="请输入单号"
+          :placeholder="$t('mes.请输入单号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="供应商编号" prop="vendorNo" label-width="100px">
+      <el-form-item :label="$t('mes.供应商编号')" prop="vendorNo" label-width="100px">
         <el-input
           v-model="queryParams.vendorNo"
-          placeholder="请输入供应商编号"
+          :placeholder="$t('mes.请输入供应商编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="供应商简称" prop="vendorName" label-width="100px">
+      <el-form-item :label="$t('mes.供应商简称')" prop="vendorName" label-width="100px">
         <el-input
           v-model="queryParams.vendorName"
-          placeholder="请输入供应商简称"
+          :placeholder="$t('mes.请输入供应商简称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="落单日期">
+      <el-form-item :label="$t('mes.落单日期')">
         <el-date-picker
           v-model="daterangePoOrderDate"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('system.开始日期')"
+          :end-placeholder="$t('system.结束日期')"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="采购员" prop="poOrderUser">
-        <el-select v-model="queryParams.poOrderUser" placeholder="请选择采购员">
+      <el-form-item :label="$t('mes.采购员')" prop="poOrderUser">
+        <el-select v-model="queryParams.poOrderUser" :placeholder="$t('mes.请选择采购员')">
         </el-select>
       </el-form-item>
-      <el-form-item label="送货地址" prop="tranAddress">
+      <el-form-item :label="$t('mes.送货地址')" prop="tranAddress">
         <el-input
           v-model="queryParams.tranAddress"
-          placeholder="请输入送货地址"
+          :placeholder="$t('mes.请输入送货地址')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="交货日期">
+      <el-form-item :label="$t('mes.交货日期')">
         <el-date-picker
           v-model="daterangeTranDate"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('system.开始日期')"
+          :end-placeholder="$t('system.结束日期')"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="备注" prop="remake">
+      <el-form-item :label="$t('system.备注')" prop="remake">
         <el-input
           v-model="queryParams.remake"
-          placeholder="请输入备注"
+          :placeholder="$t('lims.请输入备注')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="开票人" prop="billUser">
+      <el-form-item :label="$t('mes.开票人')" prop="billUser">
         <el-input
           v-model="queryParams.billUser"
-          placeholder="请输入开票人"
+          :placeholder="$t('mes.请输入开票人')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
+      <el-form-item :label="$t('system.状态')" prop="status">
         <el-select
           v-model="queryParams.status"
-          placeholder="请选择状态"
+          :placeholder="$t('system.请选择状态')"
           clearable
         >
-          <el-option label="请选择字典生成" value="" />
+          <el-option :label="$t('mes.请选择字典生成')" value="" />
         </el-select>
       </el-form-item>
-      <el-form-item label="送审日期">
+      <el-form-item :label="$t('mes.送审日期')">
         <el-date-picker
           v-model="daterangePartDate"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('system.开始日期')"
+          :end-placeholder="$t('system.结束日期')"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="送审人" prop="partUser">
+      <el-form-item :label="$t('mes.送审人')" prop="partUser">
         <el-input
           v-model="queryParams.partUser"
-          placeholder="请输入送审人"
+          :placeholder="$t('mes.请输入送审人')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="审核日期">
+      <el-form-item :label="$t('mes.审核日期')">
         <el-date-picker
           v-model="daterangeAuditDate"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('system.开始日期')"
+          :end-placeholder="$t('system.结束日期')"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="审核人" prop="auditUser">
+      <el-form-item :label="$t('mes.审核人')" prop="auditUser">
         <el-input
           v-model="queryParams.auditUser"
-          placeholder="请输入审核人"
+          :placeholder="$t('mes.请输入审核人')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="结单日期">
+      <el-form-item :label="$t('mes.结单日期')">
         <el-date-picker
           v-model="daterangeEndDate"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          :start-placeholder="$t('system.开始日期')"
+          :end-placeholder="$t('system.结束日期')"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="结单人" prop="endUser">
+      <el-form-item :label="$t('mes.结单人')" prop="endUser">
         <el-input
           v-model="queryParams.endUser"
-          placeholder="请输入结单人"
+          :placeholder="$t('mes.请输入结单人')"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -154,10 +154,10 @@
           icon="el-icon-search"
           size="mini"
           @click="handleQuery"
-          >搜索</el-button
+          >{{ this.$t('system.搜索') }}</el-button
         >
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery"
-          >重置</el-button
+          >{{ this.$t('common.reset') }}</el-button
         >
       </el-form-item>
     </el-form>
@@ -171,7 +171,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['purchase:purchase_order:add']"
-          >新增</el-button
+          >{{ this.$t('common.add') }}</el-button
         >
       </el-col>
       <el-col :span="1.5">
@@ -183,7 +183,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['purchase:purchase_order:edit']"
-          >修改</el-button
+          >{{ this.$t('system.修改') }}</el-button
         >
       </el-col>
       <el-col :span="1.5">
@@ -195,7 +195,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['purchase:purchase_order:remove']"
-          >删除</el-button
+          >{{ this.$t('common.delete') }}</el-button
         >
       </el-col>
       <el-col :span="1.5">
@@ -206,7 +206,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['purchase:purchase_order:export']"
-          >导出</el-button
+          >{{ this.$t('common.export') }}</el-button
         >
       </el-col>
       <right-toolbar
@@ -221,12 +221,12 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="更新时间" align="center" prop="id" />
-      <el-table-column label="单号" align="center" prop="poOrderNo" />
-      <el-table-column label="供应商编号" align="center" prop="vendorNo" />
-      <el-table-column label="供应商简称" align="center" prop="vendorName" />
+      <el-table-column :label="$t('mes.更新时间')" align="center" prop="id" />
+      <el-table-column :label="$t('mes.单号')" align="center" prop="poOrderNo" />
+      <el-table-column :label="$t('mes.供应商编号')" align="center" prop="vendorNo" />
+      <el-table-column :label="$t('mes.供应商简称')" align="center" prop="vendorName" />
       <el-table-column
-        label="下单日期"
+        :label="$t('mes.下单日期')"
         align="center"
         prop="poOrderDate"
         width="180"
@@ -236,15 +236,15 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="采购员"
+        :label="$t('mes.采购员')"
         align="center"
         prop="poOrderUser"
         width="180"
       >
       </el-table-column>
-      <el-table-column label="送货地址" align="center" prop="tranAddress" />
+      <el-table-column :label="$t('mes.送货地址')" align="center" prop="tranAddress" />
       <el-table-column
-        label="交货日期"
+        :label="$t('mes.交货日期')"
         align="center"
         prop="tranDate"
         width="180"
@@ -253,10 +253,10 @@
           <span>{{ parseTime(scope.row.tranDate, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remake" />
-      <el-table-column label="状态" align="center" prop="status" />
+      <el-table-column :label="$t('system.备注')" align="center" prop="remake" />
+      <el-table-column :label="$t('system.状态')" align="center" prop="status" />
       <el-table-column
-        label="送审日期"
+        :label="$t('mes.送审日期')"
         align="center"
         prop="partDate"
         width="180"
@@ -265,9 +265,9 @@
           <span>{{ parseTime(scope.row.partDate, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="送审人" align="center" prop="partUser" />
+      <el-table-column :label="$t('mes.送审人')" align="center" prop="partUser" />
       <el-table-column
-        label="审核日期"
+        :label="$t('mes.审核日期')"
         align="center"
         prop="auditDate"
         width="180"
@@ -276,9 +276,9 @@
           <span>{{ parseTime(scope.row.auditDate, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="审核人" align="center" prop="auditUser" />
+      <el-table-column :label="$t('mes.审核人')" align="center" prop="auditUser" />
       <el-table-column
-        label="结单日期"
+        :label="$t('mes.结单日期')"
         align="center"
         prop="endDate"
         width="180"
@@ -287,9 +287,9 @@
           <span>{{ parseTime(scope.row.endDate, "{y}-{m}-{d}") }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="结单人" align="center" prop="endUser" />
+      <el-table-column :label="$t('mes.结单人')" align="center" prop="endUser" />
       <el-table-column
-        label="操作"
+        :label="$t('common.operation')"
         align="center"
         class-name="small-padding fixed-width"
       >
@@ -300,7 +300,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['purchase:purchase_order:edit']"
-            >修改</el-button
+            >{{ this.$t('system.修改') }}</el-button
           >
           <el-button
             size="mini"
@@ -308,7 +308,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['purchase:purchase_order:remove']"
-            >删除</el-button
+            >{{ this.$t('common.delete') }}</el-button
           >
         </template>
       </el-table-column>
@@ -332,8 +332,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="4">
-            <el-form-item label="单号" prop="poOrderNo">
-              <el-input v-model="form.poOrderNo" placeholder="请输入单号" />
+            <el-form-item :label="$t('mes.单号')" prop="poOrderNo">
+              <el-input v-model="form.poOrderNo" :placeholder="$t('mes.请输入单号')" />
             </el-form-item>
           </el-col>
           <el-col :span="2">
@@ -341,67 +341,67 @@
               <el-switch
                 v-model="autoGenFlag"
                 active-color="#13ce66"
-                active-text="自动生成"
+                :active-text="$t('mes.自动生成')"
                 @change="handleAutoGenChange(autoGenFlag)"
               >
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="5">
-            <el-form-item label="下单日期" prop="poOrderDate">
+            <el-form-item :label="$t('mes.下单日期')" prop="poOrderDate">
               <el-date-picker
                 clearable
                 v-model="form.poOrderDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择下单日期"
+                :placeholder="$t('mes.请选择下单日期')"
               >
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="5">
-            <el-form-item label="交货日期" prop="tranDate">
+            <el-form-item :label="$t('mes.交货日期')" prop="tranDate">
               <el-date-picker
                 clearable
                 v-model="form.tranDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择交货日期"
+                :placeholder="$t('mes.请选择交货日期')"
               >
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="4">
-            <el-form-item label="采购部门" prop="poOrderDept">
-              <el-input v-model="form.poOrderDept" placeholder="请输入采购员" />
+            <el-form-item :label="$t('mes.采购部门')" prop="poOrderDept">
+              <el-input v-model="form.poOrderDept" :placeholder="$t('mes.请输入采购员')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
-            <el-form-item label="采购员" prop="poOrderUser">
-              <el-input v-model="form.poOrderUser" placeholder="请输入采购员" />
+            <el-form-item :label="$t('mes.采购员')" prop="poOrderUser">
+              <el-input v-model="form.poOrderUser" :placeholder="$t('mes.请输入采购员')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="4">
             <el-form-item
-              label="供应商编号"
+              :label="$t('mes.供应商编号')"
               prop="vendorNo"
               label-width="120px"
             >
               <el-input
                 v-model="form.vendorNo"
-                placeholder="供应商编号"
+                :placeholder="$t('mes.供应商编号')"
                 disabled
               />
             </el-form-item>
           </el-col>
           <el-col :span="4">
-            <el-form-item label="供应商" prop="vendorName">
+            <el-form-item :label="$t('lims.供应商')" prop="vendorName">
               <el-input
                 v-model="form.vendorName"
                 readonly="readonly"
-                placeholder="请选择供应商"
+                :placeholder="$t('mes.请选择供应商')"
               >
                 <el-button
                   slot="append"
@@ -413,10 +413,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="4">
-            <el-form-item label="结账方式" prop="payUp">
+            <el-form-item :label="$t('mes.结账方式')" prop="payUp">
               <el-select
                 v-model="queryParams.payUp"
-                placeholder="请选择结账方式"
+                :placeholder="$t('mes.请选择结账方式')"
               >
                 <el-option
                   v-for="dict in dict.type.pay_up_type"
@@ -428,22 +428,22 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="送货地址" prop="tranAddress">
+            <el-form-item :label="$t('mes.送货地址')" prop="tranAddress">
               <el-input
                 v-model="form.tranAddress"
-                placeholder="请输入送货地址"
+                :placeholder="$t('mes.请输入送货地址')"
               />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remake">
-              <el-input v-model="form.remake" placeholder="请输入备注" />
+            <el-form-item :label="$t('system.备注')" prop="remake">
+              <el-input v-model="form.remake" :placeholder="$t('lims.请输入备注')" />
             </el-form-item>
           </el-col>
         </el-row>
-        <el-divider content-position="center">采购订单列表信息</el-divider>
+        <el-divider content-position="center">{{ this.$t('mes.采购订单列表信息') }}</el-divider>
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
             <el-button
@@ -451,7 +451,7 @@
               icon="el-icon-plus"
               size="mini"
               @click="handleAddPurchaseOrderLine"
-              >添加</el-button
+              >{{ this.$t('lims.添加') }}</el-button
             >
           </el-col>
           <el-col :span="1.5">
@@ -460,7 +460,7 @@
               icon="el-icon-delete"
               size="mini"
               @click="handleDeletePurchaseOrderLine"
-              >删除</el-button
+              >{{ this.$t('common.delete') }}</el-button
             >
           </el-col>
         </el-row>
@@ -472,23 +472,23 @@
         >
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column
-            label="序号"
+            :label="$t('system.序号')"
             align="center"
             prop="index"
             width="50"
           />
-          <el-table-column label="明细单号" prop="poOrderLineNo" width="150">
+          <el-table-column :label="$t('mes.明细单号')" prop="poOrderLineNo" width="150">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.poOrderLineNo"
-                placeholder="请输入明细单号"
+                :placeholder="$t('mes.请输入明细单号')"
               />
             </template>
           </el-table-column>
 
-          <el-table-column label="产品编码" prop="productNo" width="200">
+          <el-table-column :label="$t('mes.产品编码')" prop="productNo" width="200">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.productNo" placeholder="请选择产品">
+              <el-input v-model="scope.row.productNo" :placeholder="$t('mes.请选择产品')">
                 <el-button
                   slot="append"
                   @click="handleSelectProduct"
@@ -499,26 +499,26 @@
               </ItemSelect>
             </template>
           </el-table-column>
-          <el-table-column label="产品名称" prop="productName" width="150">
+          <el-table-column :label="$t('lims.产品名称')" prop="productName" width="150">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.productName"
-                placeholder="请输入产品名称"
+                :placeholder="$t('mes.请输入产品名称')"
               />
             </template>
           </el-table-column>
 
-          <el-table-column label="色号" prop="colorNo" width="150">
+          <el-table-column :label="$t('mes.色号')" prop="colorNo" width="150">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.colorNo" placeholder="请输入色号" />
+              <el-input v-model="scope.row.colorNo" :placeholder="$t('mes.请输入色号')" />
             </template>
           </el-table-column>
 
-          <el-table-column label="颜色" prop="colorName" width="150">
+          <el-table-column :label="$t('mes.颜色')" prop="colorName" width="150">
             <template slot-scope="scope">
               <el-select
                 v-model="scope.row.colorName"
-                placeholder="请选择颜色"
+                :placeholder="$t('mes.请选择颜色')"
                 filterable
                 :change="changeColor(scope.row)"
               >
@@ -532,129 +532,129 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="单位" prop="unit" width="150">
+          <el-table-column :label="$t('lims.单位')" prop="unit" width="150">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.unit" placeholder="请输入单位" />
+              <el-input v-model="scope.row.unit" :placeholder="$t('lims.请输入单位')" />
             </template>
           </el-table-column>
-          <el-table-column label="数量" prop="qty" width="150">
+          <el-table-column :label="$t('lims.数量')" prop="qty" width="150">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.qty" placeholder="请输入数量" />
+              <el-input v-model="scope.row.qty" :placeholder="$t('mes.请输入数量')" />
             </template>
           </el-table-column>
-          <el-table-column label="重量" prop="weight" width="150">
+          <el-table-column :label="$t('mes.重量')" prop="weight" width="150">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.weight" placeholder="请输入重量" />
+              <el-input v-model="scope.row.weight" :placeholder="$t('mes.请输入重量')" />
             </template>
           </el-table-column>
-          <el-table-column label="单价" prop="price" width="150">
+          <el-table-column :label="$t('lims.单价')" prop="price" width="150">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.price" placeholder="请输入单价" />
+              <el-input v-model="scope.row.price" :placeholder="$t('mes.请输入单价')" />
             </template>
           </el-table-column>
-          <el-table-column label="折扣" prop="discount" width="150">
+          <el-table-column :label="$t('mes.折扣')" prop="discount" width="150">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.discount" placeholder="请输入折扣" />
+              <el-input v-model="scope.row.discount" :placeholder="$t('mes.请输入折扣')" />
             </template>
           </el-table-column>
-          <el-table-column label="折扣总价" prop="addMoney" width="150">
+          <el-table-column :label="$t('mes.折扣总价')" prop="addMoney" width="150">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.addMoney"
-                placeholder="请输入折扣总价"
+                :placeholder="$t('mes.请输入折扣总价')"
               />
             </template>
           </el-table-column>
-          <el-table-column label="总价" prop="money" width="150">
+          <el-table-column :label="$t('mes.总价')" prop="money" width="150">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.money" placeholder="请输入总价" />
+              <el-input v-model="scope.row.money" :placeholder="$t('mes.请输入总价')" />
             </template>
           </el-table-column>
-          <el-table-column label="交货日期" prop="tranDate" width="240">
+          <el-table-column :label="$t('mes.交货日期')" prop="tranDate" width="240">
             <template slot-scope="scope">
               <el-date-picker
                 clearable
                 v-model="scope.row.tranDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择送货日期"
+                :placeholder="$t('mes.请选择送货日期')"
               />
             </template>
           </el-table-column>
-          <el-table-column label="备注" prop="memo" width="150">
+          <el-table-column :label="$t('system.备注')" prop="memo" width="150">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.memo" placeholder="请输入备注" />
+              <el-input v-model="scope.row.memo" :placeholder="$t('lims.请输入备注')" />
             </template>
           </el-table-column>
 
-          <!-- <el-table-column label="收货数量" prop="shQty" width="150">
+          <!-- <el-table-column :label="$t('mes.收货数量')" prop="shQty" width="150">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.shQty"
-                placeholder="请输入收货数量"
+                :placeholder="$t('mes.请输入收货数量')"
               />
             </template>
           </el-table-column>
-          <el-table-column label="退货数量" prop="thQty" width="150">
+          <el-table-column :label="$t('mes.退货数量')" prop="thQty" width="150">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.thQty"
-                placeholder="请输入退货数量"
+                :placeholder="$t('mes.请输入退货数量')"
               />
             </template>
           </el-table-column>
-          <el-table-column label="入库数量" prop="inQty" width="150">
+          <el-table-column :label="$t('lims.入库数量')" prop="inQty" width="150">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.inQty"
-                placeholder="请输入入库数量"
+                :placeholder="$t('mes.请输入入库数量')"
               />
             </template>
           </el-table-column> -->
-          <!-- <el-table-column label="状态" prop="status" width="150">
+          <!-- <el-table-column :label="$t('system.状态')" prop="status" width="150">
             <template slot-scope="scope">
-              <el-select v-model="scope.row.status" placeholder="请选择状态">
-                <el-option label="请选择字典生成" value="" />
+              <el-select v-model="scope.row.status" :placeholder="$t('system.请选择状态')">
+                <el-option :label="$t('mes.请选择字典生成')" value="" />
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column label="结账方式" prop="payUp" width="150">
+          <el-table-column :label="$t('mes.结账方式')" prop="payUp" width="150">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.payUp"
-                placeholder="请输入结账方式"
+                :placeholder="$t('mes.请输入结账方式')"
               />
             </template>
           </el-table-column> -->
-          <!-- <el-table-column label="客户代号" prop="cusNo" width="150">
+          <!-- <el-table-column :label="$t('mes.客户代号')" prop="cusNo" width="150">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.cusNo"
-                placeholder="请输入客户代号"
+                :placeholder="$t('mes.请输入客户代号')"
               />
             </template>
           </el-table-column> -->
-          <!-- <el-table-column label="实收数量" prop="ssQty" width="150">
+          <!-- <el-table-column :label="$t('mes.实收数量')" prop="ssQty" width="150">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.ssQty"
-                placeholder="请输入实收数量"
+                :placeholder="$t('mes.请输入实收数量')"
               />
             </template>
           </el-table-column> -->
-          <!-- <el-table-column label="总重量" prop="totalWeight" width="150">
+          <!-- <el-table-column :label="$t('mes.总重量')" prop="totalWeight" width="150">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.totalWeight"
-                placeholder="请输入总重量"
+                :placeholder="$t('mes.请输入总重量')"
               />
             </template>
           </el-table-column> -->
         </el-table>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -750,16 +750,16 @@ export default {
       // 表单校验
       rules: {
         poOrderNo: [
-          { required: true, message: "单号不能为空", trigger: "blur" },
+          { required: true, message: this.$t('mes.单号不能为空'), trigger: "blur" },
         ],
         vendorNo: [
-          { required: true, message: "供应商编号不能为空", trigger: "blur" },
+          { required: true, message: this.$t('mes.供应商编号不能为空'), trigger: "blur" },
         ],
         poOrderUser: [
-          { required: true, message: "采购员不能为空", trigger: "blur" },
+          { required: true, message: this.$t('mes.采购员不能为空'), trigger: "blur" },
         ],
         tranDate: [
-          { required: true, message: "交货日期不能为空", trigger: "blur" },
+          { required: true, message: this.$t('mes.交货日期不能为空'), trigger: "blur" },
         ],
       },
     };
@@ -886,7 +886,7 @@ export default {
        this.getColorList();
       this.reset();
       this.open = true;
-      this.title = "添加采购订单";
+      this.title = this.$t('mes.添加采购订单');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -896,7 +896,7 @@ export default {
         this.form = response.data;
         this.purchaseOrderLineList = response.data.purchaseOrderLineList;
         this.open = true;
-        this.title = "修改采购订单";
+        this.title = this.$t('mes.修改采购订单');
       });
     },
     /** 提交按钮 */
@@ -906,13 +906,13 @@ export default {
           this.form.purchaseOrderLineList = this.purchaseOrderLineList;
           if (this.form.id != null) {
             updatePurchase_order(this.form).then((response) => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addPurchase_order(this.form).then((response) => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -930,7 +930,7 @@ export default {
         })
         .then(() => {
           this.getList();
-          this.$modal.msgSuccess("删除成功");
+          this.$modal.msgSuccess(this.$t('system.删除成功'));
         })
         .catch(() => {});
     },
@@ -972,7 +972,7 @@ export default {
     /** 采购订单列表删除按钮操作 */
     handleDeletePurchaseOrderLine() {
       if (this.checkedPurchaseOrderLine.length == 0) {
-        this.$modal.msgError("请先选择要删除的采购订单列表数据");
+        this.$modal.msgError(this.$t('mes.请先选择要删除的采购订单列表数据'));
       } else {
         const purchaseOrderLineList = this.purchaseOrderLineList;
         const checkedPurchaseOrderLine = this.checkedPurchaseOrderLine;

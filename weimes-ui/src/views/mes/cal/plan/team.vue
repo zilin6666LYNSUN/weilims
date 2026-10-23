@@ -4,14 +4,14 @@
         <el-col :span="12">
             <el-card class="box-card">
                 <div slot="header" class="clearfix">
-                    <span>班组</span>
-                    <el-button style="float: right; padding: 3px 0" v-if="optType !='view'" @click="handleAdd" type="text">添加</el-button>
+                    <span>{{ this.$t('mes.班组') }}</span>
+                    <el-button style="float: right; padding: 3px 0" v-if="optType !='view'" @click="handleAdd" type="text">{{ this.$t('lims.添加') }}</el-button>
                 </div>
                 <el-table v-loading="loading" :data="teamList" @row-click="onRowClick">
-                    <el-table-column label="班组编号" align="center" prop="teamCode" >
+                    <el-table-column :label="$t('mes.班组编号')" align="center" prop="teamCode" >
                     </el-table-column>
-                    <el-table-column label="班组名称" align="center" prop="teamName" />
-                    <el-table-column label="操作" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
+                    <el-table-column :label="$t('mes.班组名称')" align="center" prop="teamName" />
+                    <el-table-column :label="$t('common.operation')" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
                         <template slot-scope="scope">
                         <el-button
                             size="mini"
@@ -19,7 +19,7 @@
                             icon="el-icon-delete"
                             @click="handleDelete(scope.row)"
                             v-hasPermi="['mes:cal:calplan:edit']"
-                        >删除</el-button>
+                        >{{ this.$t('common.delete') }}</el-button>
                         </template>
                     </el-table-column>                    
                 </el-table>           
@@ -29,12 +29,12 @@
         <el-col :span="12">
             <el-card class="box-card">
                 <div slot="header" class="clearfix">
-                    <span>成员</span>                    
+                    <span>{{ this.$t('mes.成员') }}</span>                    
                 </div>
                 <el-table v-loading="loading" :data="teammemberList">
-                    <el-table-column label="用户名" align="center" prop="userName" />
-                    <el-table-column label="用户昵称" align="center" prop="nickName" />
-                    <el-table-column label="电话" align="center" prop="tel" />                    
+                    <el-table-column :label="$t('mes.用户名')" align="center" prop="userName" />
+                    <el-table-column :label="$t('system.用户昵称')" align="center" prop="nickName" />
+                    <el-table-column :label="$t('lims.电话')" align="center" prop="tel" />                    
                 </el-table>
             </el-card>
         </el-col>
@@ -117,11 +117,11 @@ export default {
         /** 删除按钮操作 */
         handleDelete(row) {
             const recordIds = row.recordId
-            this.$modal.confirm('是否确认删除班组？').then(function() {
+            this.$modal.confirm(this.$t('mes.是否确认删除班组？')).then(function() {
                 return delPlanteam(recordIds);
             }).then(() => {
                 this.getTeamList();
-                this.$modal.msgSuccess("删除成功");
+                this.$modal.msgSuccess(this.$t('system.删除成功'));
             }).catch(() => {});
         },
     }

@@ -6,12 +6,12 @@ const components = {
   itemBtns(h, element, index, parent) {
     const { copyItem, deleteItem } = this.$listeners
     return [
-      <span class="drawing-item-copy" title="复制" onClick={event => {
+      <span class="drawing-item-copy" title={this.$t('tool.复制')} onClick={event => {
         copyItem(element, parent); event.stopPropagation()
       }}>
         <i class="el-icon-copy-document" />
       </span>,
-      <span class="drawing-item-delete" title="删除" onClick={event => {
+      <span class="drawing-item-delete" title={this.$t('common.delete')} onClick={event => {
         deleteItem(index, parent); event.stopPropagation()
       }}>
         <i class="el-icon-delete" />
@@ -73,7 +73,7 @@ function renderChildren(h, element, index, parent) {
 }
 
 function layoutIsNotFound() {
-  throw new Error(`没有与${this.element.layout}匹配的layout`)
+  throw new Error(this.$t('tool.没有与{layout}匹配的layout', { layout: this.element.layout }))
 }
 
 export default {

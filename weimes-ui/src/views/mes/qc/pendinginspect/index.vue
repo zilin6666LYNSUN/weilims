@@ -1,24 +1,24 @@
 <template>
     <div class="app-container">
       <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-        <el-form-item label="单据编码" prop="sourceDocCode">
+        <el-form-item :label="$t('mes.单据编码')" prop="sourceDocCode">
           <el-input
             v-model="queryParams.sourceDocCode"
-            placeholder="请输入单据编码"
+            :placeholder="$t('mes.请输入单据编码')"
             clearable
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="物资名称" prop="itemName">
+        <el-form-item :label="$t('mes.物资名称')" prop="itemName">
           <el-input
             v-model="queryParams.itemName"
-            placeholder="请输入物资名称"
+            :placeholder="$t('mes.请输入物资名称')"
             clearable
             @keyup.enter.native="handleQuery"
           />
         </el-form-item>
-        <el-form-item label="检测类型" prop="qcType">
-          <el-select v-model="queryParams.qcType" placeholder="请选择检测类型" clearable>
+        <el-form-item :label="$t('lims.检测类型')" prop="qcType">
+          <el-select v-model="queryParams.qcType" :placeholder="$t('mes.请选择检测类型')" clearable>
             <el-option
               v-for="dict in dict.type.mes_index_type"
               :key="dict.value"
@@ -28,25 +28,25 @@
           </el-select>
         </el-form-item>     
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
         </el-form-item>
       </el-form>
   
       <el-table v-loading="loading" :data="pendingList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="单据编码" align="center" prop="sourceDocCode" />        
-        <el-table-column label="检测项型" align="center" prop="qcType">
+        <el-table-column :label="$t('mes.单据编码')" align="center" prop="sourceDocCode" />        
+        <el-table-column :label="$t('mes.检测项型')" align="center" prop="qcType">
           <template slot-scope="scope">
             <dict-tag :options="dict.type.mes_qc_type" :value="scope.row.qcType"/>
           </template>
         </el-table-column>
-        <el-table-column label="物资编码" align="center" prop="itemCode" />
-        <el-table-column label="物资名称" align="center" prop="itemName" />
-        <el-table-column label="待检数量" align="center" prop="quantityUncheck" />
-        <el-table-column label="位置" align="center" prop="address" />
+        <el-table-column :label="$t('mes.物资编码')" align="center" prop="itemCode" />
+        <el-table-column :label="$t('mes.物资名称')" align="center" prop="itemName" />
+        <el-table-column :label="$t('mes.待检数量')" align="center" prop="quantityUncheck" />
+        <el-table-column :label="$t('lims.位置')" align="center" prop="address" />
 
-        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -55,7 +55,7 @@
               @click="handleAddIQC(scope.row)"
               v-if="scope.row.qcType == 'IQC'"
               v-hasPermi="['mes:qc:iqc:edit']"
-            >来料检验</el-button>
+            >{{ this.$t('menu.来料检验') }}</el-button>
             <el-button
               size="mini"
               type="text"
@@ -63,7 +63,7 @@
               v-if="scope.row.qcType == 'PQC'"
               @click="handleAddPQC(scope.row)"
               v-hasPermi="['mes:qc:ipqc:edit']"
-            >过程检验</el-button>
+            >{{ this.$t('menu.过程检验') }}</el-button>
             <el-button
               size="mini"
               type="text"
@@ -71,7 +71,7 @@
               v-if="scope.row.qcType == 'OQC'"
               @click="handleAddOQC(scope.row)"
               v-hasPermi="['mes:qc:oqc:edit']"
-            >出货检验</el-button>
+            >{{ this.$t('mes.出货检验') }}</el-button>
           </template>
         </el-table-column>
       </el-table>

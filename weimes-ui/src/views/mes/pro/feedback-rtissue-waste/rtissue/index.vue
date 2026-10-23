@@ -4,38 +4,38 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd" v-if="optType != 'view'"
-          v-hasPermi="['mes:wm:rtissue:add']" >新增</el-button>
+          v-hasPermi="['mes:wm:rtissue:add']" >{{ this.$t('common.add') }}</el-button>
       </el-col>
     </el-row>
 
     <el-table v-loading="loading" :data="rtissueList" @selection-change="handleSelectionChange">
-      <el-table-column label="退料单编号" width="140px" align="center" prop="rtCode">
+      <el-table-column :label="$t('mes.退料单编号')" width="140px" align="center" prop="rtCode">
         <template slot-scope="scope">
           <el-button type="text" @click="handleView(scope.row)" v-hasPermi="['mes:wm:rtissue:query']">{{
             scope.row.rtCode }}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="退料单名称" align="center" prop="rtName" :show-overflow-tooltip="true" />
-      <el-table-column label="生产工单" align="center" prop="workorderCode" />
-      <el-table-column label="报工单编号" width="150px" align="center" prop="recordId" v-if="showColumn" />
-      <el-table-column label="退料日期" align="center" prop="rtDate" width="120">
+      <el-table-column :label="$t('mes.退料单名称')" align="center" prop="rtName" :show-overflow-tooltip="true" />
+      <el-table-column :label="$t('mes.生产工单')" align="center" prop="workorderCode" />
+      <el-table-column :label="$t('mes.报工单编号')" width="150px" align="center" prop="recordId" v-if="showColumn" />
+      <el-table-column :label="$t('mes.退料日期')" align="center" prop="rtDate" width="120">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.rtDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="单据状态" align="center" prop="status">
+      <el-table-column :label="$t('mes.单据状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status" />
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200px" align="center" class-name="small-padding fixed-width" v-if="optType != 'view'">
+      <el-table-column :label="$t('common.operation')" width="200px" align="center" class-name="small-padding fixed-width" v-if="optType != 'view'">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-video-play" v-if="scope.row.status == 'PREPARE'"
-            @click="handleExecute(scope.row)" v-hasPermi="['mes:wm:rtissue:edit']">执行退料</el-button>
+            @click="handleExecute(scope.row)" v-hasPermi="['mes:wm:rtissue:edit']">{{ this.$t('mes.执行退料') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-edit" v-if="scope.row.status == 'PREPARE'"
-            @click="handleUpdate(scope.row)" v-hasPermi="['mes:wm:rtissue:edit']">修改</el-button>
+            @click="handleUpdate(scope.row)" v-hasPermi="['mes:wm:rtissue:edit']">{{ this.$t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" v-if="scope.row.status == 'PREPARE'"
-            @click="handleDelete(scope.row)" v-hasPermi="['mes:wm:rtissue:remove']">删除</el-button>
+            @click="handleDelete(scope.row)" v-hasPermi="['mes:wm:rtissue:remove']">{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -48,8 +48,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="退料单编号" prop="rtCode">
-              <el-input v-model="form.rtCode" placeholder="请输入退料单编号" />
+            <el-form-item :label="$t('mes.退料单编号')" prop="rtCode">
+              <el-input v-model="form.rtCode" :placeholder="$t('mes.请输入退料单编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
@@ -60,50 +60,50 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="退料单名称" prop="rtName">
-              <el-input v-model="form.rtName" placeholder="请输入退料单名称" />
+            <el-form-item :label="$t('mes.退料单名称')" prop="rtName">
+              <el-input v-model="form.rtName" :placeholder="$t('mes.请输入退料单名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="生产工单" prop="workorderCode">
-              <el-input v-model="form.workorderCode" placeholder="请输入生产工单" readonly="readonly">
+            <el-form-item :label="$t('mes.生产工单')" prop="workorderCode">
+              <el-input v-model="form.workorderCode" :placeholder="$t('mes.请输入生产工单')" readonly="readonly">
                 <el-button slot="append" icon="el-icon-search"></el-button>
               </el-input>
             </el-form-item>
             <WorkorderSelect ref="woSelect" @onSelected="onWorkorderSelected"></WorkorderSelect>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="报工编号" prop="recordId" v-if="showColumn">
-              <el-input v-model="form.recordId" placeholder="请输入报工编号" />
+            <el-form-item :label="$t('mes.报工编号')" prop="recordId" v-if="showColumn">
+              <el-input v-model="form.recordId" :placeholder="$t('mes.请输入报工编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="退料日期" prop="rtDate">
+            <el-form-item :label="$t('mes.退料日期')" prop="rtDate">
               <el-date-picker clearable v-model="form.rtDate" type="date" value-format="yyyy-MM-dd"
-                placeholder="请选择退料日期">
+                :placeholder="$t('mes.请选择退料日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <el-divider v-if="form.rtId != null" content-position="center">物料信息</el-divider>
+      <el-divider v-if="form.rtId != null" content-position="center">{{ this.$t('mes.物料信息') }}</el-divider>
       <el-card shadow="always" v-if="form.rtId != null" class="box-card">
         <Rtissueline :rtId="form.rtId" :optType="optType" :workorderCode="form.workorderCode"></Rtissueline>
       </el-card>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType == 'view' || form.status != 'PREPARE'">返回</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType == 'view' || form.status != 'PREPARE'">{{ this.$t('common.back') }}</el-button>
         <el-button type="primary" @click="submitForm"
-          v-if="form.status == 'PREPARE' && optType != 'view'">保存</el-button>
-        <el-button @click="cancel">取 消</el-button>
+          v-if="form.status == 'PREPARE' && optType != 'view'">{{ this.$t('common.save') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -192,13 +192,13 @@ export default {
       // 表单校验
       rules: {
         rtCode: [
-          { required: true, message: "退料单编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.退料单编号不能为空'), trigger: "blur" }
         ],
         workorderCode: [
-          { required: true, message: "请选择要退料的生产工单", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择要退料的生产工单'), trigger: "blur" }
         ],
         recordId: [
-          { required: true, message: "报工编号不能为空", trigger: 'blur' }
+          { required: true, message: this.$t('mes.报工编号不能为空'), trigger: 'blur' }
         ],
       }
     };
@@ -313,7 +313,7 @@ export default {
       this.reset();
       this.warehouseInfo = [];
       this.open = true;
-      this.title = "添加生产退料单头";
+      this.title = this.$t('mes.添加生产退料单头');
       this.optType = "add";
       // this.form.recordId = this.$route.params.recordId;
       // this.form.workorderCode = this.$route.params.workorderCodeResult
@@ -331,7 +331,7 @@ export default {
         this.warehouseInfo[1] = response.data.locationId;
         this.warehouseInfo[2] = response.data.areaId;
         this.open = true;
-        this.title = "查看生产退料单信息";
+        this.title = this.$t('mes.查看生产退料单信息');
         this.optType = "view";
       });
     },
@@ -345,7 +345,7 @@ export default {
         this.warehouseInfo[1] = response.data.locationId;
         this.warehouseInfo[2] = response.data.areaId;
         this.open = true;
-        this.title = "修改生产退料单头";
+        this.title = this.$t('mes.修改生产退料单头');
         this.optType = "edit";
       });
     },
@@ -359,7 +359,7 @@ export default {
         this.warehouseInfo[1] = response.data.locationId;
         this.warehouseInfo[2] = response.data.areaId;
         this.open = true;
-        this.title = "查看退料单信息";
+        this.title = this.$t('mes.查看退料单信息');
         this.optType = "view";
       });
     },
@@ -369,13 +369,13 @@ export default {
         if (valid) {
           if (this.form.rtId != null) {
             updateRtissue(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addRtissue(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -386,21 +386,21 @@ export default {
     //执行退料
     handleExecute(row) {
       const rtIds = row.rtId || this.ids;
-      this.$modal.confirm('确认执行退料？').then(function () {
+      this.$modal.confirm(this.$t('mes.确认执行退料？')).then(function () {
         return execute(rtIds)//执行退料
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("退料成功");
+        this.$modal.msgSuccess(this.$t('mes.退料成功'));
       }).catch(() => { });
     },
     /** 删除按钮操作 */
     handleDelete(row) {
       const rtIds = row.rtId || this.ids;
-      this.$modal.confirm('是否确认删除生产退料单头编号为"' + rtIds + '"的数据项？').then(function () {
+      this.$modal.confirm(this.$t('mes.是否确认删除生产退料单头编号为{v}的数据项？', { v: rtIds })).then(function () {
         return delRtissue(rtIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => { });
     },
     /** 导出按钮操作 */

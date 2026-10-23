@@ -4,28 +4,29 @@
     <div class="left-box">
 
       <div class="left-bottom">
-        <h2>LIMS</h2>
-        <h3>您好，欢迎来到这里</h3>
-        <h6>这里是LIMS系统</h6>
+        <h2>{{ this.$t('login.brand') }}</h2>
+        <h3>{{ this.$t('login.welcome') }}</h3>
+        <h6>{{ this.$t('login.subtitle') }}</h6>
       </div>
       <img src="../assets/images/image.png" class="left-top" />
     </div>
+    <lang-select class="login-lang" />
     <div class="right-box">
       <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-        <h2 class="title">LIMS系统</h2>
+        <h2 class="title">{{ this.$t('login.title') }}</h2>
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
+          <el-input v-model="loginForm.username" type="text" auto-complete="off" :placeholder="$t('login.username')">
             <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码"
+          <el-input v-model="loginForm.password" type="password" auto-complete="off" :placeholder="$t('login.password')"
             @keyup.enter.native="handleLogin">
             <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon" />
           </el-input>
         </el-form-item>
         <el-form-item prop="code" v-if="captchaOnOff">
-          <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 60%"
+          <el-input v-model="loginForm.code" auto-complete="off" :placeholder="$t('login.captcha')" style="width: 60%"
             @keyup.enter.native="handleLogin">
             <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
           </el-input>
@@ -33,15 +34,15 @@
             <img :src="codeUrl" @click="getCode" class="login-code-img" />
           </div>
         </el-form-item>
-        <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+        <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">{{ this.$t('login.remember') }}</el-checkbox>
         <el-form-item style="width:100%;">
           <el-button :loading="loading" size="medium" type="primary" style="width:100%;"
             @click.native.prevent="handleLogin">
-            <span v-if="!loading">登 录</span>
-            <span v-else>登 录 中...</span>
+            <span v-if="!loading">{{ this.$t('login.signin') }}</span>
+            <span v-else>{{ this.$t('login.signingIn') }}</span>
           </el-button>
           <div style="float: right;" v-if="register">
-            <router-link class="link-type" :to="'/register'">立即注册</router-link>
+            <router-link class="link-type" :to="'/register'">{{ this.$t('login.register') }}</router-link>
           </div>
         </el-form-item>
       </el-form>
@@ -58,9 +59,11 @@
 import { getCodeImg } from "@/api/login";
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from '@/utils/jsencrypt'
+import LangSelect from "@/components/LangSelect";
 
 export default {
   name: "Login",
+  components: { LangSelect },
   data() {
     return {
       codeUrl: "",
@@ -73,12 +76,12 @@ export default {
       },
       loginRules: {
         username: [
-          { required: true, trigger: "blur", message: "请输入您的账号" }
+          { required: true, trigger: "blur", message: this.$t('login.validateUsername') }
         ],
         password: [
-          { required: true, trigger: "blur", message: "请输入您的密码" }
+          { required: true, trigger: "blur", message: this.$t('login.validatePassword') }
         ],
-        code: [{ required: true, trigger: "change", message: "请输入验证码" }]
+        code: [{ required: true, trigger: "change", message: this.$t('login.validateCode') }]
       },
       loading: false,
       // 验证码开关
@@ -209,6 +212,13 @@ export default {
   margin: -25px auto 30px auto;
   text-align: center;
   color: #181818;
+}
+
+.login-lang {
+  position: absolute;
+  top: 20px;
+  right: 28px;
+  color: #5a5e66;
 }
 
 .login-form {

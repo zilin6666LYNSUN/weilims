@@ -1,41 +1,41 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="110px">
-      <el-form-item label="退货单编号" prop="rtCode">
+      <el-form-item :label="$t('mes.退货单编号')" prop="rtCode">
         <el-input
           v-model="queryParams.rtCode"
-          placeholder="请输入退货单编号"
+          :placeholder="$t('mes.请输入退货单编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="退货单名称" prop="rtName">
+      <el-form-item :label="$t('mes.退货单名称')" prop="rtName">
         <el-input
           v-model="queryParams.rtName"
-          placeholder="请输入退货单名称"
+          :placeholder="$t('mes.请输入退货单名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="采购订单编号" prop="poCode">
+      <el-form-item :label="$t('mes.采购订单编号')" prop="poCode">
         <el-input
           v-model="queryParams.poCode"
-          placeholder="请输入采购订单编号"
+          :placeholder="$t('mes.请输入采购订单编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="供应商名称" prop="vendorName">
+      <el-form-item :label="$t('lims.供应商名称')" prop="vendorName">
         <el-input
           v-model="queryParams.vendorName"
-          placeholder="请输入供应商名称"
+          :placeholder="$t('lims.请输入供应商名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -48,7 +48,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:rtvendor:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -59,7 +59,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:wm:rtvendor:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -70,7 +70,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:wm:rtvendor:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -80,14 +80,14 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:wm:rtvendor:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="rtvendorList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />      
-      <el-table-column label="退货单编号" align="center" prop="rtCode" >
+      <el-table-column :label="$t('mes.退货单编号')" align="center" prop="rtCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -96,21 +96,21 @@
           >{{scope.row.rtCode}}</el-button>
         </template>
       </el-table-column>      
-      <el-table-column label="退货单名称" align="center" prop="rtName" />
-      <el-table-column label="采购订单编号" align="center" prop="poCode" />      
-      <el-table-column label="供应商编码" align="center" prop="vendorCode" />
-      <el-table-column label="供应商名称" align="center" width="150px" prop="vendorName" :show-overflow-tooltip="true"/>      
-      <el-table-column label="退货日期" align="center" prop="rtDate" width="180">
+      <el-table-column :label="$t('mes.退货单名称')" align="center" prop="rtName" />
+      <el-table-column :label="$t('mes.采购订单编号')" align="center" prop="poCode" />      
+      <el-table-column :label="$t('lims.供应商编码')" align="center" prop="vendorCode" />
+      <el-table-column :label="$t('lims.供应商名称')" align="center" width="150px" prop="vendorName" :show-overflow-tooltip="true"/>      
+      <el-table-column :label="$t('mes.退货日期')" align="center" prop="rtDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.rtDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="单据状态" align="center" prop="status">
+      <el-table-column :label="$t('mes.单据状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
       </el-table-column>      
-      <el-table-column label="操作" width="200" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" width="200" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -119,7 +119,7 @@
             v-if="scope.row.status =='PREPARE'"
             @click="handleExecute(scope.row)"
             v-hasPermi="['mes:wm:rtvendor:edit']"
-          >执行退货</el-button>
+          >{{ this.$t('mes.执行退货') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -127,7 +127,7 @@
             v-if="scope.row.status =='PREPARE'"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:wm:rtvendor:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -135,7 +135,7 @@
             v-if="scope.row.status =='PREPARE'"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:wm:rtvendor:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -153,59 +153,59 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="退货单编号" prop="rtCode">
-              <el-input v-model="form.rtCode" placeholder="请输入退货单编号" />
+            <el-form-item :label="$t('mes.退货单编号')" prop="rtCode">
+              <el-input v-model="form.rtCode" :placeholder="$t('mes.请输入退货单编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view' && form.status =='PREPARE'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="退货单名称" prop="rtName">
-              <el-input v-model="form.rtName" placeholder="请输入退货单名称" />
+            <el-form-item :label="$t('mes.退货单名称')" prop="rtName">
+              <el-input v-model="form.rtName" :placeholder="$t('mes.请输入退货单名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="采购订单编号" prop="poCode">
-              <el-input v-model="form.poCode" placeholder="请输入采购订单编号" />
+            <el-form-item :label="$t('mes.采购订单编号')" prop="poCode">
+              <el-input v-model="form.poCode" :placeholder="$t('mes.请输入采购订单编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="供应商" prop="vendorName">
-              <el-input v-model="form.vendorName" readonly="readonly" placeholder="请选择供应商" >
+            <el-form-item :label="$t('lims.供应商')" prop="vendorName">
+              <el-input v-model="form.vendorName" readonly="readonly" :placeholder="$t('mes.请选择供应商')" >
                 <el-button slot="append" @click="handleSelectVendor" icon="el-icon-search"></el-button>
               </el-input>
               <VendorSelect ref="vendorSelect" @onSelected="onVendorSelected" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="批次号" prop="batchCode">
-              <el-input v-model="form.batchCode" placeholder="请输入批次号" />
+            <el-form-item :label="$t('lims.批次号')" prop="batchCode">
+              <el-input v-model="form.batchCode" :placeholder="$t('lims.请输入批次号')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="退货日期" prop="rtDate">
+            <el-form-item :label="$t('mes.退货日期')" prop="rtDate">
               <el-date-picker clearable
                 v-model="form.rtDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择退货日期">
+                :placeholder="$t('mes.请选择退货日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="单据状态" prop="status">
-              <el-select v-model="form.status" disabled placeholder="请选择单据状态">
+            <el-form-item :label="$t('mes.单据状态')" prop="status">
+              <el-select v-model="form.status" disabled :placeholder="$t('mes.请选择单据状态')">
                 <el-option
                   v-for="dict in dict.type.mes_order_status"
                   :key="dict.value"
@@ -218,20 +218,20 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <el-divider v-if="form.rtId !=null" content-position="center">物料信息</el-divider> 
+      <el-divider v-if="form.rtId !=null" content-position="center">{{ this.$t('mes.物料信息') }}</el-divider> 
       <el-card shadow="always" v-if="form.rtId !=null" class="box-card">
         <Rtvendorline ref=line :rtId="form.rtId" :batchCode="form.batchCdoe" :vendorId="form.vendorId" :optType="optType"></Rtvendorline>
       </el-card>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">保 存</el-button>        
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">{{ this.$t('mes.保 存') }}</el-button>        
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -288,16 +288,16 @@ export default {
       // 表单校验
       rules: {
         rtCode: [
-          { required: true, message: "退货单编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.退货单编号不能为空'), trigger: "blur" }
         ],
         rtName: [
-          { required: true, message: "退货单名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.退货单名称不能为空'), trigger: "blur" }
         ],
         vendorName: [
-          { required: true, message: "供应商不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.供应商不能为空'), trigger: "blur" }
         ],
         rtDate: [
-          { required: true, message: "退货日期不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.退货日期不能为空'), trigger: "blur" }
         ]
       }
     };
@@ -361,7 +361,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加供应商退货";
+      this.title = this.$t('mes.添加供应商退货');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -371,7 +371,7 @@ export default {
       getRtvendor(rtIds).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看退货单信息";
+        this.title = this.$t('mes.查看退货单信息');
         this.optType = "view";
       });
     },
@@ -382,7 +382,7 @@ export default {
       getRtvendor(rtId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改供应商退货";
+        this.title = this.$t('mes.修改供应商退货');
         this.optType = "edit";
       });
     },
@@ -392,13 +392,13 @@ export default {
         if (valid) {
           if (this.form.rtId != null) {
             updateRtvendor(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addRtvendor(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -409,7 +409,7 @@ export default {
     //确认单据
     doconfirm(){
       let that = this;
-      this.$modal.confirm('是否完成供应商退货编制？【完成后将不能更改】').then(function(){
+      this.$modal.confirm(this.$t('mes.是否完成供应商退货编制？【完成后将不能更改】')).then(function(){
         that.form.status = 'CONFIRMED';
         that.submitForm();
       });
@@ -417,21 +417,21 @@ export default {
     //执行退货
     handleExecute(row){
       const rtIds = row.rtId || this.ids;
-      this.$modal.confirm('确认执行退货？').then(function() {
+      this.$modal.confirm(this.$t('mes.确认执行退货？')).then(function() {
         return execute(rtIds)//执行入库
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("退货成功");
+        this.$modal.msgSuccess(this.$t('mes.退货成功'));
       }).catch(() => {});
     },
     /** 删除按钮操作 */
     handleDelete(row) {
       const rtIds = row.rtId || this.ids;
-      this.$modal.confirm('是否确认删除供应商退货编号为"' + rtIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除供应商退货编号为{v}的数据项？', { v: rtIds })).then(function() {
         return delRtvendor(rtIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

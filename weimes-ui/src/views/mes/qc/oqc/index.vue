@@ -1,48 +1,48 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="检验单编号" prop="oqcCode">
+      <el-form-item :label="$t('mes.检验单编号')" prop="oqcCode">
         <el-input
           v-model="queryParams.oqcCode"
-          placeholder="请输入出货检验单编号"
+          :placeholder="$t('mes.请输入出货检验单编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="客户名称" prop="clientName">
+      <el-form-item :label="$t('lims.客户名称')" prop="clientName">
         <el-input
           v-model="queryParams.clientName"
-          placeholder="请输入客户名称"
+          :placeholder="$t('lims.请输入客户名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="批次号" prop="batchCode">
+      <el-form-item :label="$t('lims.批次号')" prop="batchCode">
         <el-input
           v-model="queryParams.batchCode"
-          placeholder="请输入批次号"
+          :placeholder="$t('lims.请输入批次号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="产品物料编码" prop="itemCode">
+      <el-form-item :label="$t('mes.产品物料编码')" prop="itemCode">
         <el-input
           v-model="queryParams.itemCode"
-          placeholder="请输入产品物料编码"
+          :placeholder="$t('mes.请输入产品物料编码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="产品物料名称" prop="itemName">
+      <el-form-item :label="$t('mes.产品物料名称')" prop="itemName">
         <el-input
           v-model="queryParams.itemName"
-          placeholder="请输入产品物料名称"
+          :placeholder="$t('mes.请输入产品物料名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="检测结果" prop="checkResult">
-        <el-select v-model="queryParams.checkResult" placeholder="请选择检测结果">
+      <el-form-item :label="$t('mes.检测结果')" prop="checkResult">
+        <el-select v-model="queryParams.checkResult" :placeholder="$t('mes.请选择检测结果')">
             <el-option
               v-for="dict in dict.type.mes_qc_result"
               :key="dict.value"
@@ -52,8 +52,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -66,7 +66,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:qc:oqc:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -77,7 +77,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:qc:oqc:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -88,7 +88,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:qc:oqc:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -98,14 +98,14 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:qc:oqc:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="oqcList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />      
-      <el-table-column label="出货检验单编号" width="150px" align="center" prop="oqcCode" >
+      <el-table-column :label="$t('mes.出货检验单编号')" width="150px" align="center" prop="oqcCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -114,42 +114,42 @@
           >{{scope.row.oqcCode}}</el-button>
         </template>
       </el-table-column>      
-      <el-table-column label="验单名称" width="100px" align="center" prop="oqcName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('mes.验单名称')" width="100px" align="center" prop="oqcName" :show-overflow-tooltip="true"/>
    
-      <el-table-column label="客户名称" width="100px" align="center" prop="clientName" :show-overflow-tooltip="true"/>
-      <el-table-column label="批次号" align="center" prop="batchCode" />
+      <el-table-column :label="$t('lims.客户名称')" width="100px" align="center" prop="clientName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('lims.批次号')" align="center" prop="batchCode" />
       
-      <el-table-column label="产品编码" width="120px" align="center" prop="itemCode" />
-      <el-table-column label="产品名称" align="center" prop="itemName" :show-overflow-tooltip="true"/>
-      <el-table-column label="规格型号" align="center" prop="specification" :show-overflow-tooltip="true"/>
-      <el-table-column label="单位" align="center" prop="unitOfMeasure" />
+      <el-table-column :label="$t('mes.产品编码')" width="120px" align="center" prop="itemCode" />
+      <el-table-column :label="$t('lims.产品名称')" align="center" prop="itemName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('lims.规格型号')" align="center" prop="specification" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure" />
      
-      <el-table-column label="发货数量" align="center" prop="quantityOut" />
-      <el-table-column label="检测数量" align="center" prop="quantityCheck" />
-      <el-table-column label="不合格数" align="center" prop="quantityUnqualified" />
+      <el-table-column :label="$t('mes.发货数量')" align="center" prop="quantityOut" />
+      <el-table-column :label="$t('mes.检测数量')" align="center" prop="quantityCheck" />
+      <el-table-column :label="$t('mes.不合格数')" align="center" prop="quantityUnqualified" />
   
-      <el-table-column label="检测结果" align="center" prop="checkResult" >
+      <el-table-column :label="$t('mes.检测结果')" align="center" prop="checkResult" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_qc_result" :value="scope.row.checkResult"/>
         </template>
       </el-table-column>
-      <el-table-column label="出货日期" align="center" prop="outDate" width="120">
+      <el-table-column :label="$t('mes.出货日期')" align="center" prop="outDate" width="120">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.outDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="检测日期" align="center" prop="inspectDate" width="120">
+      <el-table-column :label="$t('lims.检测日期')" align="center" prop="inspectDate" width="120">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.inspectDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="检测人员" align="center" prop="inspector" />
-      <el-table-column label="单据状态" align="center" prop="status" >
+      <el-table-column :label="$t('mes.检测人员')" align="center" prop="inspector" />
+      <el-table-column :label="$t('mes.单据状态')" align="center" prop="status" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -158,7 +158,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:qc:oqc:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -166,7 +166,7 @@
             @click="handleDelete(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:qc:oqc:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -184,8 +184,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="检验单编号" prop="oqcCode">
-              <el-input v-model="form.oqcCode" placeholder="请输入出货检验单编号" />
+            <el-form-item :label="$t('mes.检验单编号')" prop="oqcCode">
+              <el-input v-model="form.oqcCode" :placeholder="$t('mes.请输入出货检验单编号')" />
             </el-form-item>
           </el-col>
 
@@ -193,23 +193,23 @@
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view' && form.status =='PREPARE'" >               
               </el-switch>
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="检验单名称" prop="oqcName">
-              <el-input v-model="form.oqcName" placeholder="请输入内容" />
+            <el-form-item :label="$t('mes.检验单名称')" prop="oqcName">
+              <el-input v-model="form.oqcName" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>          
         </el-row>
 
         <el-row>
           <el-col :span="8">
-            <el-form-item label="产品编码" prop="itemCode">
-              <el-input v-if="form.oqcId ==null " readonly v-model="form.itemCode" placeholder="请选择产品" >
+            <el-form-item :label="$t('mes.产品编码')" prop="itemCode">
+              <el-input v-if="form.oqcId ==null " readonly v-model="form.itemCode" :placeholder="$t('mes.请选择产品')" >
                 <el-button slot="append" @click="handleSelectProduct" icon="el-icon-search"></el-button>
               </el-input>
               <!--如果已经保存过，则产品不允许再修改，需要修改就删除重做-->
@@ -219,13 +219,13 @@
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="产品名称" prop="itemName">
+            <el-form-item :label="$t('lims.产品名称')" prop="itemName">
               <el-input readonly="readonly" v-model="form.itemName"></el-input>            
             </el-form-item>
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="单位" prop="unitOfMeasure">
+            <el-form-item :label="$t('lims.单位')" prop="unitOfMeasure">
               <el-input readonly="readonly" v-model="form.unitOfMeasure"/>
             </el-form-item>
           </el-col>
@@ -233,7 +233,7 @@
 
         <el-row>
           <el-col :span="24">
-            <el-form-item label="规格型号" prop="specification">
+            <el-form-item :label="$t('lims.规格型号')" prop="specification">
               <el-input readonly="readonly" v-model="form.specification" type="textarea" />
             </el-form-item>
           </el-col>
@@ -241,8 +241,8 @@
 
         <el-row>
           <el-col :span="8">
-            <el-form-item label="客户编号" prop="clientCode">
-              <el-input v-model="form.clientCode" readonly placeholder="请输选择客户" >
+            <el-form-item :label="$t('mes.客户编号')" prop="clientCode">
+              <el-input v-model="form.clientCode" readonly :placeholder="$t('mes.请输选择客户')" >
                 <el-button slot="append" @click="handleSelectClient" icon="el-icon-search"></el-button>
               </el-input>
             </el-form-item>
@@ -250,59 +250,59 @@
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="客户名称" prop="clientName">
+            <el-form-item :label="$t('lims.客户名称')" prop="clientName">
               <el-input readonly="readonly" v-model="form.clientName"  />
             </el-form-item>
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="批次号" prop="batchCode">
-              <el-input v-model="form.batchCode" placeholder="请输入批次号" />
+            <el-form-item :label="$t('lims.批次号')" prop="batchCode">
+              <el-input v-model="form.batchCode" :placeholder="$t('lims.请输入批次号')" />
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row>
           <el-col :span="8">
-            <el-form-item label="发货数量" prop="quantityOut">
-              <el-input-number :min="1" v-model="form.quantityOut" placeholder="请输入发货数量" />
+            <el-form-item :label="$t('mes.发货数量')" prop="quantityOut">
+              <el-input-number :min="1" v-model="form.quantityOut" :placeholder="$t('mes.请输入发货数量')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="检测数量" prop="quantityCheck">
-              <el-input-number :min="1" v-model="form.quantityCheck" placeholder="请输入本次检测数量" />
+            <el-form-item :label="$t('mes.检测数量')" prop="quantityCheck">
+              <el-input-number :min="1" v-model="form.quantityCheck" :placeholder="$t('mes.请输入本次检测数量')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="不合格数量" prop="quantityUnqualified">
+            <el-form-item :label="$t('mes.不合格数量')" prop="quantityUnqualified">
               <el-input-number :min="0" readonly="readonly" v-model="form.quantityUnqualified" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="出货日期" prop="outDate">
+            <el-form-item :label="$t('mes.出货日期')" prop="outDate">
               <el-date-picker clearable
                 v-model="form.outDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择出货日期">
+                :placeholder="$t('mes.请选择出货日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="检测日期" prop="inspectDate">
+            <el-form-item :label="$t('lims.检测日期')" prop="inspectDate">
               <el-date-picker clearable
                 v-model="form.inspectDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择检测日期">
+                :placeholder="$t('mes.请选择检测日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="检测结果" prop="checkResult">
-              <el-select v-model="form.checkResult" placeholder="请选择检测结果">
+            <el-form-item :label="$t('mes.检测结果')" prop="checkResult">
+              <el-select v-model="form.checkResult" :placeholder="$t('mes.请选择检测结果')">
                 <el-option
                   v-for="dict in dict.type.mes_qc_result"
                   :key="dict.value"
@@ -315,43 +315,43 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-collapse accordion>
-          <el-collapse-item title="结果统计">
+          <el-collapse-item :title="$t('mes.结果统计')">
             <el-row>
               <el-col :span="8">
-                <el-form-item label="致命缺陷数量" prop="crQuantity">
+                <el-form-item :label="$t('mes.致命缺陷数量')" prop="crQuantity">
                   <el-input readonly="readonly" v-model="form.crQuantity" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="严重缺陷数量" prop="majQuantity">
+                <el-form-item :label="$t('mes.严重缺陷数量')" prop="majQuantity">
                   <el-input readonly="readonly" v-model="form.majQuantity" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="轻微缺陷数量" prop="minQuantity">
+                <el-form-item :label="$t('mes.轻微缺陷数量')" prop="minQuantity">
                   <el-input readonly="readonly" v-model="form.minQuantity" />
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item label="致命缺陷率" prop="crQuantity">
+                <el-form-item :label="$t('mes.致命缺陷率')" prop="crQuantity">
                   <el-input readonly="readonly" v-model="form.crRate" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="严重缺陷率" prop="majRate">
+                <el-form-item :label="$t('mes.严重缺陷率')" prop="majRate">
                   <el-input readonly="readonly" v-model="form.majRate" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="轻微缺陷率" prop="minRate">
+                <el-form-item :label="$t('mes.轻微缺陷率')" prop="minRate">
                   <el-input readonly="readonly" v-model="form.minRate" />
                 </el-form-item>
               </el-col>
@@ -359,15 +359,15 @@
           </el-collapse-item>
         </el-collapse>        
       </el-form>
-      <el-divider v-if="form.oqcId !=null" content-position="center">检测项</el-divider> 
+      <el-divider v-if="form.oqcId !=null" content-position="center">{{ this.$t('lims.检测项') }}</el-divider> 
       <el-card shadow="always" v-if="form.oqcId !=null" class="box-card">
           <Oqcline ref=line :oqcId="form.oqcId" :optType="optType"></Oqcline>
       </el-card>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">保 存</el-button>
-        <el-button type="success" @click="handleFinish" v-if="form.status =='PREPARE' && optType !='view'  && form.oqcId !=null">完成</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">{{ this.$t('mes.保 存') }}</el-button>
+        <el-button type="success" @click="handleFinish" v-if="form.status =='PREPARE' && optType !='view'  && form.oqcId !=null">{{ this.$t('lims.完成') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -447,25 +447,25 @@ export default {
       // 表单校验
       rules: {
         oqcCode: [
-          { required: true, message: "出货检验单编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.出货检验单编号不能为空'), trigger: "blur" }
         ],
         clientCode: [
-          { required: true, message: "客户不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.客户不能为空'), trigger: "blur" }
         ],       
         itemCode: [
-          { required: true, message: "产品不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.产品不能为空'), trigger: "blur" }
         ],
         quantityOut: [
-          { required: true, message: "发货数量不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.发货数量不能为空'), trigger: "blur" }
         ],
         quantityCheck: [
-          { required: true, message: "本次检测数量不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.本次检测数量不能为空'), trigger: "blur" }
         ],
         outDate: [
-          { required: true, message: "请选择出货日期", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择出货日期'), trigger: "blur" }
         ],
         inspectDate: [
-          { required: true, message: "请选择检测日期", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择检测日期'), trigger: "blur" }
         ],
       }
     };
@@ -557,7 +557,7 @@ export default {
       getOqc(oqcId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看出货检验单信息";
+        this.title = this.$t('mes.查看出货检验单信息');
         this.optType = "view";
       });
     },
@@ -565,7 +565,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加出货检验单";
+      this.title = this.$t('mes.添加出货检验单');
       this.optType = "add";
     },
     /** 修改按钮操作 */
@@ -575,7 +575,7 @@ export default {
       getOqc(oqcId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改出货检验单";
+        this.title = this.$t('mes.修改出货检验单');
         this.optType = "edit";
       });
     },
@@ -585,13 +585,13 @@ export default {
         if (valid) {
           if (this.form.oqcId != null) {
             updateOqc(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addOqc(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -603,13 +603,13 @@ export default {
     handleFinish(){
       let that = this;
       if(this.form.checkResult == null){
-        this.$modal.msgError("请选择检测结果！");
+        this.$modal.msgError(this.$t('mes.请选择检测结果！'));
         return;
       }
 
       this.$refs["form"].validate(valid => {
         if (valid) {
-          this.$modal.confirm('是否完成出货检验单编制？【完成后将不能更改】').then(function(){
+          this.$modal.confirm(this.$t('mes.是否完成出货检验单编制？【完成后将不能更改】')).then(function(){
             that.form.status = 'CONFIRMED';
             that.submitForm();
             that.open = false;
@@ -620,11 +620,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const oqcIds = row.oqcId || this.ids;
-      this.$modal.confirm('是否确认删除出货检验单编号为"' + oqcIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除出货检验单编号为{v}的数据项？', { v: oqcIds })).then(function() {
         return delOqc(oqcIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     handleSelectProduct(){

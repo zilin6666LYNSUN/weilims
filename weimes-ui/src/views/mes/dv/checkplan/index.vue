@@ -1,24 +1,24 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="计划编号" prop="planCode">
+      <el-form-item :label="$t('mes.计划编号')" prop="planCode">
         <el-input
           v-model="queryParams.planCode"
-          placeholder="请输入计划编号"
+          :placeholder="$t('mes.请输入计划编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="计划名称" prop="planName">
+      <el-form-item :label="$t('lims.计划名称')" prop="planName">
         <el-input
           v-model="queryParams.planName"
-          placeholder="请输入计划名称"
+          :placeholder="$t('lims.请输入计划名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="计划类型" prop="planType">
-        <el-select v-model="queryParams.planType" placeholder="请选择类型" clearable>
+      <el-form-item :label="$t('mes.计划类型')" prop="planType">
+        <el-select v-model="queryParams.planType" :placeholder="$t('mes.请选择类型')" clearable>
           <el-option
             v-for="dict in dict.type.dv_plan_type"
             :key="dict.value"
@@ -27,8 +27,8 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
+      <el-form-item :label="$t('system.状态')" prop="status">
+        <el-select v-model="queryParams.status" :placeholder="$t('system.请选择状态')" clearable>
           <el-option
             v-for="dict in dict.type.mes_order_status"
             :key="dict.value"
@@ -38,8 +38,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -52,7 +52,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:dv:checkplan:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -63,7 +63,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:dv:checkplan:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -74,7 +74,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:dv:checkplan:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -84,14 +84,14 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:dv:checkplan:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="checkplanList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="计划编码" align="center" prop="planCode" >
+      <el-table-column :label="$t('lims.计划编码')" align="center" prop="planCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -100,34 +100,34 @@
           >{{scope.row.planCode}}</el-button>
         </template>
       </el-table-column>      
-      <el-table-column label="计划名称" align="center" width="200px" prop="planName" />
-      <el-table-column label="计划类型" align="center" width="120px" prop="planType">
+      <el-table-column :label="$t('lims.计划名称')" align="center" width="200px" prop="planName" />
+      <el-table-column :label="$t('mes.计划类型')" align="center" width="120px" prop="planType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.dv_plan_type" :value="scope.row.planType"/>
         </template>
       </el-table-column>
-      <el-table-column label="开始日期" align="center" prop="startDate" width="180">
+      <el-table-column :label="$t('system.开始日期')" align="center" prop="startDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.startDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="结束日期" align="center" prop="endDate" width="180">
+      <el-table-column :label="$t('system.结束日期')" align="center" prop="endDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.endDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="频率" align="center" prop="cycleType">        
+      <el-table-column :label="$t('mes.频率')" align="center" prop="cycleType">        
         <template slot-scope="scope">
           {{scope.row.cycleCount}}
           <dict-tag :options="dict.type.mes_cycle_type" :value="scope.row.cycleType"/>
         </template>
       </el-table-column>      
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column :label="$t('system.状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="130px" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" width="130px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -136,7 +136,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:dv:checkplan:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -144,7 +144,7 @@
             @click="handleDelete(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:dv:checkplan:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -152,7 +152,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status =='FINISHED'"
             v-hasPermi="['mes:dv:checkplan:edit']"
-          >停用</el-button>
+          >{{ this.$t('lims.停用') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -170,29 +170,29 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="计划编码" prop="planCode">
-              <el-input v-model="form.planCode" placeholder="请输入计划编码" />
+            <el-form-item :label="$t('lims.计划编码')" prop="planCode">
+              <el-input v-model="form.planCode" :placeholder="$t('lims.请输入计划编码')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="计划名称" prop="planName">
-              <el-input v-model="form.planName" placeholder="请输入计划名称" />
+            <el-form-item :label="$t('lims.计划名称')" prop="planName">
+              <el-input v-model="form.planName" :placeholder="$t('lims.请输入计划名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="计划类型"  prop="planType" >
-                <el-select v-model="form.planType" placeholder="请选择计划类型">
+            <el-form-item :label="$t('mes.计划类型')"  prop="planType" >
+                <el-select v-model="form.planType" :placeholder="$t('mes.请选择计划类型')">
                   <el-option
                     v-for="dict in dict.type.dv_plan_type"
                     :key="dict.value"
@@ -203,13 +203,13 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="频率" prop="cycleCount">
-              <el-input-number :min="1" :step="1" v-model="form.cycleCount" placeholder="请输入次数" />
+            <el-form-item :label="$t('mes.频率')" prop="cycleCount">
+              <el-input-number :min="1" :step="1" v-model="form.cycleCount" :placeholder="$t('mes.请输入次数')" />
             </el-form-item>
           </el-col>
           <el-col :span="4" >
             <el-form-item  prop="cycleType" label-width="80">
-                <el-select v-model="form.cycleType" placeholder="请选择频率">
+                <el-select v-model="form.cycleType" :placeholder="$t('mes.请选择频率')">
                   <el-option
                     v-for="dict in dict.type.mes_cycle_type"
                     :key="dict.value"
@@ -222,27 +222,27 @@
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="开始日期" prop="startDate">
+            <el-form-item :label="$t('system.开始日期')" prop="startDate">
               <el-date-picker clearable
                 v-model="form.startDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择开始日期">
+                :placeholder="$t('mes.请选择开始日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="结束日期" prop="endDate">
+            <el-form-item :label="$t('system.结束日期')" prop="endDate">
               <el-date-picker clearable
                 v-model="form.endDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择结束日期">
+                :placeholder="$t('mes.请选择结束日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="状态" prop="status">
+            <el-form-item :label="$t('system.状态')" prop="status">
               <el-select v-model="form.status" disabled>
                 <el-option
                   v-for="dict in dict.type.mes_order_status"
@@ -256,26 +256,26 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <el-tabs type="border-card" v-if="form.planId != null">        
-        <el-tab-pane label="设备清单"> 
+        <el-tab-pane :label="$t('mes.设备清单')"> 
           <Checkmachinery ref="machinerylist" :optType="optType" :planId="form.planId" ></Checkmachinery>        
         </el-tab-pane>
-        <el-tab-pane :label="form.planType=='CHECK'?'点检项目':'保养项目'">
+        <el-tab-pane :label="form.planType=='CHECK'?this.$t('mes.点检项目'):this.$t('mes.保养项目')">
           <Checksubject ref="subjectlist" :optType="optType" :planId="form.planId" ></Checksubject>
         </el-tab-pane>
       </el-tabs>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">保存</el-button>
-        <el-button type="success" @click="handleFinish" v-if="form.status =='PREPARE' && optType !='view'  && form.planId !=null">启用</el-button>
-        <el-button type="success" @click="handleDeFinish" v-if="form.status =='FINISHED' && optType !='view'  && form.planId !=null">停用</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">{{ this.$t('common.save') }}</el-button>
+        <el-button type="success" @click="handleFinish" v-if="form.status =='PREPARE' && optType !='view'  && form.planId !=null">{{ this.$t('lims.启用') }}</el-button>
+        <el-button type="success" @click="handleDeFinish" v-if="form.status =='FINISHED' && optType !='view'  && form.planId !=null">{{ this.$t('lims.停用') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -329,19 +329,19 @@ export default {
       // 表单校验
       rules: {
         planCode: [
-          { required: true, message: "计划编码不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.计划编码不能为空'), trigger: "blur" }
         ],
         planName: [
-          { required: true, message: "计划名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.计划名称不能为空'), trigger: "blur" }
         ],
         planType:[
-          { required: true, message: "计划类型不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.计划类型不能为空'), trigger: "blur" }
         ],
         cycleType: [
-          { required: true, message: "请选择点检频率", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择点检频率'), trigger: "blur" }
         ],
         cycleCount: [
-          { required: true, message: "请输入点检次数", trigger: "blur" }
+          { required: true, message: this.$t('mes.请输入点检次数'), trigger: "blur" }
         ],
       }
     };
@@ -409,7 +409,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加计划";
+      this.title = this.$t('mes.添加计划');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -419,7 +419,7 @@ export default {
       getCheckplan(planId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看计划信息";
+        this.title = this.$t('mes.查看计划信息');
         this.optType = "view";
       });
     },
@@ -430,7 +430,7 @@ export default {
       getCheckplan(planId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改计划";
+        this.title = this.$t('mes.修改计划');
         this.optType = "edit";
       });
     },
@@ -440,13 +440,13 @@ export default {
         if (valid) {
           if (this.form.planId != null) {
             updateCheckplan(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addCheckplan(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -458,7 +458,7 @@ export default {
       if(this.form.planId != null && this.form.status =='PREPARE'){
         this.form.status='FINISHED';
         updateCheckplan(this.form).then(response => {                
-                this.$modal.msgSuccess("已启用");
+                this.$modal.msgSuccess(this.$t('mes.已启用'));
                 this.open = false;
                 this.getList();
         },err =>{
@@ -470,7 +470,7 @@ export default {
       if(this.form.planId != null && this.form.status =='FINISHED'){
         this.form.status='PREPARE';
         updateCheckplan(this.form).then(response => {                
-                this.$modal.msgSuccess("已停用");
+                this.$modal.msgSuccess(this.$t('lims.已停用'));
                 this.open = false;
                 this.getList();
         },err =>{
@@ -481,11 +481,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const planIds = row.planId || this.ids;
-      this.$modal.confirm('是否确认删除计划编号为"' + planIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除计划编号为{v}的数据项？', { v: planIds })).then(function() {
         return delCheckplan(planIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

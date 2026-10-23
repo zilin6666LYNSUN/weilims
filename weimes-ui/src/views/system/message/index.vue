@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="消息类型" prop="messageType">
-        <el-select v-model="queryParams.messageType" placeholder="请选择消息类型" clearable>
+      <el-form-item :label="$t('system.消息类型')" prop="messageType">
+        <el-select v-model="queryParams.messageType" :placeholder="$t('system.请选择消息类型')" clearable>
           <el-option
             v-for="dict in dict.type.sys_message_type"
             :key="dict.value"
@@ -11,8 +11,8 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="消息级别" prop="messageLevel">
-        <el-select v-model="queryParams.messageLevel" placeholder="请选择消息级别" clearable>
+      <el-form-item :label="$t('system.消息级别')" prop="messageLevel">
+        <el-select v-model="queryParams.messageLevel" :placeholder="$t('system.请选择消息级别')" clearable>
           <el-option
             v-for="dict in dict.type.sys_message_level"
             :key="dict.value"
@@ -22,27 +22,27 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="发送人" prop="senderNick">
+      <el-form-item :label="$t('system.发送人')" prop="senderNick">
         <el-input
           v-model="queryParams.senderNick"
-          placeholder="请输入发送人"
+          :placeholder="$t('system.请输入发送人')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
 
-      <el-form-item label="接收人" prop="recipientNick">
+      <el-form-item :label="$t('system.接收人')" prop="recipientNick">
         <el-input
           v-model="queryParams.recipientNick"
-          placeholder="请输入接收人"
+          :placeholder="$t('system.请输入接收人')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
 
 
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
+      <el-form-item :label="$t('system.状态')" prop="status">
+        <el-select v-model="queryParams.status" :placeholder="$t('system.请选择状态')" clearable>
           <el-option
             v-for="dict in dict.type.sys_message_status"
             :key="dict.value"
@@ -53,8 +53,8 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -67,7 +67,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:message:add']"
-        >测试</el-button>
+        >{{ this.$t('system.测试') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -78,7 +78,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:message:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -88,39 +88,39 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['system:message:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="messageList" @selection-change="handleSelectionChange">      
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="消息类型" align="center" prop="messageType">
+      <el-table-column :label="$t('system.消息类型')" align="center" prop="messageType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_message_type" :value="scope.row.messageType"/>
         </template>
       </el-table-column>
-      <el-table-column label="消息级别" align="center" prop="messageLevel">
+      <el-table-column :label="$t('system.消息级别')" align="center" prop="messageLevel">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_message_level" :value="scope.row.messageLevel"/>
         </template>
       </el-table-column>
-      <el-table-column label="标题" align="center" prop="messageTitle" />
-      <el-table-column label="内容" align="center" prop="messageContent" />
-      <el-table-column label="发送人" align="center" prop="senderNick" />
-      <el-table-column label="接收人" align="center" prop="recipientNick" />
-      <el-table-column label="处理时间" align="center" prop="processTime" width="180">
+      <el-table-column :label="$t('system.标题')" align="center" prop="messageTitle" />
+      <el-table-column :label="$t('system.内容')" align="center" prop="messageContent" />
+      <el-table-column :label="$t('system.发送人')" align="center" prop="senderNick" />
+      <el-table-column :label="$t('system.接收人')" align="center" prop="recipientNick" />
+      <el-table-column :label="$t('system.处理时间')" align="center" prop="processTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.processTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="回调地址" align="center" prop="callBack" />
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column :label="$t('system.回调地址')" align="center" prop="callBack" />
+      <el-table-column :label="$t('system.状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_message_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -128,14 +128,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:message:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:message:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -153,8 +153,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="消息类型" prop="messageType">
-              <el-select v-model="form.messageType" placeholder="请选择消息类型">
+            <el-form-item :label="$t('system.消息类型')" prop="messageType">
+              <el-select v-model="form.messageType" :placeholder="$t('system.请选择消息类型')">
                 <el-option
                   v-for="dict in dict.type.sys_message_type"
                   :key="dict.value"
@@ -165,8 +165,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="消息级别" prop="messageLevel">
-              <el-select v-model="form.messageLevel" placeholder="请选择消息级别">
+            <el-form-item :label="$t('system.消息级别')" prop="messageLevel">
+              <el-select v-model="form.messageLevel" :placeholder="$t('system.请选择消息级别')">
                 <el-option
                   v-for="dict in dict.type.sys_message_level"
                   :key="dict.value"
@@ -177,8 +177,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="接收人" prop="recipientNick">
-              <el-input v-model="form.recipientNick" readonly="readonly" placeholder="请选择接收人" >
+            <el-form-item :label="$t('system.接收人')" prop="recipientNick">
+              <el-input v-model="form.recipientNick" readonly="readonly" :placeholder="$t('system.请选择接收人')" >
                 <el-button slot="append" @click="handleUserSelect" icon="el-icon-search"></el-button>
               </el-input>
             </el-form-item>
@@ -187,29 +187,29 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="标题" prop="messageTitle">
-              <el-input v-model="form.messageTitle" placeholder="请输入标题" />
+            <el-form-item :label="$t('system.标题')" prop="messageTitle">
+              <el-input v-model="form.messageTitle" :placeholder="$t('system.请输入标题')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="内容">
+            <el-form-item :label="$t('system.内容')">
               <editor v-model="form.messageContent" :min-height="192"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="回调地址" prop="callBack">
-              <el-input v-model="form.callBack" placeholder="请输入回调地址" />
+            <el-form-item :label="$t('system.回调地址')" prop="callBack">
+              <el-input v-model="form.callBack" :placeholder="$t('system.请输入回调地址')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -252,19 +252,19 @@ export default {
       // 表单校验
       rules: {
         messageType: [
-          { required: true, message: "消息类型不能为空", trigger: "change" }
+          { required: true, message: this.$t('system.消息类型不能为空'), trigger: "change" }
         ],        
         messageLevel: [
-          { required: true, message: "消息级别不能为空", trigger: "blur" }
+          { required: true, message: this.$t('system.消息级别不能为空'), trigger: "blur" }
         ],      
         messageTitle: [
-          { required: true, message: "消息标题不能为空", trigger: "blur" }
+          { required: true, message: this.$t('system.消息标题不能为空'), trigger: "blur" }
         ],
         messageContent: [
-          { required: true, message: "消息内容不能为空", trigger: "blur" }
+          { required: true, message: this.$t('system.消息内容不能为空'), trigger: "blur" }
         ],  
         recipientName: [
-          { required: true, message: "接收人不能为空", trigger: "blur" }
+          { required: true, message: this.$t('system.接收人不能为空'), trigger: "blur" }
         ]     
       }
     };
@@ -313,7 +313,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加消息";
+      this.title = this.$t('system.添加消息');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -322,7 +322,7 @@ export default {
       getMessage(messageId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改消息";
+        this.title = this.$t('system.修改消息');
       });
     },
     /** 提交按钮 */
@@ -331,13 +331,13 @@ export default {
         if (valid) {
           if (this.form.messageId != null) {
             updateMessage(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addMessage(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -348,11 +348,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const messageIds = row.messageId || this.ids;
-      this.$modal.confirm('是否确认删除消息编号为"' + messageIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('system.是否确认删除消息编号为{v}的数据项？', { v: messageIds })).then(function() {
         return delMessage(messageIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

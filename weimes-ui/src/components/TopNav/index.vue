@@ -7,20 +7,20 @@
     <template v-for="(item, index) in topMenus">
       <el-menu-item :style="{'--theme': theme}" :index="item.path" :key="index" v-if="index < visibleNumber"
         ><svg-icon :icon-class="item.meta.icon" />
-        {{ item.meta.title }}</el-menu-item
+        {{ translateTitle(item.meta.title) }}</el-menu-item
       >
     </template>
 
     <!-- 顶部菜单超出数量折叠 -->
     <el-submenu :style="{'--theme': theme}" index="more" v-if="topMenus.length > visibleNumber">
-      <template slot="title">更多菜单</template>
+      <template slot="title">{{ this.$t('layout.topNav.more') }}</template>
       <template v-for="(item, index) in topMenus">
         <el-menu-item
           :index="item.path"
           :key="index"
           v-if="index >= visibleNumber"
           ><svg-icon :icon-class="item.meta.icon" />
-          {{ item.meta.title }}</el-menu-item
+          {{ translateTitle(item.meta.title) }}</el-menu-item
         >
       </template>
     </el-submenu>
@@ -29,6 +29,7 @@
 
 <script>
 import { constantRoutes } from "@/router";
+import { translateTitle as translate } from '@/utils/translate'
 
 // 隐藏侧边栏路由
 const hideList = ['/index', '/user/profile'];
@@ -111,6 +112,9 @@ export default {
     this.setVisibleNumber();
   },
   methods: {
+    translateTitle(title) {
+      return translate(this, title)
+    },
     // 根据宽度计算设置显示栏数
     setVisibleNumber() {
       const width = document.body.getBoundingClientRect().width / 3;

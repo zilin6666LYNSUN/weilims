@@ -10,7 +10,7 @@
           @click="handleAdd"
           v-if="optType !='view'"
           v-hasPermi="['mes:dv:checkplan:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -22,7 +22,7 @@
           @click="handleDelete"
           v-if="optType !='view'"
           v-hasPermi="['mes:dv:checkplan:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -30,12 +30,12 @@
 
     <el-table v-loading="loading" :data="checksubjectList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="项目编码" align="center" prop="subjectCode" />
-      <el-table-column label="项目名称" align="center" prop="subjectName" />
-      <el-table-column label="项目类型" align="center" prop="subjectType" />
-      <el-table-column label="项目内容" align="center" width="300px" prop="subjectContent" :show-overflow-tooltip="true"/>
-      <el-table-column label="标准" align="center" width="300px" prop="subjectStandard" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.项目编码')" align="center" prop="subjectCode" />
+      <el-table-column :label="$t('mes.项目名称')" align="center" prop="subjectName" />
+      <el-table-column :label="$t('mes.项目类型')" align="center" prop="subjectType" />
+      <el-table-column :label="$t('mes.项目内容')" align="center" width="300px" prop="subjectContent" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('mes.标准')" align="center" width="300px" prop="subjectStandard" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -44,7 +44,7 @@
             v-if="optType !='view'"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:dv:checkplan:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -142,11 +142,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const recordIds = row.recordId || this.ids;
-      this.$modal.confirm('是否确认删除点检项目编号为"' + recordIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除点检项目编号为{v}的数据项？', { v: recordIds })).then(function() {
         return delChecksubject(recordIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
 

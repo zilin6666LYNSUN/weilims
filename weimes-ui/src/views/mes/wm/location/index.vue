@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="库区名称" prop="locationName">
+      <el-form-item :label="$t('mes.库区名称')" prop="locationName">
         <el-input
           v-model="queryParams.locationName"
-          placeholder="请输入库区名称"
+          :placeholder="$t('mes.请输入库区名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -24,7 +24,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:location:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -35,7 +35,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:wm:location:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -46,14 +46,14 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:wm:location:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="locationList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="库区编码" align="center" prop="locationCode" >
+      <el-table-column :label="$t('mes.库区编码')" align="center" prop="locationCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -62,10 +62,10 @@
           >{{scope.row.locationCode}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="库区名称" align="center" prop="locationName" />
-      <el-table-column label="面积" align="center" prop="area" />
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.库区名称')" align="center" prop="locationName" />
+      <el-table-column :label="$t('mes.面积')" align="center" prop="area" />
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -73,21 +73,21 @@
             icon="el-icon-s-shop"
             @click="handleArea(scope.row.locationId)"
             v-hasPermi="['mes:wm:area:edit','mes:wm:area:list']"
-          >库位</el-button>
+          >{{ this.$t('mes.库位') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:wm:location:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:wm:location:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -105,44 +105,44 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="140px">
       <el-row>
         <el-col :span="8">
-          <el-form-item label="库区编码" prop="locationCode">
-            <el-input v-model="form.locationCode" placeholder="请输入库区编码" />
+          <el-form-item :label="$t('mes.库区编码')" prop="locationCode">
+            <el-input v-model="form.locationCode" :placeholder="$t('mes.请输入库区编码')" />
           </el-form-item>
         </el-col>
         <el-col :span="4">
           <el-form-item  label-width="80">
             <el-switch v-model="autoGenFlag"
                 active-color="#13ce66"
-                active-text="自动生成"
+                :active-text="$t('mes.自动生成')"
                 @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">               
             </el-switch>
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="库区名称" prop="locationName">
-            <el-input v-model="form.locationName" placeholder="请输入库区名称" />
+          <el-form-item :label="$t('mes.库区名称')" prop="locationName">
+            <el-input v-model="form.locationName" :placeholder="$t('mes.请输入库区名称')" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="面积" prop="area">
-            <el-input-number :min="0" :step="1" :percision="2" v-model="form.area" placeholder="请输入面积" />
+          <el-form-item :label="$t('mes.面积')" prop="area">
+            <el-input-number :min="0" :step="1" :percision="2" v-model="form.area" :placeholder="$t('mes.请输入面积')" />
           </el-form-item>
         </el-col>      
       </el-row>
       <el-row>
         <el-col :span="24">
-          <el-form-item label="备注" prop="remark">
-            <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+          <el-form-item :label="$t('system.备注')" prop="remark">
+            <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
           </el-form-item>
         </el-col>
       </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-else>{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -193,10 +193,10 @@ export default {
       // 表单校验
       rules: {
         locationCode: [
-          { required: true, message: "库区编码不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.库区编码不能为空'), trigger: "blur" }
         ],
         locationName: [
-          { required: true, message: "库区名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.库区名称不能为空'), trigger: "blur" }
         ]
       }
     };
@@ -265,7 +265,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加库区设置";
+      this.title = this.$t('mes.添加库区设置');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -275,7 +275,7 @@ export default {
       getLocation(locationId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看库区";
+        this.title = this.$t('mes.查看库区');
         this.optType = "view";
       });
     },
@@ -286,7 +286,7 @@ export default {
       getLocation(locationId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改库区设置";
+        this.title = this.$t('mes.修改库区设置');
         this.optType = "edit";
       });
     },
@@ -296,13 +296,13 @@ export default {
         if (valid) {
           if (this.form.locationId != null) {
             updateLocation(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addLocation(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -313,11 +313,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const locationIds = row.locationId || this.ids;
-      this.$modal.confirm('是否确认删除库区设置编号为"' + locationIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除库区设置编号为{v}的数据项？', { v: locationIds })).then(function() {
         return delLocation(locationIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

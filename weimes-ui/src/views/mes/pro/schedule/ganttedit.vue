@@ -10,7 +10,7 @@
           size="mini"
           @click="handleUpdate"
           v-hasPermi="['mes:pro:protask:edit']"
-        >保存</el-button>
+        >{{ this.$t('common.save') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -19,7 +19,7 @@
           icon="el-icon-delete"
           size="mini"
           @click="handleClose"
-        >关闭</el-button>
+        >{{ this.$t('system.关闭') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -28,7 +28,7 @@
           icon="el-icon-refresh"
           size="mini"
           @click="handleRefresh"
-        >重新加载</el-button>
+        >{{ this.$t('mes.重新加载') }}</el-button>
       </el-col>
     </el-row>
     <div class="wrapper">
@@ -118,10 +118,10 @@ export default {
                     this.form.endTime = endDate.getFullYear()+'-'+(endDate.getMonth()+1)+'-'+endDate.getDate()+' '+endDate.getHours()+':'+endDate.getMinutes()+':'+endDate.getSeconds();
                     updateProtask(this.form).then(response =>{
                         console.log("update success:"+id);
-                        this.$modal.msgSuccess("保存成功");
+                        this.$modal.msgSuccess(this.$t('lims.保存成功'));
                     },err =>{
                         console.log("update failed:"+err.msg);
-                        this.$modal.msgSuccess("保存失败");
+                        this.$modal.msgSuccess(this.$t('mes.保存失败'));
                     });
                 });
                 //this.changedTaskIds =[];                

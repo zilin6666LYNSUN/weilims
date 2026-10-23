@@ -2,12 +2,12 @@
   <div :class="className" :style="{ height, width, position: 'relative' }">
     <!-- 加载状态 -->
     <div v-if="loading" class="chart-overlay">
-      加载中...
+      {{ this.$t('common.loading') }}
     </div>
 
     <!-- 无数据提示 -->
     <div v-else-if="noData" class="chart-overlay">
-      暂无数据
+      {{ this.$t('common.noData') }}
     </div>
   </div>
 </template>
@@ -58,6 +58,11 @@ export default {
       if (!val && !this.noData) {
         this.setOptions(this.chartData)
       }
+    },
+    '$i18n.locale'() {
+      if (this.chart && !this.noData) {
+        this.setOptions(this.chartData)
+      }
     }
   },
   mounted() {
@@ -88,9 +93,13 @@ export default {
       }
     },
     setXYChart({ xAxisData = [], series = [] }) {
+      const displayName = (name) => {
+        const map = { '访问量': 'dashboard.visits' }
+        return map[name] ? this.$t(map[name]) : name
+      }
       const option = {
         tooltip: { trigger: 'axis' },
-        legend: this.showLegend ? { data: series.map(s => s.name) } : null,
+        legend: this.showLegend ? { data: series.map(s => displayName(s.name)) } : null,
         grid: { left: 10, right: 10, bottom: 20, top: 30, containLabel: true },
         xAxis: {
           type: 'category',
@@ -99,7 +108,7 @@ export default {
         },
         yAxis: { type: 'value' },
         series: series.map(s => ({
-          name: s.name,
+          name: displayName(s.name),
           type: this.chartType,
           data: s.data,
           smooth: this.chartType === 'line' ? this.smooth : false,

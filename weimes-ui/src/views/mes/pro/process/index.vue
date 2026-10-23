@@ -1,33 +1,33 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="工序编码" prop="processCode">
+      <el-form-item :label="$t('mes.工序编码')" prop="processCode">
         <el-input
           v-model="queryParams.processCode"
-          placeholder="请输入工序编码"
+          :placeholder="$t('mes.请输入工序编码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="工序名称" prop="processName">
+      <el-form-item :label="$t('mes.工序名称')" prop="processName">
         <el-input
           v-model="queryParams.processName"
-          placeholder="请输入工序名称"
+          :placeholder="$t('mes.请输入工序名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="是否启用" prop="enableFlag">
+      <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
         <el-input
           v-model="queryParams.enableFlag"
-          placeholder="请输入是否启用"
+          :placeholder="$t('mes.请输入是否启用')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -40,7 +40,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:pro:process:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -51,7 +51,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:pro:process:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -62,7 +62,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:pro:process:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -72,14 +72,14 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:pro:process:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="processList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="工序编码" align="center" prop="processCode" >
+      <el-table-column :label="$t('mes.工序编码')" align="center" prop="processCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -88,14 +88,14 @@
           >{{scope.row.processCode}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="工序名称" align="center" prop="processName" :show-overflow-tooltip="true"/>
-      <el-table-column label="是否启用" align="center" prop="enableFlag">
+      <el-table-column :label="$t('mes.工序名称')" align="center" prop="processName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('system.是否启用')" align="center" prop="enableFlag">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -103,14 +103,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:pro:process:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:pro:process:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -128,26 +128,26 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="工序编码" prop="processCode">
-              <el-input v-model="form.processCode" placeholder="请输入工序编码" />
+            <el-form-item :label="$t('mes.工序编码')" prop="processCode">
+              <el-input v-model="form.processCode" :placeholder="$t('mes.请输入工序编码')" />
             </el-form-item>
           </el-col>
           <el-col :span="3">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="7">
-            <el-form-item label="工序名称" prop="processName">
-              <el-input v-model="form.processName" placeholder="请输入工序名称" />
+            <el-form-item :label="$t('mes.工序名称')" prop="processName">
+              <el-input v-model="form.processName" :placeholder="$t('mes.请输入工序名称')" />
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="是否启用" prop="enableFlag">
+            <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
                <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
                 <el-radio
                   v-for="dict in dict.type.sys_yes_no"
@@ -167,25 +167,25 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="工序说明" prop="attention">
-              <el-input v-model="form.attention" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('mes.工序说明')" prop="attention">
+              <el-input v-model="form.attention" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <el-divider content-position="center" v-if="form.processId !=null">操作步骤</el-divider>
+      <el-divider content-position="center" v-if="form.processId !=null">{{ this.$t('mes.操作步骤') }}</el-divider>
       <Processcontent v-if="form.processId !=null" :optType="optType" :processId="form.processId"></Processcontent>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-else>{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -235,13 +235,13 @@ export default {
       // 表单校验
       rules: {
         processCode: [
-          { required: true, message: "工序编码不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.工序编码不能为空'), trigger: "blur" }
         ],
         processName: [
-          { required: true, message: "工序名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.工序名称不能为空'), trigger: "blur" }
         ],
         enableFlag: [
-          { required: true, message: "是否启用不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.是否启用不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -301,7 +301,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加生产工序";
+      this.title = this.$t('mes.添加生产工序');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -311,7 +311,7 @@ export default {
       getProcess(processId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看工序信息";
+        this.title = this.$t('mes.查看工序信息');
         this.optType = "view";
       });
     },
@@ -322,7 +322,7 @@ export default {
       getProcess(processId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改生产工序";
+        this.title = this.$t('mes.修改生产工序');
         this.optType = "edit";
       });
     },
@@ -332,13 +332,13 @@ export default {
         if (valid) {
           if (this.form.processId != null) {
             updateProcess(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addProcess(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -349,11 +349,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const processIds = row.processId || this.ids;
-      this.$modal.confirm('是否确认删除生产工序？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除生产工序？')).then(function() {
         return delProcess(processIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

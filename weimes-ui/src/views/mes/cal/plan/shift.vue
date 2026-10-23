@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:cal:calplan:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -20,7 +20,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:cal:calplan:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -31,21 +31,21 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:cal:calplan:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="shiftList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" align="center" prop="orderNum" />
-      <el-table-column label="班次名称" align="center" prop="shiftName" />
-      <el-table-column label="开始时间" align="center" prop="startTime" width="180">
+      <el-table-column :label="$t('system.序号')" align="center" prop="orderNum" />
+      <el-table-column :label="$t('mes.班次名称')" align="center" prop="shiftName" />
+      <el-table-column :label="$t('lims.开始时间')" align="center" prop="startTime" width="180">
       </el-table-column>
-      <el-table-column label="结束时间" align="center" prop="endTime" width="180">
+      <el-table-column :label="$t('lims.结束时间')" align="center" prop="endTime" width="180">
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" />
+      <el-table-column :label="$t('common.operation')" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -53,14 +53,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:cal:calplan:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:cal:calplan:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -78,22 +78,22 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
             <el-col :span="12">
-                <el-form-item label="序号" prop="orderNum">
-                    <el-input-number :min="1" v-model="form.orderNum" placeholder="请输入序号" />
+                <el-form-item :label="$t('system.序号')" prop="orderNum">
+                    <el-input-number :min="1" v-model="form.orderNum" :placeholder="$t('mes.请输入序号')" />
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="班次名称" prop="shiftName">
-                    <el-input v-model="form.shiftName" placeholder="请输入班次名称" />
+                <el-form-item :label="$t('mes.班次名称')" prop="shiftName">
+                    <el-input v-model="form.shiftName" :placeholder="$t('mes.请输入班次名称')" />
                 </el-form-item>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="12">
-                <el-form-item label="开始时间" prop="startTime">
+                <el-form-item :label="$t('lims.开始时间')" prop="startTime">
                 <el-time-picker
                 v-model="form.startTime"
-                placeholder="请选择开始时间"
+                :placeholder="$t('mes.请选择开始时间')"
                 format ="HH:mm"
                 value-format="HH:mm"
                 >
@@ -101,10 +101,10 @@
                 </el-form-item>
             </el-col>
             <el-col :span="12">
-                <el-form-item label="结束时间" prop="endTime">
+                <el-form-item :label="$t('lims.结束时间')" prop="endTime">
                 <el-time-picker
                 v-model="form.endTime"
-                placeholder="请选择结束时间"
+                :placeholder="$t('mes.请选择结束时间')"
                 format ="HH:mm"
                 value-format="HH:mm"
                 >                    
@@ -114,8 +114,8 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -165,13 +165,13 @@ export default {
       // 表单校验
       rules: {
         shiftName: [
-          { required: true, message: "班次名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.班次名称不能为空'), trigger: "blur" }
         ],
         startTime: [
-          { required: true, message: "开始时间不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.开始时间不能为空'), trigger: "blur" }
         ],
         endTime: [
-          { required: true, message: "结束时间不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.结束时间不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -235,7 +235,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加班次";
+      this.title = this.$t('mes.添加班次');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -244,7 +244,7 @@ export default {
       getShift(shiftId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改计划班次";
+        this.title = this.$t('mes.修改计划班次');
       });
     },
     /** 提交按钮 */
@@ -253,13 +253,13 @@ export default {
         if (valid) {
           if (this.form.shiftId != null) {
             updateShift(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addShift(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -270,11 +270,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const shiftIds = row.shiftId || this.ids;
-      this.$modal.confirm('是否确认删除班次？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除班次？')).then(function() {
         return delShift(shiftIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
   }

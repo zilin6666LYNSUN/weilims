@@ -6,45 +6,45 @@
         <el-table-column type="expand" width="25px">
           <template slot-scope="scope">
             <el-form label-position="left" inline>
-              <el-form-item label="物料编码:">
+              <el-form-item :label="$t('mes.物料编码:')">
                 <span>{{ scope.row.itemCode }}</span>
               </el-form-item>
-              <el-form-item label="物料名称:" style="margin-left: 20px;">
+              <el-form-item :label="$t('mes.物料名称:')" style="margin-left: 20px;">
                 <span>{{ scope.row.itemName }}</span>
               </el-form-item>
-              <el-form-item label="物料规格:" style="margin-left: 20px;">
+              <el-form-item :label="$t('mes.物料规格:')" style="margin-left: 20px;">
                 <span>{{ scope.row.specification }}</span>
               </el-form-item>
-              <el-form-item label="所在仓库:" style="margin-left: 20px;">
+              <el-form-item :label="$t('mes.所在仓库:')" style="margin-left: 20px;">
                 <span>{{ scope.row.warehouseName }}</span>
               </el-form-item>
-              <el-form-item label="仓库编码:" style="margin-left: 20px;">
+              <el-form-item :label="$t('mes.仓库编码:')" style="margin-left: 20px;">
                 <span>{{ scope.row.warehouseCode }}</span>
               </el-form-item>
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column label="层级" align="center" prop="level">
+        <el-table-column :label="$t('mes.层级')" align="center" prop="level">
           <template slot-scope="scope">
             <dict-tag :options="dict.type.mes_item_level" :value="scope.row.level" />
           </template>
         </el-table-column>
-        <el-table-column label="添加物料" align="center">
+        <el-table-column :label="$t('mes.添加物料')" align="center">
           <template slot-scope="scope">
             <el-button :disabled="scope.row.tableBtn" @click="handleSelectItem"
               icon="el-icon-circle-plus-outline"></el-button>
             <ItemSelect ref="itemSelect" itemOrProduct="item" @onSelected="onItemSelected"> </ItemSelect>
           </template>
         </el-table-column>
-        <el-table-column label="物料名称" align="center" prop="itemName">
+        <el-table-column :label="$t('lims.物料名称')" align="center" prop="itemName">
         </el-table-column>
-        <el-table-column label="需求数量" align="center" prop="quantity">
+        <el-table-column :label="$t('mes.需求数量')" align="center" prop="quantity">
           <template slot-scope="scope">
             <el-input align="center" type="text" v-model="scope.row.quantity" v-show="scope.row.isEditor" />
             <span v-show="!scope.row.isEditor">{{ scope.row.quantity }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="库存量" align="center" prop="quantityOnhand">
+        <el-table-column :label="$t('mes.库存量')" align="center" prop="quantityOnhand">
           <template slot-scope="scope">
             <el-popover trigger="hover" placement="top">
               <p align="center">{{ scope.row.quantityStatus }}</p>
@@ -54,17 +54,17 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column label="单位" align="center" prop="unitOfMeasure">
+        <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure">
           <template slot-scope="scope">
             {{ convertUnitmeasure(scope.row.unitOfMeasure) }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" align="center" class-name="small-padding fixed-width" v-if="optType !== 'view'">
+        <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width" v-if="optType !== 'view'">
           <template slot-scope="scope">
-            <el-button type="text" @click="edit(scope.row)" v-show="!scope.row.isEditor">编辑</el-button>
-            <el-button type="text" @click="del(scope.row)" v-show="!scope.row.isEditor">删除</el-button>
-            <el-button type="text" @click="save(scope.row)" v-show="scope.row.isEditor">保存</el-button>
-            <el-button type="text" @click="cancel(scope.row)" v-show="scope.row.isEditor">取消</el-button>
+            <el-button type="text" @click="edit(scope.row)" v-show="!scope.row.isEditor">{{ this.$t('common.edit') }}</el-button>
+            <el-button type="text" @click="del(scope.row)" v-show="!scope.row.isEditor">{{ this.$t('common.delete') }}</el-button>
+            <el-button type="text" @click="save(scope.row)" v-show="scope.row.isEditor">{{ this.$t('common.save') }}</el-button>
+            <el-button type="text" @click="cancel(scope.row)" v-show="scope.row.isEditor">{{ this.$t('common.cancel') }}</el-button>
           </template>
 
         </el-table-column>
@@ -72,7 +72,7 @@
     </el-row>
     <el-row style="margin-top: 20px">
       <el-button @click="addRow()" :disabled="btnDisabled" type="primary" icon="CirclePlus"
-        v-if="optType !== 'view'">新增物料</el-button>
+        v-if="optType !== 'view'">{{ this.$t('mes.新增物料') }}</el-button>
     </el-row>
   </div>
 </template>
@@ -192,18 +192,18 @@ export default {
       });
       if (editList.length !== 0) {
         this.$notify({
-          title: '提示',
+          title: this.$t('common.tip'),
           type: 'warning',
-          message: '每次只能修改一条数据,请保存后再添加'
+          message: this.$t('mes.每次只能修改一条数据,请保存后再添加')
         });
         return;
       }
       // 判空校验
       // if (this.isEmpty(this.clientOrderId)) {
       //   this.$notify({
-      //     title: '提示',
+      //     title: this.$t('common.tip'),
       //     type: 'warning',
-      //     message: '参数有误,请联系管理员'
+      //     message: this.$t('mes.参数有误,请联系管理员')
       //   });
       //   return;
       // }
@@ -213,9 +213,9 @@ export default {
       });
       if (this.isNotEmpty(isExist)) {
         this.$notify({
-          title: '提示',
+          title: this.$t('common.tip'),
           type: 'warning',
-          message: '当前只支持添加数据到四层'
+          message: this.$t('mes.当前只支持添加数据到四层')
         });
         return;
       }
@@ -243,13 +243,13 @@ export default {
         row.clientOrderId = this.clientOrderId;
         // row.clientOrderId = '1787471074665963521';
         addClientOrderItem(row).then(response => {
-          this.$modal.msgSuccess("新增成功");
+          this.$modal.msgSuccess(this.$t('system.新增成功'));
           this.getList();
           this.btnDisabled = false;
         });
       } else {
         updateClientOrderItem(row).then(response => {
-          this.$modal.msgSuccess("修改成功");
+          this.$modal.msgSuccess(this.$t('system.修改成功'));
           this.getList();
           this.btnDisabled = false;
         });
@@ -264,11 +264,11 @@ export default {
         this.getList();
         return;
       }
-      this.$modal.confirm('是否确认删除物料"' + row.itemName + '"的数据项？').then(function () {
+      this.$modal.confirm(this.$t('mes.是否确认删除物料{v}的数据项？', { v: row.itemName })).then(function () {
         return delClientOrderItem(row.orderItemId);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => { });
     },
     cancel(row) {
@@ -276,7 +276,7 @@ export default {
         return item.isEditor === true
       });
       if (editList !== undefined) {
-        this.$confirm('有未保存的数据,确定取消吗', "提示", { confirmButtonText: '确定', type: 'info' })
+        this.$confirm(this.$t('mes.有未保存的数据,确定取消吗'), this.$t('common.tip'), { confirmButtonText: this.$t('common.confirm'), type: 'info' })
           .then(
             () => {
               this.btnDisabled = false;

@@ -3,16 +3,16 @@
   
       <el-table v-loading="loading" :data="productBomList" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" align="center" />
-        <el-table-column label="物料编号" width="120" align="center" prop="bomItemCode" />
-        <el-table-column label="物料名称" width="200" align="center" prop="bomItemName" :show-overflow-tooltip="true"/>
-        <el-table-column label="规格型号" align="center" prop="bomItemSpec" :show-overflow-tooltip="true"/>
-        <el-table-column label="单位" align="center" prop="unitOfMeasure" />
-        <el-table-column label="物料/产品" align="center" prop="itemOrProduct" >
+        <el-table-column :label="$t('mes.物料编号')" width="120" align="center" prop="bomItemCode" />
+        <el-table-column :label="$t('lims.物料名称')" width="200" align="center" prop="bomItemName" :show-overflow-tooltip="true"/>
+        <el-table-column :label="$t('lims.规格型号')" align="center" prop="bomItemSpec" :show-overflow-tooltip="true"/>
+        <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure" />
+        <el-table-column :label="$t('mes.物料/产品')" align="center" prop="itemOrProduct" >
           <template slot-scope="scope">
             <dict-tag :options="dict.type.mes_item_product" :value="scope.row.itemOrProduct"/>
           </template>
         </el-table-column>
-        <el-table-column label="预计使用量" align="center" prop="quantity" />
+        <el-table-column :label="$t('mes.预计使用量')" align="center" prop="quantity" />
       </el-table>
       <pagination
         v-show="total>0"

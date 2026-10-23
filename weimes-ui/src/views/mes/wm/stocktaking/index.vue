@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="盘点类型" prop="takingType">
-        <el-select v-model="queryParams.takingType" placeholder="请选择盘点类型" clearable>
+      <el-form-item :label="$t('mes.盘点类型')" prop="takingType">
+        <el-select v-model="queryParams.takingType" :placeholder="$t('mes.请选择盘点类型')" clearable>
           <el-option
             v-for="dict in dict.type.mes_stocktaking_type"
             :key="dict.value"
@@ -11,52 +11,52 @@
           />
         </el-select>
       </el-form-item>     
-      <el-form-item label="盘点单编号" prop="takingCode">
+      <el-form-item :label="$t('mes.盘点单编号')" prop="takingCode">
         <el-input
           v-model="queryParams.takingCode"
-          placeholder="请输入盘点单编号"
+          :placeholder="$t('mes.请输入盘点单编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="盘点单名称" prop="takingName">
+      <el-form-item :label="$t('mes.盘点单名称')" prop="takingName">
         <el-input
           v-model="queryParams.takingName"
-          placeholder="请输入盘点单名称"
+          :placeholder="$t('mes.请输入盘点单名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="盘点日期" prop="takingDate">
+      <el-form-item :label="$t('mes.盘点日期')" prop="takingDate">
         <el-date-picker clearable
           v-model="queryParams.takingDate"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择盘点日期">
+          :placeholder="$t('mes.请选择盘点日期')">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="仓库名称" prop="warehouseName">
+      <el-form-item :label="$t('mes.仓库名称')" prop="warehouseName">
         <el-input
           v-model="queryParams.warehouseName"
-          placeholder="请输入仓库名称"
+          :placeholder="$t('mes.请输入仓库名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="单据状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择单据状态" clearable>
-          <el-option label="请选择字典生成" value="" />
+      <el-form-item :label="$t('mes.单据状态')" prop="status">
+        <el-select v-model="queryParams.status" :placeholder="$t('mes.请选择单据状态')" clearable>
+          <el-option :label="$t('mes.请选择字典生成')" value="" />
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
     <el-table v-loading="loading" :data="stocktakingList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="盘点单编号" align="center" prop="takingCode" >
+      <el-table-column :label="$t('mes.盘点单编号')" align="center" prop="takingCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -65,20 +65,20 @@
           >{{scope.row.takingCode}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="盘点单名称" align="center" prop="takingName" />
-      <el-table-column label="盘点类型" align="center" prop="takingType">
+      <el-table-column :label="$t('mes.盘点单名称')" align="center" prop="takingName" />
+      <el-table-column :label="$t('mes.盘点类型')" align="center" prop="takingType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_stocktaking_type" :value="scope.row.takingType"/>
         </template>
       </el-table-column>
-      <el-table-column label="盘点日期" align="center" prop="takingDate" width="180">
+      <el-table-column :label="$t('mes.盘点日期')" align="center" prop="takingDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.takingDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="盘点人" align="center" prop="nickName" />
-      <el-table-column label="仓库名称" align="center" prop="warehouseName" />
-      <el-table-column label="单据状态" align="center" prop="status" />
+      <el-table-column :label="$t('mes.盘点人')" align="center" prop="nickName" />
+      <el-table-column :label="$t('mes.仓库名称')" align="center" prop="warehouseName" />
+      <el-table-column :label="$t('mes.单据状态')" align="center" prop="status" />
     </el-table>
     
     <pagination
@@ -92,28 +92,28 @@
     <!-- 添加或修改库存盘点记录对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="盘点单编号" prop="takingCode">
-          <el-input v-model="form.takingCode" placeholder="请输入盘点单编号" />
+        <el-form-item :label="$t('mes.盘点单编号')" prop="takingCode">
+          <el-input v-model="form.takingCode" :placeholder="$t('mes.请输入盘点单编号')" />
         </el-form-item>
-        <el-form-item label="盘点单名称" prop="takingName">
-          <el-input v-model="form.takingName" placeholder="请输入盘点单名称" />
+        <el-form-item :label="$t('mes.盘点单名称')" prop="takingName">
+          <el-input v-model="form.takingName" :placeholder="$t('mes.请输入盘点单名称')" />
         </el-form-item>
-        <el-form-item label="盘点日期" prop="takingDate">
+        <el-form-item :label="$t('mes.盘点日期')" prop="takingDate">
           <el-date-picker clearable
             v-model="form.takingDate"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择盘点日期">
+            :placeholder="$t('mes.请选择盘点日期')">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="盘点人用户名" prop="userName">
-          <el-input v-model="form.userName" placeholder="请输入盘点人用户名" />
+        <el-form-item :label="$t('mes.盘点人用户名')" prop="userName">
+          <el-input v-model="form.userName" :placeholder="$t('mes.请输入盘点人用户名')" />
         </el-form-item>
-        <el-form-item label="盘点人" prop="nickName">
-          <el-input v-model="form.nickName" placeholder="请输入盘点人" />
+        <el-form-item :label="$t('mes.盘点人')" prop="nickName">
+          <el-input v-model="form.nickName" :placeholder="$t('mes.请输入盘点人')" />
         </el-form-item>
-        <el-form-item label="盘点类型" prop="takingType">
-          <el-select v-model="form.takingType" placeholder="请选择盘点类型">
+        <el-form-item :label="$t('mes.盘点类型')" prop="takingType">
+          <el-select v-model="form.takingType" :placeholder="$t('mes.请选择盘点类型')">
             <el-option
               v-for="dict in dict.type.mes_stocktaking_type"
               :key="dict.value"
@@ -122,35 +122,35 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="仓库ID" prop="warehouseId">
-          <el-input v-model="form.warehouseId" placeholder="请输入仓库ID" />
+        <el-form-item :label="$t('mes.仓库ID')" prop="warehouseId">
+          <el-input v-model="form.warehouseId" :placeholder="$t('mes.请输入仓库ID')" />
         </el-form-item>
-        <el-form-item label="仓库编码" prop="warehouseCode">
-          <el-input v-model="form.warehouseCode" placeholder="请输入仓库编码" />
+        <el-form-item :label="$t('mes.仓库编码')" prop="warehouseCode">
+          <el-input v-model="form.warehouseCode" :placeholder="$t('mes.请输入仓库编码')" />
         </el-form-item>
-        <el-form-item label="仓库名称" prop="warehouseName">
-          <el-input v-model="form.warehouseName" placeholder="请输入仓库名称" />
+        <el-form-item :label="$t('mes.仓库名称')" prop="warehouseName">
+          <el-input v-model="form.warehouseName" :placeholder="$t('mes.请输入仓库名称')" />
         </el-form-item>
-        <el-form-item label="单据状态">
+        <el-form-item :label="$t('mes.单据状态')">
           <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
+            <el-radio label="1">{{ this.$t('mes.请选择字典生成') }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('system.备注')" prop="remark">
+          <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
         </el-form-item>
       </el-form>
       <el-tabs type="border-card" v-if="form.takingId != null">        
-        <el-tab-pane v-if="form.takingType=='OPEN'" label="盘点清单">
+        <el-tab-pane v-if="form.takingType=='OPEN'" :label="$t('mes.盘点清单')">
           <TakingLine></TakingLine>
         </el-tab-pane>
-        <el-tab-pane label="盘点结果">
+        <el-tab-pane :label="$t('mes.盘点结果')">
           <TakingResult></TakingResult>  
         </el-tab-pane>
       </el-tabs>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -194,11 +194,11 @@ export default {
       // 表单校验
       rules: {
         takingCode: [
-          { required: true, message: "盘点单编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.盘点单编号不能为空'), trigger: "blur" }
         ],        takingDate: [
-          { required: true, message: "盘点日期不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.盘点日期不能为空'), trigger: "blur" }
         ],        takingType: [
-          { required: true, message: "盘点类型不能为空", trigger: "change" }
+          { required: true, message: this.$t('mes.盘点类型不能为空'), trigger: "change" }
         ],      }
     };
   },
@@ -246,7 +246,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加库存盘点记录";
+      this.title = this.$t('mes.添加库存盘点记录');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -255,7 +255,7 @@ export default {
       getStocktaking(takingId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改库存盘点记录";
+        this.title = this.$t('mes.修改库存盘点记录');
       });
     },
     /** 提交按钮 */
@@ -264,13 +264,13 @@ export default {
         if (valid) {
           if (this.form.takingId != null) {
             updateStocktaking(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addStocktaking(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -281,11 +281,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const takingIds = row.takingId || this.ids;
-      this.$modal.confirm('是否确认删除库存盘点记录编号为"' + takingIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除库存盘点记录编号为{v}的数据项？', { v: takingIds })).then(function() {
         return delStocktaking(takingIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */
@@ -297,11 +297,11 @@ export default {
     //执行盘点
     handleExecute(row){
       const takingIds = row.takingId || this.ids;
-      this.$modal.confirm('确认执行盘点？').then(function() {
+      this.$modal.confirm(this.$t('mes.确认执行盘点？')).then(function() {
         return execute(takingIds)//执行入库
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("盘点完成");
+        this.$modal.msgSuccess(this.$t('mes.盘点完成'));
       }).catch(() => {});
     },
   }

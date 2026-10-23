@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="缺陷记录"
+  <el-dialog :title="$t('mes.缺陷记录')"
     v-if="showFlag"
     :visible.sync="showFlag"
     :modal= false
@@ -14,7 +14,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -24,18 +24,18 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-        >常见缺陷</el-button>
+        >{{ this.$t('mes.常见缺陷') }}</el-button>
       </el-col>      
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="defectrecordList">
-      <el-table-column label="缺陷描述" width="400px" align="center" prop="defectName" >
+      <el-table-column :label="$t('mes.缺陷描述')" width="400px" align="center" prop="defectName" >
             <template slot-scope="scope">
               <el-input type="textarea" v-model="scope.row.defectName"></el-input>
             </template>
       </el-table-column>
-      <el-table-column label="缺陷等级" align="center" prop="defectLevel">
+      <el-table-column :label="$t('mes.缺陷等级')" align="center" prop="defectLevel">
         <template slot-scope="scope">
             <el-select v-model="scope.row.defectLevel">
                 <el-option
@@ -47,12 +47,12 @@
             </el-select>          
         </template>
       </el-table-column>
-      <el-table-column label="缺陷数量" align="center" prop="defectQuantity" >
+      <el-table-column :label="$t('mes.缺陷数量')" align="center" prop="defectQuantity" >
         <template slot-scope="scope">
             <el-input-number :min="1" v-model="scope.row.defectQuantity" />
         </template>
       </el-table-column>
-      <el-table-column label="操作" v-if="optType !='view'" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" v-if="optType !='view'" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -61,7 +61,7 @@
             v-if="optType !='view'"
             @click="handleDelete(scope.$index, scope.row)"
 
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -74,9 +74,9 @@
       @pagination="getList"
     />
     <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary"  v-else @click="confirm">确 定</el-button>
-        <el-button @click="showFlag=false">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary"  v-else @click="confirm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="showFlag=false">{{ this.$t('system.取 消') }}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -188,7 +188,7 @@ export default {
     handleDelete(index,row) {
         const recordIds = row.recordId || this.ids;
         let that = this;
-        this.$modal.confirm('是否确认删除缺陷记录？').then(function() {
+        this.$modal.confirm(this.$t('mes.是否确认删除缺陷记录？')).then(function() {
             that.defectrecordList.forEach(function(item,i,arr){
                 if(i == index){
                   if(that.defectrecordList[index].flag=='add'){

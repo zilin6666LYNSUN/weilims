@@ -1,33 +1,33 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="工艺路线编号" prop="routeCode">
+      <el-form-item :label="$t('mes.工艺路线编号')" prop="routeCode">
         <el-input
           v-model="queryParams.routeCode"
-          placeholder="请输入工艺路线编号"
+          :placeholder="$t('mes.请输入工艺路线编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="工艺路线名称" prop="routeName">
+      <el-form-item :label="$t('mes.工艺路线名称')" prop="routeName">
         <el-input
           v-model="queryParams.routeName"
-          placeholder="请输入工艺路线名称"
+          :placeholder="$t('mes.请输入工艺路线名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="是否启用" prop="enableFlag">
+      <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
         <el-input
           v-model="queryParams.enableFlag"
-          placeholder="请输入是否启用"
+          :placeholder="$t('mes.请输入是否启用')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -40,7 +40,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:pro:proroute:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -51,7 +51,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:pro:proroute:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -62,7 +62,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:pro:proroute:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -72,14 +72,14 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:pro:proroute:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="prorouteList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="工艺路线编号" align="center" prop="routeCode" >
+      <el-table-column :label="$t('mes.工艺路线编号')" align="center" prop="routeCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -88,15 +88,15 @@
           >{{scope.row.routeCode}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="工艺路线名称" align="center" prop="routeName" />
-      <el-table-column label="工艺路线说明" align="center" prop="routeDesc" />
-      <el-table-column label="是否启用" align="center" prop="enableFlag">
+      <el-table-column :label="$t('mes.工艺路线名称')" align="center" prop="routeName" />
+      <el-table-column :label="$t('mes.工艺路线说明')" align="center" prop="routeDesc" />
+      <el-table-column :label="$t('system.是否启用')" align="center" prop="enableFlag">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -104,14 +104,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:pro:proroute:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:pro:proroute:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -129,26 +129,26 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="编号" prop="routeCode">
-              <el-input v-model="form.routeCode" placeholder="请输入工艺路线编号" />
+            <el-form-item :label="$t('mes.编号')" prop="routeCode">
+              <el-input v-model="form.routeCode" :placeholder="$t('mes.请输入工艺路线编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="3">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="7">
-            <el-form-item label="名称" prop="routeName">
-              <el-input v-model="form.routeName" placeholder="请输入工艺路线名称" />
+            <el-form-item :label="$t('mes.名称')" prop="routeName">
+              <el-input v-model="form.routeName" :placeholder="$t('mes.请输入工艺路线名称')" />
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="是否启用" prop="enableFlag">
+            <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
               <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
                 <el-radio
                   v-for="dict in dict.type.sys_yes_no"
@@ -168,31 +168,31 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="说明" prop="routeDesc">
-              <el-input v-model="form.routeDesc" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('mes.说明')" prop="routeDesc">
+              <el-input v-model="form.routeDesc" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <el-tabs type="border-card" v-if="form.routeId != null">        
-        <el-tab-pane label="组成工序">
+        <el-tab-pane :label="$t('mes.组成工序')">
           <Routeprocess v-if="form.routeId !=null" :optType="optType" :routeId="form.routeId"></Routeprocess>         
         </el-tab-pane>
-        <el-tab-pane label="关联产品">
+        <el-tab-pane :label="$t('mes.关联产品')">
           <Routeproduct v-if="form.routeId !=null" :optType="optType" :routeId="form.routeId"></Routeproduct>
         </el-tab-pane>
       </el-tabs>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-else>{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -244,13 +244,13 @@ export default {
       // 表单校验
       rules: {
         routeCode: [
-          { required: true, message: "工艺路线编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.工艺路线编号不能为空'), trigger: "blur" }
         ],
         routeName: [
-          { required: true, message: "工艺路线名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.工艺路线名称不能为空'), trigger: "blur" }
         ],
         enableFlag: [
-          { required: true, message: "是否启用不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.是否启用不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -310,7 +310,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加工艺路线";
+      this.title = this.$t('mes.添加工艺路线');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -320,7 +320,7 @@ export default {
       getProroute(routeId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看工艺线路信息";
+        this.title = this.$t('mes.查看工艺线路信息');
         this.optType = "view";
       });
     },
@@ -331,7 +331,7 @@ export default {
       getProroute(routeId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改工艺路线";
+        this.title = this.$t('mes.修改工艺路线');
         this.optType = "edit";
       });
     },
@@ -341,13 +341,13 @@ export default {
         if (valid) {
           if (this.form.routeId != null) {
             updateProroute(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addProroute(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -358,11 +358,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const routeIds = row.routeId || this.ids;
-      this.$modal.confirm('是否确认删除工艺路线编号为"' + routeIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除工艺路线编号为{v}的数据项？', { v: routeIds })).then(function() {
         return delProroute(routeIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

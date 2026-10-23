@@ -1,44 +1,44 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="退货单编号" prop="rtCode">
+      <el-form-item :label="$t('mes.退货单编号')" prop="rtCode">
         <el-input
           v-model="queryParams.rtCode"
-          placeholder="请输入退货单编号"
+          :placeholder="$t('mes.请输入退货单编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
 
-      <el-form-item label="销售订单编号" prop="soCode">
+      <el-form-item :label="$t('mes.销售订单编号')" prop="soCode">
         <el-input
           v-model="queryParams.soCode"
-          placeholder="请输入销售订单编号"
+          :placeholder="$t('mes.请输入销售订单编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
 
-      <el-form-item label="客户名称" prop="clientName">
+      <el-form-item :label="$t('lims.客户名称')" prop="clientName">
         <el-input
           v-model="queryParams.clientName"
-          placeholder="请输入客户名称"
+          :placeholder="$t('lims.请输入客户名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
 
-      <el-form-item label="仓库名称" prop="warehouseName">
+      <el-form-item :label="$t('mes.仓库名称')" prop="warehouseName">
         <el-input
           v-model="queryParams.warehouseName"
-          placeholder="请输入仓库名称"
+          :placeholder="$t('mes.请输入仓库名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
 
-      <el-form-item label="单据状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择单据状态" clearable>
+      <el-form-item :label="$t('mes.单据状态')" prop="status">
+        <el-select v-model="queryParams.status" :placeholder="$t('mes.请选择单据状态')" clearable>
           <el-option
             v-for="dict in dict.type.mes_order_status"
             :key="dict.value"
@@ -49,8 +49,8 @@
       </el-form-item>
      
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -63,7 +63,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:rtsalse:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -74,7 +74,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:wm:rtsalse:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -85,14 +85,14 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:wm:rtsalse:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="rtsalseList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="退货单编号" width="140px" align="center" prop="rtCode" >
+      <el-table-column :label="$t('mes.退货单编号')" width="140px" align="center" prop="rtCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -101,23 +101,23 @@
           >{{scope.row.rtCode}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="退货单名称" width="150px" align="center" prop="rtName" :show-overflow-tooltip="true"/>
-      <el-table-column label="销售订单编号" width="120px" align="center" prop="soCode" />
-      <el-table-column label="客户名称" width="150px" align="center" prop="clientName" :show-overflow-tooltip="true"/>
-      <el-table-column label="仓库" align="center" prop="warehouseName" />
-      <el-table-column label="库区" align="center" prop="locationName" />
-      <el-table-column label="库位" align="center" prop="areaName" />
-      <el-table-column label="退货日期"  align="center" prop="rtDate" width="120">
+      <el-table-column :label="$t('mes.退货单名称')" width="150px" align="center" prop="rtName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('mes.销售订单编号')" width="120px" align="center" prop="soCode" />
+      <el-table-column :label="$t('lims.客户名称')" width="150px" align="center" prop="clientName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('mes.仓库')" align="center" prop="warehouseName" />
+      <el-table-column :label="$t('mes.库区')" align="center" prop="locationName" />
+      <el-table-column :label="$t('mes.库位')" align="center" prop="areaName" />
+      <el-table-column :label="$t('mes.退货日期')"  align="center" prop="rtDate" width="120">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.rtDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="单据状态" align="center" prop="status">
+      <el-table-column :label="$t('mes.单据状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="120px" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" width="120px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -126,7 +126,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:wm:rtsalse:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -134,7 +134,7 @@
             @click="handleDelete(scope.row)"
             v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:wm:rtsalse:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -142,7 +142,7 @@
             @click="handleExecute(scope.row)"
             v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:wm:rtsalse:edit']"
-          >执行退货</el-button>
+          >{{ this.$t('mes.执行退货') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -160,58 +160,58 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="退货单编号" prop="rtCode">
-              <el-input v-model="form.rtCode" placeholder="请输入退货单编号" />
+            <el-form-item :label="$t('mes.退货单编号')" prop="rtCode">
+              <el-input v-model="form.rtCode" :placeholder="$t('mes.请输入退货单编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view' && form.status =='PREPARE'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="退货单名称" prop="rtName">
-              <el-input v-model="form.rtName" placeholder="请输入退货单名称" />
+            <el-form-item :label="$t('mes.退货单名称')" prop="rtName">
+              <el-input v-model="form.rtName" :placeholder="$t('mes.请输入退货单名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="销售订单编号" prop="soCode">
-              <el-input v-model="form.soCode" placeholder="请输入销售订单编号" />
+            <el-form-item :label="$t('mes.销售订单编号')" prop="soCode">
+              <el-input v-model="form.soCode" :placeholder="$t('mes.请输入销售订单编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="客户编号" prop="clientCode">
-              <el-input v-model="form.clientCode" readonly="readonly" placeholder="请输入客户编码" >
+            <el-form-item :label="$t('mes.客户编号')" prop="clientCode">
+              <el-input v-model="form.clientCode" readonly="readonly" :placeholder="$t('lims.请输入客户编码')" >
                 <el-button slot="append" @click="handleSelectClient" icon="el-icon-search"></el-button>
               </el-input>
             </el-form-item>
             <ClientSelectSingle ref="clientSelect" @onSelected="handleClientSelect"></ClientSelectSingle>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="客户名称" prop="clientName">
-              <el-input v-model="form.clientName" readonly="readonly" placeholder="请输入客户名称" />
+            <el-form-item :label="$t('lims.客户名称')" prop="clientName">
+              <el-input v-model="form.clientName" readonly="readonly" :placeholder="$t('lims.请输入客户名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="退货日期" prop="rtDate">
+            <el-form-item :label="$t('mes.退货日期')" prop="rtDate">
               <el-date-picker clearable
                 v-model="form.rtDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择退货日期">
+                :placeholder="$t('mes.请选择退货日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="退货仓库">
+            <el-form-item :label="$t('mes.退货仓库')">
               <el-cascader v-model="warehouseInfo"
                 :options="warehouseOptions"
                 :props="warehouseProps"
@@ -221,8 +221,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="单据状态" prop="status">
-              <el-select v-model="form.status" disabled placeholder="请选择单据状态">
+            <el-form-item :label="$t('mes.单据状态')" prop="status">
+              <el-select v-model="form.status" disabled :placeholder="$t('mes.请选择单据状态')">
                 <el-option
                   v-for="dict in dict.type.mes_order_status"
                   :key="dict.value"
@@ -235,27 +235,27 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="退货原因" prop="rtReason">
-              <el-input v-model="form.rtReason" type="textarea" placeholder="请输入退货原因" />
+            <el-form-item :label="$t('mes.退货原因')" prop="rtReason">
+              <el-input v-model="form.rtReason" type="textarea" :placeholder="$t('mes.请输入退货原因')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <el-divider v-if="form.rtId !=null" content-position="center">产品信息</el-divider> 
+      <el-divider v-if="form.rtId !=null" content-position="center">{{ this.$t('mes.产品信息') }}</el-divider> 
       <el-card shadow="always" v-if="form.rtId !=null" class="box-card">
         <Rtsalseline :rtId="form.rtId" :optType="optType"></Rtsalseline>
       </el-card>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">确 定</el-button>        
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">{{ this.$t('system.确 定') }}</el-button>        
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -336,19 +336,19 @@ export default {
       // 表单校验
       rules: {
         rtCode: [
-          { required: true, message: "退货单编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.退货单编号不能为空'), trigger: "blur" }
         ],
         rtName: [
-          { required: true, message: "退货单名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.退货单名称不能为空'), trigger: "blur" }
         ],
         rtDate: [
-          { required: true, message: "请选择退货日期", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择退货日期'), trigger: "blur" }
         ],
         clientName: [
-          { required: true, message: "请选择客户", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择客户'), trigger: "blur" }
         ],
         rtReason: [
-          { required: true, message: "请填写退货原因", trigger: "blur" }
+          { required: true, message: this.$t('mes.请填写退货原因'), trigger: "blur" }
         ]
       }
     };
@@ -469,7 +469,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加产品销售退货单";
+      this.title = this.$t('mes.添加产品销售退货单');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -482,18 +482,18 @@ export default {
         this.warehouseInfo[1] = response.data.locationId;    
         this.warehouseInfo[2] = response.data.areaId; 
         this.open = true;
-        this.title = "查看销售退货单信息";
+        this.title = this.$t('mes.查看销售退货单信息');
         this.optType = "view";
       });
     },
     //执行入库
     handleExecute(row){
       const rtIds = row.rtId || this.ids;
-      this.$modal.confirm('确认执行退货？').then(function() {
+      this.$modal.confirm(this.$t('mes.确认执行退货？')).then(function() {
         return execute(rtIds)//执行退货
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("退货成功");
+        this.$modal.msgSuccess(this.$t('mes.退货成功'));
       }).catch(() => {});
     },
     /** 修改按钮操作 */
@@ -506,7 +506,7 @@ export default {
         this.warehouseInfo[1] = response.data.locationId;    
         this.warehouseInfo[2] = response.data.areaId;    
         this.open = true;
-        this.title = "修改销售退货单";
+        this.title = this.$t('mes.修改销售退货单');
         this.optType = "add";
       });
     },
@@ -516,13 +516,13 @@ export default {
         if (valid) {
           if (this.form.rtId != null) {
             updateRtsalse(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addRtsalse(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -533,11 +533,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const rtIds = row.rtId || this.ids;
-      this.$modal.confirm('是否确认删除产品销售退货单编号为"' + rtIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除产品销售退货单编号为{v}的数据项？', { v: rtIds })).then(function() {
         return delRtsalse(rtIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

@@ -2,49 +2,49 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
 
-      <el-form-item label="装箱单编号" prop="packageCode">
+      <el-form-item :label="$t('mes.装箱单编号')" prop="packageCode">
         <el-input
           v-model="queryParams.packageCode"
-          placeholder="请输入装箱单编号"
+          :placeholder="$t('mes.请输入装箱单编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="条码内容" prop="barcodeContent">
+      <el-form-item :label="$t('mes.条码内容')" prop="barcodeContent">
         <el-input
           v-model="queryParams.barcodeContent"
-          placeholder="请输入条码内容"
+          :placeholder="$t('mes.请输入条码内容')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="销售订单编号" prop="soCode">
+      <el-form-item :label="$t('mes.销售订单编号')" prop="soCode">
         <el-input
           v-model="queryParams.soCode"
-          placeholder="请输入销售订单编号"
+          :placeholder="$t('mes.请输入销售订单编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="客户名称" prop="clientName">
+      <el-form-item :label="$t('lims.客户名称')" prop="clientName">
         <el-input
           v-model="queryParams.clientName"
-          placeholder="请输入客户名称"
+          :placeholder="$t('lims.请输入客户名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="检查员名称" prop="inspectorName">
+      <el-form-item :label="$t('mes.检查员名称')" prop="inspectorName">
         <el-input
           v-model="queryParams.inspectorName"
-          placeholder="请输入检查员名称"
+          :placeholder="$t('mes.请输入检查员名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -57,7 +57,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:package:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -67,7 +67,7 @@
       default-expand-all
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       @selection-change="handleSelectionChange">
-      <el-table-column label="装箱单编号" width="180px" align="center" prop="packageCode" >
+      <el-table-column :label="$t('mes.装箱单编号')" width="180px" align="center" prop="packageCode" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -77,29 +77,29 @@
           >{{scope.row.packageCode}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="装箱日期" align="center" prop="packageDate" width="120">
+      <el-table-column :label="$t('mes.装箱日期')" align="center" prop="packageDate" width="120">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.packageDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="销售订单编号" width="100px" align="center" prop="soCode" />
-      <el-table-column label="发票编号" align="center" prop="invoiceCode" />
-      <el-table-column label="客户编码" align="center" prop="clientCode" />
-      <el-table-column label="客户名称" width="120px" align="center" prop="clientName" :show-overflow-tooltip="true"/>
-      <el-table-column label="箱长度" align="center" prop="packageLength" />
-      <el-table-column label="箱宽度" align="center" prop="packageWidth" />
-      <el-table-column label="箱高度" align="center" prop="packageHeight" />
-      <el-table-column label="尺寸单位" align="center" prop="sizeUnit" />
-      <el-table-column label="净重" align="center" prop="netWeight" />
-      <el-table-column label="毛重" align="center" prop="crossWeight" />
-      <el-table-column label="重量单位" align="center" prop="weightUnit" />
-      <el-table-column label="检查员" align="center" prop="inspectorName" />
-      <el-table-column label="状态" align="center" prop="status">
+      <el-table-column :label="$t('mes.销售订单编号')" width="100px" align="center" prop="soCode" />
+      <el-table-column :label="$t('mes.发票编号')" align="center" prop="invoiceCode" />
+      <el-table-column :label="$t('lims.客户编码')" align="center" prop="clientCode" />
+      <el-table-column :label="$t('lims.客户名称')" width="120px" align="center" prop="clientName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('mes.箱长度')" align="center" prop="packageLength" />
+      <el-table-column :label="$t('mes.箱宽度')" align="center" prop="packageWidth" />
+      <el-table-column :label="$t('mes.箱高度')" align="center" prop="packageHeight" />
+      <el-table-column :label="$t('mes.尺寸单位')" align="center" prop="sizeUnit" />
+      <el-table-column :label="$t('mes.净重')" align="center" prop="netWeight" />
+      <el-table-column :label="$t('mes.毛重')" align="center" prop="crossWeight" />
+      <el-table-column :label="$t('mes.重量单位')" align="center" prop="weightUnit" />
+      <el-table-column :label="$t('mes.检查员')" align="center" prop="inspectorName" />
+      <el-table-column :label="$t('system.状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -108,7 +108,7 @@
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:wm:package:edit']"
             v-if="scope.row.status =='PREPARE'"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -116,7 +116,7 @@
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:wm:package:remove']"
             v-if="scope.row.status =='PREPARE'"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -136,15 +136,15 @@
           <el-col :span="12">
             <el-row>
               <el-col :span="16">
-                <el-form-item label="装箱单编号" prop="packageCode">
-                  <el-input v-model="form.packageCode" placeholder="请输入装箱单编号" />
+                <el-form-item :label="$t('mes.装箱单编号')" prop="packageCode">
+                  <el-input v-model="form.packageCode" :placeholder="$t('mes.请输入装箱单编号')" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item  label-width="80">
                   <el-switch v-model="autoGenFlag"
                       active-color="#13ce66"
-                      active-text="自动生成"
+                      :active-text="$t('mes.自动生成')"
                       @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view' && form.status =='PREPARE'">               
                   </el-switch>
                 </el-form-item>
@@ -152,20 +152,20 @@
             </el-row>
             <el-row>
               <el-col :span="24">
-                <el-form-item label="装箱日期" prop="packageDate">
+                <el-form-item :label="$t('mes.装箱日期')" prop="packageDate">
                   <el-date-picker clearable
                     v-model="form.packageDate"
                     type="date"
                     value-format="yyyy-MM-dd"
-                    placeholder="请选择装箱日期">
+                    :placeholder="$t('mes.请选择装箱日期')">
                   </el-date-picker>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="17">
-                <el-form-item label="销售订单编号" prop="soCode">
-                  <el-input v-model="form.soCode" placeholder="请输入销售订单编号" />
+                <el-form-item :label="$t('mes.销售订单编号')" prop="soCode">
+                  <el-input v-model="form.soCode" :placeholder="$t('mes.请输入销售订单编号')" />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -180,28 +180,28 @@
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="客户编码" prop="clientCode">
-              <el-input v-model="form.clientCode" placeholder="请输入客户编码" >
+            <el-form-item :label="$t('lims.客户编码')" prop="clientCode">
+              <el-input v-model="form.clientCode" :placeholder="$t('lims.请输入客户编码')" >
                 <el-button slot="append" @click="handleSelectClient" icon="el-icon-search"></el-button>
               </el-input>
             </el-form-item>
             <ClientSelect ref="clientSelect" @onSelected="onClientSelected" > </ClientSelect>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="客户名称" prop="clientName">
-              <el-input v-model="form.clientName" placeholder="请输入客户名称" />
+            <el-form-item :label="$t('lims.客户名称')" prop="clientName">
+              <el-input v-model="form.clientName" :placeholder="$t('lims.请输入客户名称')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="发票编号" prop="invoiceCode">
-              <el-input v-model="form.invoiceCode" placeholder="请输入发票编号" />
+            <el-form-item :label="$t('mes.发票编号')" prop="invoiceCode">
+              <el-input v-model="form.invoiceCode" :placeholder="$t('mes.请输入发票编号')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="箱长度" prop="packageLength">
-              <el-input v-model="form.packageLength" placeholder="请输入箱长度" class="input-with-select">
+            <el-form-item :label="$t('mes.箱长度')" prop="packageLength">
+              <el-input v-model="form.packageLength" :placeholder="$t('mes.请输入箱长度')" class="input-with-select">
                 <el-select slot="append" class="width" v-model="form.sizeUnit">
                   <el-option
                       v-for="item in measureOptions"
@@ -214,20 +214,20 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="箱宽度" prop="packageWidth">
-              <el-input v-model="form.packageWidth" placeholder="请输入箱宽度" />
+            <el-form-item :label="$t('mes.箱宽度')" prop="packageWidth">
+              <el-input v-model="form.packageWidth" :placeholder="$t('mes.请输入箱宽度')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="箱高度" prop="packageHeight">
-              <el-input v-model="form.packageHeight" placeholder="请输入箱高度" />
+            <el-form-item :label="$t('mes.箱高度')" prop="packageHeight">
+              <el-input v-model="form.packageHeight" :placeholder="$t('mes.请输入箱高度')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="净重" prop="netWeight">
-              <el-input v-model="form.netWeight" placeholder="请输入净重" >
+            <el-form-item :label="$t('mes.净重')" prop="netWeight">
+              <el-input v-model="form.netWeight" :placeholder="$t('mes.请输入净重')" >
                 <el-select slot="append" v-model="form.weightUnit">
                   <el-option
                       v-for="item in measureOptions"
@@ -240,33 +240,33 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="毛重" prop="crossWeight">
-              <el-input v-model="form.crossWeight" placeholder="请输入毛重" />
+            <el-form-item :label="$t('mes.毛重')" prop="crossWeight">
+              <el-input v-model="form.crossWeight" :placeholder="$t('mes.请输入毛重')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="检查员名称" prop="inspectorName">
-              <el-input v-model="form.inspectorName" placeholder="请输入检查员名称" />
+            <el-form-item :label="$t('mes.检查员名称')" prop="inspectorName">
+              <el-input v-model="form.inspectorName" :placeholder="$t('mes.请输入检查员名称')" />
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('system.备注')" prop="remark">
+          <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
         </el-form-item>
       </el-form>
       <el-tabs type="border-card" v-if="form.packageId !=null">
-        <el-tab-pane label="子箱">
+        <el-tab-pane :label="$t('mes.子箱')">
           <SubPackage ref="subPackge" :parentId="form.packageId" :optType="optType"></SubPackage>
         </el-tab-pane>
-        <el-tab-pane label="装箱清单">
+        <el-tab-pane :label="$t('mes.装箱清单')">
           <Packageline ref="packageLine" :packageId="form.packageId" :optType="optType"></Packageline>
         </el-tab-pane>
       </el-tabs>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">保 存</el-button>
-        <el-button type="success" @click="doconfirm" v-if="form.status =='PREPARE' && optType !='view' && form.packageId !=null">完成</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view' || form.status !='PREPARE' ">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status =='PREPARE' && optType !='view' ">{{ this.$t('mes.保 存') }}</el-button>
+        <el-button type="success" @click="doconfirm" v-if="form.status =='PREPARE' && optType !='view' && form.packageId !=null">{{ this.$t('lims.完成') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -345,13 +345,13 @@ export default {
       // 表单校验
       rules: {
         parentId: [
-          { required: true, message: "父箱ID不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.父箱ID不能为空'), trigger: "blur" }
         ],
         ancestors: [
-          { required: true, message: "所有父节点ID不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.所有父节点ID不能为空'), trigger: "blur" }
         ],
         packageDate: [
-          { required: true, message: "装箱日期不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.装箱日期不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -465,7 +465,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加装箱单";
+      this.title = this.$t('mes.添加装箱单');
       this.optType="add";
     },
     // 查询明细按钮操作
@@ -475,7 +475,7 @@ export default {
       getPackage(packageIds).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看装箱单信息";
+        this.title = this.$t('mes.查看装箱单信息');
         this.optType = "view";
       });
     },
@@ -486,7 +486,7 @@ export default {
       getPackage(packageId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改装箱单";
+        this.title = this.$t('mes.修改装箱单');
         this.optType="edit";
       });
     },
@@ -496,13 +496,13 @@ export default {
         if (valid) {
           if (this.form.packageId != null) {
             updatePackage(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addPackage(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -513,7 +513,7 @@ export default {
     //完成
     doconfirm(){
       let that = this;
-      this.$modal.confirm('是否完成装箱单编制？【完成后将不能更改】').then(function(){
+      this.$modal.confirm(this.$t('mes.是否完成装箱单编制？【完成后将不能更改】')).then(function(){
         that.form.status = 'FINISHED';
         that.submitForm();
       });
@@ -521,11 +521,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const packageIds = row.packageId || this.ids;
-      this.$modal.confirm('是否确认删除装箱单编号为"' + packageIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除装箱单编号为{v}的数据项？', { v: packageIds })).then(function() {
         return delPackage(packageIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

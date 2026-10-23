@@ -10,7 +10,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:dv:repair:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -21,24 +21,24 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:dv:repair:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="repairlineList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="项目名称" align="center" prop="subjectName" />
-      <el-table-column label="故障描述" align="center" prop="malfunction" >
+      <el-table-column :label="$t('mes.项目名称')" align="center" prop="subjectName" />
+      <el-table-column :label="$t('mes.故障描述')" align="center" prop="malfunction" >
         <template slot-scope="scope">
           <el-input type="textarea">{{scope.row.malfunction}}</el-input>
         </template>
       </el-table-column>
-      <el-table-column label="故障描述资源" align="center" prop="malfunctionUrl" >
+      <el-table-column :label="$t('mes.故障描述资源')" align="center" prop="malfunctionUrl" >
         
       </el-table-column>
-      <el-table-column label="维修情况" align="center" prop="repairDes" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.维修情况')" align="center" prop="repairDes" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -46,14 +46,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:dv:repair:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:dv:repair:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -69,22 +69,22 @@
     <!-- 添加或修改设备维修单行对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="960px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">       
-        <el-form-item label="项目名称" prop="subjectName">
-          <el-input v-model="form.subjectName" placeholder="请输入项目名称" />
+        <el-form-item :label="$t('mes.项目名称')" prop="subjectName">
+          <el-input v-model="form.subjectName" :placeholder="$t('mes.请输入项目名称')" />
         </el-form-item>        
-        <el-form-item label="故障描述" prop="malfunction">
-          <el-input v-model="form.malfunction" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('mes.故障描述')" prop="malfunction">
+          <el-input v-model="form.malfunction" type="textarea" :placeholder="$t('common.inputContent')" />
         </el-form-item>
-        <el-form-item label="故障描述资源" prop="malfunctionUrl">
-          <el-input type="textarea" v-model="form.malfunctionUrl" placeholder="请输入故障描述资源" />
+        <el-form-item :label="$t('mes.故障描述资源')" prop="malfunctionUrl">
+          <el-input type="textarea" v-model="form.malfunctionUrl" :placeholder="$t('mes.请输入故障描述资源')" />
         </el-form-item>
-        <el-form-item label="维修情况" prop="repairDes">
-          <el-input  v-model="form.repairDes" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('mes.维修情况')" prop="repairDes">
+          <el-input  v-model="form.repairDes" type="textarea" :placeholder="$t('common.inputContent')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -139,7 +139,7 @@ export default {
       // 表单校验
       rules: {
         malfunction: [
-          { required: true, message: "故障描述不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.故障描述不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -208,7 +208,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加设备维修单行";
+      this.title = this.$t('mes.添加设备维修单行');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -217,7 +217,7 @@ export default {
       getRepairline(lineId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改设备维修单行";
+        this.title = this.$t('mes.修改设备维修单行');
       });
     },
     /** 提交按钮 */
@@ -226,13 +226,13 @@ export default {
         if (valid) {
           if (this.form.lineId != null) {
             updateRepairline(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addRepairline(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -243,11 +243,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const lineIds = row.lineId || this.ids;
-      this.$modal.confirm('是否确认删除设备维修单行编号为"' + lineIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除设备维修单行编号为{v}的数据项？', { v: lineIds })).then(function() {
         return delRepairline(lineIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:md:mditem:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -20,14 +20,14 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:md:mditem:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="printerconfigList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="打印机编号" align="center" prop="printerCode" :show-overflow-tooltip="true" >
+      <el-table-column :label="$t('print.打印机编号')" align="center" prop="printerCode" :show-overflow-tooltip="true" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -36,37 +36,37 @@
           >{{scope.row.printerCode}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="是否默认" align="center" prop="defaultFlag">
+      <el-table-column :label="$t('print.是否默认')" align="center" prop="defaultFlag">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.defaultFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="打印机类型" align="center" prop="printerType">
+      <el-table-column :label="$t('print.打印机类型')" align="center" prop="printerType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_printer_type" :value="scope.row.printerType"/>
         </template>
       </el-table-column>
-      <el-table-column label="打印机名称" align="center" prop="printerName" />
-      <el-table-column label="品牌" align="center" prop="brand" />
-      <el-table-column label="型号" align="center" prop="printerModel" />
-      <el-table-column label="连接类型" align="center" prop="connectionType">
+      <el-table-column :label="$t('print.打印机名称')" align="center" prop="printerName" />
+      <el-table-column :label="$t('print.品牌')" align="center" prop="brand" />
+      <el-table-column :label="$t('lims.型号')" align="center" prop="printerModel" />
+      <el-table-column :label="$t('print.连接类型')" align="center" prop="connectionType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_conn_type" :value="scope.row.connectionType"/>
         </template>
       </el-table-column>
-      <el-table-column label="打印机IP" align="center" prop="printerIp" />
-      <el-table-column label="打印机端口" align="center" prop="printerPort" />
-      <el-table-column label="启用状态" align="center" prop="enableFlag">
+      <el-table-column :label="$t('print.打印机IP')" align="center" prop="printerIp" />
+      <el-table-column :label="$t('print.打印机端口')" align="center" prop="printerPort" />
+      <el-table-column :label="$t('system.启用状态')" align="center" prop="enableFlag">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="打印机状态" align="center" prop="status">
+      <el-table-column :label="$t('print.打印机状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_printer_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" v-if="optType !='view'">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width" v-if="optType !='view'">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -74,14 +74,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:md:mditem:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:md:mditem:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -89,7 +89,7 @@
             @click="handleDefault(scope.row)"
             v-if="scope.row.defaultFlag != 'Y'"
             v-hasPermi="['print:printerconfig:list']"
-          >设置为默认</el-button>
+          >{{ this.$t('print.设置为默认') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -109,15 +109,15 @@
           <el-col :span="16">
             <el-row>
               <el-col :span="16">
-                <el-form-item label="打印机编号" prop="printerCode">
-                  <el-input v-model="form.printerCode" placeholder="请输入打印机编号" />
+                <el-form-item :label="$t('print.打印机编号')" prop="printerCode">
+                  <el-input v-model="form.printerCode" :placeholder="$t('print.请输入打印机编号')" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
                 <el-form-item  label-width="80">
                   <el-switch v-model="autoGenFlag"
                              active-color="#13ce66"
-                             active-text="自动生成"
+                             :active-text="$t('print.自动生成')"
                              @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">
                   </el-switch>
                 </el-form-item>
@@ -125,8 +125,8 @@
             </el-row>
             <el-row>
               <el-col :span="24">
-                <el-form-item label="打印机名称" prop="printerName">
-                  <el-select v-model="form.printerName" placeholder="请选择打印机">
+                <el-form-item :label="$t('print.打印机名称')" prop="printerName">
+                  <el-select v-model="form.printerName" :placeholder="$t('print.请选择打印机')">
                     <el-option
                       v-for="item in printerList"
                       :key="item.name"
@@ -139,8 +139,8 @@
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="打印机类型" prop="printerType">
-                  <el-select v-model="form.printerType" placeholder="请选择打印机类型">
+                <el-form-item :label="$t('print.打印机类型')" prop="printerType">
+                  <el-select v-model="form.printerType" :placeholder="$t('print.请选择打印机类型')">
                     <el-option
                       v-for="dict in dict.type.mes_printer_type"
                       :key="dict.value"
@@ -151,7 +151,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="启用状态" prop="enableFlag">
+                <el-form-item :label="$t('system.启用状态')" prop="enableFlag">
                   <el-radio-group v-model="form.enableFlag">
                     <el-radio
                       v-for="dict in dict.type.sys_yes_no"
@@ -164,38 +164,38 @@
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="品牌" prop="brand">
-                  <el-input v-model="form.brand" placeholder="请输入品牌" />
+                <el-form-item :label="$t('print.品牌')" prop="brand">
+                  <el-input v-model="form.brand" :placeholder="$t('print.请输入品牌')" />
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="型号" prop="printerModel">
-                  <el-input v-model="form.printerModel" placeholder="请输入型号" />
+                <el-form-item :label="$t('lims.型号')" prop="printerModel">
+                  <el-input v-model="form.printerModel" :placeholder="$t('print.请输入型号')" />
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="打印机IP" prop="printerIp">
-                  <el-input v-model="form.printerIp" placeholder="请输入打印机IP" />
+                <el-form-item :label="$t('print.打印机IP')" prop="printerIp">
+                  <el-input v-model="form.printerIp" :placeholder="$t('print.请输入打印机IP')" />
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="打印机端口" prop="printerPort">
-                  <el-input v-model="form.printerPort" placeholder="请输入打印机端口" />
+                <el-form-item :label="$t('print.打印机端口')" prop="printerPort">
+                  <el-input v-model="form.printerPort" :placeholder="$t('print.请输入打印机端口')" />
                 </el-form-item>
               </el-col>
             </el-row>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="图片URL" prop="printerUrl">
+            <el-form-item :label="$t('print.图片URL')" prop="printerUrl">
               <ImageUpload :limit="1" :value="form.printerUrl" :fileSize="5" @onUploaded="handleImgUplaoded" @onRemoved="handleImgRemoved" ></ImageUpload>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="连接类型">
+            <el-form-item :label="$t('print.连接类型')">
               <el-radio-group v-model="form.connectionType">
                 <el-radio
                   v-for="dict in dict.type.mes_conn_type"
@@ -206,7 +206,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="打印机状态">
+            <el-form-item :label="$t('print.打印机状态')">
               <el-radio-group v-model="form.status">
                 <el-radio
                   v-for="dict in dict.type.mes_printer_status"
@@ -219,15 +219,15 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm" v-if="optType !='view'">确 定</el-button>
-        <el-button @click="cancel">关 闭</el-button>
+        <el-button type="primary" @click="submitForm" v-if="optType !='view'">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('print.关 闭') }}</el-button>
       </div>
     </el-dialog>
 
@@ -276,21 +276,21 @@ export default {
       // 表单校验
       rules: {
         printerCode: [
-          { required: true, message: "打印机编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('print.打印机编号不能为空'), trigger: "blur" }
         ],
 
         printerName: [
-          { required: true, message: "打印机名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('print.打印机名称不能为空'), trigger: "blur" }
         ],
 
         printerIp: [
-          { required: true, message: "打印机IP地址不能为空", trigger: "blur" }
+          { required: true, message: this.$t('print.打印机IP地址不能为空'), trigger: "blur" }
         ],
         printerPort: [
-          { required: true, message: "打印机端口地址不能为空", trigger: "blur" }
+          { required: true, message: this.$t('print.打印机端口地址不能为空'), trigger: "blur" }
         ],
         remark: [
-          { max: 250, message: '长度必须小于250个字符', trigger: 'blur' }
+          { max: 250, message: this.$t('print.长度必须小于250个字符'), trigger: 'blur' }
         ]
       }
     };
@@ -331,7 +331,7 @@ export default {
       setDefaultPrinter(row).then(res => {
         if (res.code == 200) {
           this.getList();
-          this.$modal.msgSuccess("设置成功!");
+          this.$modal.msgSuccess(this.$t('print.设置成功!'));
         }
       })
     },
@@ -376,7 +376,7 @@ export default {
       this.printerList = hiprint.hiwebSocket.printerList
       this.reset();
       this.open = true;
-      this.title = "添加打印机配置";
+      this.title = this.$t('print.添加打印机配置');
       this.optType = 'add';
     },
     /** 修改按钮操作 */
@@ -386,7 +386,7 @@ export default {
       getPrinterconfig(printerId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改打印机配置";
+        this.title = this.$t('print.修改打印机配置');
         this.optType = 'edit';
       });
     },
@@ -398,7 +398,7 @@ export default {
       getPrinterconfig(printerId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看打印机配置";
+        this.title = this.$t('print.查看打印机配置');
         this.optType = 'view';
       });
     },
@@ -409,13 +409,13 @@ export default {
           this.form.clientId = this.client.clientId;
           if (this.form.printerId != null) {
             updatePrinterconfig(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addPrinterconfig(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -426,11 +426,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const printerIds = row.printerId || this.ids;
-      this.$modal.confirm('是否确认删除打印机配置编号为"' + printerIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('print.是否确认删除打印机配置编号为{v}的数据项？', { v: printerIds })).then(function() {
         return delPrinterconfig(printerIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     //自动生成编码

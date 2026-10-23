@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:cal:team:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
         <UserMultiSelect ref="userSelect" @onSelected="userSelected"></UserMultiSelect>
       </el-col>
       <el-col :span="1.5">
@@ -21,7 +21,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:cal:team:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -31,17 +31,17 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:cal:team:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="teammemberList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="用户名" align="center" prop="userName" />
-      <el-table-column label="用户昵称" align="center" prop="nickName" />
-      <el-table-column label="电话" align="center" prop="tel" />
-      <el-table-column label="操作" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.用户名')" align="center" prop="userName" />
+      <el-table-column :label="$t('system.用户昵称')" align="center" prop="nickName" />
+      <el-table-column :label="$t('lims.电话')" align="center" prop="tel" />
+      <el-table-column :label="$t('common.operation')" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -49,7 +49,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:cal:team:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -167,7 +167,7 @@ export default {
     handleAdd() {
       this.$refs.userSelect.showFlag = true;
       this.open = true;
-      this.title = "添加班组成员";
+      this.title = this.$t('mes.添加班组成员');
     },
     userSelected(rows){
       if(rows !=null){
@@ -187,11 +187,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const memberIds = row.memberId || this.ids;
-      this.$modal.confirm('是否确认删除班组成员？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除班组成员？')).then(function() {
         return delTeammember(memberIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

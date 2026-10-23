@@ -15,13 +15,13 @@
       ref="upload"
     >
       <!-- 上传按钮 -->
-      <el-button size="mini" type="primary">选取文件</el-button>
+      <el-button size="mini" type="primary">{{ this.$t("common.uploadFile") }}</el-button>
       <!-- 上传提示 -->
       <div class="el-upload__tip" slot="tip" v-if="showTip">
-        请上传
-        <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
-        <template v-if="fileType"> 格式为 <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
-        的文件
+        {{ this.$t("common.uploadTipPrefix") }}
+        <template v-if="fileSize"> {{ this.$t("common.uploadTipSize") }} <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
+        <template v-if="fileType"> {{ this.$t("common.uploadTipType") }} <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
+        {{ this.$t("common.uploadTipSuffix") }}
       </div>
     </el-upload>
 
@@ -32,7 +32,7 @@
           <span class="el-icon-document"> {{ getFileName(file.name) }} </span>
         </el-link>
         <div class="ele-upload-list__item-content-action">
-          <el-link :underline="false" @click="handleDelete(index)" type="danger">删除</el-link>
+          <el-link :underline="false" @click="handleDelete(index)" type="danger">{{ this.$t("common.delete") }}</el-link>
         </div>
       </li>
     </transition-group>
@@ -133,21 +133,21 @@ export default {
       if (this.fileSize) {
         const isLt = file.size / 1024 / 1024 < this.fileSize;
         if (!isLt) {
-          this.$modal.msgError(`上传文件大小不能超过 ${this.fileSize} MB!`);
+          this.$modal.msgError(this.$t("common.fileSizeExceed", { size: this.fileSize }));
           return false;
         }
       }
-      this.$modal.loading("正在上传文件，请稍候...");
+      this.$modal.loading(this.$t("common.uploadingFile"));
       this.number++;
       return true;
     },
     // 文件个数超出
     handleExceed() {
-      this.$modal.msgError(`上传文件数量不能超过 ${this.limit} 个!`);
+      this.$modal.msgError(this.$t("common.fileCountExceed", { count: this.limit }));
     },
     // 上传失败
     handleUploadError(err) {
-      this.$modal.msgError("上传图片失败，请重试");
+      this.$modal.msgError(this.$t("common.uploadFileFailed"));
       this.$modal.closeLoading()
     },
     // 上传成功回调

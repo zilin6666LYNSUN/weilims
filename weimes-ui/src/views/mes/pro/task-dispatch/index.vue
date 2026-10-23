@@ -1,38 +1,38 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="任务名称" prop="taskName">
-        <el-input v-model="queryParams.taskName" placeholder="请输入任务名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('lims.任务名称')" prop="taskName">
+        <el-input v-model="queryParams.taskName" :placeholder="$t('mes.请输入任务名称')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="生产工单编号" prop="workorderCode" label-width="110px">
-        <el-input v-model="queryParams.workorderCode" placeholder="请输入生产工单编号" clearable
+      <el-form-item :label="$t('mes.生产工单编号')" prop="workorderCode" label-width="110px">
+        <el-input v-model="queryParams.workorderCode" :placeholder="$t('mes.请输入生产工单编号')" clearable
           @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="工单名称" prop="workorderName">
-        <el-input v-model="queryParams.workorderName" placeholder="请输入工单名称" clearable
+      <el-form-item :label="$t('mes.工单名称')" prop="workorderName">
+        <el-input v-model="queryParams.workorderName" :placeholder="$t('mes.请输入工单名称')" clearable
           @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="工序名称" prop="processName">
-        <el-input v-model="queryParams.processName" placeholder="请输入工序名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('mes.工序名称')" prop="processName">
+        <el-input v-model="queryParams.processName" :placeholder="$t('mes.请输入工序名称')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="multiple" @click="handleUser2Select"
-          v-hasPermi="['pro:taskdispatch:addAssignUsers']">批量编辑指派人</el-button>
+          v-hasPermi="['pro:taskdispatch:addAssignUsers']">{{ this.$t('mes.批量编辑指派人') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
-          v-hasPermi="['pro:taskdispatch:removeAssignUsers']">重置派单人</el-button>
+          v-hasPermi="['pro:taskdispatch:removeAssignUsers']">{{ this.$t('mes.重置派单人') }}</el-button>
       </el-col>
       <!-- <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
-          v-hasPermi="['pro:taskdispatch:export']">导出</el-button>
+          v-hasPermi="['pro:taskdispatch:export']">{{ this.$t('common.export') }}</el-button>
       </el-col> -->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -41,39 +41,39 @@
       @selection-change="handleSelectionChange" :row-key="getRowKeys" default-expand-all
       :tree-props="{ children: 'childTasks' }" ref="taskTable">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="任务ID" align="center" prop="taskId" v-if="false" />
-      <el-table-column label="生产工单编号" align="center" prop="workorderCode" width="180" show-overflow-tooltip sortable />
-      <el-table-column label="工单名称" align="center" prop="workorderName" width="130" show-overflow-tooltip sortable />
-      <!-- <el-table-column label="任务编号" align="center" prop="taskCode" /> -->
-      <el-table-column label="任务名称" align="center" prop="taskName" width="180" show-overflow-tooltip sortable />
-      <el-table-column label="工作站名称" align="center" prop="workstationName" width="130" show-overflow-tooltip sortable />
-      <el-table-column label="工序名称" align="center" prop="processName" width="100" sortable />
-      <!--  <el-table-column label="工艺编号" align="center" prop="routeCode" show-overflow-tooltip/> -->
-      <el-table-column label="产品物料名称" align="center" prop="itemName" width="130" show-overflow-tooltip sortable />
-      <!--  <el-table-column label="客户名称" align="center" prop="clientName" /> -->
-      <el-table-column label="开始生产时间" align="center" prop="startTime" width="130" sortable>
+      <el-table-column :label="$t('mes.任务ID')" align="center" prop="taskId" v-if="false" />
+      <el-table-column :label="$t('mes.生产工单编号')" align="center" prop="workorderCode" width="180" show-overflow-tooltip sortable />
+      <el-table-column :label="$t('mes.工单名称')" align="center" prop="workorderName" width="130" show-overflow-tooltip sortable />
+      <!-- <el-table-column :label="$t('mes.任务编号')" align="center" prop="taskCode" /> -->
+      <el-table-column :label="$t('lims.任务名称')" align="center" prop="taskName" width="180" show-overflow-tooltip sortable />
+      <el-table-column :label="$t('mes.工作站名称')" align="center" prop="workstationName" width="130" show-overflow-tooltip sortable />
+      <el-table-column :label="$t('mes.工序名称')" align="center" prop="processName" width="100" sortable />
+      <!--  <el-table-column :label="$t('mes.工艺编号')" align="center" prop="routeCode" show-overflow-tooltip/> -->
+      <el-table-column :label="$t('mes.产品物料名称')" align="center" prop="itemName" width="130" show-overflow-tooltip sortable />
+      <!--  <el-table-column :label="$t('lims.客户名称')" align="center" prop="clientName" /> -->
+      <el-table-column :label="$t('mes.开始生产时间')" align="center" prop="startTime" width="130" sortable>
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.startTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="完成生产时间" align="center" prop="endTime" width="130" sortable>
+      <el-table-column :label="$t('mes.完成生产时间')" align="center" prop="endTime" width="130" sortable>
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.endTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <!-- <el-table-column label="生产状态" align="center" prop="status" /> -->
-      <el-table-column label="派单人id" align="center" prop="taskUserId" v-if="false" />
-      <el-table-column label="派单人名称" align="center" prop="taskBy" sortable width="150" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <!-- <el-table-column :label="$t('mes.生产状态')" align="center" prop="status" /> -->
+      <el-table-column :label="$t('mes.派单人id')" align="center" prop="taskUserId" v-if="false" />
+      <el-table-column :label="$t('mes.派单人名称')" align="center" prop="taskBy" sortable width="150" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" slot="append" @click="handleUser2Select(scope.row)"
             v-hasPermi="['pro:taskdispatch:addAssignUsers']"
-            v-if="scope.row.taskUserId != null && scope.row.status != 'FINISHED'">修改</el-button>
+            v-if="scope.row.taskUserId != null && scope.row.status != 'FINISHED'">{{ this.$t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-plus" slot="append" @click="handleUser2Select(scope.row)"
-            v-hasPermi="['pro:taskdispatch:addAssignUsers']" v-if="scope.row.status === 'PREPARE'">指派用户</el-button>
+            v-hasPermi="['pro:taskdispatch:addAssignUsers']" v-if="scope.row.status === 'PREPARE'">{{ this.$t('mes.指派用户') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleDelete(scope.row)"
             v-hasPermi="['pro:taskdispatch:removeAssignUsers']"
-            v-if="scope.row.taskUserId != null && scope.row.status != 'FINISHED'">重置派单人</el-button>
+            v-if="scope.row.taskUserId != null && scope.row.status != 'FINISHED'">{{ this.$t('mes.重置派单人') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -285,11 +285,11 @@ export default {
     /** 重置派单人员按钮操作 */
     handleDelete(row) {
       const taskIds = row.taskId || this.ids;
-      this.$modal.confirm('是否确认清空当前任务派单人？').then(function () {
+      this.$modal.confirm(this.$t('mes.是否确认清空当前任务派单人？')).then(function () {
         return removeAssignUsers(taskIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("清空成功");
+        this.$modal.msgSuccess(this.$t('mes.清空成功'));
       }).catch(() => { });
     },
     /** 导出按钮操作 */
@@ -319,7 +319,7 @@ export default {
           if (response.msg != null && response.msg != '') {
             this.$modal.msgError(response.msg);
           } else {
-            this.$modal.msgSuccess("派单成功！");
+            this.$modal.msgSuccess(this.$t('mes.派单成功！'));
           }
           this.getList();
         })

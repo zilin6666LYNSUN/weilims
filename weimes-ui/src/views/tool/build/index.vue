@@ -9,7 +9,7 @@
       <el-scrollbar class="left-scrollbar">
         <div class="components-list">
           <div class="components-title">
-            <svg-icon icon-class="component" />输入型组件
+            <svg-icon icon-class="component" />{{ this.$t('tool.输入型组件') }}
           </div>
           <draggable
             class="components-draggable"
@@ -31,7 +31,7 @@
             </div>
           </draggable>
           <div class="components-title">
-            <svg-icon icon-class="component" />选择型组件
+            <svg-icon icon-class="component" />{{ this.$t('tool.选择型组件') }}
           </div>
           <draggable
             class="components-draggable"
@@ -55,7 +55,7 @@
             </div>
           </draggable>
           <div class="components-title">
-            <svg-icon icon-class="component" /> 布局型组件
+            <svg-icon icon-class="component" />{{ this.$t('tool.布局型组件') }}
           </div>
           <draggable
             class="components-draggable" :list="layoutComponents"
@@ -79,13 +79,13 @@
     <div class="center-board">
       <div class="action-bar">
         <el-button icon="el-icon-download" type="text" @click="download">
-          导出vue文件
+          {{ this.$t('tool.导出vue文件') }}
         </el-button>
         <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">
-          复制代码
+          {{ this.$t('tool.复制代码') }}
         </el-button>
         <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">
-          清空
+          {{ this.$t('tool.清空') }}
         </el-button>
       </div>
       <el-scrollbar class="center-scrollbar">
@@ -111,7 +111,7 @@
               />
             </draggable>
             <div v-show="!drawingList.length" class="empty-info">
-              从左侧拖入或点选组件进行表单设计
+              {{ this.$t('tool.从左侧拖入或点选组件进行表单设计') }}
             </div>
           </el-form>
         </el-row>
@@ -127,7 +127,7 @@
 
     <code-type-dialog
       :visible.sync="dialogVisible"
-      title="选择生成类型"
+      :title="$t('tool.选择生成类型')"
       :show-file-name="showFileName"
       @confirm="generate"
     />
@@ -213,15 +213,15 @@ export default {
       text: trigger => {
         const codeStr = this.generateCode()
         this.$notify({
-          title: '成功',
-          message: '代码已复制到剪切板，可粘贴。',
+          title: this.$t('system.成功'),
+          message: this.$t('tool.代码已复制到剪切板，可粘贴。'),
           type: 'success'
         })
         return codeStr
       }
     })
     clipboard.on('error', e => {
-      this.$message.error('代码复制失败')
+      this.$message.error(this.$t('tool.代码复制失败'))
     })
   },
   methods: {
@@ -282,7 +282,7 @@ export default {
       document.getElementById('copyNode').click()
     },
     empty() {
-      this.$confirm('确定要清空所有组件吗？', '提示', { type: 'warning' }).then(
+      this.$confirm(this.$t('tool.确定要清空所有组件吗？'), this.$t('common.tip'), { type: 'warning' }).then(
         () => {
           this.drawingList = []
         }

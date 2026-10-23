@@ -4,43 +4,43 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-          v-hasPermi="['mes:wmwasteheader:add']" v-if="optType != 'view'">新增
+          v-hasPermi="['mes:wmwasteheader:add']" v-if="optType != 'view'">{{ this.$t('common.add') }}
         </el-button>
       </el-col>
     </el-row>
 
     <el-table v-loading="loading" :data="wmWasteHeaderList" @selection-change="handleSelectionChange">
-      <el-table-column label="废料单编号" width="180px" align="center" prop="wasteCode" :show-overflow-tooltip="true">
+      <el-table-column :label="$t('mes.废料单编号')" width="180px" align="center" prop="wasteCode" :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <el-button type="text" @click="handleView(scope.row)" v-hasPermi="['mes:wmwasteheader:query']">{{
             scope.row.wasteCode }}
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="废料单名称" align="center" prop="wasteName" :show-overflow-tooltip="true" />
-      <el-table-column label="生产工单" align="center" prop="workorderCode" />
-      <el-table-column label="报工单编号" width="150px" align="center" prop="recordId" v-if="showColumn" />
-      <el-table-column label="废料日期" align="center" prop="wasteDate" width="120">
+      <el-table-column :label="$t('mes.废料单名称')" align="center" prop="wasteName" :show-overflow-tooltip="true" />
+      <el-table-column :label="$t('mes.生产工单')" align="center" prop="workorderCode" />
+      <el-table-column :label="$t('mes.报工单编号')" width="150px" align="center" prop="recordId" v-if="showColumn" />
+      <el-table-column :label="$t('mes.废料日期')" align="center" prop="wasteDate" width="120">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.wasteDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="单据状态" align="center" prop="status">
+      <el-table-column :label="$t('mes.单据状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status" />
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="200px" align="center" class-name="small-padding fixed-width"
+      <el-table-column :label="$t('common.operation')" width="200px" align="center" class-name="small-padding fixed-width"
         v-if="optType != 'view'">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-video-play" v-if="scope.row.status == 'PREPARE'"
-            @click="handleExecute(scope.row)" v-hasPermi="['mes:wmwasteheader:edit']">执行废料
+            @click="handleExecute(scope.row)" v-hasPermi="['mes:wmwasteheader:edit']">{{ this.$t('mes.执行废料') }}
           </el-button>
           <el-button size="mini" type="text" icon="el-icon-edit" v-if="scope.row.status == 'PREPARE'"
-            @click="handleUpdate(scope.row)" v-hasPermi="['mes:wmwasteheader:edit']">修改
+            @click="handleUpdate(scope.row)" v-hasPermi="['mes:wmwasteheader:edit']">{{ this.$t('system.修改') }}
           </el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" v-if="scope.row.status == 'PREPARE'"
-            @click="handleDelete(scope.row)" v-hasPermi="['mes:wmwasteheader:remove']">删除
+            @click="handleDelete(scope.row)" v-hasPermi="['mes:wmwasteheader:remove']">{{ this.$t('common.delete') }}
           </el-button>
         </template>
       </el-table-column>
@@ -54,8 +54,8 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="废料单编号" prop="wasteCode">
-              <el-input v-model="form.wasteCode" placeholder="请输入废料单编号" />
+            <el-form-item :label="$t('mes.废料单编号')" prop="wasteCode">
+              <el-input v-model="form.wasteCode" :placeholder="$t('mes.请输入废料单编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
@@ -66,50 +66,50 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="废料单名称" prop="wasteName">
-              <el-input v-model="form.wasteName" placeholder="请输入废料单名称" />
+            <el-form-item :label="$t('mes.废料单名称')" prop="wasteName">
+              <el-input v-model="form.wasteName" :placeholder="$t('mes.请输入废料单名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="生产工单" prop="workorderCode">
-              <el-input v-model="form.workorderCode" placeholder="请输入生产工单" readonly="readonly">
+            <el-form-item :label="$t('mes.生产工单')" prop="workorderCode">
+              <el-input v-model="form.workorderCode" :placeholder="$t('mes.请输入生产工单')" readonly="readonly">
                 <!-- <el-button slot="append" icon="el-icon-search" @click="handleWorkorderSelect"></el-button> -->
               </el-input>
             </el-form-item>
             <WorkorderSelect ref="woSelect" @onSelected="onWorkorderSelected"></WorkorderSelect>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="报工编号" prop="recordId" v-if="showColumn">
-              <el-input v-model="form.recordId" placeholder="请输入报工编号" />
+            <el-form-item :label="$t('mes.报工编号')" prop="recordId" v-if="showColumn">
+              <el-input v-model="form.recordId" :placeholder="$t('mes.请输入报工编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="废料日期" prop="wasteDate">
+            <el-form-item :label="$t('mes.废料日期')" prop="wasteDate">
               <el-date-picker clearable v-model="form.wasteDate" type="date" value-format="yyyy-MM-dd"
-                placeholder="请选择废料日期">
+                :placeholder="$t('mes.请选择废料日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <el-divider v-if="form.wasteId != null" content-position="center">物料信息</el-divider>
+      <el-divider v-if="form.wasteId != null" content-position="center">{{ this.$t('mes.物料信息') }}</el-divider>
       <el-card shadow="always" v-if="form.wasteId != null" class="box-card">
         <WmWasteline :wasteId="form.wasteId" :optType="optType" :workorderCode="form.workorderCode"></WmWasteline>
       </el-card>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType == 'view' || form.status != 'PREPARE'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-if="form.status == 'PREPARE' && optType != 'view'">保
+        <el-button type="primary" @click="cancel" v-if="optType == 'view' || form.status != 'PREPARE'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-if="form.status == 'PREPARE' && optType != 'view'">{{ this.$t('mes.保') }}
           存</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -205,10 +205,10 @@ export default {
       // 表单校验
       rules: {
         wasteCode: [
-          { required: true, message: '废料单编号不能为空', trigger: 'blur' }
+          { required: true, message: this.$t('mes.废料单编号不能为空'), trigger: 'blur' }
         ],
         workorderCode: [
-          { required: true, message: '请选择要废料的生产工单', trigger: 'blur' }
+          { required: true, message: this.$t('mes.请选择要废料的生产工单'), trigger: 'blur' }
         ]
       }
     }
@@ -322,7 +322,7 @@ export default {
     handleAdd() {
       this.reset()
       this.open = true
-      this.title = '添加生产废料单头'
+      this.title = this.$t('mes.添加生产废料单头')
       this.optType = 'add'
       this.form.recordId = this.recordId;
       this.form.workorderCode = this.workorderCode
@@ -338,7 +338,7 @@ export default {
         this.warehouseInfo[1] = response.data.locationId
         this.warehouseInfo[2] = response.data.areaId
         this.open = true
-        this.title = '查看生产废料单信息'
+        this.title = this.$t('mes.查看生产废料单信息')
         this.optType = 'view'
       })
     },
@@ -352,7 +352,7 @@ export default {
         this.warehouseInfo[1] = response.data.locationId;
         this.warehouseInfo[2] = response.data.areaId;
         this.open = true;
-        this.title = "修改生产废料单头";
+        this.title = this.$t('mes.修改生产废料单头');
         this.optType = "edit";
       })
     },
@@ -362,13 +362,13 @@ export default {
         if (valid) {
           if (this.form.wasteId != null) {
             updateWmWasteHeader(this.form).then(response => {
-              this.$modal.msgSuccess('修改成功')
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false
               this.getList()
             })
           } else {
             addWmWasteHeader(this.form).then(response => {
-              this.$modal.msgSuccess('新增成功')
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false
               this.getList()
             })
@@ -379,11 +379,11 @@ export default {
     //执行废料
     handleExecute(row) {
       const wasteIds = row.wasteId || this.ids
-      this.$modal.confirm('确认执行废料？').then(function () {
+      this.$modal.confirm(this.$t('mes.确认执行废料？')).then(function () {
         return execute(wasteIds)//执行废料
       }).then(() => {
         this.getList()
-        this.$modal.msgSuccess('废料成功')
+        this.$modal.msgSuccess(this.$t('mes.废料成功'));
       }).catch(() => {
       })
     },
@@ -391,11 +391,11 @@ export default {
     handleDelete(row) {
       const wasteCode = row.wasteCode
       const wasteIds = row.wasteId || this.ids
-      this.$modal.confirm('是否确认删除生产废料单头编号为"' + wasteCode + '"的数据项？').then(function () {
+      this.$modal.confirm(this.$t('mes.是否确认删除生产废料单头编号为{v}的数据项？', { v: wasteCode })).then(function () {
         return delWmWasteHeader(wasteIds)
       }).then(() => {
         this.getList()
-        this.$modal.msgSuccess('删除成功')
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {
       })
     },

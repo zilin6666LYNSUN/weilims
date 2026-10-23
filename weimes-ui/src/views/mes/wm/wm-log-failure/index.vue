@@ -1,56 +1,56 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="失败时间" prop="failureTime">
+      <el-form-item :label="$t('mes.失败时间')" prop="failureTime">
         <el-date-picker clearable v-model="queryParams.failureTime" type="date" value-format="yyyy-MM-dd"
-          placeholder="请选择失败时间">
+          :placeholder="$t('mes.请选择失败时间')">
         </el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
-          v-hasPermi="['wm:wmlogfailure:export']">导出</el-button>
+          v-hasPermi="['wm:wmlogfailure:export']">{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="wmLogFailureList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <!-- <el-table-column label="失败记录ID" align="center" prop="failureId" /> -->
+      <!-- <el-table-column :label="$t('mes.失败记录ID')" align="center" prop="failureId" /> -->
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline >
-            <el-form-item label="日志写入失败原因">
+            <el-form-item :label="$t('mes.日志写入失败原因')">
               <span>{{ props.row.failureReason }}</span>
             </el-form-item>
-            <el-form-item label="失败时的原始日志数据">
+            <el-form-item :label="$t('mes.失败时的原始日志数据')">
               <span>{{ props.row.logData }}</span>
             </el-form-item>
           </el-form>
         </template>
       </el-table-column>
-      <el-table-column label="日志写入失败原因" show-overflow-tooltip="true" align="center" prop="failureReason" />
-      <el-table-column label="失败时间" align="center" prop="failureTime" width="180">
+      <el-table-column :label="$t('mes.日志写入失败原因')" show-overflow-tooltip="true" align="center" prop="failureReason" />
+      <el-table-column :label="$t('mes.失败时间')" align="center" prop="failureTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.failureTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="失败时的原始日志数据" show-overflow-tooltip="true" align="center" prop="logData" />
-      <!-- <el-table-column label="创建人ID" align="center" prop="createUserId" /> -->
-      <el-table-column label="创建人" align="center" prop="createBy" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column :label="$t('mes.失败时的原始日志数据')" show-overflow-tooltip="true" align="center" prop="logData" />
+      <!-- <el-table-column :label="$t('mes.创建人ID')" align="center" prop="createUserId" /> -->
+      <el-table-column :label="$t('mes.创建人')" align="center" prop="createBy" />
+      <el-table-column :label="$t('system.创建时间')" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="更新人" align="center" prop="updateBy" />
-      <el-table-column label="更新时间" align="center" prop="updateTime" width="180">
+      <el-table-column :label="$t('mes.更新人')" align="center" prop="updateBy" />
+      <el-table-column :label="$t('mes.更新时间')" align="center" prop="updateTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>

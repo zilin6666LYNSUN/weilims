@@ -1,112 +1,112 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="生产工单ID" prop="workorderId">
+      <el-form-item :label="$t('mes.生产工单ID')" prop="workorderId">
         <el-input
           v-model="queryParams.workorderId"
-          placeholder="请输入生产工单ID"
+          :placeholder="$t('mes.请输入生产工单ID')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="生产工单编码" prop="workorderCode">
+      <el-form-item :label="$t('mes.生产工单编码')" prop="workorderCode">
         <el-input
           v-model="queryParams.workorderCode"
-          placeholder="请输入生产工单编码"
+          :placeholder="$t('mes.请输入生产工单编码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="生产工单名称" prop="workorderName">
+      <el-form-item :label="$t('mes.生产工单名称')" prop="workorderName">
         <el-input
           v-model="queryParams.workorderName"
-          placeholder="请输入生产工单名称"
+          :placeholder="$t('mes.请输入生产工单名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="生产任务ID" prop="taskId">
+      <el-form-item :label="$t('mes.生产任务ID')" prop="taskId">
         <el-input
           v-model="queryParams.taskId"
-          placeholder="请输入生产任务ID"
+          :placeholder="$t('mes.请输入生产任务ID')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="生产任务编号" prop="taskCode">
+      <el-form-item :label="$t('mes.生产任务编号')" prop="taskCode">
         <el-input
           v-model="queryParams.taskCode"
-          placeholder="请输入生产任务编号"
+          :placeholder="$t('mes.请输入生产任务编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="生产任务名称" prop="taskName">
+      <el-form-item :label="$t('mes.生产任务名称')" prop="taskName">
         <el-input
           v-model="queryParams.taskName"
-          placeholder="请输入生产任务名称"
+          :placeholder="$t('mes.请输入生产任务名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="工作站ID" prop="workstationId">
+      <el-form-item :label="$t('mes.工作站ID')" prop="workstationId">
         <el-input
           v-model="queryParams.workstationId"
-          placeholder="请输入工作站ID"
+          :placeholder="$t('mes.请输入工作站ID')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="工作站编号" prop="workstationCode">
+      <el-form-item :label="$t('mes.工作站编号')" prop="workstationCode">
         <el-input
           v-model="queryParams.workstationCode"
-          placeholder="请输入工作站编号"
+          :placeholder="$t('mes.请输入工作站编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="工作站名称" prop="workstationName">
+      <el-form-item :label="$t('mes.工作站名称')" prop="workstationName">
         <el-input
           v-model="queryParams.workstationName"
-          placeholder="请输入工作站名称"
+          :placeholder="$t('mes.请输入工作站名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="工序ID" prop="processId">
+      <el-form-item :label="$t('mes.工序ID')" prop="processId">
         <el-input
           v-model="queryParams.processId"
-          placeholder="请输入工序ID"
+          :placeholder="$t('mes.请输入工序ID')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="工序编号" prop="processCode">
+      <el-form-item :label="$t('mes.工序编号')" prop="processCode">
         <el-input
           v-model="queryParams.processCode"
-          placeholder="请输入工序编号"
+          :placeholder="$t('mes.请输入工序编号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="工序名称" prop="processName">
+      <el-form-item :label="$t('mes.工序名称')" prop="processName">
         <el-input
           v-model="queryParams.processName"
-          placeholder="请输入工序名称"
+          :placeholder="$t('mes.请输入工序名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="生产日期" prop="produceDate">
+      <el-form-item :label="$t('mes.生产日期')" prop="produceDate">
         <el-date-picker clearable
           v-model="queryParams.produceDate"
           type="date"
           value-format="yyyy-MM-dd"
-          placeholder="请选择生产日期">
+          :placeholder="$t('mes.请选择生产日期')">
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="单据状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择单据状态" clearable>
+      <el-form-item :label="$t('mes.单据状态')" prop="status">
+        <el-select v-model="queryParams.status" :placeholder="$t('mes.请选择单据状态')" clearable>
           <el-option
             v-for="dict in dict.type.mes_order_status"
             :key="dict.value"
@@ -116,8 +116,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -130,7 +130,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:productproduce:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -141,7 +141,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:wm:productproduce:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -152,7 +152,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:wm:productproduce:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -162,38 +162,38 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:wm:productproduce:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="productproduceList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="入库单ID" align="center" prop="recordId" />
-      <el-table-column label="生产工单ID" align="center" prop="workorderId" />
-      <el-table-column label="生产工单编码" align="center" prop="workorderCode" />
-      <el-table-column label="生产工单名称" align="center" prop="workorderName" />
-      <el-table-column label="生产任务ID" align="center" prop="taskId" />
-      <el-table-column label="生产任务编号" align="center" prop="taskCode" />
-      <el-table-column label="生产任务名称" align="center" prop="taskName" />
-      <el-table-column label="工作站ID" align="center" prop="workstationId" />
-      <el-table-column label="工作站编号" align="center" prop="workstationCode" />
-      <el-table-column label="工作站名称" align="center" prop="workstationName" />
-      <el-table-column label="工序ID" align="center" prop="processId" />
-      <el-table-column label="工序编号" align="center" prop="processCode" />
-      <el-table-column label="工序名称" align="center" prop="processName" />
-      <el-table-column label="生产日期" align="center" prop="produceDate" width="180">
+      <el-table-column :label="$t('mes.入库单ID')" align="center" prop="recordId" />
+      <el-table-column :label="$t('mes.生产工单ID')" align="center" prop="workorderId" />
+      <el-table-column :label="$t('mes.生产工单编码')" align="center" prop="workorderCode" />
+      <el-table-column :label="$t('mes.生产工单名称')" align="center" prop="workorderName" />
+      <el-table-column :label="$t('mes.生产任务ID')" align="center" prop="taskId" />
+      <el-table-column :label="$t('mes.生产任务编号')" align="center" prop="taskCode" />
+      <el-table-column :label="$t('mes.生产任务名称')" align="center" prop="taskName" />
+      <el-table-column :label="$t('mes.工作站ID')" align="center" prop="workstationId" />
+      <el-table-column :label="$t('mes.工作站编号')" align="center" prop="workstationCode" />
+      <el-table-column :label="$t('mes.工作站名称')" align="center" prop="workstationName" />
+      <el-table-column :label="$t('mes.工序ID')" align="center" prop="processId" />
+      <el-table-column :label="$t('mes.工序编号')" align="center" prop="processCode" />
+      <el-table-column :label="$t('mes.工序名称')" align="center" prop="processName" />
+      <el-table-column :label="$t('mes.生产日期')" align="center" prop="produceDate" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.produceDate, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="单据状态" align="center" prop="status">
+      <el-table-column :label="$t('mes.单据状态')" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_order_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -201,14 +201,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:wm:productproduce:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:wm:productproduce:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -224,51 +224,51 @@
     <!-- 添加或修改产品产出记录对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="生产工单ID" prop="workorderId">
-          <el-input v-model="form.workorderId" placeholder="请输入生产工单ID" />
+        <el-form-item :label="$t('mes.生产工单ID')" prop="workorderId">
+          <el-input v-model="form.workorderId" :placeholder="$t('mes.请输入生产工单ID')" />
         </el-form-item>
-        <el-form-item label="生产工单编码" prop="workorderCode">
-          <el-input v-model="form.workorderCode" placeholder="请输入生产工单编码" />
+        <el-form-item :label="$t('mes.生产工单编码')" prop="workorderCode">
+          <el-input v-model="form.workorderCode" :placeholder="$t('mes.请输入生产工单编码')" />
         </el-form-item>
-        <el-form-item label="生产工单名称" prop="workorderName">
-          <el-input v-model="form.workorderName" placeholder="请输入生产工单名称" />
+        <el-form-item :label="$t('mes.生产工单名称')" prop="workorderName">
+          <el-input v-model="form.workorderName" :placeholder="$t('mes.请输入生产工单名称')" />
         </el-form-item>
-        <el-form-item label="生产任务ID" prop="taskId">
-          <el-input v-model="form.taskId" placeholder="请输入生产任务ID" />
+        <el-form-item :label="$t('mes.生产任务ID')" prop="taskId">
+          <el-input v-model="form.taskId" :placeholder="$t('mes.请输入生产任务ID')" />
         </el-form-item>
-        <el-form-item label="生产任务编号" prop="taskCode">
-          <el-input v-model="form.taskCode" placeholder="请输入生产任务编号" />
+        <el-form-item :label="$t('mes.生产任务编号')" prop="taskCode">
+          <el-input v-model="form.taskCode" :placeholder="$t('mes.请输入生产任务编号')" />
         </el-form-item>
-        <el-form-item label="生产任务名称" prop="taskName">
-          <el-input v-model="form.taskName" placeholder="请输入生产任务名称" />
+        <el-form-item :label="$t('mes.生产任务名称')" prop="taskName">
+          <el-input v-model="form.taskName" :placeholder="$t('mes.请输入生产任务名称')" />
         </el-form-item>
-        <el-form-item label="工作站ID" prop="workstationId">
-          <el-input v-model="form.workstationId" placeholder="请输入工作站ID" />
+        <el-form-item :label="$t('mes.工作站ID')" prop="workstationId">
+          <el-input v-model="form.workstationId" :placeholder="$t('mes.请输入工作站ID')" />
         </el-form-item>
-        <el-form-item label="工作站编号" prop="workstationCode">
-          <el-input v-model="form.workstationCode" placeholder="请输入工作站编号" />
+        <el-form-item :label="$t('mes.工作站编号')" prop="workstationCode">
+          <el-input v-model="form.workstationCode" :placeholder="$t('mes.请输入工作站编号')" />
         </el-form-item>
-        <el-form-item label="工作站名称" prop="workstationName">
-          <el-input v-model="form.workstationName" placeholder="请输入工作站名称" />
+        <el-form-item :label="$t('mes.工作站名称')" prop="workstationName">
+          <el-input v-model="form.workstationName" :placeholder="$t('mes.请输入工作站名称')" />
         </el-form-item>
-        <el-form-item label="工序ID" prop="processId">
-          <el-input v-model="form.processId" placeholder="请输入工序ID" />
+        <el-form-item :label="$t('mes.工序ID')" prop="processId">
+          <el-input v-model="form.processId" :placeholder="$t('mes.请输入工序ID')" />
         </el-form-item>
-        <el-form-item label="工序编号" prop="processCode">
-          <el-input v-model="form.processCode" placeholder="请输入工序编号" />
+        <el-form-item :label="$t('mes.工序编号')" prop="processCode">
+          <el-input v-model="form.processCode" :placeholder="$t('mes.请输入工序编号')" />
         </el-form-item>
-        <el-form-item label="工序名称" prop="processName">
-          <el-input v-model="form.processName" placeholder="请输入工序名称" />
+        <el-form-item :label="$t('mes.工序名称')" prop="processName">
+          <el-input v-model="form.processName" :placeholder="$t('mes.请输入工序名称')" />
         </el-form-item>
-        <el-form-item label="生产日期" prop="produceDate">
+        <el-form-item :label="$t('mes.生产日期')" prop="produceDate">
           <el-date-picker clearable
             v-model="form.produceDate"
             type="date"
             value-format="yyyy-MM-dd"
-            placeholder="请选择生产日期">
+            :placeholder="$t('mes.请选择生产日期')">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="单据状态">
+        <el-form-item :label="$t('mes.单据状态')">
           <el-radio-group v-model="form.status">
             <el-radio
               v-for="dict in dict.type.mes_order_status"
@@ -277,13 +277,13 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('system.备注')" prop="remark">
+          <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -409,7 +409,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加产品产出记录";
+      this.title = this.$t('mes.添加产品产出记录');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -418,7 +418,7 @@ export default {
       getProductproduce(recordId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改产品产出记录";
+        this.title = this.$t('mes.修改产品产出记录');
       });
     },
     /** 提交按钮 */
@@ -427,13 +427,13 @@ export default {
         if (valid) {
           if (this.form.recordId != null) {
             updateProductproduce(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addProductproduce(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -444,11 +444,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const recordIds = row.recordId || this.ids;
-      this.$modal.confirm('是否确认删除产品产出记录编号为"' + recordIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除产品产出记录编号为{v}的数据项？', { v: recordIds })).then(function() {
         return delProductproduce(recordIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

@@ -1,41 +1,41 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
-      <el-form-item label="SN码" prop="snCode">
+      <el-form-item :label="$t('mes.SN码')" prop="snCode">
         <el-input
           v-model="queryParams.snCode"
-          placeholder="请输入SN码"
+          :placeholder="$t('mes.请输入SN码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="产品物料编码" prop="itemCode">
+      <el-form-item :label="$t('mes.产品物料编码')" prop="itemCode">
         <el-input
           v-model="queryParams.itemCode"
-          placeholder="请输入产品物料编码"
+          :placeholder="$t('mes.请输入产品物料编码')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="产品物料名称" prop="itemName">
+      <el-form-item :label="$t('mes.产品物料名称')" prop="itemName">
         <el-input
           v-model="queryParams.itemName"
-          placeholder="请输入产品物料名称"
+          :placeholder="$t('mes.请输入产品物料名称')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="批次号" prop="batchCode">
+      <el-form-item :label="$t('lims.批次号')" prop="batchCode">
         <el-input
           v-model="queryParams.batchCode"
-          placeholder="请输入批次号"
+          :placeholder="$t('lims.请输入批次号')"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
@@ -48,7 +48,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:wm:sn:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -58,19 +58,19 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:wm:sn:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="snList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="产品编码" align="center" prop="itemCode" />
-      <el-table-column label="产品名称" align="center" prop="itemName" />
-      <el-table-column label="规格型号" align="center" prop="specification" />
-      <el-table-column label="单位" align="center" prop="unitOfMeasure" />
-      <el-table-column label="批次号" align="center" prop="batchCode" />
-      <el-table-column label="SN码数量" align="center" prop="snNum" >
+      <el-table-column :label="$t('mes.产品编码')" align="center" prop="itemCode" />
+      <el-table-column :label="$t('lims.产品名称')" align="center" prop="itemName" />
+      <el-table-column :label="$t('lims.规格型号')" align="center" prop="specification" />
+      <el-table-column :label="$t('lims.单位')" align="center" prop="unitOfMeasure" />
+      <el-table-column :label="$t('lims.批次号')" align="center" prop="batchCode" />
+      <el-table-column :label="$t('mes.SN码数量')" align="center" prop="snNum" >
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -79,12 +79,12 @@
           >{{scope.row.snNum}}</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="生成时间" align="center" prop="genDate" width="120">
+      <el-table-column :label="$t('mes.生成时间')" align="center" prop="genDate" width="120">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.genDate, '{y}-{m}-{d} {h}:{mi}:{s}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -92,14 +92,14 @@
             icon="el-icon-edit"
             @click="handleExport(scope.row)"
             v-hasPermi="['mes:wm:sn:edit']"
-          >导出/打印</el-button>
+          >{{ this.$t('mes.导出/打印') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:wm:sn:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -117,42 +117,42 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="物料编码"  prop="itemCode">
-              <el-input v-model="form.itemCode" readonly="readonly" placeholder="请选择物料编码" >
+            <el-form-item :label="$t('mes.物料编码')"  prop="itemCode">
+              <el-input v-model="form.itemCode" readonly="readonly" :placeholder="$t('mes.请选择物料编码')" >
                 <el-button slot="append" @click="handleSelectProduct" icon="el-icon-search"></el-button>
               </el-input>
             </el-form-item>
             <ItemSelect ref="itemSelect" @onSelected="onItemSelected" > </ItemSelect>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="物料名称" prop="itemName">
+            <el-form-item :label="$t('lims.物料名称')" prop="itemName">
               <el-input v-model="form.itemName" readonly="readonly" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="规格型号" prop="specification">
+            <el-form-item :label="$t('lims.规格型号')" prop="specification">
               <el-input v-model="form.specification" type="textarea" readonly="readonly" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="批次号" prop="batchCode">
-              <el-input v-model="form.batchCode" placeholder="请输入批次号" />
+            <el-form-item :label="$t('lims.批次号')" prop="batchCode">
+              <el-input v-model="form.batchCode" :placeholder="$t('lims.请输入批次号')" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="SN码数量" prop="snNum">
-              <el-input-number :min="1" :max="1000" v-model="form.snNum" placeholder="请输入需要生成的SN码数量" />
+            <el-form-item :label="$t('mes.SN码数量')" prop="snNum">
+              <el-input-number :min="1" :max="1000" v-model="form.snNum" :placeholder="$t('mes.请输入需要生成的SN码数量')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -194,9 +194,9 @@ export default {
       // 表单校验
       rules: {
         snNum: [
-          { required: true, message: "请输入需要生成的SN码数量", trigger: "blur" }
+          { required: true, message: this.$t('mes.请输入需要生成的SN码数量'), trigger: "blur" }
         ],        itemCode: [
-          { required: true, message: "产品物料不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.产品物料不能为空'), trigger: "blur" }
         ],      }
     };
   },
@@ -248,7 +248,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "生成SN码";
+      this.title = this.$t('mes.生成SN码');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -257,7 +257,7 @@ export default {
       getSn(snId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改SN码";
+        this.title = this.$t('mes.修改SN码');
       });
     },
     /** 提交按钮 */
@@ -265,7 +265,7 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
             addSn(this.form).then(response => {
-              this.$modal.msgSuccess("生成成功");
+              this.$modal.msgSuccess(this.$t('lims.生成成功'));
               this.open = false;
               this.getList();
             });
@@ -275,11 +275,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const snIds = row.snId || this.ids;
-      this.$modal.confirm('是否确认删除SN码编号为"' + snIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除SN码编号为{v}的数据项？', { v: snIds })).then(function() {
         return delSn(snIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

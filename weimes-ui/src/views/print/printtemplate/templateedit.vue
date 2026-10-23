@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['print:printerconfig:add']"
-        >保存99</el-button>
+        >{{ this.$t('print.保存99') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -20,7 +20,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['print:printerconfig:edit']"
-        >打印</el-button>
+        >{{ this.$t('common.print') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -31,7 +31,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['print:printerconfig:remove']"
-        >取消</el-button>
+        >{{ this.$t('common.cancel') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -39,22 +39,22 @@
         <el-col span="4">
             <div class="flex-2 left">
               <div class="flex-row justify-center flex-wrap">
-                <div class="title">基础元素</div>
+                <div class="title">{{ this.$t('print.基础元素') }}</div>
                 <div class="ep-draggable-item item" tid="defaultModule.text">
                   <i class="iconfont sv-text" />
-                  <span>文本</span>
+                  <span>{{ this.$t('print.文本') }}</span>
                 </div>
                 <div class="ep-draggable-item item" tid="defaultModule.image">
                   <i class="iconfont sv-image" />
-                  <span>图片</span>
+                  <span>{{ this.$t('print.图片') }}</span>
                 </div>
                 <div class="ep-draggable-item item" tid="defaultModule.longText">
                   <i class="iconfont sv-longText" />
-                  <span>长文</span>
+                  <span>{{ this.$t('print.长文') }}</span>
                 </div>
                 <div class="ep-draggable-item item" tid="defaultModule.table">
                   <i class="iconfont sv-table" />
-                  <span>表格</span>
+                  <span>{{ this.$t('print.表格') }}</span>
                 </div>
                 <div class="ep-draggable-item item" tid="defaultModule.html">
                   <i class="iconfont sv-html" />
@@ -62,24 +62,24 @@
                 </div>
                 <div class="ep-draggable-item item" tid="defaultModule.customText">
                   <i class="iconfont sv-text" />
-                  <span>自定义</span>
+                  <span>{{ this.$t('lims.自定义') }}</span>
                 </div>
-                <div class="title">辅助元素</div>
+                <div class="title">{{ this.$t('print.辅助元素') }}</div>
                 <div class="ep-draggable-item item" tid="defaultModule.hline">
                   <i class="iconfont sv-hline" />
-                  <span>横线</span>
+                  <span>{{ this.$t('print.横线') }}</span>
                 </div>
                 <div class="ep-draggable-item item" tid="defaultModule.vline">
                   <i class="iconfont sv-vline" />
-                  <span>竖线</span>
+                  <span>{{ this.$t('print.竖线') }}</span>
                 </div>
                 <div class="ep-draggable-item item" tid="defaultModule.rect">
                   <i class="iconfont sv-rect" />
-                  <span>矩形</span>
+                  <span>{{ this.$t('print.矩形') }}</span>
                 </div>
                 <div class="ep-draggable-item item" tid="defaultModule.oval">
                   <i class="iconfont sv-oval" />
-                  <span>圆形</span>
+                  <span>{{ this.$t('print.圆形') }}</span>
                 </div>
               </div>
             </div>

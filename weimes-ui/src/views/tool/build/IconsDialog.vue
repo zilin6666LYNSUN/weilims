@@ -9,12 +9,12 @@
       @close="onClose"
     >
       <div slot="title">
-        选择图标
+        {{ this.$t('tool.选择图标') }}
         <el-input
           v-model="key"
           size="mini"
           :style="{width: '260px'}"
-          placeholder="请输入图标名称"
+          :placeholder="$t('common.pleaseInputIconName')"
           prefix-icon="el-icon-search"
           clearable
         />

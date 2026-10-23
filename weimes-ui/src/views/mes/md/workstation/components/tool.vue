@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-table v-loading="loading" :data="workstationtoolList" @selection-change="handleSelectionChange">
-      <el-table-column label="类型名称" align="center" prop="toolTypeName" />
-      <el-table-column label="数量" align="center" prop="quantity" />
-      <el-table-column label="操作" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('lims.类型名称')" align="center" prop="toolTypeName" />
+      <el-table-column :label="$t('lims.数量')" align="center" prop="quantity" />
+      <el-table-column :label="$t('common.operation')" align="center" v-if="optType !='view'" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -11,14 +11,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:md:workstation:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:md:workstation:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -27,8 +27,8 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
 
-        <el-form-item label="工装夹具类型" prop="toolTypeId">
-           <el-select v-model="form.toolTypeId" placeholder="请选择类型">
+        <el-form-item :label="$t('mes.工装夹具类型')" prop="toolTypeId">
+           <el-select v-model="form.toolTypeId" :placeholder="$t('mes.请选择类型')">
                 <el-option
                   v-for="dict in toolTypeOptions"
                   :key="dict.toolTypeId"
@@ -37,13 +37,13 @@
                 ></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="数量" prop="quantity">
-          <el-input-number :min="1" v-model="form.quantity" placeholder="请输入数量" />
+        <el-form-item :label="$t('lims.数量')" prop="quantity">
+          <el-input-number :min="1" v-model="form.quantity" :placeholder="$t('mes.请输入数量')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -90,13 +90,13 @@ export default {
       // 表单校验
       rules: {
         workstationId: [
-          { required: true, message: "工作站ID不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.工作站ID不能为空'), trigger: "blur" }
         ],
         toolTypeId: [
-          { required: true, message: "工装夹具类型ID不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.工装夹具类型ID不能为空'), trigger: "blur" }
         ],
         quantity: [
-          { required: true, message: "数量不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.数量不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -166,7 +166,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加工装夹具资源";
+      this.title = this.$t('mes.添加工装夹具资源');
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -175,7 +175,7 @@ export default {
       getWorkstationtool(recordId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改工装夹具资源";
+        this.title = this.$t('mes.修改工装夹具资源');
       });
     },
     /** 提交按钮 */
@@ -184,13 +184,13 @@ export default {
         if (valid) {
           if (this.form.recordId != null) {
             updateWorkstationtool(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addWorkstationtool(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -201,11 +201,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const recordIds = row.recordId || this.ids;
-      this.$modal.confirm('是否确认删除工装夹具资源？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除工装夹具资源？')).then(function() {
         return delWorkstationtool(recordIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     }
   }

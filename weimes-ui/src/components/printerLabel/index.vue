@@ -4,7 +4,7 @@
             type="text"
             icon="el-icon-printer"
             @click="handlePrint()"
-          >{{labelText}}</el-button>
+          >{{ labelText || this.$t('common.print') }}</el-button>
 </template>
 <script>
 import { printBarcodeLabel } from "@/api/print/print";
@@ -21,7 +21,7 @@ export default {
         businessType: null,
         labelText: {
             type: String,
-            default: '打印'
+            default: ''
         },
         printerCode: null
     },
@@ -37,7 +37,7 @@ export default {
                     const printer = JSON.parse(printerJson);
                     theCode = printer.printerCode;
                 }else{
-                    this.$modal.msgError("请在打印管理-打印机配置功能中指定默认打印机！");
+                    this.$modal.msgError(this.$t("common.setDefaultPrinter"));
                 }
             }else{
                 theCode = this.printerCode;
@@ -45,7 +45,7 @@ export default {
 
             const param = { businessId: this.businessId, businessCode: this.businessCode, businessType: this.businessType, printerCode: theCode };
             printBarcodeLabel(param).then(response => {
-              this.$modal.msgSuccess("打印成功");
+              this.$modal.msgSuccess(this.$t("common.printSuccess"));
             });
         }
     }

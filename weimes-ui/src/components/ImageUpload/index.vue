@@ -22,15 +22,15 @@
 
     <!-- 上传提示 -->
     <div class="el-upload__tip" slot="tip" v-if="showTip">
-      请上传
-      <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
-      <template v-if="fileType"> 格式为 <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
-      的文件
+       {{ this.$t("common.uploadTipPrefix") }}
+      <template v-if="fileSize"> {{ this.$t("common.uploadTipSize") }} <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
+      <template v-if="fileType"> {{ this.$t("common.uploadTipType") }} <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
+       {{ this.$t("common.uploadTipSuffix") }}
     </div>
 
     <el-dialog
       :visible.sync="dialogVisible"
-      title="预览"
+      :title="$t('common.preview')"
       width="800"
       append-to-body
     >
@@ -169,26 +169,26 @@ export default {
       }
 
       if (!isImg) {
-        this.$modal.msgError(`文件格式不正确, 请上传${this.fileType.join("/")}图片格式文件!`);
+        this.$modal.msgError(this.$t("common.imageFormatError", { format: this.fileType.join("/") }));
         return false;
       }
       if (this.fileSize) {
         const isLt = file.size / 1024 / 1024 < this.fileSize;
         if (!isLt) {
-          this.$modal.msgError(`上传头像图片大小不能超过 ${this.fileSize} MB!`);
+          this.$modal.msgError(this.$t("common.avatarSizeExceed", { size: this.fileSize }));
           return false;
         }
       }
-      this.$modal.loading("正在上传图片，请稍候...");
+      this.$modal.loading(this.$t("common.uploadingImage"));
       this.number++;
     },
     // 文件个数超出
     handleExceed() {
-      this.$modal.msgError(`上传文件数量不能超过 ${this.limit} 个!`);
+      this.$modal.msgError(this.$t("common.fileCountExceed", { count: this.limit }));
     },
     // 上传失败
     handleUploadError() {
-      this.$modal.msgError("上传图片失败，请重试");
+      this.$modal.msgError(this.$t("common.uploadImageFailed"));
       this.$modal.closeLoading();
     },
     // 预览

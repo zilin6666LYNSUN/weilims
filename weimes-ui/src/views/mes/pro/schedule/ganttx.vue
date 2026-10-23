@@ -65,7 +65,7 @@ export default {
         start_date: today,
         css: "today",
         text: "今天",
-        title: "今天: " + date_to_str(today)
+        title: this.$t('mes.今天:') + date_to_str(today)
       });
     },
     // 初始化甘特图配置
@@ -83,11 +83,11 @@ export default {
       gantt.config.duration_step = 8;
       gantt.config.grid_width = 520;
       gantt.config.columns = [
-        { name: "text", label: "任务名", tree: true, width: '200' },
-        { name: "workstation", label: "工作站", align: "center", width: '*' },
-        { name: "process", label: "工序", align: "center", width: '*' },
-        { name: "start_date", label: "开始时间", align: "center", width: '*' },
-        { name: "end_date", label: "结束时间", align: "center", width: '*' },
+        { name: "text", label: this.$t('mes.任务名'), tree: true, width: '200' },
+        { name: "workstation", label: this.$t('mes.工作站'), align: "center", width: '*' },
+        { name: "process", label: this.$t('mes.工序'), align: "center", width: '*' },
+        { name: "start_date", label: this.$t('lims.开始时间'), align: "center", width: '*' },
+        { name: "end_date", label: this.$t('lims.结束时间'), align: "center", width: '*' },
       ];
       // 1.3 设置中文
       gantt.i18n.setLocale("cn");
@@ -99,9 +99,9 @@ export default {
       // gantt.config.quick_info_delay = 300; // 单位：毫秒
       gantt.templates.tooltip_text = function (start, end, task) {
         if (task.type == 'project') {
-          return "<b style='text-align:left;'>生产工单:</b> " + task.text + "    <span style='text-align:left;'>" + " 完成比例：" + Math.round(task.progress * 100) + "% </span>";
+          return "<b style='text-align:left;'>" + this.$t('mes.生产工单:') + "</b> " + task.text + "    <span style='text-align:left;'>" + this.$t('mes.完成比例：') + " " + Math.round(task.progress * 100) + "% </span>";
         } else {
-          return "<b style='text-align:left;'>生产任务:</b> " + task.process + " " + task.text + "    <span style='text-align:left;'>" + " 完成比例：" + Math.round(task.progress * 100) + "% </span>";
+          return "<b style='text-align:left;'>" + this.$t('mes.生产任务:') + "</b> " + task.process + " " + task.text + "    <span style='text-align:left;'>" + this.$t('mes.完成比例：') + " " + Math.round(task.progress * 100) + "% </span>";
         }
       };
 
@@ -111,9 +111,9 @@ export default {
       // 1.6 显示到任务上的文本
       gantt.templates.task_text = function (start, end, task) {
         if (task.type == 'project') {
-          return "<b style='text-align:left;'>生产工单:</b> " + task.text + "    <span style='text-align:left;'>" + " 完成比例：" + Math.round(task.progress * 100) + "% </span>";
+          return "<b style='text-align:left;'>" + this.$t('mes.生产工单:') + "</b> " + task.text + "    <span style='text-align:left;'>" + this.$t('mes.完成比例：') + " " + Math.round(task.progress * 100) + "% </span>";
         } else {
-          return "<b style='text-align:left;'>生产任务:</b> " + task.process + " " + task.text + "    <span style='text-align:left;'>" + " 完成比例：" + Math.round(task.progress * 100) + "% </span>";
+          return "<b style='text-align:left;'>" + this.$t('mes.生产任务:') + "</b> " + task.process + " " + task.text + "    <span style='text-align:left;'>" + this.$t('mes.完成比例：') + " " + Math.round(task.progress * 100) + "% </span>";
         }
       };
       // 1.7 显示单元格

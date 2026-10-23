@@ -9,7 +9,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:md:mditem:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
         <ItemSelect ref="itemSelect" @onSelected="onItemSelected" > </ItemSelect>
       </el-col>
       <el-col :span="1.5">
@@ -21,20 +21,20 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:md:mditem:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="bomList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="物料编码" align="center" prop="bomItemCode" />
-      <el-table-column label="物料名称" align="center" prop="bomItemName" :show-overflow-tooltip="true" />
-      <el-table-column label="规格" align="center" prop="bomItemSpec" :show-overflow-tooltip="true" />
-      <el-table-column label="单位" width="60px" align="center" prop="unitOfMeasure" />
-      <el-table-column label="使用比例" width="90px" align="center" prop="quantity" />  
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />  
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" v-if="optType !='view'">
+      <el-table-column :label="$t('mes.物料编码')" align="center" prop="bomItemCode" />
+      <el-table-column :label="$t('lims.物料名称')" align="center" prop="bomItemName" :show-overflow-tooltip="true" />
+      <el-table-column :label="$t('lims.规格')" align="center" prop="bomItemSpec" :show-overflow-tooltip="true" />
+      <el-table-column :label="$t('lims.单位')" width="60px" align="center" prop="unitOfMeasure" />
+      <el-table-column :label="$t('mes.使用比例')" width="90px" align="center" prop="quantity" />  
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" :show-overflow-tooltip="true" />  
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width" v-if="optType !='view'">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -42,14 +42,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:md:mditem:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:md:mditem:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -65,28 +65,28 @@
  <!-- 添加或修改产品BOM关系对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="BOM物料编码" prop="bomItemCode">
-          <el-input v-model="form.bomItemCode" readonly placeholder="请输入BOM物料编码" />
+        <el-form-item :label="$t('mes.BOM物料编码')" prop="bomItemCode">
+          <el-input v-model="form.bomItemCode" readonly :placeholder="$t('mes.请输入BOM物料编码')" />
         </el-form-item>
-        <el-form-item label="BOM物料名称" prop="bomItemName">
-          <el-input v-model="form.bomItemName" readonly placeholder="请输入BOM物料名称" />
+        <el-form-item :label="$t('mes.BOM物料名称')" prop="bomItemName">
+          <el-input v-model="form.bomItemName" readonly :placeholder="$t('mes.请输入BOM物料名称')" />
         </el-form-item>
-        <el-form-item label="BOM物料规格" prop="bomItemSpec">
-          <el-input v-model="form.bomItemSpec" readonly type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('mes.BOM物料规格')" prop="bomItemSpec">
+          <el-input v-model="form.bomItemSpec" readonly type="textarea" :placeholder="$t('common.inputContent')" />
         </el-form-item>
-        <el-form-item label="BOM物料单位" prop="unitOfMeasure">
-          <el-input v-model="form.unitOfMeasure" readonly placeholder="请输入BOM物料单位" />
+        <el-form-item :label="$t('mes.BOM物料单位')" prop="unitOfMeasure">
+          <el-input v-model="form.unitOfMeasure" readonly :placeholder="$t('mes.请输入BOM物料单位')" />
         </el-form-item>
-        <el-form-item label="物料使用比例" prop="quantity">
-          <el-input-number  :precision="4" :step="0.1" :min="0"  v-model="form.quantity" placeholder="请输入物料使用比例" />
+        <el-form-item :label="$t('mes.物料使用比例')" prop="quantity">
+          <el-input-number  :precision="4" :step="0.1" :min="0"  v-model="form.quantity" :placeholder="$t('mes.请输入物料使用比例')" />
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item :label="$t('system.备注')" prop="remark">
+          <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
 
@@ -142,7 +142,7 @@ components: { ItemSelect },
     // 表单校验
       rules: {
         quantity: [
-          { required: true, message: "物料使用比例不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.物料使用比例不能为空'), trigger: "blur" }
         ]
       }
     };
@@ -221,7 +221,7 @@ components: { ItemSelect },
       getBom(bomId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改产品BOM关系";
+        this.title = this.$t('mes.修改产品BOM关系');
       });
     },
     /** 提交按钮 */
@@ -229,7 +229,7 @@ components: { ItemSelect },
       this.$refs["form"].validate(valid => {
         if (valid) {
             updateBom(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });  
@@ -239,11 +239,11 @@ components: { ItemSelect },
     /** 删除按钮操作 */
     handleDelete(row) {
       const bomIds = row.bomId || this.ids;
-      this.$modal.confirm('是否确认删除产品BOM关系编号为"' + bomIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除产品BOM关系编号为{v}的数据项？', { v: bomIds })).then(function() {
         return delBom(bomIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     //物料选择弹出框
@@ -261,7 +261,7 @@ components: { ItemSelect },
                 this.form.enableFlag = 'Y';
                 var retFlag = false;
                 addBom(this.form).then(response => {
-                    this.$modal.msgSuccess("新增成功");
+                    this.$modal.msgSuccess(this.$t('system.新增成功'));
                     this.getList();
                 });
             });

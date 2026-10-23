@@ -10,18 +10,18 @@
               </el-button>
             </template>
 
-            <el-popover v-model="paperPopVisible" title="设置纸张宽高(mm)" trigger="click">
+            <el-popover v-model="paperPopVisible" :title="$t('print.设置纸张宽高(mm)')" trigger="click">
               <div>
                 <el-input-number v-model="paperWidth" style=" width: 120px; text-align: center"
-                                 controls-position="right"   placeholder="宽(mm)"/>
+                                 controls-position="right"   :placeholder="$t('print.宽(mm)')"/>
                 <el-input style=" width: 50px; border-left: 0; pointer-events: none;text-align: center; backgroundColor: #fff"
                           placeholder="~" disabled
                 />
                 <el-input-number v-model="paperHeight" style="width: 120px; text-align: center; border-left: 0"
-                                 controls-position="right"   placeholder="高(mm)"/>
+                                 controls-position="right"   :placeholder="$t('print.高(mm)')"/>
               </div>
-              <el-button type="primary" style="width: 290px; margin-top: 10px;" @click="otherPaper">确定</el-button>
-              <el-button slot="reference" :type="'other'==curPaperType?'primary':''">自定义纸张</el-button>
+              <el-button type="primary" style="width: 290px; margin-top: 10px;" @click="otherPaper">{{ this.$t('common.confirm') }}</el-button>
+              <el-button slot="reference" :type="'other'==curPaperType?'primary':''">{{ this.$t('print.自定义纸张') }}</el-button>
             </el-popover>
           </el-button-group>
           <el-input
@@ -37,50 +37,50 @@
             <el-button icon="el-icon-zoom-in" slot="append" @click="changeScale(true)"></el-button>
           </el-input>
           <el-button-group style="margin-left: 10px;">
-            <el-button type="primary" icon="el-icon-printer" @click="print()">打印</el-button>
-            <el-button type="primary" icon="el-icon-refresh-left" @click="rotatePaper()">旋转</el-button>
-            <el-button type="primary" icon="el-icon-view" @click="preView">预览</el-button>
+            <el-button type="primary" icon="el-icon-printer" @click="print()">{{ this.$t('common.print') }}</el-button>
+            <el-button type="primary" icon="el-icon-refresh-left" @click="rotatePaper()">{{ this.$t('print.旋转') }}</el-button>
+            <el-button type="primary" icon="el-icon-view" @click="preView">{{ this.$t('common.preview') }}</el-button>
 
             <el-button type="primary" icon="el-icon-view" @click="print">
-              打印
+              {{ this.$t('common.print') }}
             </el-button>
             <el-button type="primary" icon="el-icon-view" @click="printPdf">
-              pdf导出
+              {{ this.$t('print.pdf导出') }}
             </el-button>
 
-            <el-button type="success" icon="el-icon-check" @click="handleSave">保存</el-button>
+            <el-button type="success" icon="el-icon-check" @click="handleSave">{{ this.$t('common.save') }}</el-button>
             <el-popconfirm
-                title="是否确认清空?"
-                confirm-button-text="确定清空"
+                :title="$t('print.是否确认清空?')"
+                :confirm-button-text="$t('print.确定清空')"
                 @confirm="clearPaper">
               <el-button slot="reference" type="danger" icon="el-icon-close">
-                清空
+                {{ this.$t('print.清空') }}
               </el-button>
             </el-popconfirm>
           </el-button-group>
           <el-radio-group style="margin-left: 10px;">
-            <el-radio-button @click="setElsAlign('left')" title="左对齐">
+            <el-radio-button @click="setElsAlign('left')" :title="$t('print.左对齐')">
               <svg-icon icon-class="alignLeft" />
             </el-radio-button>
-            <el-radio-button @click="setElsAlign('vertical')" title="居中">
+            <el-radio-button @click="setElsAlign('vertical')" :title="$t('print.居中')">
               <svg-icon icon-class="alignCenter" />
             </el-radio-button>
-            <el-radio-button @click="setElsAlign('right')" title="右对齐">
+            <el-radio-button @click="setElsAlign('right')" :title="$t('print.右对齐')">
               <svg-icon icon-class="alignRight" />
             </el-radio-button>
-            <el-radio-button @click="setElsAlign('top')" title="顶部对齐">
+            <el-radio-button @click="setElsAlign('top')" :title="$t('print.顶部对齐')">
               <svg-icon icon-class="alignTop" />
             </el-radio-button>
-            <el-radio-button @click="setElsAlign('horizontal')" title="垂直居中">
+            <el-radio-button @click="setElsAlign('horizontal')" :title="$t('print.垂直居中')">
               <svg-icon icon-class="horizontal" />
             </el-radio-button>
-            <el-radio-button @click="setElsAlign('bottom')" title="底部对齐">
+            <el-radio-button @click="setElsAlign('bottom')" :title="$t('print.底部对齐')">
               <svg-icon icon-class="alignBottom" />
             </el-radio-button>
-            <el-radio-button @click="setElsAlign('distributeHor')" title="横向分散">
+            <el-radio-button @click="setElsAlign('distributeHor')" :title="$t('print.横向分散')">
               <svg-icon icon-class="resizeHorizontal" />
             </el-radio-button>
-            <el-radio-button @click="setElsAlign('distributeVer')" title="纵向分散">
+            <el-radio-button @click="setElsAlign('distributeVer')" :title="$t('print.纵向分散')">
               <svg-icon icon-class="resizeVertical" />
             </el-radio-button>
           </el-radio-group>
@@ -91,13 +91,13 @@
           <el-card class="ep-drag-container">
             <el-row>
               <el-col :span="24" class="rect-printElement-types hiprintEpContainer">
-                <el-row class="drag_item_title">基础组件</el-row>
+                <el-row class="drag_item_title">{{ this.$t('print.基础组件') }}</el-row>
                 <el-row style="height: 100px;">
                   <el-col :span="12" class="drag_item_box">
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.text" style>
                         <svg-icon icon-class="text" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">固定文本</p>
+                        <p class="glyphicon-class">{{ this.$t('print.固定文本') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -105,7 +105,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.image" style>
                         <svg-icon icon-class="picture" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">图片</p>
+                        <p class="glyphicon-class">{{ this.$t('print.图片') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -115,7 +115,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.longText">
                         <svg-icon icon-class="textarea" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">长文</p>
+                        <p class="glyphicon-class">{{ this.$t('print.长文') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -123,7 +123,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.date" style>
                         <svg-icon icon-class="date" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">日期时间</p>
+                        <p class="glyphicon-class">{{ this.$t('print.日期时间') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -134,7 +134,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.table" style>
                         <svg-icon icon-class="build" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">表单</p>
+                        <p class="glyphicon-class">{{ this.$t('print.表单') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -142,19 +142,19 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.emptyTable" style>
                         <svg-icon icon-class="build" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">空白表单</p>
+                        <p class="glyphicon-class">{{ this.$t('print.空白表单') }}</p>
                       </a>
                     </div>
                   </el-col>
                 </el-row>
 
-                <el-row class="drag_item_title">辅助</el-row>
+                <el-row class="drag_item_title">{{ this.$t('print.辅助') }}</el-row>
                 <el-row style="height: 100px;">
                   <el-col :span="12" class="drag_item_box">
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.hline" style>
                         <svg-icon icon-class="hline" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">横线</p>
+                        <p class="glyphicon-class">{{ this.$t('print.横线') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -162,7 +162,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.vline" style>
                         <svg-icon icon-class="vline" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">竖线</p>
+                        <p class="glyphicon-class">{{ this.$t('print.竖线') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -172,7 +172,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.rect">
                         <svg-icon icon-class="rect" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">矩形</p>
+                        <p class="glyphicon-class">{{ this.$t('print.矩形') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -180,18 +180,18 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.oval">
                         <svg-icon icon-class="circle" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">圆形</p>
+                        <p class="glyphicon-class">{{ this.$t('print.圆形') }}</p>
                       </a>
                     </div>
                   </el-col>
                 </el-row>
-                <el-row class="drag_item_title">表单</el-row>
+                <el-row class="drag_item_title">{{ this.$t('print.表单') }}</el-row>
                 <el-row style="height: 100px;">
                   <el-col :span="12" class="drag_item_box">
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.barcode">
                         <svg-icon icon-class="barcode" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">条形码</p>
+                        <p class="glyphicon-class">{{ this.$t('print.条形码') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -199,7 +199,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.qrcode">
                         <svg-icon icon-class="qrcode" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">二维码</p>
+                        <p class="glyphicon-class">{{ this.$t('print.二维码') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -209,7 +209,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.itemCode">
                         <svg-icon icon-class="itemcode" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">物料编码</p>
+                        <p class="glyphicon-class">{{ this.$t('print.物料编码') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -217,7 +217,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.itemName">
                         <svg-icon icon-class="itemname" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">物料名称</p>
+                        <p class="glyphicon-class">{{ this.$t('lims.物料名称') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -227,7 +227,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.workorderCode">
                         <svg-icon icon-class="workordercode" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">工单编号</p>
+                        <p class="glyphicon-class">{{ this.$t('print.工单编号') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -235,7 +235,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.workorderName">
                         <svg-icon icon-class="workordername" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">工单名称</p>
+                        <p class="glyphicon-class">{{ this.$t('print.工单名称') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -245,7 +245,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.vendorCode">
                         <svg-icon icon-class="vendorcode" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">供应商编号</p>
+                        <p class="glyphicon-class">{{ this.$t('print.供应商编号') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -253,7 +253,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.vendorName">
                         <svg-icon icon-class="vendorname" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">供应商名称</p>
+                        <p class="glyphicon-class">{{ this.$t('lims.供应商名称') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -263,7 +263,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.clientCode">
                         <svg-icon icon-class="clientcode" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">客户编号</p>
+                        <p class="glyphicon-class">{{ this.$t('print.客户编号') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -271,7 +271,7 @@
                     <div>
                       <a class="ep-draggable-item" tid="defaultModule.clientName">
                         <svg-icon icon-class="clientname" class="draggable-item-svg"/>
-                        <p class="glyphicon-class">客户名称</p>
+                        <p class="glyphicon-class">{{ this.$t('lims.客户名称') }}</p>
                       </a>
                     </div>
                   </el-col>
@@ -302,35 +302,35 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="模板编号" prop="templateCode">
-              <el-input v-model="form.templateCode" placeholder="请输入模板编号" />
+            <el-form-item :label="$t('lims.模板编号')" prop="templateCode">
+              <el-input v-model="form.templateCode" :placeholder="$t('lims.请输入模板编号')" />
             </el-form-item>
           </el-col>
           <el-col :span="4"></el-col>
           <el-col :span="12">
-            <el-form-item label="模板名称" prop="templateName">
-              <el-input v-model="form.templateName" placeholder="请输入模板名称" />
+            <el-form-item :label="$t('lims.模板名称')" prop="templateName">
+              <el-input v-model="form.templateName" :placeholder="$t('lims.请输入模板名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="模板类型" prop="templateType">
-              <el-select v-model="form.templateType" placeholder="请选择模板类型">
-                <el-option label="请选择字典生成" value="" />
+            <el-form-item :label="$t('lims.模板类型')" prop="templateType">
+              <el-select v-model="form.templateType" :placeholder="$t('lims.请选择模板类型')">
+                <el-option :label="$t('print.请选择字典生成')" value="" />
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="是否默认" prop="isDefault">
-              <el-input v-model="form.isDefault" placeholder="请输入是否默认" />
+            <el-form-item :label="$t('print.是否默认')" prop="isDefault">
+              <el-input v-model="form.isDefault" :placeholder="$t('print.请输入是否默认')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="启用状态" prop="enableFlag">
-              <el-input v-model="form.enableFlag" placeholder="请输入启用状态" />
+            <el-form-item :label="$t('system.启用状态')" prop="enableFlag">
+              <el-input v-model="form.enableFlag" :placeholder="$t('print.请输入启用状态')" />
             </el-form-item>
           </el-col>
           <el-col :span="4"></el-col>
@@ -338,8 +338,8 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveTemplate">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="saveTemplate">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -392,9 +392,9 @@ export default {
       // 表单校验
       rules: {
         templateCode: [
-          { required: true, message: "模板编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('print.模板编号不能为空'), trigger: "blur" }
         ],        templateType: [
-          { required: true, message: "模板类型不能为空", trigger: "change" }
+          { required: true, message: this.$t('print.模板类型不能为空'), trigger: "change" }
         ],
       },
       template: null,
@@ -477,7 +477,7 @@ export default {
             }
             hiprintTemplate.update(JSON.parse(this.form.templateJson));
           } catch (e) {
-            this.$message.error(`更新失败: ${e}`)
+            this.$message.error(this.$t('print.更新失败') + ': ' + e)
           }
         }
       });
@@ -605,12 +605,12 @@ export default {
         // 或者使用 hiprintTemplate.setFontList([])
         // 或元素中 options.fontList: []
         fontList: [
-          {title: '微软雅黑', value: 'Microsoft YaHei'},
-          {title: '黑体', value: 'STHeitiSC-Light'},
-          {title: '思源黑体', value: 'SourceHanSansCN-Normal'},
-          {title: '王羲之书法体', value: '王羲之书法体'},
-          {title: '宋体', value: 'SimSun'},
-          {title: '华为楷体', value: 'STKaiti'},
+          {title: this.$t('print.微软雅黑'), value: 'Microsoft YaHei'},
+          {title: this.$t('print.黑体'), value: 'STHeitiSC-Light'},
+          {title: this.$t('print.思源黑体'), value: 'SourceHanSansCN-Normal'},
+          {title: this.$t('print.王羲之书法体'), value: '王羲之书法体'},
+          {title: this.$t('print.宋体'), value: 'SimSun'},
+          {title: this.$t('print.华为楷体'), value: 'STKaiti'},
           {title: 'cursive', value: 'cursive'},
         ],
         dataMode: 1, // 1:getJson 其他：getJsonTid 默认1
@@ -664,7 +664,7 @@ export default {
           this.scaleValue = scaleValue;
         }
       } catch (error) {
-        this.$message.error(`操作失败: ${error}`)
+        this.$message.error(this.$t('print.操作失败') + ': ' + error)
       }
     },
     otherPaper() {
@@ -707,7 +707,7 @@ export default {
         // 创建一个新的模板对象，包含所有必要的数据
         const previewTemplate = {
           getJson: () => templateJson,
-          name: '打印预览',
+          name: this.$t('print.打印预览'),
           json: templateJson,
           printData: printData,
           extendCss: ''
@@ -721,7 +721,7 @@ export default {
         this.saveTemplate();
       }else{
         this.open = true;
-        this.title = "新增打印模板配置";
+        this.title = this.$t('print.新增打印模板配置');
       }
     },
     //将当前模板的JSON保存到数据库
@@ -736,7 +736,7 @@ export default {
       const element = document.getElementById("hiprint-printTemplate");
       if (!element) {
         console.error('错误：未找到打印模板元素');
-        this.$message.error('无法找到打印模板元素');
+        this.$message.error(this.$t('print.无法找到打印模板元素'));
         return;
       }
 
@@ -767,7 +767,7 @@ export default {
             }
             if (that.form.templateId != null) {
               updateTemplate(that.form).then(response => {
-                that.$modal.msgSuccess("修改成功");
+                that.$modal.msgSuccess(this.$t('system.修改成功'));
                 that.open = false;
                 // 关闭当前页面并刷新列表
                 that.$store.dispatch("tagsView/delView", that.$route);
@@ -775,7 +775,7 @@ export default {
               });
             } else {
               addTemplate(that.form).then(response => {
-                that.$modal.msgSuccess("新增成功");
+                that.$modal.msgSuccess(this.$t('system.新增成功'));
                 that.open = false;
                 // 关闭当前页面并刷新列表
                 that.$store.dispatch("tagsView/delView", that.$route);
@@ -784,16 +784,16 @@ export default {
             }
           }).catch(error => {
             console.error('缩略图上传失败:', error);
-            that.$message.error('上传缩略图失败');
+            that.$message.error(this.$t('print.上传缩略图失败'));
           });
         }, 'image/jpeg', 0.95);
       }).catch(error => {
         console.error('缩略图生成失败:', error);
-        that.$message.error('生成缩略图失败');
+        that.$message.error(this.$t('print.生成缩略图失败'));
         // 即使生成缩略图失败，也继续保存模板
         if (that.form.templateId != null) {
           updateTemplate(that.form).then(response => {
-            that.$modal.msgSuccess("修改成功");
+            that.$modal.msgSuccess(this.$t('system.修改成功'));
             that.open = false;
             // 关闭当前页面并刷新列表
             that.$store.dispatch("tagsView/delView", that.$route);
@@ -801,7 +801,7 @@ export default {
           });
         } else {
           addTemplate(that.form).then(response => {
-            that.$modal.msgSuccess("新增成功");
+            that.$modal.msgSuccess(this.$t('system.新增成功'));
             that.open = false;
             // 关闭当前页面并刷新列表
             that.$store.dispatch("tagsView/delView", that.$route);
@@ -818,29 +818,29 @@ export default {
       let that = this;
       if (window.hiwebSocket.opened) {
         let hiprintTemplate = this.$print2(undefined, panel, printData, {
-          printer: '', title: 'Api单独打印',
+          printer: '', title: this.$t('print.Api单独打印'),
           styleHandler: () => {
             // let css = '<link href="http://hiprint.io/Content/hiprint/css/print-lock.css" media="print" rel="stylesheet">';
             let css = '<style>.hiprint-printElement-text{color:red !important;}</style>'
             return css
           }
         })
-        let key = 'Api单独直接打印';
+        let key = this.$t('print.Api单独直接打印');
         hiprintTemplate.on('printSuccess', function () {
           that.$notification.success({
             key: key,
             placement: 'topRight',
-            message: key + ' 打印成功',
-            description: 'Api单独直接打印回调',
+            message: key + ' ' + this.$t('common.printSuccess'),
+            description: this.$t('print.Api单独直接打印回调'),
           });
         });
         return;
       }
-      this.$message.error('客户端未连接,无法直接打印')
+      this.$message.error(this.$t('print.客户端未连接,无法直接打印'))
     },
     // print() {
     //     if (window.hiwebSocket.opened) {
-    //       hiprintTemplate.print2(printData, {printer: PRINT_DICT.PRINT_NAME, title: 'hiprint测试打印'});
+    //       hiprintTemplate.print2(printData, {printer: PRINT_DICT.PRINT_NAME, title: this.$t('print.hiprint测试打印')});
     //       this.$message.success("打印成功")
     //       return
     //     }
@@ -851,20 +851,20 @@ export default {
       // hiprint对象获取
       if (window.hiwebSocket.opened) {
         hiprintTemplate.print2(printData,
-            {printer: 'NPIF17119 (HP LaserJet MFP M233sdw)', title: 'hiprint测试打印'}
+            {printer: 'NPIF17119 (HP LaserJet MFP M233sdw)', title: this.$t('print.hiprint测试打印')}
         );
-        this.$message.success("打印成功")
+        this.$message.success(this.$t('common.printSuccess'))
         return;
       }else{
         console.log('print window.hiwebSocket.opened status',window.hiwebSocket.opened);
       }
-      this.$message.error('客户端未连接,无法直接打印')
+      this.$message.error(this.$t('print.客户端未连接,无法直接打印'))
 
     },
     printPdf() {
       // <!-- scale 越大 pdf 越清晰，文件越大  默认2,建议谷歌浏览器使用-->
       console.log('index topdf--',printData.table);
-      hiprintTemplate.toPdf(printData, '打印预览', {
+      hiprintTemplate.toPdf(printData, this.$t('print.打印预览'), {
         scale: 15,
         style: `
           .hiprint-printElement-tableTarget {
@@ -887,7 +887,7 @@ export default {
       try {
         hiprintTemplate.clear();
       } catch (error) {
-        this.$message.error(`操作失败: ${error}`);
+        this.$message.error(this.$t('print.操作失败') + ': ' + error);
       }
     },
     ippPrintAttr() {
@@ -1027,7 +1027,7 @@ export default {
         try {
           hiprintTemplate.update(JSON.parse(this.jsonIn))
         } catch (e) {
-          this.$message.error(`更新失败: ${e}`)
+          this.$message.error(this.$t('print.更新失败') + ': ' + e)
         }
       }
     },

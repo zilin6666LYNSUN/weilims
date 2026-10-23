@@ -3,30 +3,30 @@
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
       <el-row>
         <el-col :span="8">
-          <el-form-item label="客户编码" prop="clientCode">
+          <el-form-item :label="$t('lims.客户编码')" prop="clientCode">
             <el-input
               v-model="queryParams.clientCode"
-              placeholder="请输入客户编码"
+              :placeholder="$t('lims.请输入客户编码')"
               clearable
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="客户名称" prop="clientName">
+          <el-form-item :label="$t('lims.客户名称')" prop="clientName">
             <el-input
               v-model="queryParams.clientName"
-              placeholder="请输入客户名称"
+              :placeholder="$t('lims.请输入客户名称')"
               clearable
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="客户简称" prop="clientNick">
+          <el-form-item :label="$t('mes.客户简称')" prop="clientNick">
             <el-input
               v-model="queryParams.clientNick"
-              placeholder="请输入客户简称"
+              :placeholder="$t('mes.请输入客户简称')"
               clearable
               @keyup.enter.native="handleQuery"
             />
@@ -35,20 +35,20 @@
       </el-row>
       <el-row>
         <el-col :span="8">
-            <el-form-item label="客户英文名称" prop="clientEn">
+            <el-form-item :label="$t('mes.客户英文名称')" prop="clientEn">
             <el-input
               v-model="queryParams.clientEn"
-              placeholder="请输入客户英文名称"
+              :placeholder="$t('mes.请输入客户英文名称')"
               clearable
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="是否启用" prop="enableFlag">
+          <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
             <el-select
               v-model="queryParams.enableFlag"
-              placeholder="是否启用"
+              :placeholder="$t('system.是否启用')"
               clearable
               style="width: 215px"
             >
@@ -63,8 +63,8 @@
         </el-col>
         <el-col :span="8">
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -79,7 +79,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:md:client:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -90,7 +90,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:md:client:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -101,7 +101,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:md:client:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -111,14 +111,14 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:md:client:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="clientList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="客户编码" align="center" prop="clientCode" >
+      <el-table-column :label="$t('lims.客户编码')" align="center" prop="clientCode" >
          <template slot-scope="scope">
                 <el-button
                   type="text"
@@ -127,22 +127,22 @@
                 >{{scope.row.clientCode}}</el-button>
           </template>
       </el-table-column>
-      <el-table-column label="客户名称" width="150px" align="center" prop="clientName" :show-overflow-tooltip="true"/>
-      <el-table-column label="客户简称" align="center" prop="clientNick" />
-      <el-table-column label="客户类型" align="center" prop="clientType" >
+      <el-table-column :label="$t('lims.客户名称')" width="150px" align="center" prop="clientName" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('mes.客户简称')" align="center" prop="clientNick" />
+      <el-table-column :label="$t('lims.客户类型')" align="center" prop="clientType" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_client_type" :value="scope.row.clientType"/>
         </template>
       </el-table-column>
-      <el-table-column label="客户电话" align="center" prop="tel" />
-      <el-table-column label="联系人" align="center" prop="contact1" />
-      <el-table-column label="联系人-电话" align="center" prop="contact1Tel" />
-      <el-table-column label="是否启用" align="center" prop="enableFlag" >
+      <el-table-column :label="$t('mes.客户电话')" align="center" prop="tel" />
+      <el-table-column :label="$t('lims.联系人')" align="center" prop="contact1" />
+      <el-table-column :label="$t('mes.联系人-电话')" align="center" prop="contact1Tel" />
+      <el-table-column :label="$t('system.是否启用')" align="center" prop="enableFlag" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -150,14 +150,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:md:client:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:md:client:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -175,39 +175,39 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="客户编码" prop="clientCode">
-              <el-input v-model="form.clientCode" placeholder="请输入客户编码" />
+            <el-form-item :label="$t('lims.客户编码')" prop="clientCode">
+              <el-input v-model="form.clientCode" :placeholder="$t('lims.请输入客户编码')" />
             </el-form-item>
           </el-col>
             <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="客户名称" prop="clientName">
-              <el-input v-model="form.clientName" placeholder="请输入客户名称" />
+            <el-form-item :label="$t('lims.客户名称')" prop="clientName">
+              <el-input v-model="form.clientName" :placeholder="$t('lims.请输入客户名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="客户简称" prop="clientNick">
-              <el-input v-model="form.clientNick" placeholder="请输入客户简称" />
+            <el-form-item :label="$t('mes.客户简称')" prop="clientNick">
+              <el-input v-model="form.clientNick" :placeholder="$t('mes.请输入客户简称')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="客户英文名称" prop="clientEn">
-              <el-input v-model="form.clientEn" placeholder="请输入客户英文名称" />
+            <el-form-item :label="$t('mes.客户英文名称')" prop="clientEn">
+              <el-input v-model="form.clientEn" :placeholder="$t('mes.请输入客户英文名称')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="客户类型" prop="clientType">
-              <el-select v-model="form.clientType" placeholder="请选择客户类型">
+            <el-form-item :label="$t('lims.客户类型')" prop="clientType">
+              <el-select v-model="form.clientType" :placeholder="$t('mes.请选择客户类型')">
               <el-option
                   v-for="dict in dict.type.mes_client_type"
                   :key="dict.value"
@@ -220,63 +220,63 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="客户简介" prop="clientDes">
-              <el-input v-model="form.clientDes" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('mes.客户简介')" prop="clientDes">
+              <el-input v-model="form.clientDes" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="客户地址" prop="address">
-              <el-input v-model="form.address" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('mes.客户地址')" prop="address">
+              <el-input v-model="form.address" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="客户官网地址" prop="website">
-              <el-input v-model="form.website" placeholder="请输入客户官网地址" />
+            <el-form-item :label="$t('mes.客户官网地址')" prop="website">
+              <el-input v-model="form.website" :placeholder="$t('mes.请输入客户官网地址')" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="客户邮箱地址" prop="email">
+            <el-form-item :label="$t('mes.客户邮箱地址')" prop="email">
               <el-input v-model="form.email" v-if="optType=='view'" />
-              <el-input v-model="form.email" placeholder="请输入客户邮箱地址" v-else/>
+              <el-input v-model="form.email" :placeholder="$t('mes.请输入客户邮箱地址')" v-else/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="客户电话" prop="tel">
+            <el-form-item :label="$t('mes.客户电话')" prop="tel">
               <el-input v-model="form.tel" v-if="optType=='view'"  />
-              <el-input v-model="form.tel" placeholder="请输入客户电话" v-else/>
+              <el-input v-model="form.tel" :placeholder="$t('mes.请输入客户电话')" v-else/>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <!-- <el-form-item label="客户LOGO" prop="clientLogo">
+            <!-- <el-form-item :label="$t('mes.客户LOGO')" prop="clientLogo">
               <el-input v-model="form.clientLogo" v-if="optType=='view'" />
-              <el-input v-model="form.clientLogo" placeholder="请输入客户LOGO" v-else/>
+              <el-input v-model="form.clientLogo" :placeholder="$t('mes.请输入客户LOGO')" v-else/>
             </el-form-item> -->
-            <el-form-item label="手机" prop="contact1Tel">
+            <el-form-item :label="$t('system.手机')" prop="contact1Tel">
               <el-input v-model="form.contact1Tel" v-if="optType=='view'" />
-              <el-input v-model="form.contact1Tel" placeholder="请输入联系人1-电话" v-else />
+              <el-input v-model="form.contact1Tel" :placeholder="$t('mes.请输入联系人1-电话')" v-else />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="6">
-            <el-form-item label="业务员" prop="busMan">
-              <el-input v-model="form.salesMan" placeholder="请输入业务员" />
+            <el-form-item :label="$t('mes.业务员')" prop="busMan">
+              <el-input v-model="form.salesMan" :placeholder="$t('mes.请输入业务员')" />
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="跟单" prop="followerMan">
-              <el-input v-model="form.followerMan" placeholder="请输入跟单" />
+            <el-form-item :label="$t('mes.跟单')" prop="followerMan">
+              <el-input v-model="form.followerMan" :placeholder="$t('mes.请输入跟单')" />
             </el-form-item>
           </el-col>
           <el-col :span="6"
-            ><el-form-item label="结账方式" prop="payUp">
-              <el-select v-model="form.payUp" placeholder="请选择结账方式">
+            ><el-form-item :label="$t('mes.结账方式')" prop="payUp">
+              <el-select v-model="form.payUp" :placeholder="$t('mes.请选择结账方式')">
                 <el-option
                   v-for="dict in dict.type.pay_up_type"
                   :key="dict.value"
@@ -287,8 +287,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="币别" prop="currency">
-              <el-select v-model="form.currency" placeholder="请选择币别">
+            <el-form-item :label="$t('mes.币别')" prop="currency">
+              <el-select v-model="form.currency" :placeholder="$t('mes.请选择币别')">
                 <el-option
                   v-for="dict in dict.type.currency_type"
                   :key="dict.value"
@@ -299,53 +299,53 @@
             </el-form-item>
           </el-col>
           <!-- <el-col :span="8">
-            <el-form-item label="联系人1" prop="contact1">
+            <el-form-item :label="$t('mes.联系人1')" prop="contact1">
               <el-input v-model="form.contact1" v-if="optType=='view'" />
-              <el-input v-model="form.contact1" placeholder="请输入联系人1" v-else/>
+              <el-input v-model="form.contact1" :placeholder="$t('mes.请输入联系人1')" v-else/>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="联系人1-电话" prop="contact1Tel">
+            <el-form-item :label="$t('mes.联系人1-电话')" prop="contact1Tel">
               <el-input v-model="form.contact1Tel" v-if="optType=='view'" />
-              <el-input v-model="form.contact1Tel" placeholder="请输入联系人1-电话" v-else />
+              <el-input v-model="form.contact1Tel" :placeholder="$t('mes.请输入联系人1-电话')" v-else />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="联系人1-邮箱" prop="contact1Email">
+            <el-form-item :label="$t('mes.联系人1-邮箱')" prop="contact1Email">
               <el-input v-model="form.contact1Email" v-if="optType=='view'" />
-              <el-input v-model="form.contact1Email" placeholder="请输入联系人1-邮箱" v-else/>
+              <el-input v-model="form.contact1Email" :placeholder="$t('mes.请输入联系人1-邮箱')" v-else/>
             </el-form-item>
           </el-col>
         </el-row> -->
         <!-- <el-row>
           <el-col :span="8">
-            <el-form-item label="联系人2" prop="contact2">
+            <el-form-item :label="$t('mes.联系人2')" prop="contact2">
               <el-input v-model="form.contact2" v-if="optType=='view'" />
-              <el-input v-model="form.contact2" placeholder="请输入联系人2" v-else />
+              <el-input v-model="form.contact2" :placeholder="$t('mes.请输入联系人2')" v-else />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="联系人2-电话" prop="contact2Tel">
+            <el-form-item :label="$t('mes.联系人2-电话')" prop="contact2Tel">
               <el-input v-model="form.contact2Tel" v-if="optType=='view'" />
-              <el-input v-model="form.contact2Tel" placeholder="请输入联系人2-电话"  v-else/>
+              <el-input v-model="form.contact2Tel" :placeholder="$t('mes.请输入联系人2-电话')"  v-else/>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="联系人2-邮箱" prop="contact2Email">
+            <el-form-item :label="$t('mes.联系人2-邮箱')" prop="contact2Email">
               <el-input v-model="form.contact2Email" v-if="optType=='view'" />
-              <el-input v-model="form.contact2Email" placeholder="请输入联系人2-邮箱" v-else/>
+              <el-input v-model="form.contact2Email" :placeholder="$t('mes.请输入联系人2-邮箱')" v-else/>
             </el-form-item>
           </el-col> -->
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="社会信用代码" prop="creditCode">
+            <el-form-item :label="$t('mes.社会信用代码')" prop="creditCode">
               <el-input v-model="form.creditCode" readonly v-if="optType=='view'" />
-              <el-input v-model="form.creditCode" placeholder="请输入统一社会信用代码" v-else />
+              <el-input v-model="form.creditCode" :placeholder="$t('mes.请输入统一社会信用代码')" v-else />
             </el-form-item>
           </el-col >
           <el-col :span="12">
-            <el-form-item label="是否有效" prop="enableFlag">
+            <el-form-item :label="$t('lims.是否有效')" prop="enableFlag">
               <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
                 <el-radio
                   v-for="dict in dict.type.sys_yes_no"
@@ -366,17 +366,17 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
+            <el-form-item :label="$t('system.备注')" prop="remark">
               <el-input v-model="form.remark" type="textarea" readonly v-if="optType=='view'" />
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" v-else />
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" v-else />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-else>{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -440,34 +440,34 @@ export default {
       // 表单校验
       rules: {
         clientCode: [
-          { required: true, message: "客户编码不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.客户编码不能为空'), trigger: "blur" }
         ],
         clientName: [
-          { required: true, message: "客户名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.客户名称不能为空'), trigger: "blur" }
         ],
         email:[
           {
             type: "email",
-            message: "请输入正确的邮箱地址",
+            message: this.$t('system.请输入正确的邮箱地址'),
             trigger: ["blur", "change"]
           }
         ],
         contact1Email:[
           {
             type: "email",
-            message: "请输入正确的邮箱地址",
+            message: this.$t('system.请输入正确的邮箱地址'),
             trigger: ["blur", "change"]
           }
         ],
         contact2Email:[
           {
             type: "email",
-            message: "请输入正确的邮箱地址",
+            message: this.$t('system.请输入正确的邮箱地址'),
             trigger: ["blur", "change"]
           }
         ],
         enableFlag: [
-          { required: true, message: "是否启用不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.是否启用不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -546,7 +546,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加客户";
+      this.title = this.$t('mes.添加客户');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -556,7 +556,7 @@ export default {
       getClient(clientId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看客户";
+        this.title = this.$t('mes.查看客户');
         this.optType = "view";
       });
     },
@@ -567,7 +567,7 @@ export default {
       getClient(clientId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改客户";
+        this.title = this.$t('mes.修改客户');
         this.optType = "edit";
       });
     },
@@ -577,13 +577,13 @@ export default {
         if (valid) {
           if (this.form.clientId != null) {
             updateClient(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addClient(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -594,11 +594,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const clientIds = row.clientId || this.ids;
-      this.$modal.confirm('是否确认删除客户编号为"' + clientIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除客户编号为{v}的数据项？', { v: clientIds })).then(function() {
         return delClient(clientIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */

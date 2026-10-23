@@ -3,8 +3,8 @@
         <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="检验单编号" prop="oqcCode">
-              <el-input v-model="form.oqcCode" placeholder="请输入出货检验单编号" />
+            <el-form-item :label="$t('mes.检验单编号')" prop="oqcCode">
+              <el-input v-model="form.oqcCode" :placeholder="$t('mes.请输入出货检验单编号')" />
             </el-form-item>
           </el-col>
 
@@ -12,23 +12,23 @@
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view' && form.status =='PREPARE'" >               
               </el-switch>
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="检验单名称" prop="oqcName">
-              <el-input v-model="form.oqcName" placeholder="请输入内容" />
+            <el-form-item :label="$t('mes.检验单名称')" prop="oqcName">
+              <el-input v-model="form.oqcName" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>          
         </el-row>
 
         <el-row>
           <el-col :span="8">
-            <el-form-item label="产品编码" prop="itemCode">
-              <el-input v-if="form.oqcId ==null " readonly v-model="form.itemCode" placeholder="请选择产品" >
+            <el-form-item :label="$t('mes.产品编码')" prop="itemCode">
+              <el-input v-if="form.oqcId ==null " readonly v-model="form.itemCode" :placeholder="$t('mes.请选择产品')" >
                 <el-button slot="append" @click="handleSelectProduct" icon="el-icon-search"></el-button>
               </el-input>
               <!--如果已经保存过，则产品不允许再修改，需要修改就删除重做-->
@@ -38,13 +38,13 @@
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="产品名称" prop="itemName">
+            <el-form-item :label="$t('lims.产品名称')" prop="itemName">
               <el-input readonly="readonly" v-model="form.itemName"></el-input>            
             </el-form-item>
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="单位" prop="unitOfMeasure">
+            <el-form-item :label="$t('lims.单位')" prop="unitOfMeasure">
               <el-input readonly="readonly" v-model="form.unitOfMeasure"/>
             </el-form-item>
           </el-col>
@@ -52,7 +52,7 @@
 
         <el-row>
           <el-col :span="24">
-            <el-form-item label="规格型号" prop="specification">
+            <el-form-item :label="$t('lims.规格型号')" prop="specification">
               <el-input readonly="readonly" v-model="form.specification" type="textarea" />
             </el-form-item>
           </el-col>
@@ -60,8 +60,8 @@
 
         <el-row>
           <el-col :span="8">
-            <el-form-item label="客户编号" prop="clientCode">
-              <el-input v-model="form.clientCode" readonly placeholder="请输选择客户" >
+            <el-form-item :label="$t('mes.客户编号')" prop="clientCode">
+              <el-input v-model="form.clientCode" readonly :placeholder="$t('mes.请输选择客户')" >
                 <el-button slot="append" @click="handleSelectClient" icon="el-icon-search"></el-button>
               </el-input>
             </el-form-item>
@@ -69,59 +69,59 @@
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="客户名称" prop="clientName">
+            <el-form-item :label="$t('lims.客户名称')" prop="clientName">
               <el-input readonly="readonly" v-model="form.clientName"  />
             </el-form-item>
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="批次号" prop="batchCode">
-              <el-input v-model="form.batchCode" placeholder="请输入批次号" />
+            <el-form-item :label="$t('lims.批次号')" prop="batchCode">
+              <el-input v-model="form.batchCode" :placeholder="$t('lims.请输入批次号')" />
             </el-form-item>
           </el-col>
         </el-row>
 
         <el-row>
           <el-col :span="8">
-            <el-form-item label="发货数量" prop="quantityOut">
-              <el-input-number :min="1" v-model="form.quantityOut" placeholder="请输入发货数量" />
+            <el-form-item :label="$t('mes.发货数量')" prop="quantityOut">
+              <el-input-number :min="1" v-model="form.quantityOut" :placeholder="$t('mes.请输入发货数量')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="检测数量" prop="quantityCheck">
-              <el-input-number :min="1" v-model="form.quantityCheck" placeholder="请输入本次检测数量" />
+            <el-form-item :label="$t('mes.检测数量')" prop="quantityCheck">
+              <el-input-number :min="1" v-model="form.quantityCheck" :placeholder="$t('mes.请输入本次检测数量')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="不合格数量" prop="quantityUnqualified">
+            <el-form-item :label="$t('mes.不合格数量')" prop="quantityUnqualified">
               <el-input-number :min="0" readonly="readonly" v-model="form.quantityUnqualified" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="出货日期" prop="outDate">
+            <el-form-item :label="$t('mes.出货日期')" prop="outDate">
               <el-date-picker clearable
                 v-model="form.outDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择出货日期">
+                :placeholder="$t('mes.请选择出货日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="检测日期" prop="inspectDate">
+            <el-form-item :label="$t('lims.检测日期')" prop="inspectDate">
               <el-date-picker clearable
                 v-model="form.inspectDate"
                 type="date"
                 value-format="yyyy-MM-dd"
-                placeholder="请选择检测日期">
+                :placeholder="$t('mes.请选择检测日期')">
               </el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="检测结果" prop="checkResult">
-              <el-select v-model="form.checkResult" placeholder="请选择检测结果">
+            <el-form-item :label="$t('mes.检测结果')" prop="checkResult">
+              <el-select v-model="form.checkResult" :placeholder="$t('mes.请选择检测结果')">
                 <el-option
                   v-for="dict in dict.type.mes_qc_result"
                   :key="dict.value"
@@ -134,43 +134,43 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-collapse accordion>
-          <el-collapse-item title="结果统计">
+          <el-collapse-item :title="$t('mes.结果统计')">
             <el-row>
               <el-col :span="8">
-                <el-form-item label="致命缺陷数量" prop="crQuantity">
+                <el-form-item :label="$t('mes.致命缺陷数量')" prop="crQuantity">
                   <el-input readonly="readonly" v-model="form.crQuantity" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="严重缺陷数量" prop="majQuantity">
+                <el-form-item :label="$t('mes.严重缺陷数量')" prop="majQuantity">
                   <el-input readonly="readonly" v-model="form.majQuantity" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="轻微缺陷数量" prop="minQuantity">
+                <el-form-item :label="$t('mes.轻微缺陷数量')" prop="minQuantity">
                   <el-input readonly="readonly" v-model="form.minQuantity" />
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="8">
-                <el-form-item label="致命缺陷率" prop="crQuantity">
+                <el-form-item :label="$t('mes.致命缺陷率')" prop="crQuantity">
                   <el-input readonly="readonly" v-model="form.crRate" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="严重缺陷率" prop="majRate">
+                <el-form-item :label="$t('mes.严重缺陷率')" prop="majRate">
                   <el-input readonly="readonly" v-model="form.majRate" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="轻微缺陷率" prop="minRate">
+                <el-form-item :label="$t('mes.轻微缺陷率')" prop="minRate">
                   <el-input readonly="readonly" v-model="form.minRate" />
                 </el-form-item>
               </el-col>
@@ -178,7 +178,7 @@
           </el-collapse-item>
         </el-collapse>        
       </el-form>
-      <el-divider v-if="form.oqcId !=null" content-position="center">检测项</el-divider> 
+      <el-divider v-if="form.oqcId !=null" content-position="center">{{ this.$t('lims.检测项') }}</el-divider> 
       <el-card shadow="always" v-if="form.oqcId !=null" class="box-card">
           <Oqcline ref=line :oqcId="form.oqcId" :optType="optType"></Oqcline>
       </el-card>
@@ -203,25 +203,25 @@ export default {
       // 表单校验
       rules: {
         oqcCode: [
-          { required: true, message: "出货检验单编号不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.出货检验单编号不能为空'), trigger: "blur" }
         ],
         clientCode: [
-          { required: true, message: "客户不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.客户不能为空'), trigger: "blur" }
         ],       
         itemCode: [
-          { required: true, message: "产品不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.产品不能为空'), trigger: "blur" }
         ],
         quantityOut: [
-          { required: true, message: "发货数量不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.发货数量不能为空'), trigger: "blur" }
         ],
         quantityCheck: [
-          { required: true, message: "本次检测数量不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.本次检测数量不能为空'), trigger: "blur" }
         ],
         outDate: [
-          { required: true, message: "请选择出货日期", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择出货日期'), trigger: "blur" }
         ],
         inspectDate: [
-          { required: true, message: "请选择检测日期", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择检测日期'), trigger: "blur" }
         ],
       }
     }
@@ -286,11 +286,11 @@ export default {
         if (valid) {
           if (this.form.oqcId != null) {
             updateOqc(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
             });
           } else {
             addOqc(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
             });
           }
         }
@@ -300,13 +300,13 @@ export default {
     handleFinish(){
       let that = this;
       if(this.form.checkResult == null){
-        this.$modal.msgError("请选择检测结果！");
+        this.$modal.msgError(this.$t('mes.请选择检测结果！'));
         return;
       }
 
       this.$refs["form"].validate(valid => {
         if (valid) {
-          this.$modal.confirm('是否完成出货检验单编制？【完成后将不能更改】').then(function(){
+          this.$modal.confirm(this.$t('mes.是否完成出货检验单编制？【完成后将不能更改】')).then(function(){
             that.form.status = 'FINISHED';
             that.submitForm();
             that.cancel();

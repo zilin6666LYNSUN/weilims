@@ -1,67 +1,67 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="职级编码" prop="rankCode">
-        <el-input v-model="queryParams.rankCode" placeholder="请输入职级编码" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('hrm.职级编码')" prop="rankCode">
+        <el-input v-model="queryParams.rankCode" :placeholder="$t('hrm.请输入职级编码')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="职级层次" prop="rankType" >
-        <el-input v-model="queryParams.rankType" placeholder="请输入职级层次" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('hrm.职级层次')" prop="rankType" >
+        <el-input v-model="queryParams.rankType" :placeholder="$t('hrm.请输入职级层次')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="职级层次名称" prop="rankName" label-width="110px">
-        <el-input v-model="queryParams.rankName" placeholder="请输入职级层次名称" clearable @keyup.enter.native="handleQuery" />
+      <el-form-item :label="$t('hrm.职级层次名称')" prop="rankName" label-width="110px">
+        <el-input v-model="queryParams.rankName" :placeholder="$t('hrm.请输入职级层次名称')" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="薪资范围" prop="salaryRangeMin">
-        <el-input v-model="queryParams.salaryRangeMin" placeholder="请输入下限" clearable @keyup.enter.native="handleQuery"
+      <el-form-item :label="$t('hrm.薪资范围')" prop="salaryRangeMin">
+        <el-input v-model="queryParams.salaryRangeMin" :placeholder="$t('hrm.请输入下限')" clearable @keyup.enter.native="handleQuery"
           style="width: 120px;"  /> ~
-        <el-input style="width: 120px;" v-model="queryParams.salaryRangeMax" placeholder="请输入上限" clearable
+        <el-input style="width: 120px;" v-model="queryParams.salaryRangeMax" :placeholder="$t('hrm.请输入上限')" clearable
           @keyup.enter.native="handleQuery"  />
       </el-form-item>
-      <!--   <el-form-item label="薪资范围上限" prop="salaryRangeMax">
+      <!--   <el-form-item :label="$t('hrm.薪资范围上限')" prop="salaryRangeMax">
         
       </el-form-item> -->
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-          v-hasPermi="['md:hrmrank:add']">新增</el-button>
+          v-hasPermi="['md:hrmrank:add']">{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate"
-          v-hasPermi="['md:hrmrank:edit']">修改</el-button>
+          v-hasPermi="['md:hrmrank:edit']">{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete"
-          v-hasPermi="['md:hrmrank:remove']">删除</el-button>
+          v-hasPermi="['md:hrmrank:remove']">{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
-          v-hasPermi="['md:hrmrank:export']">导出</el-button>
+          v-hasPermi="['md:hrmrank:export']">{{ this.$t('common.export') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="hrmRankList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="职级主键id" align="center" prop="rankId" v-if="false" />
-      <el-table-column label="职级编码" align="center" prop="rankCode" />
-      <el-table-column label="职级层次" align="center" prop="rankType" />
-      <el-table-column label="职级层次名称" align="center" prop="rankName" />
-      <el-table-column label="薪资范围（元）" align="center" >
-        <el-table-column label="薪资范围下限" align="center" prop="salaryRangeMin" />
-        <el-table-column label="薪资范围上限" align="center" prop="salaryRangeMax" />
+      <el-table-column :label="$t('hrm.职级主键id')" align="center" prop="rankId" v-if="false" />
+      <el-table-column :label="$t('hrm.职级编码')" align="center" prop="rankCode" />
+      <el-table-column :label="$t('hrm.职级层次')" align="center" prop="rankType" />
+      <el-table-column :label="$t('hrm.职级层次名称')" align="center" prop="rankName" />
+      <el-table-column :label="$t('hrm.薪资范围（元）')" align="center" >
+        <el-table-column :label="$t('hrm.薪资范围下限')" align="center" prop="salaryRangeMin" />
+        <el-table-column :label="$t('hrm.薪资范围上限')" align="center" prop="salaryRangeMax" />
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" />
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['md:hrmrank:edit']">修改</el-button>
+            v-hasPermi="['md:hrmrank:edit']">{{ this.$t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['md:hrmrank:remove']">删除</el-button>
+            v-hasPermi="['md:hrmrank:remove']">{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -74,43 +74,43 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="职级编码" prop="rankCode">
-              <el-input v-model="form.rankCode" placeholder="请输入职级编码" />
+            <el-form-item :label="$t('hrm.职级编码')" prop="rankCode">
+              <el-input v-model="form.rankCode" :placeholder="$t('hrm.请输入职级编码')" />
             </el-form-item>
           </el-col>
           <el-col :span="3">
             <el-form-item label-width="80">
-              <el-switch v-model="autoGenFlag" active-color="#13ce66" active-text="自动生成"
+              <el-switch v-model="autoGenFlag" active-color="#13ce66" :active-text="$t('hrm.自动生成')"
                 @change="handleAutoGenChange(autoGenFlag)" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="职级层次" prop="rankType" label-width="110px">
-              <el-input v-model="form.rankType" placeholder="请输入职级层次" />
+            <el-form-item :label="$t('hrm.职级层次')" prop="rankType" label-width="110px">
+              <el-input v-model="form.rankType" :placeholder="$t('hrm.请输入职级层次')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="职级层次名称" prop="rankName" label-width="110px">
-              <el-input v-model="form.rankName" placeholder="请输入职级层次名称" />
+            <el-form-item :label="$t('hrm.职级层次名称')" prop="rankName" label-width="110px">
+              <el-input v-model="form.rankName" :placeholder="$t('hrm.请输入职级层次名称')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" placeholder="请输入备注" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" :placeholder="$t('lims.请输入备注')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="薪资范围下限" prop="salaryRangeMin" label-width="120px">
-              <el-input v-model="form.salaryRangeMin" placeholder="请输入薪资范围下限" />
+            <el-form-item :label="$t('hrm.薪资范围下限')" prop="salaryRangeMin" label-width="120px">
+              <el-input v-model="form.salaryRangeMin" :placeholder="$t('hrm.请输入薪资范围下限')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="薪资范围上限" prop="salaryRangeMax" label-width="120px">
-              <el-input v-model="form.salaryRangeMax" placeholder="请输入薪资范围上限" />
+            <el-form-item :label="$t('hrm.薪资范围上限')" prop="salaryRangeMax" label-width="120px">
+              <el-input v-model="form.salaryRangeMax" :placeholder="$t('hrm.请输入薪资范围上限')" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -119,8 +119,8 @@
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
   </div>
@@ -165,19 +165,19 @@ export default {
       // 表单校验
       rules: {
         rankCode: [
-          { required: true, message: "职级编码不能为空", trigger: "blur" }
+          { required: true, message: this.$t('hrm.职级编码不能为空'), trigger: "blur" }
         ], 
         rankType: [
-          { required: true, message: "职级层次不能为空", trigger: "blur" }
+          { required: true, message: this.$t('hrm.职级层次不能为空'), trigger: "blur" }
         ], 
         rankName: [
-          { required: true, message: "职级层次名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('hrm.职级层次名称不能为空'), trigger: "blur" }
         ], 
         salaryRangeMin: [
-          { required: true, message: "薪资范围下限不能为空", trigger: "blur" }
+          { required: true, message: this.$t('hrm.薪资范围下限不能为空'), trigger: "blur" }
         ], 
         salaryRangeMax: [
-          { required: true, message: "薪资范围上限不能为空", trigger: "blur" }
+          { required: true, message: this.$t('hrm.薪资范围上限不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -191,10 +191,10 @@ export default {
     verification() {
       let check = (!this.queryParams.salaryRangeMin && !this.queryParams.salaryRangeMax) || (this.queryParams.salaryRangeMin && this.queryParams.salaryRangeMax);
       if (!check) {
-        this.$message.warning("薪资范围不为空");
+        this.$message.warning(this.$t('hrm.薪资范围不为空'));
       }
       if (this.queryParams.salaryRangeMin > this.queryParams.salaryRangeMax) {
-        this.$message.warning("起始数不能大于结束数");
+        this.$message.warning(this.$t('hrm.起始数不能大于结束数'));
         return false;
       } else {
         return true;
@@ -254,7 +254,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加职级管理";
+      this.title = this.$t('hrm.添加职级管理');
       this.optType = 'add';
     },
     /** 修改按钮操作 */
@@ -265,7 +265,7 @@ export default {
       getHrmRank(rankId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改职级管理";
+        this.title = this.$t('hrm.修改职级管理');
       });
     },
     /** 提交按钮 */
@@ -274,13 +274,13 @@ export default {
         if (valid) {
           if (this.form.rankId != null) {
             updateHrmRank(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addHrmRank(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -291,12 +291,12 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const rankIds = row.rankId || this.ids;
-      //this.$modal.confirm('是否确认删除职级管理编号为"' + rankIds + '"的数据项？').then(function () {
-      this.$modal.confirm('是否确认删除所选职级管理的数据项？').then(function () {
+      //this.$modal.confirm(this.$t('hrm.是否确认删除职级管理编号为{v}的数据项？', { v: rankIds })).then(function () {
+      this.$modal.confirm(this.$t('hrm.是否确认删除所选职级管理的数据项？')).then(function () {
         return delHrmRank(rankIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => { });
     },
     /** 导出按钮操作 */

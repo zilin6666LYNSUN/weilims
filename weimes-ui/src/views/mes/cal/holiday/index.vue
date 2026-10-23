@@ -10,8 +10,8 @@
                             </div>
                         </el-col>
                         <el-col :span="8">
-                            <el-tag v-if="holidayList.indexOf(data.day) ==-1" effect="dark">班</el-tag>
-                            <el-tag v-else effect="dark" type="success">休</el-tag>
+                            <el-tag v-if="holidayList.indexOf(data.day) ==-1" effect="dark">{{ this.$t('mes.班') }}</el-tag>
+                            <el-tag v-else effect="dark" type="success">{{ this.$t('mes.休') }}</el-tag>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -27,23 +27,23 @@
             <el-form ref="form" :model="form" :rules="rules" label-width="80px">
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="日期" prop="theDay">
+                        <el-form-item :label="$t('mes.日期')" prop="theDay">
                             <el-input v-model="form.theDay" readonly="readonly"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="类型" prop="holidayType">
+                        <el-form-item :label="$t('system.类型')" prop="holidayType">
                             <el-radio-group v-model="form.holidayType">
-                                <el-radio label="HOLIDAY">假</el-radio>
-                                <el-radio label="WORKDAY">班</el-radio>
+                                <el-radio label="HOLIDAY">{{ this.$t('mes.假') }}</el-radio>
+                                <el-radio label="WORKDAY">{{ this.$t('mes.班') }}</el-radio>
                             </el-radio-group>
                         </el-form-item>
                     </el-col>
                 </el-row>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button type="primary" v-hasPermi="['mes:cal:calholiday:edit']" @click="submitForm">确 定</el-button>
-                <el-button @click="cancel">取 消</el-button>
+                <el-button type="primary" v-hasPermi="['mes:cal:calholiday:edit']" @click="submitForm">{{ this.$t('system.确 定') }}</el-button>
+                <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
             </div>
         </el-dialog>
     </div>
@@ -61,7 +61,7 @@ export default {
             holidayList:[],//假日
             workdayList:[],//工作日
             // 弹出层标题
-            title: "节假日设置",
+            title: this.$t('mes.节假日设置'),
             // 是否显示弹出层
             open: false,
             form:{},
@@ -74,7 +74,7 @@ export default {
             // 表单校验
             rules: {
                 holidayType: [
-                { required: true, message: "请选择类型", trigger: "blur" }
+                { required: true, message: this.$t('mes.请选择类型'), trigger: "blur" }
                 ],
             }
         }
@@ -111,7 +111,7 @@ export default {
             this.$refs["form"].validate(valid => {
                 if (valid) {
                     addCalholiday(this.form).then(response => {
-                    this.$modal.msgSuccess("设置成功");
+                    this.$modal.msgSuccess(this.$t('mes.设置成功'));
                     this.open = false;
                     this.getList();
                     });

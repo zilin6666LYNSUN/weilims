@@ -5,30 +5,30 @@
         <div class="feedback">
           <p class="feedback-p">
             <span class="feedback-s"></span>
-            <span class="feedback-message">生产报工</span>
+            <span class="feedback-message">{{ this.$t('mes.生产报工') }}</span>
           </p>
-          <p v-if="optTypeFlag" class="warning-text">*注：保存之后才可新增退料以及废料</p>
+          <p v-if="optTypeFlag" class="warning-text">{{ this.$t('mes.*注：保存之后才可新增退料以及废料') }}</p>
           <el-form ref="form" :model="form" :rules="rules" label-width="100px" class="feedback-form">
             <el-row>
               <el-col :span="5">
-                <el-form-item label="报工类型" prop="feedbackType">
-                  <el-select v-model="form.feedbackType" placeholder="请选择报工类型">
+                <el-form-item :label="$t('mes.报工类型')" prop="feedbackType">
+                  <el-select v-model="form.feedbackType" :placeholder="$t('mes.请选择报工类型')">
                     <el-option v-for="dict in dict.type.mes_feedback_type" :key="dict.value" :label="dict.label"
                       :value="dict.value"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
               <el-col :span="7">
-                <el-form-item label="生产工单" prop="workorderCode">
-                  <el-input v-model="form.workorderCode" placeholder="请选择生产工单">
+                <el-form-item :label="$t('mes.生产工单')" prop="workorderCode">
+                  <el-input v-model="form.workorderCode" :placeholder="$t('mes.请选择生产工单')">
                     <el-button slot="append" icon="el-icon-search" @click="handleWorkorderSelect"></el-button>
                   </el-input>
                 </el-form-item>
                 <WorkorderSelect ref="woSelect" @onSelected="onWorkorderSelected"></WorkorderSelect>
               </el-col>
               <el-col :span="7">
-                <el-form-item label="生产任务" prop="taskCode">
-                  <el-input v-model="form.taskCode" placeholder="请选择生产任务">
+                <el-form-item :label="$t('mes.生产任务')" prop="taskCode">
+                  <el-input v-model="form.taskCode" :placeholder="$t('mes.请选择生产任务')">
                     <el-button slot="append" icon="el-icon-search" @click="handleTaskSelect"></el-button>
                   </el-input>
                 </el-form-item>
@@ -36,25 +36,25 @@
                 </ProtaskSelect>
               </el-col>
               <el-col :span="4">
-                <el-form-item label="单位" prop="unitOfMeasure">
+                <el-form-item :label="$t('lims.单位')" prop="unitOfMeasure">
                   <el-input v-model="form.unitOfMeasure" readonly="readonly" />
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="5">
-                <el-form-item label="产品编码" prop="itemCode">
+                <el-form-item :label="$t('mes.产品编码')" prop="itemCode">
                   <el-input v-model="form.itemCode" readonly="readonly" />
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="产品名称" prop="itemName">
+                <el-form-item :label="$t('lims.产品名称')" prop="itemName">
                   <el-input v-model="form.itemName" readonly="readonly" />
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="报工人" prop="nickName">
-                  <el-input v-model="form.nickName" placeholder="请选择报工人">
+                <el-form-item :label="$t('mes.报工人')" prop="nickName">
+                  <el-input v-model="form.nickName" :placeholder="$t('mes.请选择报工人')">
                     <el-button slot="append" @click="handleUserSelect" icon="el-icon-search"></el-button>
                   </el-input>
                 </el-form-item>
@@ -62,8 +62,8 @@
               </el-col>
 
               <el-col :span="6">
-                <el-form-item label="审核人" prop="recordNick">
-                  <el-input v-model="form.recordNick" placeholder="请选择审核人">
+                <el-form-item :label="$t('mes.审核人')" prop="recordNick">
+                  <el-input v-model="form.recordNick" :placeholder="$t('mes.请选择审核人')">
                     <el-button slot="append" @click="handleUser2Select" icon="el-icon-search"></el-button>
                   </el-input>
                 </el-form-item>
@@ -72,44 +72,44 @@
             </el-row>
             <el-row v-if="form.isCheck == 'N'">
               <el-col :span="4">
-                <el-form-item label="报工数量" prop="quantityFeedback">
+                <el-form-item :label="$t('mes.报工数量')" prop="quantityFeedback">
                   <el-input readonly="readonly" v-model="form.quantityFeedback" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="合格品数量" prop="quantityQualified">
+                <el-form-item :label="$t('mes.合格品数量')" prop="quantityQualified">
                   <el-input-number :min="0" @change="handleQuantityChanged" v-model="form.quantityQualified"
-                    placeholder="请输入合格品数量" />
+                    :placeholder="$t('mes.请输入合格品数量')" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="不良品数量" prop="quantityUnquanlified">
+                <el-form-item :label="$t('mes.不良品数量')" prop="quantityUnquanlified">
                   <el-input-number :min="0" @change="handleQuantityChanged" v-model="form.quantityUnquanlified"
-                    placeholder="请输入不良品数量" />
+                    :placeholder="$t('mes.请输入不良品数量')" />
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row v-else>
               <el-col :span="5">
-                <el-form-item label="报工数量" prop="quantityFeedback">
+                <el-form-item :label="$t('mes.报工数量')" prop="quantityFeedback">
                   <el-input readonly="readonly" v-model="form.quantityFeedback" />
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="待检测数量" prop="quantityUncheck">
+                <el-form-item :label="$t('mes.待检测数量')" prop="quantityUncheck">
                   <el-input-number :min="0" @change="handleQuantityChanged" v-model="form.quantityUncheck"
-                    placeholder="请输入待检测数量" />
+                    :placeholder="$t('mes.请输入待检测数量')" />
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-form-item label="备注" prop="remark">
-                  <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+                <el-form-item :label="$t('system.备注')" prop="remark">
+                  <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="规格型号" prop="specification">
+                <el-form-item :label="$t('lims.规格型号')" prop="specification">
                   <el-input v-model="form.specification" type="textarea" readonly="readonly" />
                 </el-form-item>
               </el-col>
@@ -117,24 +117,24 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button type="primary" @click="submitForm"
-              v-if="form.status == 'PREPARE' && optType != 'view'">保存</el-button>
+              v-if="form.status == 'PREPARE' && optType != 'view'">{{ this.$t('common.save') }}</el-button>
             <el-button type="warning" @click="handleSubmit"
-              v-if="form.status == 'PREPARE' && optType != 'view' && form.recordId != null">提交审批</el-button>
+              v-if="form.status == 'PREPARE' && optType != 'view' && form.recordId != null">{{ this.$t('mes.提交审批') }}</el-button>
             <el-button type="sucess" @click="handleExecute"
-              v-if="form.status == 'APPROVING' && form.recordId != null">审批通过</el-button>
+              v-if="form.status == 'APPROVING' && form.recordId != null">{{ this.$t('mes.审批通过') }}</el-button>
             <el-button type="danger" @click="handleReject"
-              v-if="form.status == 'APPROVING' && form.recordId != null">审批不通过</el-button>
-            <el-button type="primary" @click="cancel">返回</el-button>
+              v-if="form.status == 'APPROVING' && form.recordId != null">{{ this.$t('mes.审批不通过') }}</el-button>
+            <el-button type="primary" @click="cancel">{{ this.$t('common.back') }}</el-button>
           </div>
         </div>
       </div>
     </el-row>
     <el-row>
       <el-tabs type="border-card" class="tab-panes" v-if="this.form.recordId !== null">
-        <el-tab-pane label="生产退料">
+        <el-tab-pane :label="$t('mes.生产退料')">
           <Rtissue :recordId="this.form.recordId" :workorderCode="this.form.workorderCode" :optType="optType"></Rtissue>
         </el-tab-pane>
-        <el-tab-pane label="生产废料">
+        <el-tab-pane :label="$t('mes.生产废料')">
           <WmWasteForm :recordId="this.form.recordId" :workorderCode="this.form.workorderCode" :optType="optType">
           </WmWasteForm>
         </el-tab-pane>
@@ -185,19 +185,19 @@ export default {
       // 表单校验
       rules: {
         feedbackType: [
-          { required: true, message: "报工类型不能为空", trigger: "change" }
+          { required: true, message: this.$t('mes.报工类型不能为空'), trigger: "change" }
         ],
         taskCode: [
-          { required: true, message: "请选择生产任务", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择生产任务'), trigger: "blur" }
         ],
         workorderCode: [
-          { required: true, message: "生产工单不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.生产工单不能为空'), trigger: "blur" }
         ],
         nickName: [
-          { required: true, message: "请选择报工人", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择报工人'), trigger: "blur" }
         ],
         feedbackTime: [
-          { required: true, message: "请选择报工时间", trigger: "blur" }
+          { required: true, message: this.$t('mes.请选择报工时间'), trigger: "blur" }
         ]
       }
     };
@@ -213,7 +213,7 @@ export default {
     //     next();
     //   });
     // } else {
-    //   this.$modal.confirm('离开页面后不会保存现有未保存的数据，确认离开吗？(点击确认离开当前页面，点击取消停留在当前页面。)').then(function () {
+    //   this.$modal.confirm(this.$t('mes.离开页面后不会保存现有未保存的数据，确认离开吗？(点击确认离开当前页面，点击取消停留在当前页面。)')).then(function () {
     //   }).then(() => {
     //     // 关闭当前页面标签
     //     this.$store.dispatch('tagsView/delView', from).then(() => {
@@ -318,13 +318,13 @@ export default {
           if (this.form.recordId != null) {
             updateFeedback(this.form).then(response => {
               this.saveFlag = true;
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
             })
           } else {
             addFeedback(this.form).then(response => {
               this.form.recordId = response.data;
               this.saveFlag = true;
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
             });
           }
         }
@@ -336,7 +336,7 @@ export default {
           this.form.status = "APPROVING";
           if (this.form.recordId != null) {
             updateFeedback(this.form).then(response => {
-              this.$modal.msgSuccess("提交成功");
+              this.$modal.msgSuccess(this.$t('lims.提交成功'));
               this.cancel();
             });
           }
@@ -346,10 +346,10 @@ export default {
     //审批通过执行
     handleExecute() {
       const recordIds = this.form.recordId;
-      this.$modal.confirm('确认执行报工？').then(function () {
+      this.$modal.confirm(this.$t('mes.确认执行报工？')).then(function () {
         return execute(recordIds)//执行报工
       }).then(() => {
-        this.$modal.msgSuccess("执行成功");
+        this.$modal.msgSuccess(this.$t('mes.执行成功'));
         this.cancel()
       }).catch(() => { });
     },
@@ -357,20 +357,20 @@ export default {
     handleReject() {
       if (this.form.recordId != null) {
         refuse(this.form.recordId).then(response => {
-          this.$modal.msgSuccess("提交成功");
+          this.$modal.msgSuccess(this.$t('lims.提交成功'));
           this.cancel();
         });
       } else {
-        this.$modal.msgError("提交失败，请联系管理员");
+        this.$modal.msgError(this.$t('mes.提交失败，请联系管理员'));
       }
     },
     /** 删除按钮操作 */
     handleDelete(row) {
       const recordIds = row.recordId || this.ids;
-      this.$modal.confirm('是否确认删除生产报工记录编号为"' + recordIds + '"的数据项？').then(function () {
+      this.$modal.confirm(this.$t('mes.是否确认删除生产报工记录编号为{v}的数据项？', { v: recordIds })).then(function () {
         return delFeedback(recordIds);
       }).then(() => {
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
 
       }).catch(() => { });
     },

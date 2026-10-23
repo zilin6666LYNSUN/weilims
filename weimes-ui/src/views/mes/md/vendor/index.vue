@@ -3,30 +3,30 @@
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
       <el-row>
         <el-col :span="8">
-          <el-form-item label="供应商编码" prop="vendorCode">
+          <el-form-item :label="$t('lims.供应商编码')" prop="vendorCode">
             <el-input
               v-model="queryParams.vendorCode"
-              placeholder="请输入供应商编码"
+              :placeholder="$t('lims.请输入供应商编码')"
               clearable
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="供应商名称" prop="vendorName">
+          <el-form-item :label="$t('lims.供应商名称')" prop="vendorName">
             <el-input
               v-model="queryParams.vendorName"
-              placeholder="请输入供应商名称"
+              :placeholder="$t('lims.请输入供应商名称')"
               clearable
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="供应商简称" prop="vendorNick">
+          <el-form-item :label="$t('mes.供应商简称')" prop="vendorNick">
             <el-input
               v-model="queryParams.vendorNick"
-              placeholder="请输入供应商简称"
+              :placeholder="$t('mes.请输入供应商简称')"
               clearable
               @keyup.enter.native="handleQuery"
             />
@@ -35,20 +35,20 @@
       </el-row>
       <el-row>
         <el-col :span="8">
-          <el-form-item label="英文名称" prop="vendorEn">
+          <el-form-item :label="$t('mes.英文名称')" prop="vendorEn">
             <el-input
               v-model="queryParams.vendorEn"
-              placeholder="请输入供应商英文名称"
+              :placeholder="$t('mes.请输入供应商英文名称')"
               clearable
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="是否启用" prop="enableFlag">
+          <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
             <el-select
               v-model="queryParams.enableFlag"
-              placeholder="是否启用"
+              :placeholder="$t('system.是否启用')"
               clearable
               style="width: 215px"
             >
@@ -63,8 +63,8 @@
         </el-col>
         <el-col :span="8">
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">{{ this.$t('system.搜索') }}</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">{{ this.$t('common.reset') }}</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -79,7 +79,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['mes:md:vendor:add']"
-        >新增</el-button>
+        >{{ this.$t('common.add') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -90,7 +90,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['mes:md:vendor:edit']"
-        >修改</el-button>
+        >{{ this.$t('system.修改') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -101,7 +101,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['mes:md:vendor:remove']"
-        >删除</el-button>
+        >{{ this.$t('common.delete') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -111,7 +111,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['mes:md:vendor:export']"
-        >导出</el-button>
+        >{{ this.$t('common.export') }}</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -121,14 +121,14 @@
           size="mini"
           @click="handleImport"
           v-hasPermi="['system:user:import']"
-        >导入</el-button>
+        >{{ this.$t('system.导入') }}</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="vendorList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="供应商编码" align="center" prop="vendorCode" >
+      <el-table-column :label="$t('lims.供应商编码')" align="center" prop="vendorCode" >
           <template slot-scope="scope">
                 <el-button              
                   type="text"
@@ -137,22 +137,22 @@
                 >{{scope.row.vendorCode}}</el-button>
           </template>
       </el-table-column>
-      <el-table-column label="供应商名称" align="center" prop="vendorName" width="150px" :show-overflow-tooltip="true"/>
-      <el-table-column label="供应商简称" align="center" prop="vendorNick" />
-      <el-table-column label="供应商等级" align="center" prop="vendorLevel" >
+      <el-table-column :label="$t('lims.供应商名称')" align="center" prop="vendorName" width="150px" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('mes.供应商简称')" align="center" prop="vendorNick" />
+      <el-table-column :label="$t('mes.供应商等级')" align="center" prop="vendorLevel" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.mes_vendor_level" :value="scope.row.vendorLevel"/>
         </template>
       </el-table-column>
-      <el-table-column label="供应商评分" align="center" prop="vendorScore" />
-      <el-table-column label="供应商电话" align="center" prop="tel" />
-      <el-table-column label="是否启用" align="center" prop="enableFlag" >
+      <el-table-column :label="$t('mes.供应商评分')" align="center" prop="vendorScore" />
+      <el-table-column :label="$t('mes.供应商电话')" align="center" prop="tel" />
+      <el-table-column :label="$t('system.是否启用')" align="center" prop="enableFlag" >
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.enableFlag"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true"/>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('system.备注')" align="center" prop="remark" :show-overflow-tooltip="true"/>
+      <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -160,14 +160,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:md:vendor:edit']"
-          >修改</el-button>
+          >{{ this.$t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:md:vendor:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -185,55 +185,55 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="供应商编码" prop="vendorCode">
-              <el-input v-model="form.vendorCode" placeholder="请输入供应商编码" />
+            <el-form-item :label="$t('lims.供应商编码')" prop="vendorCode">
+              <el-input v-model="form.vendorCode" :placeholder="$t('lims.请输入供应商编码')" />
             </el-form-item>
           </el-col>
           <el-col :span="4">
             <el-form-item  label-width="80">
               <el-switch v-model="autoGenFlag"
                   active-color="#13ce66"
-                  active-text="自动生成"
+                  :active-text="$t('mes.自动生成')"
                   @change="handleAutoGenChange(autoGenFlag)" v-if="optType != 'view'">               
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="供应商名称" prop="vendorName">
-              <el-input v-model="form.vendorName" placeholder="请输入供应商名称" />
+            <el-form-item :label="$t('lims.供应商名称')" prop="vendorName">
+              <el-input v-model="form.vendorName" :placeholder="$t('lims.请输入供应商名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="供应商简称" prop="vendorNick">
-              <el-input v-model="form.vendorNick" placeholder="请输入供应商简称" />
+            <el-form-item :label="$t('mes.供应商简称')" prop="vendorNick">
+              <el-input v-model="form.vendorNick" :placeholder="$t('mes.请输入供应商简称')" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="供应商英文名称" prop="vendorEn">
-              <el-input v-model="form.vendorEn" placeholder="请输入供应商英文名称" />
+            <el-form-item :label="$t('mes.供应商英文名称')" prop="vendorEn">
+              <el-input v-model="form.vendorEn" :placeholder="$t('mes.请输入供应商英文名称')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="供应商简介" prop="vendorDes">
-              <el-input v-model="form.vendorDes" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('mes.供应商简介')" prop="vendorDes">
+              <el-input v-model="form.vendorDes" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="供应商地址" prop="address">
-              <el-input v-model="form.address" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('mes.供应商地址')" prop="address">
+              <el-input v-model="form.address" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="供应商等级" prop="vendorLevel">
-              <el-select v-model="form.vendorLevel" placeholder="请选择供应商等级">
+            <el-form-item :label="$t('mes.供应商等级')" prop="vendorLevel">
+              <el-select v-model="form.vendorLevel" :placeholder="$t('mes.请选择供应商等级')">
               <el-option
                   v-for="dict in dict.type.mes_vendor_level"
                   :key="dict.value"
@@ -244,70 +244,70 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="供应商评分" prop="vendorScore">
-              <el-input-number :min="0" :max="100" v-model="form.vendorScore" placeholder="请输入供应商评分" />
+            <el-form-item :label="$t('mes.供应商评分')" prop="vendorScore">
+              <el-input-number :min="0" :max="100" v-model="form.vendorScore" :placeholder="$t('mes.请输入供应商评分')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="供应商官网地址" prop="website">
-              <el-input v-model="form.website" placeholder="请输入供应商官网地址" />
+            <el-form-item :label="$t('mes.供应商官网地址')" prop="website">
+              <el-input v-model="form.website" :placeholder="$t('mes.请输入供应商官网地址')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="供应商邮箱地址" prop="email">
-              <el-input v-model="form.email" placeholder="请输入供应商邮箱地址" />
+            <el-form-item :label="$t('mes.供应商邮箱地址')" prop="email">
+              <el-input v-model="form.email" :placeholder="$t('mes.请输入供应商邮箱地址')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="供应商电话" prop="tel">
-              <el-input v-model="form.tel" placeholder="请输入供应商电话" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label="联系人1" prop="contact1">
-              <el-input v-model="form.contact1" placeholder="请输入联系人1" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="联系人1-电话" prop="contact1Tel">
-              <el-input v-model="form.contact1Tel" placeholder="请输入联系人1-电话" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="联系人1-邮箱" prop="contact1Email">
-              <el-input v-model="form.contact1Email" placeholder="请输入联系人1-邮箱" />
+            <el-form-item :label="$t('mes.供应商电话')" prop="tel">
+              <el-input v-model="form.tel" :placeholder="$t('mes.请输入供应商电话')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="联系人2" prop="contact2">
-              <el-input v-model="form.contact2" placeholder="请输入联系人2" />
+            <el-form-item :label="$t('mes.联系人1')" prop="contact1">
+              <el-input v-model="form.contact1" :placeholder="$t('mes.请输入联系人1')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="联系人2-电话" prop="contact2Tel">
-              <el-input v-model="form.contact2Tel" placeholder="请输入联系人2-电话" />
+            <el-form-item :label="$t('mes.联系人1-电话')" prop="contact1Tel">
+              <el-input v-model="form.contact1Tel" :placeholder="$t('mes.请输入联系人1-电话')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="联系人2-邮箱" prop="contact2Email">
-              <el-input v-model="form.contact2Email" placeholder="请输入联系人2-邮箱" />
+            <el-form-item :label="$t('mes.联系人1-邮箱')" prop="contact1Email">
+              <el-input v-model="form.contact1Email" :placeholder="$t('mes.请输入联系人1-邮箱')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-form-item label="统一社会信用代码" prop="creditCode">
-              <el-input v-model="form.creditCode" placeholder="请输入统一社会信用代码" />
+            <el-form-item :label="$t('mes.联系人2')" prop="contact2">
+              <el-input v-model="form.contact2" :placeholder="$t('mes.请输入联系人2')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="是否启用" prop="enableFlag">
+            <el-form-item :label="$t('mes.联系人2-电话')" prop="contact2Tel">
+              <el-input v-model="form.contact2Tel" :placeholder="$t('mes.请输入联系人2-电话')" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item :label="$t('mes.联系人2-邮箱')" prop="contact2Email">
+              <el-input v-model="form.contact2Email" :placeholder="$t('mes.请输入联系人2-邮箱')" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="8">
+            <el-form-item :label="$t('mes.统一社会信用代码')" prop="creditCode">
+              <el-input v-model="form.creditCode" :placeholder="$t('mes.请输入统一社会信用代码')" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item :label="$t('system.是否启用')" prop="enableFlag">
                <el-radio-group v-model="form.enableFlag" disabled v-if="optType=='view'">
                 <el-radio
                   v-for="dict in dict.type.sys_yes_no"
@@ -325,23 +325,23 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="供应商LOGO地址" prop="vendorLogo">
-              <el-input v-model="form.vendorLogo" placeholder="请输入供应商LOGO地址" />
+            <el-form-item :label="$t('mes.供应商LOGO地址')" prop="vendorLogo">
+              <el-input v-model="form.vendorLogo" :placeholder="$t('mes.请输入供应商LOGO地址')" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+            <el-form-item :label="$t('system.备注')" prop="remark">
+              <el-input v-model="form.remark" type="textarea" :placeholder="$t('common.inputContent')" />
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="cancel" v-if="optType =='view'">返回</el-button>
-        <el-button type="primary" @click="submitForm" v-else>确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="cancel" v-if="optType =='view'">{{ this.$t('common.back') }}</el-button>
+        <el-button type="primary" @click="submitForm" v-else>{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="cancel">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
 
@@ -360,18 +360,18 @@
         drag
       >
         <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        <div class="el-upload__text">{{ this.$t('system.将文件拖到此处，或') }}<em>{{ this.$t('system.点击上传') }}</em></div>
         <div class="el-upload__tip text-center" slot="tip">
           <div class="el-upload__tip" slot="tip">
-            <el-checkbox v-model="upload.updateSupport" /> 是否更新已经存在的用户数据
+            <el-checkbox v-model="upload.updateSupport" />{{ this.$t('system.是否更新已经存在的用户数据') }}
           </div>
-          <span>仅允许导入xls、xlsx格式文件。</span>
-          <el-link type="primary" :underline="false" style="font-size:12px;vertical-align: baseline;" @click="importTemplate">下载模板</el-link>
+          <span>{{ this.$t('system.仅允许导入xls、xlsx格式文件。') }}</span>
+          <el-link type="primary" :underline="false" style="font-size:12px;vertical-align: baseline;" @click="importTemplate">{{ this.$t('system.下载模板') }}</el-link>
         </div>
       </el-upload>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFileForm">确 定</el-button>
-        <el-button @click="upload.open = false">取 消</el-button>
+        <el-button type="primary" @click="submitFileForm">{{ this.$t('system.确 定') }}</el-button>
+        <el-button @click="upload.open = false">{{ this.$t('system.取 消') }}</el-button>
       </div>
     </el-dialog>
 
@@ -453,13 +453,13 @@ export default {
       // 表单校验
       rules: {
         vendorCode: [
-          { required: true, message: "供应商编码不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.供应商编码不能为空'), trigger: "blur" }
         ],
         vendorName: [
-          { required: true, message: "供应商名称不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.供应商名称不能为空'), trigger: "blur" }
         ],
         enableFlag: [
-          { required: true, message: "是否启用不能为空", trigger: "blur" }
+          { required: true, message: this.$t('mes.是否启用不能为空'), trigger: "blur" }
         ],
       }
     };
@@ -539,7 +539,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加供应商";
+      this.title = this.$t('mes.添加供应商');
       this.optType = "add";
     },
     // 查询明细按钮操作
@@ -549,7 +549,7 @@ export default {
       getVendor(vendorId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "查看供应商";
+        this.title = this.$t('mes.查看供应商');
         this.optType = "view";
       });
     },
@@ -560,7 +560,7 @@ export default {
       getVendor(vendorId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改供应商";
+        this.title = this.$t('mes.修改供应商');
         this.optType = "edit";
       });
     },
@@ -570,13 +570,13 @@ export default {
         if (valid) {
           if (this.form.vendorId != null) {
             updateVendor(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addVendor(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -587,11 +587,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const vendorIds = row.vendorId || this.ids;
-      this.$modal.confirm('是否确认删除供应商编号为"' + vendorIds + '"的数据项？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除供应商编号为{v}的数据项？', { v: vendorIds })).then(function() {
         return delVendor(vendorIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     },
     /** 导出按钮操作 */
@@ -602,7 +602,7 @@ export default {
     },
     /** 导入按钮操作 */
     handleImport() {
-      this.upload.title = "供应商导入";
+      this.upload.title = this.$t('mes.供应商导入');
       this.upload.open = true;
     },
     /** 下载模板操作 */
@@ -619,7 +619,7 @@ export default {
       this.upload.open = false;
       this.upload.isUploading = false;
       this.$refs.upload.clearFiles();
-      this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
+      this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", this.$t('system.导入结果'), { dangerouslyUseHTMLString: true });
       this.getList();
     },
     // 提交上传文件

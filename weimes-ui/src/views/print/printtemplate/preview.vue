@@ -15,11 +15,11 @@
       </el-col>
     </el-row>
     <template slot="title">
-      <div>模板预览</div>
+      <div>{{ this.$t('print.模板预览') }}</div>
     </template>
     <template slot="footer">
-      <el-button key="close" type="info" @click="hideModal">关闭</el-button>
-      <el-button key="pdf" type="info" @click="toPdf">pdf打印</el-button>
+      <el-button key="close" type="info" @click="hideModal">{{ this.$t('system.关闭') }}</el-button>
+      <el-button key="pdf" type="info" @click="toPdf">{{ this.$t('print.pdf打印') }}</el-button>
     </template>
   </el-dialog>
 </template>
@@ -52,7 +52,7 @@ export default {
     async show(template) {
       try {
         if (!template || !template.getJson) {
-          throw new Error('无效的模板数据');
+          throw new Error(this.$t('print.无效的模板数据'));
         }
         
         this.initializeTemplate(template);
@@ -60,7 +60,7 @@ export default {
         
         const templateJson = template.getJson();
         if (!templateJson || !templateJson.panels) {
-          throw new Error('模板数据格式错误');
+          throw new Error(this.$t('print.模板数据格式错误'));
         }
         
         await this.setupHiprintTemplate(template);
@@ -69,7 +69,7 @@ export default {
         this.spinning = false;
       } catch (error) {
         console.error('Error in template preview:', error);
-        this.$message.error('模板预览失败: ' + error.message);
+        this.$message.error(this.$t('print.模板预览失败') + ': ' + error.message);
         this.spinning = false;
         this.visible = false;
       }
@@ -104,13 +104,13 @@ export default {
     },
     toPdf() {
       console.log('--view topdf---');
-      this.hiprintTemplate.toPdf(qrCodes, '打印预览');
+      this.hiprintTemplate.toPdf(qrCodes, this.$t('print.打印预览'));
     },
     print2() {
       if (hiprint.hiwebSocket.opened) {
         this.performPrintOperation(this.hiprintTemplate.print2, undefined, { printer: '', title: this.name });
       } else {
-        this.$message.error('请先连接直接打印客户端');
+        this.$message.error(this.$t('print.请先连接直接打印客户端'));
       }
     },
     performPrintOperation(printMethod, callback, options = {}) {

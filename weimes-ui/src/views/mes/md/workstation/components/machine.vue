@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-table v-loading="loading" :data="workstationmachineList">
-      <el-table-column label="设备编号" align="center" prop="machineryCode" />
-      <el-table-column label="设备名称" align="center" width="150px" prop="machineryName" />
-      <el-table-column label="数量" width="50px" align="center" prop="quantity" />
-      <el-table-column label="操作" v-if="optType !='view'" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="$t('mes.设备编号')" align="center" prop="machineryCode" />
+      <el-table-column :label="$t('mes.设备名称')" align="center" width="150px" prop="machineryName" />
+      <el-table-column :label="$t('lims.数量')" width="50px" align="center" prop="quantity" />
+      <el-table-column :label="$t('common.operation')" v-if="optType !='view'" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:md:workstation:remove']"
-          >删除</el-button>
+          >{{ this.$t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -108,7 +108,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加设备资源";
+      this.title = this.$t('mes.添加设备资源');
     },
 
     /** 提交按钮 */
@@ -117,13 +117,13 @@ export default {
         if (valid) {
           if (this.form.recordId != null) {
             updateWorkstationmachine(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess(this.$t('system.修改成功'));
               this.open = false;
               this.getList();
             });
           } else {
             addWorkstationmachine(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess(this.$t('system.新增成功'));
               this.open = false;
               this.getList();
             });
@@ -134,11 +134,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const recordIds = row.recordId || this.ids;
-      this.$modal.confirm('是否确认删除设备资源？').then(function() {
+      this.$modal.confirm(this.$t('mes.是否确认删除设备资源？')).then(function() {
         return delWorkstationmachine(recordIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess(this.$t('system.删除成功'));
       }).catch(() => {});
     }
   }
