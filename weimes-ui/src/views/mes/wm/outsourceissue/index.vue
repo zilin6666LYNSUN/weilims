@@ -108,7 +108,7 @@
             v-if="scope.row.status =='PREPARE'"
             @click="handleExecute(scope.row)"
             v-hasPermi="['mes:wm:outsourceissue:edit']"
-          >{{ this.$t('mes.执行发料') }}</el-button>
+          >{{ $t('mes.执行发料') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -116,7 +116,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:wm:outsourceissue:edit']"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -124,7 +124,7 @@
             @click="handleDelete(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:wm:outsourceissue:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

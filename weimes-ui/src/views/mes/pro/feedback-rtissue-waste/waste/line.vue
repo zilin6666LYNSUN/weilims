@@ -30,9 +30,9 @@
       <el-table-column :label="$t('common.operation')" width="100px" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-if="optType != 'view'" v-hasPermi="['mes:wmwasteheader:edit']">{{ this.$t('system.修改') }}</el-button>
+            v-if="optType != 'view'" v-hasPermi="['mes:wmwasteheader:edit']">{{ $t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-if="optType != 'view'" v-hasPermi="['mes:wmwasteheader:remove']">{{ this.$t('common.delete') }}</el-button>
+            v-if="optType != 'view'" v-hasPermi="['mes:wmwasteheader:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

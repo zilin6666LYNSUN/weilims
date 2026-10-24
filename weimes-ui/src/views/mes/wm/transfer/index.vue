@@ -123,7 +123,7 @@
             v-if="(scope.row.status =='PREPARE' && scope.row.transferType == 'INNER')"            
             @click="handleExecute(scope.row)"
             v-hasPermi="['mes:wm:transfer:edit']"
-          >{{ this.$t('mes.执行转移') }}</el-button>
+          >{{ $t('mes.执行转移') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -131,7 +131,7 @@
             v-if="(scope.row.status =='PREPARE' && scope.row.transferType == 'OUTER')"            
             @click="handleTransOut(scope.row)"
             v-hasPermi="['mes:wm:transfer:edit']"
-          >{{ this.$t('mes.执行移出') }}</el-button>
+          >{{ $t('mes.执行移出') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -139,7 +139,7 @@
             v-if="(scope.row.status =='CONFIRMED' && scope.row.transferType == 'OUTER')"            
             @click="handleExecute(scope.row)"
             v-hasPermi="['mes:wm:transfer:edit']"
-          >{{ this.$t('mes.执行移入') }}</el-button>
+          >{{ $t('mes.执行移入') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -147,7 +147,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:wm:transfer:edit']"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -155,7 +155,7 @@
             @click="handleDelete(scope.row)"
             v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:wm:transfer:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

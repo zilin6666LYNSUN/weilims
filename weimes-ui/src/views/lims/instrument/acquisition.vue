@@ -21,17 +21,17 @@
       <el-table-column :label="$t('lims.接口类型')" align="center" prop="interfaceType" width="100"/>
       <el-table-column :label="$t('lims.数据协议')" align="center" prop="dataProtocol" width="100"/>
       <el-table-column :label="$t('lims.自动导入')" align="center" prop="autoImport" width="80">
-        <template slot-scope="scope"><el-tag :type="scope.row.autoImport===1?'success':'info'">{{ scope.row.autoImport===1?this.$t('lims.是'):$t('lims.否') }}</el-tag></template>
+        <template slot-scope="scope"><el-tag :type="scope.row.autoImport===1?'success':'info'">{{ scope.row.autoImport===1?$t('lims.是'):$t('lims.否') }}</el-tag></template>
       </el-table-column>
       <el-table-column :label="$t('lims.轮询间隔(秒)')" align="center" prop="pollInterval" width="110"/>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="80">
-        <template slot-scope="scope"><el-tag :type="scope.row.status==='ACTIVE'?'success':'info'">{{ scope.row.status==='ACTIVE'?this.$t('lims.启用'):$t('lims.禁用') }}</el-tag></template>
+        <template slot-scope="scope"><el-tag :type="scope.row.status==='ACTIVE'?'success':'info'">{{ scope.row.status==='ACTIVE'?$t('lims.启用'):$t('lims.禁用') }}</el-tag></template>
       </el-table-column>
       <el-table-column :label="$t('common.operation')" align="center" width="220">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:instrument:acquisition:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" @click="handleImport(scope.row)" v-hasPermi="['lims:instrument:acquisition:edit']">{{ this.$t('lims.采集数据') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:instrument:acquisition:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:instrument:acquisition:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" @click="handleImport(scope.row)" v-hasPermi="['lims:instrument:acquisition:edit']">{{ $t('lims.采集数据') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:instrument:acquisition:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

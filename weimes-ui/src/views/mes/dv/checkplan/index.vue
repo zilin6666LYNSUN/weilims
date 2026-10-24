@@ -136,7 +136,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:dv:checkplan:edit']"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -144,7 +144,7 @@
             @click="handleDelete(scope.row)"
             v-if="scope.row.status =='PREPARE'"
             v-hasPermi="['mes:dv:checkplan:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -152,7 +152,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status =='FINISHED'"
             v-hasPermi="['mes:dv:checkplan:edit']"
-          >{{ this.$t('lims.停用') }}</el-button>
+          >{{ $t('lims.停用') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

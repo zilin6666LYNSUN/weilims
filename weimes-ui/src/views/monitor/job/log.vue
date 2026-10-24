@@ -130,7 +130,7 @@
             icon="el-icon-view"
             @click="handleView(scope.row)"
             v-hasPermi="['monitor:job:query']"
-          >{{ this.$t('monitor.详细') }}</el-button>
+          >{{ $t('monitor.详细') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

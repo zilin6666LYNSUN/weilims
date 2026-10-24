@@ -184,7 +184,7 @@
             v-if="scope.row.status =='PREPARE'"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:qc:iqc:edit']"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -192,7 +192,7 @@
             v-if="scope.row.status =='PREPARE'"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:qc:iqc:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -200,7 +200,7 @@
             
             @click="viewReport"
           >
-          {{ this.$t('mes.查看报表') }}
+          {{ $t('mes.查看报表') }}
           </el-button>
         </template>
       </el-table-column>

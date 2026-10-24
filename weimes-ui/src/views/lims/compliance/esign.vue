@@ -36,14 +36,14 @@
       <el-table-column :label="$t('lims.签名理由')" align="center" prop="reason" :show-overflow-tooltip="true" min-width="150" />
       <el-table-column :label="$t('lims.是否有效')" align="center" prop="isValid" width="80">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.isValid === 1 ? 'success' : 'danger'" size="small">{{ scope.row.isValid === 1 ? this.$t('lims.有效') : $t('lims.无效') }}</el-tag>
+          <el-tag :type="scope.row.isValid === 1 ? 'success' : 'danger'" size="small">{{ scope.row.isValid === 1 ? $t('lims.有效') : $t('lims.无效') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('lims.IP地址')" align="center" prop="ipAddress" width="130" />
       <el-table-column :label="$t('common.operation')" align="center" width="120">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-view" @click="handleViewSignatures(scope.row)" v-hasPermi="['lims:esign:query']">{{ this.$t('lims.查看') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-check" @click="handleVerify(scope.row)" v-hasPermi="['lims:esign:verify']">{{ this.$t('lims.验证') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-view" @click="handleViewSignatures(scope.row)" v-hasPermi="['lims:esign:query']">{{ $t('lims.查看') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-check" @click="handleVerify(scope.row)" v-hasPermi="['lims:esign:verify']">{{ $t('lims.验证') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -79,7 +79,7 @@
         <el-table-column :label="$t('lims.签名理由')" align="center" prop="reason" :show-overflow-tooltip="true" min-width="150" />
         <el-table-column :label="$t('lims.是否有效')" align="center" prop="isValid" width="80">
           <template slot-scope="scope">
-            <el-tag :type="scope.row.isValid === 1 ? 'success' : 'danger'" size="small">{{ scope.row.isValid === 1 ? this.$t('lims.有效') : $t('lims.无效') }}</el-tag>
+            <el-tag :type="scope.row.isValid === 1 ? 'success' : 'danger'" size="small">{{ scope.row.isValid === 1 ? $t('lims.有效') : $t('lims.无效') }}</el-tag>
           </template>
         </el-table-column>
       </el-table>

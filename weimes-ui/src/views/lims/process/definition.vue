@@ -24,16 +24,16 @@
       <el-table-column :label="$t('lims.版本')" align="center" prop="version" width="80"/>
       <el-table-column :label="$t('lims.状态')" align="center" width="100">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status === 'ACTIVE' ? 'success' : 'info'">{{ scope.row.status === 'ACTIVE' ? this.$t('lims.启用') : $t('lims.停用') }}</el-tag>
+          <el-tag :type="scope.row.status === 'ACTIVE' ? 'success' : 'info'">{{ scope.row.status === 'ACTIVE' ? $t('lims.启用') : $t('lims.停用') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('lims.生效日期')" align="center" prop="effectiveDate" width="140"/>
       <el-table-column :label="$t('common.operation')" align="center" width="200">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:process:definition:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-circle-check" @click="handleActivate(scope.row)" v-if="scope.row.status !== 'ACTIVE'" v-hasPermi="['lims:process:definition:edit']">{{ this.$t('lims.启用') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-circle-close" @click="handleDeactivate(scope.row)" v-if="scope.row.status === 'ACTIVE'" v-hasPermi="['lims:process:definition:edit']">{{ this.$t('lims.停用') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:process:definition:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:process:definition:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-circle-check" @click="handleActivate(scope.row)" v-if="scope.row.status !== 'ACTIVE'" v-hasPermi="['lims:process:definition:edit']">{{ $t('lims.启用') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-circle-close" @click="handleDeactivate(scope.row)" v-if="scope.row.status === 'ACTIVE'" v-hasPermi="['lims:process:definition:edit']">{{ $t('lims.停用') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:process:definition:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

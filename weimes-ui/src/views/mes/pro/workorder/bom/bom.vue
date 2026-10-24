@@ -35,7 +35,7 @@
             v-if="workorder.status == 'PREPARE'"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:pro:workorder:edit']"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
 
           <el-button
             size="mini"
@@ -44,7 +44,7 @@
             @click="handleAddSubWorkorder(scope.row)"
             v-if="workorder.status == 'CONFIRMED' && scope.row.itemOrProduct=='PRODUCT' && workorder.workorderType =='SELF'"
             v-hasPermi="['mes:pro:workorder:edit']"
-          >{{ this.$t('mes.生成工单') }}</el-button>
+          >{{ $t('mes.生成工单') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

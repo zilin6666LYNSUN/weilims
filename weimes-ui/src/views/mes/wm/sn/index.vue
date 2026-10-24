@@ -92,14 +92,14 @@
             icon="el-icon-edit"
             @click="handleExport(scope.row)"
             v-hasPermi="['mes:wm:sn:edit']"
-          >{{ this.$t('mes.导出/打印') }}</el-button>
+          >{{ $t('mes.导出/打印') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:wm:sn:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

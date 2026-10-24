@@ -26,27 +26,27 @@
       <el-table-column :label="$t('lims.模板编号')" align="center" prop="templateCode" width="140"/>
       <el-table-column :label="$t('lims.模板名称')" align="center" prop="templateName" width="200"/>
       <el-table-column :label="$t('lims.模板类型')" align="center" prop="templateType" width="100">
-        <template slot-scope="scope"><el-tag :type="{CMA:'danger',CNAS:'warning',INTERNAL:'info'}[scope.row.templateType]">{{ {CMA:'CMA',CNAS:'CNAS',INTERNAL: this.$t('lims.内部')}[scope.row.templateType] }}</el-tag></template>
+        <template slot-scope="scope"><el-tag :type="{CMA:'danger',CNAS:'warning',INTERNAL:'info'}[scope.row.templateType]">{{ {CMA:'CMA',CNAS:'CNAS',INTERNAL: $t('lims.内部')}[scope.row.templateType] }}</el-tag></template>
       </el-table-column>
       <el-table-column :label="$t('lims.模板分类')" align="center" prop="templateCategory" width="120">
-        <template slot-scope="scope">{{ {FOOD: this.$t('lims.食品'),DRUG: this.$t('lims.药品'),ENVIRONMENT: this.$t('lims.环境'),WATER: this.$t('lims.水质'),OTHER: this.$t('lims.其他')}[scope.row.templateCategory] || scope.row.templateCategory }}</template>
+        <template slot-scope="scope">{{ {FOOD: $t('lims.食品'),DRUG: $t('lims.药品'),ENVIRONMENT: $t('lims.环境'),WATER: $t('lims.水质'),OTHER: $t('lims.其他')}[scope.row.templateCategory] || scope.row.templateCategory }}</template>
       </el-table-column>
       <el-table-column :label="$t('lims.版本号')" align="center" prop="versionNumber" width="80"/>
       <el-table-column :label="$t('lims.纸张大小')" align="center" prop="paperSize" width="80"/>
       <el-table-column :label="$t('lims.方向')" align="center" prop="orientation" width="80">
-        <template slot-scope="scope">{{ scope.row.orientation==='LANDSCAPE'?this.$t('lims.横向'):this.$t('lims.纵向') }}</template>
+        <template slot-scope="scope">{{ scope.row.orientation==='LANDSCAPE'?$t('lims.横向'):$t('lims.纵向') }}</template>
       </el-table-column>
       <el-table-column :label="$t('lims.默认')" align="center" prop="isDefault" width="60">
-        <template slot-scope="scope"><el-tag :type="scope.row.isDefault===1?'success':'info'">{{ scope.row.isDefault===1?this.$t('lims.是'):this.$t('lims.否') }}</el-tag></template>
+        <template slot-scope="scope"><el-tag :type="scope.row.isDefault===1?'success':'info'">{{ scope.row.isDefault===1?$t('lims.是'):$t('lims.否') }}</el-tag></template>
       </el-table-column>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="80">
-        <template slot-scope="scope"><el-tag :type="{DRAFT:'info',PUBLISHED:'success',DISABLED:'danger'}[scope.row.status]">{{ {DRAFT: this.$t('lims.草稿'),PUBLISHED: this.$t('lims.已发布'),DISABLED: this.$t('lims.已停用')}[scope.row.status] }}</el-tag></template>
+        <template slot-scope="scope"><el-tag :type="{DRAFT:'info',PUBLISHED:'success',DISABLED:'danger'}[scope.row.status]">{{ {DRAFT: $t('lims.草稿'),PUBLISHED: $t('lims.已发布'),DISABLED: $t('lims.已停用')}[scope.row.status] }}</el-tag></template>
       </el-table-column>
       <el-table-column :label="$t('lims.创建时间')" align="center" prop="createTime" width="160"/>
       <el-table-column :label="$t('common.operation')" align="center" width="180">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:report:template:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:report:template:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:report:template:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:report:template:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

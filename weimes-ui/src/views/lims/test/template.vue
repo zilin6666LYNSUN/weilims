@@ -18,14 +18,14 @@
       <el-table-column :label="$t('lims.样品类型')" align="center" prop="sampleType" width="120"/>
       <el-table-column :label="$t('lims.检测项数')" align="center" prop="itemCount" width="90"/>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="100">
-        <template slot-scope="scope"><el-tag :type="scope.row.status === 'ENABLED' ? 'success' : 'info'">{{ scope.row.status === 'ENABLED' ? this.$t('lims.启用') : $t('lims.停用') }}</el-tag></template>
+        <template slot-scope="scope"><el-tag :type="scope.row.status === 'ENABLED' ? 'success' : 'info'">{{ scope.row.status === 'ENABLED' ? $t('lims.启用') : $t('lims.停用') }}</el-tag></template>
       </el-table-column>
       <el-table-column :label="$t('lims.创建时间')" align="center" prop="createTime" width="160"/>
       <el-table-column :label="$t('common.operation')" align="center" width="200">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="handleViewItems(scope.row)">{{ this.$t('lims.检测项') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:test:template:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:test:template:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" @click="handleViewItems(scope.row)">{{ $t('lims.检测项') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:test:template:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:test:template:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -57,8 +57,8 @@
         <el-table-column :label="$t('lims.序号')" prop="sortOrder" width="80"/>
         <el-table-column :label="$t('common.operation')" width="120">
           <template slot-scope="scope">
-            <el-button size="mini" type="text" @click="handleEditItem(scope.row)">{{ this.$t('common.edit') }}</el-button>
-            <el-button size="mini" type="text" @click="handleDelItem(scope.row)">{{ this.$t('common.delete') }}</el-button>
+            <el-button size="mini" type="text" @click="handleEditItem(scope.row)">{{ $t('common.edit') }}</el-button>
+            <el-button size="mini" type="text" @click="handleDelItem(scope.row)">{{ $t('common.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>

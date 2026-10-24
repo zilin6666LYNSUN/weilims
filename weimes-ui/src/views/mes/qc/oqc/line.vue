@@ -27,7 +27,7 @@
             @click="handleDefect(scope.row)"
             v-hasPermi="['mes:qc:oqc:edit']"
             v-if="optType !='view'"
-          >{{ this.$t('mes.缺陷记录') }}</el-button>        
+          >{{ $t('mes.缺陷记录') }}</el-button>        
         </template>
       </el-table-column>
     </el-table>

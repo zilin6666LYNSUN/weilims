@@ -24,25 +24,25 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column :label="$t('lims.偏差编号')" align="center" prop="deviationCode" width="140"/>
       <el-table-column :label="$t('lims.偏差类型')" align="center" prop="deviationType" width="100">
-        <template slot-scope="scope">{{ scope.row.deviationType === 'PLANNED' ? this.$t('lims.计划内') : $t('lims.计划外') }}</template>
+        <template slot-scope="scope">{{ scope.row.deviationType === 'PLANNED' ? $t('lims.计划内') : $t('lims.计划外') }}</template>
       </el-table-column>
       <el-table-column :label="$t('lims.偏差描述')" align="center" prop="description" :show-overflow-tooltip="true"/>
       <el-table-column :label="$t('lims.发现日期')" align="center" prop="discoveryDate" width="110"/>
       <el-table-column :label="$t('lims.严重程度')" align="center" prop="severityLevel" width="100">
-        <template slot-scope="scope"><el-tag :type="{ CRITICAL: 'danger', MAJOR: 'warning', MINOR: 'info' }[scope.row.severityLevel]">{{ { CRITICAL: this.$t('lims.严重'), MAJOR: this.$t('lims.主要'), MINOR: this.$t('lims.次要') }[scope.row.severityLevel] }}</el-tag></template>
+        <template slot-scope="scope"><el-tag :type="{ CRITICAL: 'danger', MAJOR: 'warning', MINOR: 'info' }[scope.row.severityLevel]">{{ { CRITICAL: $t('lims.严重'), MAJOR: $t('lims.主要'), MINOR: $t('lims.次要') }[scope.row.severityLevel] }}</el-tag></template>
       </el-table-column>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="100">
         <template slot-scope="scope">
-          <el-tag :type="{ DRAFT: 'info', PENDING_APPROVAL: 'warning', APPROVED: '', IN_PROGRESS: '', CLOSED: 'success' }[scope.row.status]">{{ { DRAFT: this.$t('lims.草稿'), PENDING_APPROVAL: this.$t('lims.待审批'), APPROVED: this.$t('lims.已批准'), IN_PROGRESS: this.$t('lims.执行中'), CLOSED: this.$t('lims.已关闭') }[scope.row.status] }}</el-tag>
+          <el-tag :type="{ DRAFT: 'info', PENDING_APPROVAL: 'warning', APPROVED: '', IN_PROGRESS: '', CLOSED: 'success' }[scope.row.status]">{{ { DRAFT: $t('lims.草稿'), PENDING_APPROVAL: $t('lims.待审批'), APPROVED: $t('lims.已批准'), IN_PROGRESS: $t('lims.执行中'), CLOSED: $t('lims.已关闭') }[scope.row.status] }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('common.operation')" align="center" width="220">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="handleSubmit(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:deviation:edit']">{{ this.$t('lims.提交') }}</el-button>
-          <el-button size="mini" type="text" @click="handleApprove(scope.row)" v-if="scope.row.status === 'PENDING_APPROVAL'" v-hasPermi="['lims:deviation:approve']">{{ this.$t('lims.审批') }}</el-button>
-          <el-button size="mini" type="text" @click="handleClose(scope.row)" v-if="scope.row.status === 'IN_PROGRESS'" v-hasPermi="['lims:deviation:close']">{{ this.$t('lims.关闭') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:deviation:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:deviation:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" @click="handleSubmit(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:deviation:edit']">{{ $t('lims.提交') }}</el-button>
+          <el-button size="mini" type="text" @click="handleApprove(scope.row)" v-if="scope.row.status === 'PENDING_APPROVAL'" v-hasPermi="['lims:deviation:approve']">{{ $t('lims.审批') }}</el-button>
+          <el-button size="mini" type="text" @click="handleClose(scope.row)" v-if="scope.row.status === 'IN_PROGRESS'" v-hasPermi="['lims:deviation:close']">{{ $t('lims.关闭') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:deviation:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:deviation:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

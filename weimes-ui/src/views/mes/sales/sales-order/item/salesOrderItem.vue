@@ -61,10 +61,10 @@
         </el-table-column>
         <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width" v-if="optType !== 'view'">
           <template slot-scope="scope">
-            <el-button type="text" @click="edit(scope.row)" v-show="!scope.row.isEditor">{{ this.$t('common.edit') }}</el-button>
-            <el-button type="text" @click="del(scope.row)" v-show="!scope.row.isEditor">{{ this.$t('common.delete') }}</el-button>
-            <el-button type="text" @click="save(scope.row)" v-show="scope.row.isEditor">{{ this.$t('common.save') }}</el-button>
-            <el-button type="text" @click="cancel(scope.row)" v-show="scope.row.isEditor">{{ this.$t('common.cancel') }}</el-button>
+            <el-button type="text" @click="edit(scope.row)" v-show="!scope.row.isEditor">{{ $t('common.edit') }}</el-button>
+            <el-button type="text" @click="del(scope.row)" v-show="!scope.row.isEditor">{{ $t('common.delete') }}</el-button>
+            <el-button type="text" @click="save(scope.row)" v-show="scope.row.isEditor">{{ $t('common.save') }}</el-button>
+            <el-button type="text" @click="cancel(scope.row)" v-show="scope.row.isEditor">{{ $t('common.cancel') }}</el-button>
           </template>
 
         </el-table-column>

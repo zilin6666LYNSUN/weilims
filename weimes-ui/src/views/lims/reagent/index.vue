@@ -22,7 +22,7 @@
       <el-table-column :label="$t('lims.试剂名称')" align="center" prop="reagentName" width="160"/>
       <el-table-column :label="$t('lims.CAS号')" align="center" prop="casNumber" width="130"/>
       <el-table-column :label="$t('lims.试剂类型')" align="center" prop="reagentType" width="100">
-        <template slot-scope="scope">{{ { GENERAL: this.$t('lims.一般'), HAZARDOUS: this.$t('lims.危险'), STANDARD: this.$t('lims.标准品'), CULTURE: this.$t('lims.培养基') }[scope.row.reagentType] }}</template>
+        <template slot-scope="scope">{{ { GENERAL: $t('lims.一般'), HAZARDOUS: $t('lims.危险'), STANDARD: $t('lims.标准品'), CULTURE: $t('lims.培养基') }[scope.row.reagentType] }}</template>
       </el-table-column>
       <el-table-column :label="$t('lims.生产商')" align="center" prop="manufacturer" width="120"/>
       <el-table-column :label="$t('lims.危险等级')" align="center" prop="hazardLevel" width="100"/>
@@ -30,9 +30,9 @@
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="80"/>
       <el-table-column :label="$t('common.operation')" align="center" width="200">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="handleStockLog(scope.row)">{{ this.$t('lims.出入库') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:reagent:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:reagent:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" @click="handleStockLog(scope.row)">{{ $t('lims.出入库') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:reagent:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:reagent:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

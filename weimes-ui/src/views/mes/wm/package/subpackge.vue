@@ -52,7 +52,7 @@
               @click="handleDelete(scope.row)"
               v-hasPermi="['mes:wm:package:remove']"
               v-if="optType !='view'"
-            >{{ this.$t('common.delete') }}</el-button>
+            >{{ $t('common.delete') }}</el-button>
           </template>
         </el-table-column>
       </el-table>

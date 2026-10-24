@@ -10,8 +10,8 @@
                             </div>
                         </el-col>
                         <el-col :span="8">
-                            <el-tag v-if="holidayList.indexOf(data.day) ==-1" effect="dark">{{ this.$t('mes.班') }}</el-tag>
-                            <el-tag v-else effect="dark" type="success">{{ this.$t('mes.休') }}</el-tag>
+                            <el-tag v-if="holidayList.indexOf(data.day) ==-1" effect="dark">{{ $t('mes.班') }}</el-tag>
+                            <el-tag v-else effect="dark" type="success">{{ $t('mes.休') }}</el-tag>
                         </el-col>
                     </el-row>
                     <el-row>

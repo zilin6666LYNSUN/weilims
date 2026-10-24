@@ -27,14 +27,14 @@
       <el-table-column :label="$t('lims.版本')" align="center" prop="versionNo" width="80"/>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="100">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status === 'ENABLED' ? 'success' : 'info'">{{ scope.row.status === 'ENABLED' ? this.$t('lims.启用') : $t('lims.停用') }}</el-tag>
+          <el-tag :type="scope.row.status === 'ENABLED' ? 'success' : 'info'">{{ scope.row.status === 'ENABLED' ? $t('lims.启用') : $t('lims.停用') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('lims.创建时间')" align="center" prop="createTime" width="160"/>
       <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width" width="160">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:test:method:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:test:method:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:test:method:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:test:method:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

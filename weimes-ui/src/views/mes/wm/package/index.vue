@@ -108,7 +108,7 @@
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:wm:package:edit']"
             v-if="scope.row.status =='PREPARE'"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -116,7 +116,7 @@
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:wm:package:remove']"
             v-if="scope.row.status =='PREPARE'"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

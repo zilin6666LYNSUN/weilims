@@ -53,7 +53,7 @@
             icon="el-icon-delete"
             @click="handleForceLogout(scope.row)"
             v-hasPermi="['monitor:online:forceLogout']"
-          >{{ this.$t('monitor.强退') }}</el-button>
+          >{{ $t('monitor.强退') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

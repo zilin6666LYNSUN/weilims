@@ -55,7 +55,7 @@
               @click="handleAddIQC(scope.row)"
               v-if="scope.row.qcType == 'IQC'"
               v-hasPermi="['mes:qc:iqc:edit']"
-            >{{ this.$t('menu.来料检验') }}</el-button>
+            >{{ $t('menu.来料检验') }}</el-button>
             <el-button
               size="mini"
               type="text"
@@ -63,7 +63,7 @@
               v-if="scope.row.qcType == 'PQC'"
               @click="handleAddPQC(scope.row)"
               v-hasPermi="['mes:qc:ipqc:edit']"
-            >{{ this.$t('menu.过程检验') }}</el-button>
+            >{{ $t('menu.过程检验') }}</el-button>
             <el-button
               size="mini"
               type="text"
@@ -71,7 +71,7 @@
               v-if="scope.row.qcType == 'OQC'"
               @click="handleAddOQC(scope.row)"
               v-hasPermi="['mes:qc:oqc:edit']"
-            >{{ this.$t('mes.出货检验') }}</el-button>
+            >{{ $t('mes.出货检验') }}</el-button>
           </template>
         </el-table-column>
       </el-table>

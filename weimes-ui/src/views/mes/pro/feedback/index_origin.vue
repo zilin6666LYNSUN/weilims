@@ -142,7 +142,7 @@
             icon="el-icon-query"
             @click="handleView(scope.row)"
             v-hasPermi="['mes:pro:feedback:query']"
-          >{{ this.$t('lims.查看') }}</el-button>
+          >{{ $t('lims.查看') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -150,7 +150,7 @@
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:pro:feedback:edit']"
             v-if="scope.row.status =='PREPARE'"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -158,7 +158,7 @@
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:pro:feedback:remove']"
             v-if="scope.row.status =='PREPARE'"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -39,9 +39,9 @@
         class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['mes:wm:itemrecpt:edit']">{{ this.$t('system.修改') }}</el-button>
+            v-hasPermi="['mes:wm:itemrecpt:edit']">{{ $t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['mes:wm:itemrecpt:remove']">{{ this.$t('common.delete') }}</el-button>
+            v-hasPermi="['mes:wm:itemrecpt:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

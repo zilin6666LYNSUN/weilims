@@ -56,7 +56,7 @@
             @click="handleUpdate(scope.row)"
             v-if="optType != 'view'"
             v-hasPermi="['mes:wm:rtissue:edit']"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -64,7 +64,7 @@
             @click="handleDelete(scope.row)"
             v-if="optType != 'view'"
             v-hasPermi="['mes:wm:rtissue:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

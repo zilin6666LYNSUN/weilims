@@ -150,11 +150,11 @@
       <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['md:order:edit']">{{ this.$t('system.修改') }}</el-button>
+            v-hasPermi="['md:order:edit']">{{ $t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['md:order:remove']">{{ this.$t('common.delete') }}</el-button>
+            v-hasPermi="['md:order:remove']">{{ $t('common.delete') }}</el-button>
           <!-- <el-button size="mini" type="text" icon="el-icon-delete" @click="puMes(scope.row)"
-            v-hasPermi="['md:order:push']">{{ this.$t('mes.推送') }}</el-button> -->
+            v-hasPermi="['md:order:push']">{{ $t('mes.推送') }}</el-button> -->
         </template>
       </el-table-column>
     </el-table>

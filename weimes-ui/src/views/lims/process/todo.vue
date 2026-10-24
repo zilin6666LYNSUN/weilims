@@ -9,9 +9,9 @@
       <el-table-column :label="$t('lims.开始时间')" align="center" prop="startTime" width="160"/>
       <el-table-column :label="$t('common.operation')" align="center" width="160">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-check" @click="handleApprove(scope.row)">{{ this.$t('lims.同意') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-close" @click="handleReject(scope.row)">{{ this.$t('lims.驳回') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-view" @click="handleHistory(scope.row)">{{ this.$t('lims.历史') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-check" @click="handleApprove(scope.row)">{{ $t('lims.同意') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-close" @click="handleReject(scope.row)">{{ $t('lims.驳回') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-view" @click="handleHistory(scope.row)">{{ $t('lims.历史') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

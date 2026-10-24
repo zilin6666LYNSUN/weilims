@@ -83,7 +83,7 @@
             icon="el-icon-circle-close"
             @click="cancelAuthUser(scope.row)"
             v-hasPermi="['system:role:remove']"
-          >{{ this.$t('system.取消授权') }}</el-button>
+          >{{ $t('system.取消授权') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

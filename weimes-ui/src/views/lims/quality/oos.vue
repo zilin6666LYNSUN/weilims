@@ -32,18 +32,18 @@
       <el-table-column :label="$t('lims.实测值')" align="center" prop="oosValue" width="100"/>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="100">
         <template slot-scope="scope">
-          <el-tag :type="{ DRAFT: 'info', INVESTIGATING: 'warning', REVIEWING: '', APPROVED: 'success', CLOSED: 'success' }[scope.row.status]">{{ { DRAFT: this.$t('lims.草稿'), INVESTIGATING: this.$t('lims.调查中'), REVIEWING: this.$t('lims.审核中'), APPROVED: this.$t('lims.已批准'), CLOSED: this.$t('lims.已关闭') }[scope.row.status] }}</el-tag>
+          <el-tag :type="{ DRAFT: 'info', INVESTIGATING: 'warning', REVIEWING: '', APPROVED: 'success', CLOSED: 'success' }[scope.row.status]">{{ { DRAFT: $t('lims.草稿'), INVESTIGATING: $t('lims.调查中'), REVIEWING: $t('lims.审核中'), APPROVED: $t('lims.已批准'), CLOSED: $t('lims.已关闭') }[scope.row.status] }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('lims.创建时间')" align="center" prop="createTime" width="160"/>
       <el-table-column :label="$t('common.operation')" align="center" width="260">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="handlePhase(scope.row)">{{ this.$t('lims.阶段记录') }}</el-button>
-          <el-button size="mini" type="text" @click="handleSubmit(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:oos:edit']">{{ this.$t('lims.提交') }}</el-button>
-          <el-button size="mini" type="text" @click="handleReview(scope.row)" v-if="scope.row.status === 'REVIEWING'" v-hasPermi="['lims:oos:review']">{{ this.$t('lims.审核') }}</el-button>
-          <el-button size="mini" type="text" @click="handleApprove(scope.row)" v-if="scope.row.status === 'REVIEWING'" v-hasPermi="['lims:oos:approve']">{{ this.$t('lims.批准') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:oos:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:oos:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" @click="handlePhase(scope.row)">{{ $t('lims.阶段记录') }}</el-button>
+          <el-button size="mini" type="text" @click="handleSubmit(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:oos:edit']">{{ $t('lims.提交') }}</el-button>
+          <el-button size="mini" type="text" @click="handleReview(scope.row)" v-if="scope.row.status === 'REVIEWING'" v-hasPermi="['lims:oos:review']">{{ $t('lims.审核') }}</el-button>
+          <el-button size="mini" type="text" @click="handleApprove(scope.row)" v-if="scope.row.status === 'REVIEWING'" v-hasPermi="['lims:oos:approve']">{{ $t('lims.批准') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:oos:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:oos:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -80,7 +80,7 @@
         <el-table-column :label="$t('lims.操作人')" prop="operatorName" width="100"/>
         <el-table-column :label="$t('common.operation')" width="100">
           <template slot-scope="scope">
-            <el-button size="mini" type="text" @click="handleEditPhase(scope.row)">{{ this.$t('common.edit') }}</el-button>
+            <el-button size="mini" type="text" @click="handleEditPhase(scope.row)">{{ $t('common.edit') }}</el-button>
           </template>
         </el-table-column>
       </el-table>

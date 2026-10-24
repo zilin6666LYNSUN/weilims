@@ -70,13 +70,13 @@
       <el-table-column :label="$t('common.operation')" width="200px" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-video-play" v-if="scope.row.status == 'PREPARE'"
-            @click="handleExecute(scope.row)" v-hasPermi="['mes:wmwasteheader:edit']">{{ this.$t('mes.执行废料') }}
+            @click="handleExecute(scope.row)" v-hasPermi="['mes:wmwasteheader:edit']">{{ $t('mes.执行废料') }}
           </el-button>
           <el-button size="mini" type="text" icon="el-icon-edit" v-if="scope.row.status == 'PREPARE'"
-            @click="handleUpdate(scope.row)" v-hasPermi="['mes:wmwasteheader:edit']">{{ this.$t('system.修改') }}
+            @click="handleUpdate(scope.row)" v-hasPermi="['mes:wmwasteheader:edit']">{{ $t('system.修改') }}
           </el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" v-if="scope.row.status == 'PREPARE'"
-            @click="handleDelete(scope.row)" v-hasPermi="['mes:wmwasteheader:remove']">{{ this.$t('common.delete') }}
+            @click="handleDelete(scope.row)" v-hasPermi="['mes:wmwasteheader:remove']">{{ $t('common.delete') }}
           </el-button>
         </template>
       </el-table-column>

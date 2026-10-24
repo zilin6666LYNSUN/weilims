@@ -85,7 +85,7 @@
       <el-table-column :label="$t('common.operation')" width="150px" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" v-if="scope.row.status == 'CONFIRMED'"
-            @click="handleUpdate(scope.row)" v-hasPermi="['mes:pro:protask:edit']">{{ this.$t('mes.排产') }}</el-button>
+            @click="handleUpdate(scope.row)" v-hasPermi="['mes:pro:protask:edit']">{{ $t('mes.排产') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

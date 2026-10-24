@@ -108,14 +108,14 @@
       <el-table-column :label="$t('common.operation')" width="150px" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" v-if="scope.row.status == 'PREPARE'"
-            @click="handleUpdate(scope.row)" v-hasPermi="['mes:pro:workorder:edit']">{{ this.$t('system.修改') }}</el-button>
+            @click="handleUpdate(scope.row)" v-hasPermi="['mes:pro:workorder:edit']">{{ $t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-plus"
             v-if="scope.row.status == 'CONFIRMED' && scope.row.workorderType == 'SELF'" @click="handleAdd(scope.row)"
-            v-hasPermi="['mes:pro:workorder:update']">{{ this.$t('common.add') }}</el-button>
+            v-hasPermi="['mes:pro:workorder:update']">{{ $t('common.add') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-circle-check" v-if="scope.row.status == 'CONFIRMED'"
-            @click="handleFinish(scope.row)" v-hasPermi="['mes:pro:workorder:update']">{{ this.$t('lims.完成') }}</el-button>
+            @click="handleFinish(scope.row)" v-hasPermi="['mes:pro:workorder:update']">{{ $t('lims.完成') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" v-if="scope.row.status == 'PREPARE'"
-            @click="handleDelete(scope.row)" v-hasPermi="['mes:pro:workorder:remove']">{{ this.$t('common.delete') }}</el-button>
+            @click="handleDelete(scope.row)" v-hasPermi="['mes:pro:workorder:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

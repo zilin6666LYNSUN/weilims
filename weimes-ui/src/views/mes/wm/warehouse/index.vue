@@ -87,21 +87,21 @@
             icon="el-icon-s-shop"
             @click="handleLocation(scope.row.warehouseId)"
             v-hasPermi="['mes:wm:location:edit','mes:wm:location:list']"
-          >{{ this.$t('mes.库区') }}</el-button>
+          >{{ $t('mes.库区') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['mes:wm:warehouse:edit']"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['mes:wm:warehouse:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

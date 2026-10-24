@@ -89,19 +89,19 @@
           <el-table-column :label="$t('common.operation')" align="center" width="160" class-name="small-padding fixed-width">
             <template slot-scope="scope" v-if="scope.row.userId !== 1">
               <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                v-hasPermi="['system:user:edit']">{{ this.$t('system.修改') }}</el-button>
+                v-hasPermi="['system:user:edit']">{{ $t('system.修改') }}</el-button>
               <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                v-hasPermi="['system:user:remove']">{{ this.$t('common.delete') }}</el-button>
+                v-hasPermi="['system:user:remove']">{{ $t('common.delete') }}</el-button>
               <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)"
                 v-hasPermi="['system:user:resetPwd', 'system:user:edit']">
                 <span class="el-dropdown-link">
-                  <i class="el-icon-d-arrow-right el-icon--right"></i>{{ this.$t('system.更多') }}
+                  <i class="el-icon-d-arrow-right el-icon--right"></i>{{ $t('system.更多') }}
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="handleResetPwd" icon="el-icon-key"
-                    v-hasPermi="['system:user:resetPwd']">{{ this.$t('system.重置密码') }}</el-dropdown-item>
+                    v-hasPermi="['system:user:resetPwd']">{{ $t('system.重置密码') }}</el-dropdown-item>
                   <el-dropdown-item command="handleAuthRole" icon="el-icon-circle-check"
-                    v-hasPermi="['system:user:edit']">{{ this.$t('menu.分配角色') }}</el-dropdown-item>
+                    v-hasPermi="['system:user:edit']">{{ $t('menu.分配角色') }}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>

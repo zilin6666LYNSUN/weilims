@@ -21,21 +21,21 @@
       <el-table-column :label="$t('lims.校准编号')" align="center" prop="calibrationCode" width="140"/>
       <el-table-column :label="$t('lims.仪器')" align="center" prop="instrumentName" width="140"/>
       <el-table-column :label="$t('lims.校准类型')" align="center" prop="calibrationType" width="100">
-        <template slot-scope="scope">{{ scope.row.calibrationType === 'INTERNAL' ? this.$t('lims.内部') : $t('lims.外部') }}</template>
+        <template slot-scope="scope">{{ scope.row.calibrationType === 'INTERNAL' ? $t('lims.内部') : $t('lims.外部') }}</template>
       </el-table-column>
       <el-table-column :label="$t('lims.校准日期')" align="center" prop="calibrationDate" width="120"/>
       <el-table-column :label="$t('lims.下次校准')" align="center" prop="nextCalibration" width="120"/>
       <el-table-column :label="$t('lims.校准机构')" align="center" prop="calibrationOrg" width="140"/>
       <el-table-column :label="$t('lims.证书号')" align="center" prop="certificateNo" width="140"/>
       <el-table-column :label="$t('lims.校准结果')" align="center" prop="calibrationResult" width="100">
-        <template slot-scope="scope"><el-tag :type="scope.row.calibrationResult === 'QUALIFIED' ? 'success' : 'danger'">{{ scope.row.calibrationResult === 'QUALIFIED' ? this.$t('lims.合格') : $t('lims.不合格') }}</el-tag></template>
+        <template slot-scope="scope"><el-tag :type="scope.row.calibrationResult === 'QUALIFIED' ? 'success' : 'danger'">{{ scope.row.calibrationResult === 'QUALIFIED' ? $t('lims.合格') : $t('lims.不合格') }}</el-tag></template>
       </el-table-column>
       <el-table-column :label="$t('lims.校准人')" align="center" prop="calibratedBy" width="100"/>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="100"/>
       <el-table-column :label="$t('common.operation')" align="center" width="140">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:instrument:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:instrument:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:instrument:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:instrument:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -59,9 +59,9 @@
       <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['md:hrmrank:edit']">{{ this.$t('system.修改') }}</el-button>
+            v-hasPermi="['md:hrmrank:edit']">{{ $t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['md:hrmrank:remove']">{{ this.$t('common.delete') }}</el-button>
+            v-hasPermi="['md:hrmrank:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

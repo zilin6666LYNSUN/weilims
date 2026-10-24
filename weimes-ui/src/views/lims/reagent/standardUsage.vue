@@ -20,7 +20,7 @@
       <el-table-column :label="$t('lims.剩余量')" align="center" prop="remainingAfter" width="90"/>
       <el-table-column :label="$t('common.operation')" align="center" width="80">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:reagent:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:reagent:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

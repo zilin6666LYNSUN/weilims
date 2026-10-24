@@ -61,7 +61,7 @@
             v-if="optType !='view'"
             @click="handleDelete(scope.$index, scope.row)"
 
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

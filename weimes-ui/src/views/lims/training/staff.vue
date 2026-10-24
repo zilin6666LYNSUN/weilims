@@ -24,8 +24,8 @@
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="80"/>
       <el-table-column :label="$t('common.operation')" align="center" width="140">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:staff:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:staff:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:staff:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:staff:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -56,7 +56,7 @@
           <el-table-column :label="$t('lims.授权日期')" align="center" prop="authorizedDate"/>
           <el-table-column :label="$t('lims.到期日期')" align="center" prop="expireDate"/>
           <el-table-column :label="$t('common.operation')" align="center" width="90">
-            <template slot-scope="scope"><el-button size="mini" type="text" icon="el-icon-delete" @click="testAuthList.splice(scope.$index, 1)">{{ this.$t('common.delete') }}</el-button></template>
+            <template slot-scope="scope"><el-button size="mini" type="text" icon="el-icon-delete" @click="testAuthList.splice(scope.$index, 1)">{{ $t('common.delete') }}</el-button></template>
           </el-table-column>
         </el-table>
         <el-form-item :label="$t('lims.新增授权')">
@@ -71,7 +71,7 @@
           <el-table-column :label="$t('lims.授权日期')" align="center" prop="authorizedDate"/>
           <el-table-column :label="$t('lims.到期日期')" align="center" prop="expireDate"/>
           <el-table-column :label="$t('common.operation')" align="center" width="90">
-            <template slot-scope="scope"><el-button size="mini" type="text" icon="el-icon-delete" @click="instAuthList.splice(scope.$index, 1)">{{ this.$t('common.delete') }}</el-button></template>
+            <template slot-scope="scope"><el-button size="mini" type="text" icon="el-icon-delete" @click="instAuthList.splice(scope.$index, 1)">{{ $t('common.delete') }}</el-button></template>
           </el-table-column>
         </el-table>
         <el-form-item :label="$t('lims.新增授权')">

@@ -41,7 +41,7 @@
       <el-table-column :label="$t('lims.IP地址')" align="center" prop="ipAddress" width="130" />
       <el-table-column :label="$t('common.operation')" align="center" width="100">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-view" @click="handleHistory(scope.row)" v-hasPermi="['lims:esign:audit:query']">{{ this.$t('lims.变更历史') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-view" @click="handleHistory(scope.row)" v-hasPermi="['lims:esign:audit:query']">{{ $t('lims.变更历史') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

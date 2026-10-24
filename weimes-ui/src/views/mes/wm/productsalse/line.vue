@@ -63,7 +63,7 @@
             @click="handleDelete(scope.row)"
             v-if="optType != 'view'"
             v-hasPermi="['mes:wm:productsalse:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

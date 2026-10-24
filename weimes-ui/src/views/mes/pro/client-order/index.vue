@@ -78,9 +78,9 @@
       <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['pro:clientorder:edit']" v-if="scope.row.status !== 'WORK_ORDER_FINISHED'">{{ this.$t('system.修改') }}</el-button>
+            v-hasPermi="['pro:clientorder:edit']" v-if="scope.row.status !== 'WORK_ORDER_FINISHED'">{{ $t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['pro:clientorder:remove']" v-if="scope.row.status !== 'WORK_ORDER_FINISHED'">{{ this.$t('common.delete') }}</el-button>
+            v-hasPermi="['pro:clientorder:remove']" v-if="scope.row.status !== 'WORK_ORDER_FINISHED'">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

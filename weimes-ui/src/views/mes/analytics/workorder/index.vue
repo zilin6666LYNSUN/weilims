@@ -87,9 +87,9 @@
       <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" v-if="scope.row.status == 'PREPARE'"
-            @click="handleUpdate(scope.row)" v-hasPermi="['mes:cal:calplan:edit']">{{ this.$t('system.修改') }}</el-button>
+            @click="handleUpdate(scope.row)" v-hasPermi="['mes:cal:calplan:edit']">{{ $t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" v-if="scope.row.status == 'PREPARE'"
-            @click="handleDelete(scope.row)" v-hasPermi="['mes:cal:calplan:remove']">{{ this.$t('common.delete') }}</el-button>
+            @click="handleDelete(scope.row)" v-hasPermi="['mes:cal:calplan:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

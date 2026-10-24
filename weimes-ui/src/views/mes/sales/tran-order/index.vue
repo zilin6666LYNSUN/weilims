@@ -306,7 +306,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['sales:tranOrder:edit']"
-            >{{ this.$t('system.修改') }}</el-button
+            >{{ $t('system.修改') }}</el-button
           >
           <el-button
             size="mini"
@@ -314,14 +314,14 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['sales:tranOrder:remove']"
-            >{{ this.$t('common.delete') }}</el-button
+            >{{ $t('common.delete') }}</el-button
           >
           <el-button
             icon="el-icon-print"
             size="mini"
             type="text"
             @click.stop="printOut(scope.row, true)"
-            >{{ this.$t('common.print') }}</el-button
+            >{{ $t('common.print') }}</el-button
           >
         </template>
       </el-table-column>

@@ -23,8 +23,8 @@
     <!-- 上传提示 -->
     <div class="el-upload__tip" slot="tip" v-if="showTip">
        {{ this.$t("common.uploadTipPrefix") }}
-      <template v-if="fileSize"> {{ this.$t("common.uploadTipSize") }} <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
-      <template v-if="fileType"> {{ this.$t("common.uploadTipType") }} <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
+      <template v-if="fileSize"> {{ this.$t("common.uploadTipSize") }} <b style="color: #f56c6c">{{ fileSize }}MB</b> {{ fileSize }}MB</b> </template>
+      <template v-if="fileType"> {{ this.$t("common.uploadTipType") }} <b style="color: #f56c6c">{{ fileType.join("/") }}</b> ype.join("/") }}</b> </template>
        {{ this.$t("common.uploadTipSuffix") }}
     </div>
 

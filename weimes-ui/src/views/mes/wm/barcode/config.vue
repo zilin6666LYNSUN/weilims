@@ -36,7 +36,7 @@
           <el-button
             type="text"
             @click="handleSetReport(scope.row)"
-          >{{ this.$t('mes.设置') }}</el-button>
+          >{{ $t('mes.设置') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

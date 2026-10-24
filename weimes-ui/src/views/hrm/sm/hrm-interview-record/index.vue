@@ -68,11 +68,11 @@
       <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button v-if="scope.row.interviewRecordId != null" size="mini" type="text" icon="el-icon-edit"
-            @click="handleUpdate(scope.row)" v-hasPermi="['sm:hrminterviewrecord:edit']">{{ this.$t('hrm.反馈') }}</el-button>
+            @click="handleUpdate(scope.row)" v-hasPermi="['sm:hrminterviewrecord:edit']">{{ $t('hrm.反馈') }}</el-button>
           <el-button v-if="scope.row.interviewRecordId != null" size="mini" type="text" icon="el-icon-delete"
-            @click="handleDelete(scope.row)" v-hasPermi="['sm:hrminterviewrecord:remove']">{{ this.$t('common.delete') }}</el-button>
+            @click="handleDelete(scope.row)" v-hasPermi="['sm:hrminterviewrecord:remove']">{{ $t('common.delete') }}</el-button>
           <el-button type="text" size="mini" icon="el-icon-edit" @click="handleAdd(scope.row)"
-            v-if="scope.row.interviewRecordId === null">{{ this.$t('hrm.邀请面试') }}</el-button>
+            v-if="scope.row.interviewRecordId === null">{{ $t('hrm.邀请面试') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -81,11 +81,11 @@
       <el-table-column :label="$t('common.operation')" align="center" width="100px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-query" @click="handleView(scope.row)"
-            v-hasPermi="['mes:pro:feedback:query']">{{ this.$t('lims.查看') }}</el-button>
+            v-hasPermi="['mes:pro:feedback:query']">{{ $t('lims.查看') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['mes:pro:feedback:edit']" v-if="scope.row.status == 'PREPARE'">{{ this.$t('system.修改') }}</el-button>
+            v-hasPermi="['mes:pro:feedback:edit']" v-if="scope.row.status == 'PREPARE'">{{ $t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['mes:pro:feedback:remove']" v-if="scope.row.status == 'PREPARE'">{{ this.$t('common.delete') }}</el-button>
+            v-hasPermi="['mes:pro:feedback:remove']" v-if="scope.row.status == 'PREPARE'">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

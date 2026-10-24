@@ -24,7 +24,7 @@
       <el-table-column type="selection" width="55" align="center"/>
       <el-table-column :label="$t('lims.变更编号')" align="center" prop="changeCode" width="140"/>
       <el-table-column :label="$t('lims.变更类型')" align="center" prop="changeType" width="100">
-        <template slot-scope="scope">{{ scope.row.changeType === 'TEMPORARY' ? this.$t('lims.临时') : $t('lims.永久') }}</template>
+        <template slot-scope="scope">{{ scope.row.changeType === 'TEMPORARY' ? $t('lims.临时') : $t('lims.永久') }}</template>
       </el-table-column>
       <el-table-column :label="$t('lims.变更描述')" align="center" prop="changeDescription" :show-overflow-tooltip="true"/>
       <el-table-column :label="$t('lims.影响范围')" align="center" prop="impactAnalysis" width="120"/>
@@ -32,17 +32,17 @@
       <el-table-column :label="$t('lims.计划日期')" align="center" prop="effectiveDate" width="110"/>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="100">
         <template slot-scope="scope">
-          <el-tag :type="{ DRAFT: 'info', PENDING_APPROVAL: 'warning', APPROVED: '', IMPLEMENTING: '', COMPLETED: 'success' }[scope.row.status]">{{ { DRAFT: this.$t('lims.草稿'), PENDING_APPROVAL: this.$t('lims.待审批'), APPROVED: this.$t('lims.已批准'), IMPLEMENTING: this.$t('lims.执行中'), COMPLETED: this.$t('lims.已完成') }[scope.row.status] }}</el-tag>
+          <el-tag :type="{ DRAFT: 'info', PENDING_APPROVAL: 'warning', APPROVED: '', IMPLEMENTING: '', COMPLETED: 'success' }[scope.row.status]">{{ { DRAFT: $t('lims.草稿'), PENDING_APPROVAL: $t('lims.待审批'), APPROVED: $t('lims.已批准'), IMPLEMENTING: $t('lims.执行中'), COMPLETED: $t('lims.已完成') }[scope.row.status] }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('common.operation')" align="center" width="260">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="handleSubmit(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:change:edit']">{{ this.$t('lims.提交') }}</el-button>
-          <el-button size="mini" type="text" @click="handleApprove(scope.row)" v-if="scope.row.status === 'PENDING_APPROVAL'" v-hasPermi="['lims:change:approve']">{{ this.$t('lims.审批') }}</el-button>
-          <el-button size="mini" type="text" @click="handleImplement(scope.row)" v-if="scope.row.status === 'APPROVED'" v-hasPermi="['lims:change:implement']">{{ this.$t('lims.执行') }}</el-button>
-          <el-button size="mini" type="text" @click="handleComplete(scope.row)" v-if="scope.row.status === 'IMPLEMENTING'" v-hasPermi="['lims:change:complete']">{{ this.$t('lims.完成') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:change:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:change:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" @click="handleSubmit(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:change:edit']">{{ $t('lims.提交') }}</el-button>
+          <el-button size="mini" type="text" @click="handleApprove(scope.row)" v-if="scope.row.status === 'PENDING_APPROVAL'" v-hasPermi="['lims:change:approve']">{{ $t('lims.审批') }}</el-button>
+          <el-button size="mini" type="text" @click="handleImplement(scope.row)" v-if="scope.row.status === 'APPROVED'" v-hasPermi="['lims:change:implement']">{{ $t('lims.执行') }}</el-button>
+          <el-button size="mini" type="text" @click="handleComplete(scope.row)" v-if="scope.row.status === 'IMPLEMENTING'" v-hasPermi="['lims:change:complete']">{{ $t('lims.完成') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:change:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:change:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

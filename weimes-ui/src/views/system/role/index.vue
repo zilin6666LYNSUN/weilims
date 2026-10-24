@@ -126,23 +126,23 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:role:edit']"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:role:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
           <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['system:role:edit']">
             <span class="el-dropdown-link">
-              <i class="el-icon-d-arrow-right el-icon--right"></i>{{ this.$t('system.更多') }}
+              <i class="el-icon-d-arrow-right el-icon--right"></i>{{ $t('system.更多') }}
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="handleDataScope" icon="el-icon-circle-check"
-                v-hasPermi="['system:role:edit']">{{ this.$t('system.数据权限') }}</el-dropdown-item>
+                v-hasPermi="['system:role:edit']">{{ $t('system.数据权限') }}</el-dropdown-item>
               <el-dropdown-item command="handleAuthUser" icon="el-icon-user"
-                v-hasPermi="['system:role:edit']">{{ this.$t('menu.分配用户') }}</el-dropdown-item>
+                v-hasPermi="['system:role:edit']">{{ $t('menu.分配用户') }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </template>

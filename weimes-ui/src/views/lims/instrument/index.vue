@@ -27,13 +27,13 @@
       <el-table-column :label="$t('lims.下次校准')" align="center" prop="nextCalibration" width="110"/>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="90">
         <template slot-scope="scope">
-          <el-tag :type="{ NORMAL: 'success', MAINTENANCE: 'warning', DISABLED: 'info', SCRAPPED: 'danger' }[scope.row.status]">{{ { NORMAL: this.$t('lims.正常'), MAINTENANCE: this.$t('lims.维修中'), DISABLED: this.$t('lims.停用'), SCRAPPED: this.$t('lims.报废') }[scope.row.status] }}</el-tag>
+          <el-tag :type="{ NORMAL: 'success', MAINTENANCE: 'warning', DISABLED: 'info', SCRAPPED: 'danger' }[scope.row.status]">{{ { NORMAL: $t('lims.正常'), MAINTENANCE: $t('lims.维修中'), DISABLED: $t('lims.停用'), SCRAPPED: $t('lims.报废') }[scope.row.status] }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('common.operation')" align="center" width="160">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:instrument:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:instrument:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:instrument:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:instrument:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

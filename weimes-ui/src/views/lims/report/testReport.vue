@@ -23,14 +23,14 @@
       <el-table-column :label="$t('lims.报告编号')" align="center" prop="reportCode" width="160"/>
       <el-table-column :label="$t('lims.报告类型')" align="center" prop="reportType" width="100">
         <template slot-scope="scope">
-          <el-tag :type="{CMA:'danger',CNAS:'warning',INTERNAL:'info'}[scope.row.reportType]">{{ {CMA:'CMA',CNAS:'CNAS',INTERNAL: this.$t('lims.内部')}[scope.row.reportType] }}</el-tag>
+          <el-tag :type="{CMA:'danger',CNAS:'warning',INTERNAL:'info'}[scope.row.reportType]">{{ {CMA:'CMA',CNAS:'CNAS',INTERNAL: $t('lims.内部')}[scope.row.reportType] }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('lims.报告标题')" align="center" prop="title" :show-overflow-tooltip="true"/>
       <el-table-column :label="$t('lims.产品名称')" align="center" prop="productName" width="140"/>
       <el-table-column :label="$t('lims.总结论')" align="center" prop="conclusion" width="100">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.conclusion" :type="scope.row.conclusion==='QUALIFIED'?'success':'danger'">{{ scope.row.conclusion==='QUALIFIED'?this.$t('lims.合格'):$t('lims.不合格') }}</el-tag>
+          <el-tag v-if="scope.row.conclusion" :type="scope.row.conclusion==='QUALIFIED'?'success':'danger'">{{ scope.row.conclusion==='QUALIFIED'?$t('lims.合格'):$t('lims.不合格') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="100">
@@ -42,14 +42,14 @@
       <el-table-column :label="$t('lims.创建时间')" align="center" prop="createTime" width="160"/>
       <el-table-column :label="$t('common.operation')" align="center" width="320">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="handleGenerate(scope.row)" v-if="scope.row.status==='DRAFT'" v-hasPermi="['lims:report:test:generate']">{{ this.$t('lims.生成') }}</el-button>
-          <el-button size="mini" type="text" @click="handleReview(scope.row)" v-if="scope.row.status==='PREPARING'" v-hasPermi="['lims:report:test:review']">{{ this.$t('lims.复核') }}</el-button>
-          <el-button size="mini" type="text" @click="handleApprove(scope.row)" v-if="scope.row.status==='REVIEWING'" v-hasPermi="['lims:report:test:approve']">{{ this.$t('lims.批准') }}</el-button>
-          <el-button size="mini" type="text" @click="handleRelease(scope.row)" v-if="scope.row.status==='APPROVING'" v-hasPermi="['lims:report:test:release']">{{ this.$t('lims.放行') }}</el-button>
-          <el-button size="mini" type="text" @click="handlePrint(scope.row)" v-if="scope.row.status==='RELEASED'" v-hasPermi="['lims:report:test:query']">{{ this.$t('common.print') }}</el-button>
-          <el-button size="mini" type="text" @click="handleViewSignatures(scope.row)">{{ this.$t('lims.签章') }}</el-button>
-          <el-button size="mini" type="text" @click="handleVoid(scope.row)" v-if="['DRAFT','PREPARING'].includes(scope.row.status)" v-hasPermi="['lims:report:test:edit']">{{ this.$t('lims.作废') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status==='DRAFT'" v-hasPermi="['lims:report:test:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" @click="handleGenerate(scope.row)" v-if="scope.row.status==='DRAFT'" v-hasPermi="['lims:report:test:generate']">{{ $t('lims.生成') }}</el-button>
+          <el-button size="mini" type="text" @click="handleReview(scope.row)" v-if="scope.row.status==='PREPARING'" v-hasPermi="['lims:report:test:review']">{{ $t('lims.复核') }}</el-button>
+          <el-button size="mini" type="text" @click="handleApprove(scope.row)" v-if="scope.row.status==='REVIEWING'" v-hasPermi="['lims:report:test:approve']">{{ $t('lims.批准') }}</el-button>
+          <el-button size="mini" type="text" @click="handleRelease(scope.row)" v-if="scope.row.status==='APPROVING'" v-hasPermi="['lims:report:test:release']">{{ $t('lims.放行') }}</el-button>
+          <el-button size="mini" type="text" @click="handlePrint(scope.row)" v-if="scope.row.status==='RELEASED'" v-hasPermi="['lims:report:test:query']">{{ $t('common.print') }}</el-button>
+          <el-button size="mini" type="text" @click="handleViewSignatures(scope.row)">{{ $t('lims.签章') }}</el-button>
+          <el-button size="mini" type="text" @click="handleVoid(scope.row)" v-if="['DRAFT','PREPARING'].includes(scope.row.status)" v-hasPermi="['lims:report:test:edit']">{{ $t('lims.作废') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status==='DRAFT'" v-hasPermi="['lims:report:test:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -95,13 +95,13 @@
     <el-dialog :title="$t('lims.签章记录')" :visible.sync="signatureOpen" width="700px" append-to-body>
       <el-table :data="signatureList" border>
         <el-table-column :label="$t('lims.签章类型')" prop="signatureType" width="100">
-          <template slot-scope="scope">{{ {PREPARE: this.$t('lims.编制'),REVIEW: this.$t('lims.复核'),APPROVE: this.$t('lims.批准'),RELEASE: this.$t('lims.放行')}[scope.row.signatureType] }}</template>
+          <template slot-scope="scope">{{ {PREPARE: $t('lims.编制'),REVIEW: $t('lims.复核'),APPROVE: $t('lims.批准'),RELEASE: $t('lims.放行')}[scope.row.signatureType] }}</template>
         </el-table-column>
         <el-table-column :label="$t('lims.签章人')" prop="signerName" width="100"/>
         <el-table-column :label="$t('lims.签章含义')" prop="signatureMeaning"/>
         <el-table-column :label="$t('lims.签章时间')" prop="signatureTime" width="160"/>
         <el-table-column :label="$t('lims.状态')" width="80">
-          <template slot-scope="scope"><el-tag :type="scope.row.isValid===1?'success':'info'">{{ scope.row.isValid===1?this.$t('lims.有效'):$t('lims.无效') }}</el-tag></template>
+          <template slot-scope="scope"><el-tag :type="scope.row.isValid===1?'success':'info'">{{ scope.row.isValid===1?$t('lims.有效'):$t('lims.无效') }}</el-tag></template>
         </el-table-column>
       </el-table>
     </el-dialog>

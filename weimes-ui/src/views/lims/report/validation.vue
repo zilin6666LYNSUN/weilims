@@ -21,19 +21,19 @@
       <el-table-column :label="$t('lims.规则编号')" align="center" prop="ruleCode" width="120"/>
       <el-table-column :label="$t('lims.规则名称')" align="center" prop="ruleName" width="160"/>
       <el-table-column :label="$t('lims.规则类型')" align="center" prop="ruleType" width="120">
-        <template slot-scope="scope">{{ {RANGE: this.$t('lims.范围校验'),OUTLIER: this.$t('lims.异常值'),REPEATABILITY: this.$t('lims.重复性'),ACCURACY: this.$t('lims.准确度'),COMPLETENESS: this.$t('lims.完整性'),CUSTOM: this.$t('lims.自定义')}[scope.row.ruleType] }}</template>
+        <template slot-scope="scope">{{ {RANGE: $t('lims.范围校验'),OUTLIER: $t('lims.异常值'),REPEATABILITY: $t('lims.重复性'),ACCURACY: $t('lims.准确度'),COMPLETENESS: $t('lims.完整性'),CUSTOM: $t('lims.自定义')}[scope.row.ruleType] }}</template>
       </el-table-column>
       <el-table-column :label="$t('lims.错误级别')" align="center" prop="errorLevel" width="100">
         <template slot-scope="scope"><el-tag :type="{WARNING:'warning',ERROR:'danger',CRITICAL:'danger'}[scope.row.errorLevel]">{{ scope.row.errorLevel }}</el-tag></template>
       </el-table-column>
       <el-table-column :label="$t('lims.错误提示')" align="center" prop="errorMessage" :show-overflow-tooltip="true"/>
       <el-table-column :label="$t('lims.状态')" align="center" prop="isEnabled" width="80">
-        <template slot-scope="scope"><el-tag :type="scope.row.isEnabled===1?'success':'info'">{{ scope.row.isEnabled===1?this.$t('lims.启用'):$t('lims.禁用') }}</el-tag></template>
+        <template slot-scope="scope"><el-tag :type="scope.row.isEnabled===1?'success':'info'">{{ scope.row.isEnabled===1?$t('lims.启用'):$t('lims.禁用') }}</el-tag></template>
       </el-table-column>
       <el-table-column :label="$t('common.operation')" align="center" width="180">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:report:validation:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:report:validation:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:report:validation:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:report:validation:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

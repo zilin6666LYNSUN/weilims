@@ -19,14 +19,14 @@
       <el-table-column :label="$t('lims.用途')" align="center" prop="purpose" :show-overflow-tooltip="true"/>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="100">
         <template slot-scope="scope">
-          <el-tag :type="{ PENDING: 'warning', CONFIRMED: '', CANCELLED: 'info', COMPLETED: 'success' }[scope.row.status]">{{ { PENDING: this.$t('lims.待确认'), CONFIRMED: this.$t('lims.已确认'), CANCELLED: this.$t('lims.已取消'), COMPLETED: this.$t('lims.已完成') }[scope.row.status] }}</el-tag>
+          <el-tag :type="{ PENDING: 'warning', CONFIRMED: '', CANCELLED: 'info', COMPLETED: 'success' }[scope.row.status]">{{ { PENDING: $t('lims.待确认'), CONFIRMED: $t('lims.已确认'), CANCELLED: $t('lims.已取消'), COMPLETED: $t('lims.已完成') }[scope.row.status] }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('common.operation')" align="center" width="180">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:instrument:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" @click="handleConfirm(scope.row)" v-if="scope.row.status === 'PENDING'" v-hasPermi="['lims:instrument:edit']">{{ this.$t('lims.确认') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:instrument:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:instrument:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" @click="handleConfirm(scope.row)" v-if="scope.row.status === 'PENDING'" v-hasPermi="['lims:instrument:edit']">{{ $t('lims.确认') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:instrument:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

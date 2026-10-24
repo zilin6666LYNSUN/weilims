@@ -120,25 +120,25 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['monitor:job:edit']"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['monitor:job:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
           <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['monitor:job:changeStatus', 'monitor:job:query']">
             <span class="el-dropdown-link">
-              <i class="el-icon-d-arrow-right el-icon--right"></i>{{ this.$t('system.更多') }}
+              <i class="el-icon-d-arrow-right el-icon--right"></i>{{ $t('system.更多') }}
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="handleRun" icon="el-icon-caret-right"
-                v-hasPermi="['monitor:job:changeStatus']">{{ this.$t('monitor.执行一次') }}</el-dropdown-item>
+                v-hasPermi="['monitor:job:changeStatus']">{{ $t('monitor.执行一次') }}</el-dropdown-item>
               <el-dropdown-item command="handleView" icon="el-icon-view"
-                v-hasPermi="['monitor:job:query']">{{ this.$t('monitor.任务详细') }}</el-dropdown-item>
+                v-hasPermi="['monitor:job:query']">{{ $t('monitor.任务详细') }}</el-dropdown-item>
               <el-dropdown-item command="handleJobLog" icon="el-icon-s-operation"
-                v-hasPermi="['monitor:job:query']">{{ this.$t('menu.调度日志') }}</el-dropdown-item>
+                v-hasPermi="['monitor:job:query']">{{ $t('menu.调度日志') }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </template>

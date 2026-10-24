@@ -22,9 +22,9 @@
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="90"/>
       <el-table-column :label="$t('common.operation')" align="center" width="200">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:training:record:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-user" @click="handleParticipants(scope.row)" v-hasPermi="['lims:training:record:list']">{{ this.$t('menu.参训人员') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:training:record:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:training:record:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-user" @click="handleParticipants(scope.row)" v-hasPermi="['lims:training:record:list']">{{ $t('menu.参训人员') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:training:record:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -67,7 +67,7 @@
         <el-table-column :label="$t('lims.证书号')" align="center" prop="certificateNo" width="130"/>
         <el-table-column :label="$t('lims.证书到期')" align="center" prop="certificateExpire" width="110"/>
         <el-table-column :label="$t('common.operation')" align="center" width="80">
-          <template slot-scope="scope"><el-button size="mini" type="text" icon="el-icon-delete" @click="removeParticipant(scope.row)">{{ this.$t('common.delete') }}</el-button></template>
+          <template slot-scope="scope"><el-button size="mini" type="text" icon="el-icon-delete" @click="removeParticipant(scope.row)">{{ $t('common.delete') }}</el-button></template>
         </el-table-column>
       </el-table>
       <el-form size="mini" label-width="80px" style="margin-top:10px">

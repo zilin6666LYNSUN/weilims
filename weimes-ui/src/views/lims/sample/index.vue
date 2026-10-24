@@ -59,17 +59,17 @@
       </el-table-column>
       <el-table-column :label="$t('lims.优先级')" align="center" prop="priority" width="80">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.priority === 'URGENT'" type="warning">{{ this.$t('lims.加急') }}</el-tag>
-          <el-tag v-else-if="scope.row.priority === 'EMERGENCY'" type="danger">{{ this.$t('lims.紧急') }}</el-tag>
-          <el-tag v-else>{{ this.$t('lims.普通') }}</el-tag>
+          <el-tag v-if="scope.row.priority === 'URGENT'" type="warning">{{ $t('lims.加急') }}</el-tag>
+          <el-tag v-else-if="scope.row.priority === 'EMERGENCY'" type="danger">{{ $t('lims.紧急') }}</el-tag>
+          <el-tag v-else>{{ $t('lims.普通') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('lims.创建时间')" align="center" prop="createTime" width="160"/>
       <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width" width="200">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:sample:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-check" @click="handleReceive(scope.row)" v-if="scope.row.status === '待接收'" v-hasPermi="['lims:sample:receive']">{{ this.$t('lims.接收') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:sample:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:sample:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-check" @click="handleReceive(scope.row)" v-if="scope.row.status === '待接收'" v-hasPermi="['lims:sample:receive']">{{ $t('lims.接收') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:sample:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

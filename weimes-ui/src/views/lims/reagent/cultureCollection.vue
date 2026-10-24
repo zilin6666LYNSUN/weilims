@@ -27,9 +27,9 @@
       </el-table-column>
       <el-table-column :label="$t('common.operation')" align="center" width="230">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-download" @click="handleReceive(scope.row)" v-hasPermi="['lims:reagent:edit']">{{ this.$t('lims.入库') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-refresh" @click="handlePassage(scope.row)" v-hasPermi="['lims:reagent:edit']">{{ this.$t('lims.传代') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDiscard(scope.row)" v-hasPermi="['lims:reagent:edit']">{{ this.$t('lims.销毁') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-download" @click="handleReceive(scope.row)" v-hasPermi="['lims:reagent:edit']">{{ $t('lims.入库') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-refresh" @click="handlePassage(scope.row)" v-hasPermi="['lims:reagent:edit']">{{ $t('lims.传代') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDiscard(scope.row)" v-hasPermi="['lims:reagent:edit']">{{ $t('lims.销毁') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

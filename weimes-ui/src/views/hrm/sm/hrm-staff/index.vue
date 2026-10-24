@@ -138,11 +138,11 @@
       <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width" width="200">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-            v-hasPermi="['st:hrmstaff:edit']">{{ this.$t('system.修改') }}</el-button>
+            v-hasPermi="['st:hrmstaff:edit']">{{ $t('system.修改') }}</el-button>
           <!-- <el-button size="mini" type="text" icon="el-icon-thumb" @click="handleProcess(scope.row)"
-            v-hasPermi="['st:hrmstaff:edit']" v-if="scope.row.status === '0'">{{ this.$t('hrm.邀请面试') }}</el-button> -->
+            v-hasPermi="['st:hrmstaff:edit']" v-if="scope.row.status === '0'">{{ $t('hrm.邀请面试') }}</el-button> -->
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['st:hrmstaff:remove']">{{ this.$t('common.delete') }}</el-button>
+            v-hasPermi="['st:hrmstaff:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

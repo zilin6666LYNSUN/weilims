@@ -52,15 +52,15 @@
       <el-table-column :label="$t('common.operation')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="text" size="small" icon="el-icon-view" @click="handlePreview(scope.row)"
-            v-hasPermi="['tool:gen:preview']">{{ this.$t('common.preview') }}</el-button>
+            v-hasPermi="['tool:gen:preview']">{{ $t('common.preview') }}</el-button>
           <el-button type="text" size="small" icon="el-icon-edit" @click="handleEditTable(scope.row)"
-            v-hasPermi="['tool:gen:edit']">{{ this.$t('common.edit') }}</el-button>
+            v-hasPermi="['tool:gen:edit']">{{ $t('common.edit') }}</el-button>
           <el-button type="text" size="small" icon="el-icon-delete" @click="handleDelete(scope.row)"
-            v-hasPermi="['tool:gen:remove']">{{ this.$t('common.delete') }}</el-button>
+            v-hasPermi="['tool:gen:remove']">{{ $t('common.delete') }}</el-button>
           <el-button type="text" size="small" icon="el-icon-refresh" @click="handleSynchDb(scope.row)"
-            v-hasPermi="['tool:gen:edit']">{{ this.$t('tool.同步') }}</el-button>
+            v-hasPermi="['tool:gen:edit']">{{ $t('tool.同步') }}</el-button>
           <el-button type="text" size="small" icon="el-icon-download" @click="handleGenTable(scope.row)"
-            v-hasPermi="['tool:gen:code']">{{ this.$t('tool.生成代码') }}</el-button>
+            v-hasPermi="['tool:gen:code']">{{ $t('tool.生成代码') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

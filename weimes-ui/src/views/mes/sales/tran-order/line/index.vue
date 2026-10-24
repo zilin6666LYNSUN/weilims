@@ -348,7 +348,7 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['md:line:edit']"
-            >{{ this.$t('system.修改') }}</el-button
+            >{{ $t('system.修改') }}</el-button
           >
           <el-button
             size="mini"
@@ -356,7 +356,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['md:line:remove']"
-            >{{ this.$t('common.delete') }}</el-button
+            >{{ $t('common.delete') }}</el-button
           >
         </template>
       </el-table-column>

@@ -27,21 +27,21 @@
       <el-table-column :label="$t('lims.产品名称')" align="center" prop="productName" width="160"/>
       <el-table-column :label="$t('lims.批号')" align="center" prop="batchNo" width="120"/>
       <el-table-column :label="$t('lims.考察类型')" align="center" prop="studyType" width="100">
-        <template slot-scope="scope">{{ { LONG_TERM: this.$t('lims.长期'), ACCELERATED: this.$t('lims.加速'), INTERMEDIATE: this.$t('lims.中间') }[scope.row.studyType] }}</template>
+        <template slot-scope="scope">{{ { LONG_TERM: $t('lims.长期'), ACCELERATED: $t('lims.加速'), INTERMEDIATE: $t('lims.中间') }[scope.row.studyType] }}</template>
       </el-table-column>
       <el-table-column :label="$t('lims.存储条件')" align="center" prop="storageCondition" width="120"/>
       <el-table-column :label="$t('lims.开始日期')" align="center" prop="startDate" width="110"/>
       <el-table-column :label="$t('lims.结束日期')" align="center" prop="endDate" width="110"/>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="100">
         <template slot-scope="scope">
-          <el-tag :type="{ DRAFT: 'info', IN_PROGRESS: '', COMPLETED: 'success', CLOSED: 'success' }[scope.row.status]">{{ { DRAFT: this.$t('lims.草稿'), IN_PROGRESS: this.$t('lims.进行中'), COMPLETED: this.$t('lims.已完成'), CLOSED: this.$t('lims.已关闭') }[scope.row.status] }}</el-tag>
+          <el-tag :type="{ DRAFT: 'info', IN_PROGRESS: '', COMPLETED: 'success', CLOSED: 'success' }[scope.row.status]">{{ { DRAFT: $t('lims.草稿'), IN_PROGRESS: $t('lims.进行中'), COMPLETED: $t('lims.已完成'), CLOSED: $t('lims.已关闭') }[scope.row.status] }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('common.operation')" align="center" width="200">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="handleTestPoints(scope.row)">{{ this.$t('lims.考察点') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:stability:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:stability:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" @click="handleTestPoints(scope.row)">{{ $t('lims.考察点') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:stability:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:stability:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -78,14 +78,14 @@
         <el-table-column :label="$t('lims.实际日期')" prop="actualDate" width="120"/>
         <el-table-column :label="$t('lims.检验结果摘要')" prop="testResultSummary" :show-overflow-tooltip="true"/>
         <el-table-column label="OOT" prop="isOot" width="70">
-          <template slot-scope="scope"><el-tag :type="scope.row.isOot ? 'danger' : 'success'">{{ scope.row.isOot ? this.$t('lims.是') : $t('lims.否') }}</el-tag></template>
+          <template slot-scope="scope"><el-tag :type="scope.row.isOot ? 'danger' : 'success'">{{ scope.row.isOot ? $t('lims.是') : $t('lims.否') }}</el-tag></template>
         </el-table-column>
         <el-table-column :label="$t('lims.状态')" prop="status" width="90">
-          <template slot-scope="scope">{{ { PENDING: this.$t('lims.待检'), TESTING: this.$t('lims.检验中'), COMPLETED: this.$t('lims.已完成') }[scope.row.status] }}</template>
+          <template slot-scope="scope">{{ { PENDING: $t('lims.待检'), TESTING: $t('lims.检验中'), COMPLETED: $t('lims.已完成') }[scope.row.status] }}</template>
         </el-table-column>
         <el-table-column :label="$t('common.operation')" width="100">
           <template slot-scope="scope">
-            <el-button size="mini" type="text" @click="handleEditTest(scope.row)" v-if="scope.row.status !== 'COMPLETED'">{{ this.$t('lims.录入结果') }}</el-button>
+            <el-button size="mini" type="text" @click="handleEditTest(scope.row)" v-if="scope.row.status !== 'COMPLETED'">{{ $t('lims.录入结果') }}</el-button>
           </template>
         </el-table-column>
       </el-table>

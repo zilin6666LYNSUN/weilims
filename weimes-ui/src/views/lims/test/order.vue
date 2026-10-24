@@ -26,18 +26,18 @@
       <el-table-column :label="$t('lims.计划完成')" align="center" prop="plannedEndDate" width="110"/>
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="100">
         <template slot-scope="scope">
-          <el-tag :type="{ DRAFT: 'info', PENDING_TEST: 'warning', TESTING: '', PENDING_REVIEW: '', PENDING_APPROVAL: 'warning', COMPLETED: 'success' }[scope.row.status]">{{ { DRAFT: this.$t('lims.草稿'), PENDING_TEST: this.$t('lims.待检验'), TESTING: this.$t('lims.检验中'), PENDING_REVIEW: this.$t('lims.待复核'), PENDING_APPROVAL: this.$t('lims.待批准'), COMPLETED: this.$t('lims.已完成') }[scope.row.status] }}</el-tag>
+          <el-tag :type="{ DRAFT: 'info', PENDING_TEST: 'warning', TESTING: '', PENDING_REVIEW: '', PENDING_APPROVAL: 'warning', COMPLETED: 'success' }[scope.row.status]">{{ { DRAFT: $t('lims.草稿'), PENDING_TEST: $t('lims.待检验'), TESTING: $t('lims.检验中'), PENDING_REVIEW: $t('lims.待复核'), PENDING_APPROVAL: $t('lims.待批准'), COMPLETED: $t('lims.已完成') }[scope.row.status] }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('lims.创建时间')" align="center" prop="createTime" width="160"/>
       <el-table-column :label="$t('common.operation')" align="center" width="280">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="handleResult(scope.row)" v-if="['PENDING_TEST','TESTING'].includes(scope.row.status)" v-hasPermi="['lims:test:order:edit']">{{ this.$t('lims.录入结果') }}</el-button>
-          <el-button size="mini" type="text" @click="handleSubmit(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:test:order:submit']">{{ this.$t('lims.提交') }}</el-button>
-          <el-button size="mini" type="text" @click="handleReview(scope.row)" v-if="scope.row.status === 'PENDING_REVIEW'" v-hasPermi="['lims:test:order:review']">{{ this.$t('lims.复核') }}</el-button>
-          <el-button size="mini" type="text" @click="handleApprove(scope.row)" v-if="scope.row.status === 'PENDING_APPROVAL'" v-hasPermi="['lims:test:order:approve']">{{ this.$t('lims.批准') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:test:order:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:test:order:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" @click="handleResult(scope.row)" v-if="['PENDING_TEST','TESTING'].includes(scope.row.status)" v-hasPermi="['lims:test:order:edit']">{{ $t('lims.录入结果') }}</el-button>
+          <el-button size="mini" type="text" @click="handleSubmit(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:test:order:submit']">{{ $t('lims.提交') }}</el-button>
+          <el-button size="mini" type="text" @click="handleReview(scope.row)" v-if="scope.row.status === 'PENDING_REVIEW'" v-hasPermi="['lims:test:order:review']">{{ $t('lims.复核') }}</el-button>
+          <el-button size="mini" type="text" @click="handleApprove(scope.row)" v-if="scope.row.status === 'PENDING_APPROVAL'" v-hasPermi="['lims:test:order:approve']">{{ $t('lims.批准') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:test:order:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:test:order:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

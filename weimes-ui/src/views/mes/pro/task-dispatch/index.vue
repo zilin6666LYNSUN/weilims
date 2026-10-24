@@ -68,12 +68,12 @@
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" slot="append" @click="handleUser2Select(scope.row)"
             v-hasPermi="['pro:taskdispatch:addAssignUsers']"
-            v-if="scope.row.taskUserId != null && scope.row.status != 'FINISHED'">{{ this.$t('system.修改') }}</el-button>
+            v-if="scope.row.taskUserId != null && scope.row.status != 'FINISHED'">{{ $t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-plus" slot="append" @click="handleUser2Select(scope.row)"
-            v-hasPermi="['pro:taskdispatch:addAssignUsers']" v-if="scope.row.status === 'PREPARE'">{{ this.$t('mes.指派用户') }}</el-button>
+            v-hasPermi="['pro:taskdispatch:addAssignUsers']" v-if="scope.row.status === 'PREPARE'">{{ $t('mes.指派用户') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleDelete(scope.row)"
             v-hasPermi="['pro:taskdispatch:removeAssignUsers']"
-            v-if="scope.row.taskUserId != null && scope.row.status != 'FINISHED'">{{ this.$t('mes.重置派单人') }}</el-button>
+            v-if="scope.row.taskUserId != null && scope.row.status != 'FINISHED'">{{ $t('mes.重置派单人') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

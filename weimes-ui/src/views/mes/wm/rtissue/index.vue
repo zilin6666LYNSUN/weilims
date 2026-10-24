@@ -60,11 +60,11 @@
       <el-table-column :label="$t('common.operation')" width="150px" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-video-play" v-if="scope.row.status == 'PREPARE'"
-            @click="handleExecute(scope.row)" v-hasPermi="['mes:wm:rtissue:edit']">{{ this.$t('mes.执行退料') }}</el-button>
+            @click="handleExecute(scope.row)" v-hasPermi="['mes:wm:rtissue:edit']">{{ $t('mes.执行退料') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-edit" v-if="scope.row.status == 'PREPARE'"
-            @click="handleUpdate(scope.row)" v-hasPermi="['mes:wm:rtissue:edit']">{{ this.$t('system.修改') }}</el-button>
+            @click="handleUpdate(scope.row)" v-hasPermi="['mes:wm:rtissue:edit']">{{ $t('system.修改') }}</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" v-if="scope.row.status == 'PREPARE'"
-            @click="handleDelete(scope.row)" v-hasPermi="['mes:wm:rtissue:remove']">{{ this.$t('common.delete') }}</el-button>
+            @click="handleDelete(scope.row)" v-hasPermi="['mes:wm:rtissue:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -119,7 +119,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:wm:productsalse:edit']"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -127,7 +127,7 @@
             @click="handleDelete(scope.row)"
             v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:wm:productsalse:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -135,7 +135,7 @@
             @click="handleExecute(scope.row)"
             v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:wm:productsalse:edit']"
-          >{{ this.$t('mes.执行出库') }}</el-button>
+          >{{ $t('mes.执行出库') }}</el-button>
           
         </template>
       </el-table-column>

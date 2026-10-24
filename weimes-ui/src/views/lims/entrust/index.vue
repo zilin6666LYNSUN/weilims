@@ -31,11 +31,11 @@
       </el-table-column>
       <el-table-column :label="$t('common.operation')" align="center" width="280">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-upload" @click="handleSubmit(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:entrust:submit']">{{ this.$t('menu.提交受理') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-check" @click="handleReview(scope.row)" v-if="scope.row.status === 'SUBMITTED'" v-hasPermi="['lims:entrust:review']">{{ this.$t('menu.受理评审') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-box" @click="handleRegister(scope.row)" v-if="scope.row.status === 'ACCEPTED'" v-hasPermi="['lims:entrust:register']">{{ this.$t('menu.登记样品') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:entrust:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:entrust:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-upload" @click="handleSubmit(scope.row)" v-if="scope.row.status === 'DRAFT'" v-hasPermi="['lims:entrust:submit']">{{ $t('menu.提交受理') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-check" @click="handleReview(scope.row)" v-if="scope.row.status === 'SUBMITTED'" v-hasPermi="['lims:entrust:review']">{{ $t('menu.受理评审') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-box" @click="handleRegister(scope.row)" v-if="scope.row.status === 'ACCEPTED'" v-hasPermi="['lims:entrust:register']">{{ $t('menu.登记样品') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:entrust:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:entrust:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -126,7 +126,7 @@
             @click="handleUpdate(scope.row)"
             v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:wm:rtsalse:edit']"
-          >{{ this.$t('system.修改') }}</el-button>
+          >{{ $t('system.修改') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -134,7 +134,7 @@
             @click="handleDelete(scope.row)"
             v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:wm:rtsalse:remove']"
-          >{{ this.$t('common.delete') }}</el-button>
+          >{{ $t('common.delete') }}</el-button>
           <el-button
             size="mini"
             type="text"
@@ -142,7 +142,7 @@
             @click="handleExecute(scope.row)"
             v-if="scope.row.status == 'PREPARE'"
             v-hasPermi="['mes:wm:rtsalse:edit']"
-          >{{ this.$t('mes.执行退货') }}</el-button>
+          >{{ $t('mes.执行退货') }}</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -15,7 +15,7 @@
     <el-table v-loading="loading" :data="dataList">
       <el-table-column :label="$t('lims.维护编号')" align="center" prop="maintenanceId" width="140"/>
       <el-table-column :label="$t('lims.维护类型')" align="center" prop="maintenanceType" width="100">
-        <template slot-scope="scope">{{ { PREVENTIVE: this.$t('lims.预防性'), CORRECTIVE: this.$t('lims.纠正性'), ROUTINE: this.$t('lims.日常') }[scope.row.maintenanceType] }}</template>
+        <template slot-scope="scope">{{ { PREVENTIVE: $t('lims.预防性'), CORRECTIVE: $t('lims.纠正性'), ROUTINE: $t('lims.日常') }[scope.row.maintenanceType] }}</template>
       </el-table-column>
       <el-table-column :label="$t('lims.维护日期')" align="center" prop="maintenanceDate" width="120"/>
       <el-table-column :label="$t('lims.维护描述')" align="center" prop="description" :show-overflow-tooltip="true"/>
@@ -23,8 +23,8 @@
       <el-table-column :label="$t('lims.状态')" align="center" prop="status" width="100"/>
       <el-table-column :label="$t('common.operation')" align="center" width="140">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:instrument:edit']">{{ this.$t('lims.修改') }}</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:instrument:remove']">{{ this.$t('common.delete') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['lims:instrument:edit']">{{ $t('lims.修改') }}</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['lims:instrument:remove']">{{ $t('common.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
